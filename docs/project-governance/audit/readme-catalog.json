@@ -1,0 +1,633 @@
+{
+  "generatedAt": "2026-10-10T11:25:16.771263+00:00",
+  "policy": "Every owned structural/evidence directory gets a README; generated assets and external/runtime trees are explained by parents",
+  "directories": [
+    {
+      "directory": ".",
+      "files": [
+        "prototype-audit-report.md",
+        "prototype-vue-migration-assessment.md"
+      ],
+      "readme": "README.md"
+    },
+    {
+      "directory": "docs",
+      "files": [],
+      "readme": "docs/README.md"
+    },
+    {
+      "directory": "docs/project-governance",
+      "files": [
+        "DEPENDENCY_AUDIT.md",
+        "DEVELOPMENT_PLAN.md",
+        "ENGINEERING_ASSIGNMENTS.md",
+        "FRONTEND_API_HANDOFF.md",
+        "MODIFICATIONS.md",
+        "PENDING_REGISTER.md",
+        "PROJECT_AUDIT.md",
+        "README_REVIEW.md",
+        "多维数据分析平台开发模块与人员分工（修订版）.docx"
+      ],
+      "readme": "docs/project-governance/README.md"
+    },
+    {
+      "directory": "docs/project-governance/audit",
+      "files": [
+        "api-inventory.csv",
+        "api-inventory.json",
+        "assignment-review-final.pdf",
+        "assignment-review-v2.pdf",
+        "assignment-review-v3.pdf",
+        "assignment-review-v4.pdf",
+        "assignment-review.pdf",
+        "assignment-reviewed.pdf",
+        "checks.json",
+        "contract-only-operations.md",
+        "dependency-current-run.json",
+        "dependency-current.json",
+        "dependency-current.stderr.txt",
+        "dependency-pre-authorization.json",
+        "external-docx-0.txt",
+        "first-party-text.txt",
+        "output-manifest.json",
+        "readme-catalog.json",
+        "readme-checks.json",
+        "readme-source-baseline.json",
+        "unit-current.json",
+        "word-visual-review.json",
+        "work-packages.json",
+        "workspace-docx-text.json",
+        "workspace-files.jsonl",
+        "workspace-inventory-summary.json"
+      ],
+      "readme": "docs/project-governance/audit/README.md"
+    },
+    {
+      "directory": "docs/project-governance/audit/word-render",
+      "files": [
+        "page-1.png",
+        "page-10.png",
+        "page-11.png",
+        "page-12.png",
+        "page-13.png",
+        "page-14.png",
+        "page-15.png",
+        "page-16.png",
+        "page-17.png",
+        "page-18.png",
+        "page-19.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "page-8.png",
+        "page-9.png"
+      ],
+      "readme": "docs/project-governance/audit/word-render/README.md"
+    },
+    {
+      "directory": "docs/project-governance/scripts",
+      "files": [
+        "audit_dependencies.cjs",
+        "build_governance.py",
+        "inspect_api.cjs",
+        "inspect_workspace.py",
+        "render_word_review.py",
+        "verify_deliverables.py",
+        "verify_readmes.py"
+      ],
+      "readme": "docs/project-governance/scripts/README.md"
+    },
+    {
+      "directory": "docs/system-design",
+      "files": [
+        "00_需求追踪与设计说明.md",
+        "01_总体系统架构设计.md",
+        "02_技术栈选型与ADR.md",
+        "03_数据库与数据架构设计.md",
+        "04_API与接口契约设计.md",
+        "05_UIUX与交互设计.md",
+        "06_安全架构设计.md",
+        "07_性能与容量设计.md",
+        "08_可靠性与可观测性设计.md",
+        "09_部署架构设计.md",
+        "10_开发联调与集成方案.md",
+        "11_架构风险与待确认事项.md",
+        "系统设计说明书.md"
+      ],
+      "readme": "docs/system-design/README.md"
+    },
+    {
+      "directory": "docs/system-design/adr",
+      "files": [
+        "ADR-001-architecture.md",
+        "ADR-002-backend.md",
+        "ADR-003-database.md",
+        "ADR-004-gis.md",
+        "ADR-005-async-task.md",
+        "ADR-006-api.md",
+        "ADR-007-authentication.md",
+        "ADR-008-deployment.md"
+      ],
+      "readme": "docs/system-design/adr/README.md"
+    },
+    {
+      "directory": "docs/system-design/api",
+      "files": [
+        "FRONTEND_INTEGRATION.md",
+        "OPENAPI_CHANGELOG.md",
+        "OPENAPI_COVERAGE.md",
+        "OPENAPI_PENDING.md",
+        "api-conventions.md",
+        "api-coverage-matrix.md",
+        "error-codes.md",
+        "openapi - 副本.yaml",
+        "openapi-audit-report.md",
+        "openapi.yaml"
+      ],
+      "readme": "docs/system-design/api/README.md"
+    },
+    {
+      "directory": "docs/system-design/database",
+      "files": [
+        "api-storage-map.md",
+        "data-dictionary.md",
+        "design-changelog.md",
+        "design-validation.md",
+        "index-design.md",
+        "migration-plan.md",
+        "pending-design.md",
+        "query-examples.sql",
+        "schema.sql"
+      ],
+      "readme": "docs/system-design/database/README.md"
+    },
+    {
+      "directory": "docs/system-design/diagrams",
+      "files": [
+        "analysis-task-sequence.mmd",
+        "auth-sequence.mmd",
+        "component-architecture.mmd",
+        "container-architecture.mmd",
+        "data-flow.mmd",
+        "deployment.mmd",
+        "er-diagram.mmd",
+        "module-dependency.mmd",
+        "search-sequence.mmd",
+        "system-context.mmd"
+      ],
+      "readme": "docs/system-design/diagrams/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui",
+      "files": [
+        "design-system.md",
+        "information-architecture.md",
+        "prototype-audit-baseline.html"
+      ],
+      "readme": "docs/system-design/ui/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype",
+      "files": [
+        ".env.example",
+        ".gitignore",
+        "CHANGES.md",
+        "MIGRATION_PLAN.md",
+        "index.html",
+        "package-lock.json",
+        "package.json",
+        "tsconfig.json",
+        "vite.config.ts"
+      ],
+      "readme": "docs/system-design/ui/prototype/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit",
+      "files": [
+        "manifest.json",
+        "requirements.json",
+        "requirements.md"
+      ],
+      "readme": "docs/system-design/ui/prototype/audit/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit/vue-migration",
+      "files": [
+        "FRONTEND_REMAINING.md",
+        "dashboard-final.png",
+        "dashboard-initial.png",
+        "dashboard-smoke.png",
+        "dependency-audit.json",
+        "final-audit.json",
+        "final-audit.md",
+        "http-analysis-failure.png",
+        "http-analysis-results.json",
+        "http-e2e-results.json",
+        "http-resources-failure.png",
+        "http-resources-results.json",
+        "map-final.png",
+        "map-selection-failure.png",
+        "map-selection-results.json",
+        "map-selection.png",
+        "openapi-generation.json",
+        "openapi-operations.json",
+        "pdf-text.txt",
+        "requirements-source.json",
+        "search-context-final.png",
+        "smoke-final.json",
+        "smoke-initial.json",
+        "source-manifest.json",
+        "unit-final.json",
+        "unit-initial.json",
+        "vue-e2e-results.json"
+      ],
+      "readme": "docs/system-design/ui/prototype/audit/vue-migration/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit/vue-migration/flows",
+      "files": [
+        "failure-1.png",
+        "failure-10.png",
+        "failure-11.png",
+        "failure-13.png",
+        "failure-15.png",
+        "failure-17.png",
+        "failure-18.png",
+        "failure-19.png",
+        "failure-2.png",
+        "failure-20.png",
+        "failure-21.png",
+        "failure-3.png",
+        "failure-4.png",
+        "failure-5.png",
+        "failure-7.png",
+        "failure-8.png",
+        "failure-9.png",
+        "results.json"
+      ],
+      "readme": "docs/system-design/ui/prototype/audit/vue-migration/flows/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/dist",
+      "files": [
+        "index.html"
+      ],
+      "readme": "docs/system-design/ui/prototype/dist/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/scripts",
+      "files": [
+        "audit.mjs",
+        "generate-api.mjs"
+      ],
+      "readme": "docs/system-design/ui/prototype/scripts/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src",
+      "files": [
+        "App.vue",
+        "domain.ts",
+        "main.ts",
+        "router.ts",
+        "style.css"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/api",
+      "files": [
+        "client.ts",
+        "contract.json",
+        "gateway.ts",
+        "httpForms.ts",
+        "mutations.ts",
+        "operations.ts",
+        "resources.ts",
+        "schema.ts",
+        "tasks.ts",
+        "validation-contract.json",
+        "validation.ts"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/api/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/components",
+      "files": [
+        "ChartPanel.vue",
+        "DataTable.vue",
+        "DeviceMap.vue",
+        "FormDialog.vue",
+        "QueryForm.vue",
+        "RegionPicker.vue",
+        "RemoteAssetImage.vue",
+        "RemoteDashboard.vue",
+        "RemoteMap.vue",
+        "RemoteOperations.vue",
+        "RemoteProfiles.vue",
+        "RemoteReportPreview.vue",
+        "RemoteTaskDetails.vue"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/components/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/mock",
+      "files": [
+        "fixture.json",
+        "imports.ts",
+        "repository.ts"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/mock/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/pages",
+      "files": [
+        "AdminPage.vue",
+        "AnalysisPage.vue",
+        "DashboardPage.vue",
+        "DatasetsPage.vue",
+        "LibraryPage.vue",
+        "MapPage.vue",
+        "OperationsPage.vue",
+        "ProfilesPage.vue",
+        "SearchPage.vue",
+        "ServicePage.vue",
+        "WatchPage.vue"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/pages/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/stores",
+      "files": [
+        "platform.ts"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/stores/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/utils",
+      "files": [
+        "files.ts",
+        "sets.ts"
+      ],
+      "readme": "docs/system-design/ui/prototype/src/utils/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/tests",
+      "files": [
+        "audit.e2e.cjs",
+        "contracts.test.ts",
+        "files.test.ts",
+        "http-forms.test.ts",
+        "http-resources.test.ts",
+        "platform.test.ts",
+        "session.test.ts",
+        "sets.test.ts",
+        "vue-flows.e2e.cjs",
+        "vue-http-analysis.e2e.cjs",
+        "vue-http-resources.e2e.cjs",
+        "vue-http.e2e.cjs",
+        "vue-map-selection.e2e.cjs",
+        "vue-smoke.cjs",
+        "vue.e2e.cjs"
+      ],
+      "readme": "docs/system-design/ui/prototype/tests/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/tests/evidence",
+      "files": [
+        "MAC数据统计验收.xlsx",
+        "MAC检索.png",
+        "MAC检索查询结果.xlsx",
+        "results.json",
+        "workbook-validation.json",
+        "人像-1.svg",
+        "人像检索.png",
+        "人员库.png",
+        "人员库.xlsx",
+        "任务中心.png",
+        "伴随任务.png",
+        "伴随任务结果.xlsx",
+        "区域统计.png",
+        "区域统计结果.xlsx",
+        "参数配置.png",
+        "告警结果.png",
+        "围栏检索.png",
+        "围栏检索查询结果.xlsx",
+        "图码档案.png",
+        "地图框选证据.png",
+        "地图研判.png",
+        "场所管理.png",
+        "多报表验收.zip",
+        "操作日志.png",
+        "操作日志.xlsx",
+        "数据态势.png",
+        "数据运算.png",
+        "数据运算详情.xlsx",
+        "数据量异常设备.xlsx",
+        "用户管理.png",
+        "电围分类统计.xlsx",
+        "电围区域采集数据统计验收.xlsx",
+        "电围设备采集数据统计验收.xlsx",
+        "电围运营商数据统计验收.xlsx",
+        "短信日志.png",
+        "短信日志.xlsx",
+        "碰撞任务.png",
+        "碰撞任务结果.xlsx",
+        "系统组件状态验收.xlsx",
+        "系统首页.png",
+        "综合布控.png",
+        "角色管理.png",
+        "设备 A-01.xlsx",
+        "设备分布.png",
+        "设备分布勾选与在线率.png",
+        "设备实时在线率验收.xlsx",
+        "设备实时状态验收.xlsx",
+        "设备管理.png",
+        "车牌数据统计验收.xlsx",
+        "车牌检索.png",
+        "车牌检索查询结果.xlsx",
+        "车码档案.png",
+        "运维报表.png",
+        "运维通知.png",
+        "运维首页.png"
+      ],
+      "readme": "docs/system-design/ui/prototype/tests/evidence/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/vendor",
+      "files": [
+        "JSZip-LICENSE.md",
+        "jszip.min.js"
+      ],
+      "readme": "docs/system-design/ui/prototype/vendor/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype-migration-assessment",
+      "files": [
+        "assessment-verification.json",
+        "baseline-verification.json",
+        "estimate.json",
+        "inspect.cjs",
+        "inventory.json",
+        "verify-assessment.cjs",
+        "verify-baseline.cjs"
+      ],
+      "readme": "docs/system-design/ui/prototype-migration-assessment/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype-v1-baseline",
+      "files": [
+        "app.css",
+        "app.js",
+        "index.html"
+      ],
+      "readme": "docs/system-design/ui/prototype-v1-baseline/README.md"
+    },
+    {
+      "directory": "docs/system-design/ui/wireframes",
+      "files": [
+        "核心页面线框.md"
+      ],
+      "readme": "docs/system-design/ui/wireframes/README.md"
+    },
+    {
+      "directory": "合同修订工作",
+      "files": [
+        "artifact.md",
+        "compact-text.txt",
+        "compact-verification.json",
+        "compact_contract.py",
+        "export_pdf.ps1",
+        "final-compact-review.json",
+        "final_compact_review.py",
+        "render_with_word_pdf.py",
+        "revise_contract.py",
+        "revised-text.txt",
+        "verification.json",
+        "多维数据分析平台合同v1.0 - 副本.docx",
+        "多维数据分析平台合同v1.0 - 副本_正文精简.docx"
+      ],
+      "readme": "合同修订工作/README.md"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v1",
+      "files": [
+        "compact.pdf",
+        "page-1.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "page-8.png"
+      ],
+      "readme": "合同修订工作/compact-render-v1/README.md"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v2",
+      "files": [
+        "compact.pdf",
+        "page-1.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "page-8.png",
+        "page-9.png"
+      ],
+      "readme": "合同修订工作/compact-render-v2/README.md"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v3",
+      "files": [
+        "compact.pdf",
+        "page-1.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "page-8.png"
+      ],
+      "readme": "合同修订工作/compact-render-v3/README.md"
+    },
+    {
+      "directory": "合同修订工作/final-render-v1",
+      "files": [
+        "page-1.png",
+        "page-10.png",
+        "page-11.png",
+        "page-12.png",
+        "page-13.png",
+        "page-14.png",
+        "page-15.png",
+        "page-16.png",
+        "page-17.png",
+        "page-18.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "page-8.png",
+        "page-9.png",
+        "revised.pdf"
+      ],
+      "readme": "合同修订工作/final-render-v1/README.md"
+    },
+    {
+      "directory": "合同修订工作/original-render",
+      "files": [
+        "original.pdf"
+      ],
+      "readme": "合同修订工作/original-render/README.md"
+    },
+    {
+      "directory": "合同修订工作/reference-render",
+      "files": [
+        "page-1.png",
+        "page-2.png",
+        "page-3.png",
+        "page-4.png",
+        "page-5.png",
+        "page-6.png",
+        "page-7.png",
+        "reference.pdf"
+      ],
+      "readme": "合同修订工作/reference-render/README.md"
+    }
+  ],
+  "excludedTrees": [
+    {
+      "path": ".git",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/project-governance/audit/render-temp",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/.npm-cache",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/node_modules",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "合同修订工作/render-temp",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    }
+  ]
+}

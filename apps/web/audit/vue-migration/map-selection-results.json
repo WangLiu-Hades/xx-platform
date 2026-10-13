@@ -1,0 +1,52 @@
+{
+  "time": "2026-10-13T03:35:50.651Z",
+  "origin": "http://127.0.0.1:5183",
+  "checks": [
+    {
+      "name": "地图研判：框内四点全部选中、框外点排除",
+      "passed": true
+    },
+    {
+      "name": "地图研判：反向拖拽选中同样四点",
+      "passed": true
+    },
+    {
+      "name": "地图研判：新框选替换为框内两点",
+      "passed": true
+    },
+    {
+      "name": "地图研判：空白框选清空选择",
+      "passed": true
+    },
+    {
+      "name": "地图研判：切回单选仅选择点击的点位",
+      "passed": true
+    },
+    {
+      "name": "地图研判：重置地图清空选择",
+      "passed": true
+    },
+    {
+      "name": "设备分布：框内四点全部选中、框外点排除",
+      "passed": true
+    },
+    {
+      "name": "设备分布：反向拖拽选中同样四点",
+      "passed": true
+    },
+    {
+      "name": "设备分布：新框选替换为框内两点",
+      "passed": true
+    },
+    {
+      "name": "设备分布：空白框选清空选择",
+      "passed": true
+    },
+    {
+      "name": "设备分布：重置地图清空选择",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "consoleErrors": []
+}

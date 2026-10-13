@@ -1,0 +1,8 @@
+flowchart LR
+  User[公安业务用户与运维用户] --> Web[PC Web 平台]
+  Admin[系统管理员] --> Web
+  Web --> Platform[多维数据分析平台]
+  Devices[围栏 车牌 MAC 人像采集设备] --> Platform
+  Gateway[短信 邮件 平台消息通道] <-->|投递与回执| Platform
+  Map[已授权的地图底图服务] --> Platform
+  Platform --> Files[受控文件与备份]

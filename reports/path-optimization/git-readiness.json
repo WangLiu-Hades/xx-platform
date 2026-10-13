@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-13T03:57:02.490700+00:00",
+  "method": "Git temporary bare metadata + target work-tree; no git init/add/commit/push in project",
+  "candidateFiles": 500,
+  "candidateBytes": 90970153,
+  "excludedRuntimeOrPrivateLeaks": [],
+  "filesOver100MiB": [],
+  "missingRequiredFiles": [],
+  "obviousCredentialFiles": [],
+  "trackedOnlyBrokenLinks": [],
+  "passed": true
+}

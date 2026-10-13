@@ -1,0 +1,9 @@
+# 示例，不是生效中的CODEOWNERS；尚未提供四位成员的个人账号。
+# 按 docs/team/ownership.json 的职责，提供个人账号后把模板改为CODEOWNERS。
+# /apps/web/             @FRONTEND_ACCOUNT
+# /apps/api/             @BACKEND_ACCOUNT
+# /contracts/api/        @BACKEND_ACCOUNT
+# /workers/data/         @DATA_ACCOUNT
+# /workers/delivery/     @BACKEND_ACCOUNT
+# /infra/                @QA_ACCOUNT
+# /tests/                @QA_ACCOUNT

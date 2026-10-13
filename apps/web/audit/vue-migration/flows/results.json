@@ -1,0 +1,376 @@
+{
+  "time": "2026-10-09T13:07:13.814Z",
+  "origin": "http://127.0.0.1:5182",
+  "checks": [
+    {
+      "name": "登录失败后可恢复、涉密入口按角色显示",
+      "ids": [
+        "PDF-001",
+        "PDF-017"
+      ],
+      "passed": true,
+      "evidence": "失败登录未破坏仓库，非涉密入口隐藏"
+    },
+    {
+      "name": "首页统计、悬停、跳转、类型切换、图例与月报下载",
+      "ids": [
+        "PDF-002",
+        "PDF-003",
+        "PDF-004",
+        "PDF-005",
+        "PDF-006",
+        "PDF-007",
+        "PDF-008",
+        "PDF-009",
+        "PDF-010",
+        "PDF-011",
+        "PDF-012",
+        "PDF-013",
+        "PDF-014"
+      ],
+      "passed": true,
+      "evidence": "电围分类统计.xlsx"
+    },
+    {
+      "name": "围栏检索查询、统计、伴随保存及轨迹复位",
+      "ids": [
+        "PDF-015",
+        "PDF-016",
+        "PDF-019",
+        "PDF-021",
+        "PDF-022",
+        "PDF-023",
+        "PDF-024",
+        "PDF-025",
+        "PDF-026",
+        "PDF-027",
+        "PDF-028",
+        "PDF-029",
+        "PDF-030"
+      ],
+      "passed": true,
+      "evidence": "围栏检索.xlsx"
+    },
+    {
+      "name": "车牌检索查询、统计、伴随保存及轨迹复位",
+      "ids": [
+        "PDF-031",
+        "PDF-033",
+        "PDF-035",
+        "PDF-036",
+        "PDF-037",
+        "PDF-038",
+        "PDF-039",
+        "PDF-040",
+        "PDF-041",
+        "PDF-042",
+        "PDF-043"
+      ],
+      "passed": true,
+      "evidence": "车牌检索.xlsx"
+    },
+    {
+      "name": "MAC检索查询、统计、伴随保存及轨迹复位",
+      "ids": [
+        "PDF-044",
+        "PDF-046",
+        "PDF-048",
+        "PDF-049",
+        "PDF-050",
+        "PDF-051",
+        "PDF-052",
+        "PDF-053",
+        "PDF-054",
+        "PDF-055",
+        "PDF-056"
+      ],
+      "passed": true,
+      "evidence": "MAC检索.xlsx"
+    },
+    {
+      "name": "人像悬停搜图、阈值、保存、上传与右键",
+      "ids": [
+        "PDF-057",
+        "PDF-058",
+        "PDF-059",
+        "PDF-060",
+        "PDF-061",
+        "PDF-062"
+      ],
+      "passed": true,
+      "evidence": {
+        "original": 18
+      }
+    },
+    {
+      "name": "人员库新增人员、编辑、导入确认与选中导出",
+      "ids": [
+        "PDF-063",
+        "PDF-064",
+        "PDF-065",
+        "PDF-066",
+        "PDF-067",
+        "PDF-068",
+        "PDF-069"
+      ],
+      "passed": true,
+      "evidence": "人员库.xlsx"
+    },
+    {
+      "name": "地图四种类型、11项人员信息、单选与详情带选区",
+      "ids": [
+        "PDF-070",
+        "PDF-071",
+        "PDF-072",
+        "PDF-073",
+        "PDF-074",
+        "PDF-075",
+        "PDF-076",
+        "PDF-077",
+        "PDF-158",
+        "PDF-160",
+        "PDF-161",
+        "PDF-162",
+        "PDF-163",
+        "PDF-166"
+      ],
+      "passed": true,
+      "evidence": "选区详情过滤生效"
+    },
+    {
+      "name": "伴随任务详情类型、编辑及只导出选中结果",
+      "ids": [
+        "PDF-078",
+        "PDF-079",
+        "PDF-080",
+        "PDF-081",
+        "PDF-082",
+        "PDF-083",
+        "PDF-084",
+        "PDF-085",
+        "PDF-086"
+      ],
+      "passed": true,
+      "evidence": "伴随分析示例 1.xlsx"
+    },
+    {
+      "name": "碰撞任务详情类型、编辑及只导出选中结果",
+      "ids": [
+        "PDF-087",
+        "PDF-088",
+        "PDF-089",
+        "PDF-090",
+        "PDF-091",
+        "PDF-092",
+        "PDF-093",
+        "PDF-094"
+      ],
+      "passed": true,
+      "evidence": "碰撞分析示例 1.xlsx"
+    },
+    {
+      "name": "区域统计详情类型、编辑及只导出选中结果",
+      "ids": [
+        "PDF-095",
+        "PDF-096",
+        "PDF-097",
+        "PDF-098",
+        "PDF-099",
+        "PDF-100",
+        "PDF-101",
+        "PDF-102",
+        "PDF-103"
+      ],
+      "passed": true,
+      "evidence": "区域统计示例 1.xlsx"
+    },
+    {
+      "name": "数据集拖放、混合运算和Excel导出再导入",
+      "ids": [
+        "PDF-104",
+        "PDF-105",
+        "PDF-106",
+        "PDF-107",
+        "PDF-108",
+        "PDF-109",
+        "PDF-110",
+        "PDF-111",
+        "PDF-112"
+      ],
+      "passed": true,
+      "evidence": "数据集详情.xlsx"
+    },
+    {
+      "name": "布控选人、新增、模拟命中、结束统计和编辑",
+      "ids": [
+        "PDF-113",
+        "PDF-114",
+        "PDF-115",
+        "PDF-117",
+        "PDF-118",
+        "PDF-119",
+        "PDF-121",
+        "PDF-212"
+      ],
+      "passed": true,
+      "evidence": "状态和五项统计可见"
+    },
+    {
+      "name": "档案四类关联、外貌车牌查询与综合轨迹",
+      "ids": [
+        "PDF-122",
+        "PDF-123",
+        "PDF-124",
+        "PDF-125",
+        "PDF-126",
+        "PDF-127",
+        "PDF-128",
+        "PDF-129"
+      ],
+      "passed": true,
+      "evidence": "综合地图包含四类采集"
+    },
+    {
+      "name": "常驻模型参数保存、标签筛选与关闭后的标签失效",
+      "ids": [
+        "PDF-130",
+        "PDF-131",
+        "PDF-132"
+      ],
+      "passed": true,
+      "evidence": "模型启停立即影响合成标签"
+    },
+    {
+      "name": "运维12图、四种时间范围、完整指标及异常Excel",
+      "ids": [
+        "PDF-133",
+        "PDF-134",
+        "PDF-135",
+        "PDF-136",
+        "PDF-137",
+        "PDF-138",
+        "PDF-139",
+        "PDF-140",
+        "PDF-141"
+      ],
+      "passed": true,
+      "evidence": "4/4/5/3 指标和两类异常导出"
+    },
+    {
+      "name": "场所设备增改、参数、离线采集历史、复位和删除",
+      "ids": [
+        "PDF-142",
+        "PDF-143",
+        "PDF-144",
+        "PDF-145",
+        "PDF-146",
+        "PDF-147",
+        "PDF-148",
+        "PDF-149",
+        "PDF-150",
+        "PDF-151",
+        "PDF-152",
+        "PDF-153",
+        "PDF-154",
+        "PDF-155",
+        "PDF-157"
+      ],
+      "passed": true,
+      "evidence": "浏览器设备.xlsx"
+    },
+    {
+      "name": "配置三步向导、详情、编辑及删除",
+      "ids": [
+        "PDF-167",
+        "PDF-168",
+        "PDF-169",
+        "PDF-170",
+        "PDF-171",
+        "PDF-172",
+        "PDF-173"
+      ],
+      "passed": true,
+      "evidence": "参数应用与任务编辑"
+    },
+    {
+      "name": "报表八种内容、年月日预览与Excel和ZIP下载",
+      "ids": [
+        "PDF-174",
+        "PDF-175",
+        "PDF-176",
+        "PDF-177",
+        "PDF-178",
+        "PDF-179",
+        "PDF-180",
+        "PDF-181",
+        "PDF-182",
+        "PDF-183",
+        "PDF-184",
+        "PDF-185",
+        "PDF-186",
+        "PDF-187",
+        "PDF-188",
+        "PDF-189"
+      ],
+      "passed": true,
+      "evidence": "验收多报表.zip"
+    },
+    {
+      "name": "通知邮件和短信、详情撤销及两类日志导出范围",
+      "ids": [
+        "PDF-190",
+        "PDF-191",
+        "PDF-192",
+        "PDF-193",
+        "PDF-194",
+        "PDF-195",
+        "PDF-208",
+        "PDF-209",
+        "PDF-210",
+        "PDF-211",
+        "PDF-212",
+        "PDF-213",
+        "PDF-214"
+      ],
+      "passed": true,
+      "evidence": {
+        "sms": "短信日志.xlsx",
+        "own": "操作日志.xlsx"
+      }
+    },
+    {
+      "name": "角色用户权限、本人日志、引用保护和先禁用再删除",
+      "ids": [
+        "PDF-196",
+        "PDF-197",
+        "PDF-198",
+        "PDF-199",
+        "PDF-200",
+        "PDF-201",
+        "PDF-202",
+        "PDF-203",
+        "PDF-204",
+        "PDF-205",
+        "PDF-206",
+        "PDF-207",
+        "PDF-210"
+      ],
+      "passed": true,
+      "evidence": "操作日志.xlsx"
+    },
+    {
+      "name": "设备聚合放大、区域在线率和热力切换复位",
+      "ids": [
+        "PDF-159",
+        "PDF-164",
+        "PDF-165"
+      ],
+      "passed": true,
+      "evidence": "聚合与点位缩放、热力状态及重置"
+    }
+  ],
+  "passed": 22,
+  "failed": 0,
+  "errors": [],
+  "consoleErrors": []
+}

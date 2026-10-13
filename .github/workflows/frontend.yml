@@ -1,0 +1,29 @@
+name: Frontend and layout
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+        working-directory: apps/web
+      - run: npm run generate:api
+        working-directory: apps/web
+      - run: git diff --exit-code -- apps/web/src/api
+      - run: npm run typecheck
+        working-directory: apps/web
+      - run: npm test
+        working-directory: apps/web
+      - run: npm run build
+        working-directory: apps/web
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python tools/layout/verify_layout.py

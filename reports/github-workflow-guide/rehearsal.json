@@ -1,0 +1,129 @@
+{
+  "checkedAt": "2026-10-13T09:43:46.438930+00:00",
+  "remote": "local temporary bare repository only",
+  "githubPushed": false,
+  "sourceFilesCopied": 501,
+  "checks": [
+    {
+      "check": "upload_preview_readonly",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "unreviewed_overwrite_rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "reviewed_upload_copied",
+      "passed": true,
+      "detail": {
+        "applied": true,
+        "files": 501,
+        "backupVerifiedByFollowingCheck": true
+      }
+    },
+    {
+      "check": "old_readme_exact_backup",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "runtime_private_excluded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "remote_archive_preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "dirty_destination_rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "imported_layout_check",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_tracked_ignored_files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "default_branch_detected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "task_branch_sync_and_push",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-01_sparse_dependencies",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-01_web_not_expanded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-01_restore_full_layout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-02_sparse_dependencies",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "frontend_generator_input_visible",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "sparse_add_dependency",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-02_restore_full_layout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-03_sparse_dependencies",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-03_web_not_expanded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-03_restore_full_layout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "DEV-04_full_layout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "other_root_application_rejected",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 23,
+  "failed": 0
+}

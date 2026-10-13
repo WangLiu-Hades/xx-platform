@@ -1,0 +1,18 @@
+sequenceDiagram
+  actor User as 用户
+  participant Web as 检索页面
+  participant API as M05 API
+  participant Auth as M01权限
+  participant DB as PostgreSQL PostGIS
+  User->>Web: 设置类型 场所 时间 目标
+  Web->>API: POST /captures/search 请求体
+  API->>Auth: 检查操作权限及场所范围
+  Auth-->>API: 允许的范围
+  API->>DB: 参数化索引检索 + 游标
+  DB-->>API: 限量记录
+  API-->>Web: 脱敏 items nextCursor traceId
+  User->>Web: 选择记录并点轨迹
+  Web->>API: POST /contexts
+  API->>Auth: 重校目标与范围
+  API-->>Web: contextId
+  Web->>Web: 导航地图研判，仅传 contextId

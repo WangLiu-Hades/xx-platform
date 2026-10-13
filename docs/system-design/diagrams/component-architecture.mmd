@@ -1,0 +1,23 @@
+flowchart TD
+  API[Spring Boot API] --> Base[M01 平台公共契约]
+  API --> Search[M05 检索]
+  API --> Context[M06 上下文与动作]
+  API --> GIS[M07 地图查询]
+  API --> Watch[M10 布控通知]
+  API --> Ops[M12 运维]
+  API --> Auth[M14 用户角色审计]
+  Search --> Data[(PostgreSQL PostGIS)]
+  Context --> Task[M01 统一任务]
+  Watch --> Task
+  Ops --> Task
+  Task --> Data
+  Worker[Python Worker] --> Ingest[M03 接入标准化]
+  Worker --> Analysis[M08 研判]
+  Worker --> Sets[M09 集合运算]
+  Worker --> Models[M11 模型计算]
+  Worker --> Reports[导出与报告]
+  Ingest --> Data
+  Analysis --> Data
+  Sets --> Data
+  Models --> Data
+  Reports --> Data

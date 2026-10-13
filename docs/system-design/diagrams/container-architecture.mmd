@@ -1,0 +1,13 @@
+flowchart LR
+  U[用户浏览器] --> W[Vue Web 静态资源]
+  U --> P[反向代理 TLS]
+  W --> P
+  P --> A[Spring Boot 模块化 API]
+  A --> DB[(PostgreSQL PostGIS)]
+  A --> F[(受控文件卷)]
+  K[Python 数据与分析 Worker] --> DB
+  K --> F
+  D[设备与数据源] --> K
+  K --> N[短信 邮件 设备适配器]
+  A --> M[日志 指标 健康端点]
+  K --> M

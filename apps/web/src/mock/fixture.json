@@ -1,0 +1,1715 @@
+{
+  "sites": [
+    {
+      "id": "S0",
+      "name": "中心广场",
+      "region": "中心区",
+      "address": "示例路1号"
+    },
+    {
+      "id": "S1",
+      "name": "东区车站",
+      "region": "东区",
+      "address": "示例路2号"
+    },
+    {
+      "id": "S2",
+      "name": "西区公园",
+      "region": "西区",
+      "address": "示例路3号"
+    },
+    {
+      "id": "S3",
+      "name": "北区路口",
+      "region": "北区",
+      "address": "示例路4号"
+    },
+    {
+      "id": "S4",
+      "name": "南区商场",
+      "region": "南区",
+      "address": "示例路5号"
+    }
+  ],
+  "devices": [
+    {
+      "id": "D0",
+      "name": "设备 A-01",
+      "serial": "MOCK-1000",
+      "site": "中心广场",
+      "region": "中心区",
+      "type": "电围",
+      "status": "在线",
+      "x": 20,
+      "y": 28,
+      "count": 1200,
+      "group": "核心组",
+      "params": {
+        "power": "10",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D1",
+      "name": "设备 A-02",
+      "serial": "MOCK-1001",
+      "site": "东区车站",
+      "region": "东区",
+      "type": "车牌",
+      "status": "在线",
+      "x": 38,
+      "y": 62,
+      "count": 1435,
+      "group": "核心组",
+      "params": {
+        "power": "20",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D2",
+      "name": "设备 A-03",
+      "serial": "MOCK-1002",
+      "site": "西区公园",
+      "region": "西区",
+      "type": "MAC",
+      "status": "在线",
+      "x": 58,
+      "y": 38,
+      "count": 1670,
+      "group": "外围组",
+      "params": {
+        "power": "30",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D3",
+      "name": "设备 A-04",
+      "serial": "MOCK-1003",
+      "site": "北区路口",
+      "region": "北区",
+      "type": "人像",
+      "status": "离线",
+      "x": 76,
+      "y": 68,
+      "count": 1905,
+      "group": "外围组",
+      "params": {
+        "power": "10",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D4",
+      "name": "设备 A-05",
+      "serial": "MOCK-1004",
+      "site": "南区商场",
+      "region": "南区",
+      "type": "电围",
+      "status": "在线",
+      "x": 86,
+      "y": 26,
+      "count": 2140,
+      "group": "外围组",
+      "params": {
+        "power": "20",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D5",
+      "name": "设备 A-06",
+      "serial": "MOCK-1005",
+      "site": "中心广场",
+      "region": "中心区",
+      "type": "车牌",
+      "status": "在线",
+      "x": 24,
+      "y": 74,
+      "count": 2375,
+      "group": "核心组",
+      "params": {
+        "power": "30",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D6",
+      "name": "设备 A-07",
+      "serial": "MOCK-1006",
+      "site": "东区车站",
+      "region": "东区",
+      "type": "MAC",
+      "status": "在线",
+      "x": 42,
+      "y": 24,
+      "count": 2610,
+      "group": "核心组",
+      "params": {
+        "power": "10",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D7",
+      "name": "设备 A-08",
+      "serial": "MOCK-1007",
+      "site": "西区公园",
+      "region": "西区",
+      "type": "人像",
+      "status": "离线",
+      "x": 60,
+      "y": 80,
+      "count": 2845,
+      "group": "外围组",
+      "params": {
+        "power": "20",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D8",
+      "name": "设备 A-09",
+      "serial": "MOCK-1008",
+      "site": "北区路口",
+      "region": "北区",
+      "type": "电围",
+      "status": "在线",
+      "x": 74,
+      "y": 43,
+      "count": 3080,
+      "group": "外围组",
+      "params": {
+        "power": "30",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    },
+    {
+      "id": "D9",
+      "name": "设备 A-10",
+      "serial": "MOCK-1009",
+      "site": "南区商场",
+      "region": "南区",
+      "type": "车牌",
+      "status": "在线",
+      "x": 84,
+      "y": 82,
+      "count": 3315,
+      "group": "外围组",
+      "params": {
+        "power": "10",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "resetCount": 0
+    }
+  ],
+  "captures": [
+    {
+      "id": "C0-0",
+      "type": "电围",
+      "target": "460000000000000",
+      "imei": "860000000000000",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-05 08:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C0-1",
+      "type": "电围",
+      "target": "460000000000001",
+      "imei": "860000000000001",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-05 08:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C0-2",
+      "type": "电围",
+      "target": "460000000000002",
+      "imei": "860000000000002",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-05 08:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C0-3",
+      "type": "电围",
+      "target": "460000000000003",
+      "imei": "860000000000003",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-05 08:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C0-4",
+      "type": "电围",
+      "target": "460000000000004",
+      "imei": "860000000000004",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-05 08:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C0-5",
+      "type": "电围",
+      "target": "460000000000005",
+      "imei": "860000000000005",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-05 08:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C0-6",
+      "type": "电围",
+      "target": "460000000000000",
+      "imei": "860000000000000",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-06 09:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C0-7",
+      "type": "电围",
+      "target": "460000000000001",
+      "imei": "860000000000001",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-06 09:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C0-8",
+      "type": "电围",
+      "target": "460000000000002",
+      "imei": "860000000000002",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-09",
+      "deviceId": "D8",
+      "time": "2026-10-06 09:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C0-9",
+      "type": "电围",
+      "target": "460000000000003",
+      "imei": "860000000000003",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-10",
+      "deviceId": "D9",
+      "time": "2026-10-06 09:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C0-10",
+      "type": "电围",
+      "target": "460000000000004",
+      "imei": "860000000000004",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-06 09:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C0-11",
+      "type": "电围",
+      "target": "460000000000005",
+      "imei": "860000000000005",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-06 09:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C0-12",
+      "type": "电围",
+      "target": "460000000000000",
+      "imei": "860000000000000",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-07 10:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C0-13",
+      "type": "电围",
+      "target": "460000000000001",
+      "imei": "860000000000001",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-07 10:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C0-14",
+      "type": "电围",
+      "target": "460000000000002",
+      "imei": "860000000000002",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-07 10:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C0-15",
+      "type": "电围",
+      "target": "460000000000003",
+      "imei": "860000000000003",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-07 10:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C0-16",
+      "type": "电围",
+      "target": "460000000000004",
+      "imei": "860000000000004",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-07 10:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C0-17",
+      "type": "电围",
+      "target": "460000000000005",
+      "imei": "860000000000005",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-07 10:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C1-0",
+      "type": "车牌",
+      "target": "示A10000",
+      "imei": "860000000000000",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-05 08:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C1-1",
+      "type": "车牌",
+      "target": "示A10001",
+      "imei": "860000000000001",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-05 08:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C1-2",
+      "type": "车牌",
+      "target": "示A10002",
+      "imei": "860000000000002",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-05 08:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C1-3",
+      "type": "车牌",
+      "target": "示A10003",
+      "imei": "860000000000003",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-05 08:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C1-4",
+      "type": "车牌",
+      "target": "示A10004",
+      "imei": "860000000000004",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-05 08:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C1-5",
+      "type": "车牌",
+      "target": "示A10005",
+      "imei": "860000000000005",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-05 08:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C1-6",
+      "type": "车牌",
+      "target": "示A10000",
+      "imei": "860000000000000",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-06 09:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C1-7",
+      "type": "车牌",
+      "target": "示A10001",
+      "imei": "860000000000001",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-06 09:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C1-8",
+      "type": "车牌",
+      "target": "示A10002",
+      "imei": "860000000000002",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-09",
+      "deviceId": "D8",
+      "time": "2026-10-06 09:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C1-9",
+      "type": "车牌",
+      "target": "示A10003",
+      "imei": "860000000000003",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-10",
+      "deviceId": "D9",
+      "time": "2026-10-06 09:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C1-10",
+      "type": "车牌",
+      "target": "示A10004",
+      "imei": "860000000000004",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-06 09:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C1-11",
+      "type": "车牌",
+      "target": "示A10005",
+      "imei": "860000000000005",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-06 09:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C1-12",
+      "type": "车牌",
+      "target": "示A10000",
+      "imei": "860000000000000",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-07 10:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C1-13",
+      "type": "车牌",
+      "target": "示A10001",
+      "imei": "860000000000001",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-07 10:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C1-14",
+      "type": "车牌",
+      "target": "示A10002",
+      "imei": "860000000000002",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-07 10:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C1-15",
+      "type": "车牌",
+      "target": "示A10003",
+      "imei": "860000000000003",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-07 10:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C1-16",
+      "type": "车牌",
+      "target": "示A10004",
+      "imei": "860000000000004",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-07 10:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C1-17",
+      "type": "车牌",
+      "target": "示A10005",
+      "imei": "860000000000005",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-07 10:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C2-0",
+      "type": "MAC",
+      "target": "02:00:00:00:00:00",
+      "imei": "860000000000000",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-05 08:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C2-1",
+      "type": "MAC",
+      "target": "02:00:00:00:00:01",
+      "imei": "860000000000001",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-05 08:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C2-2",
+      "type": "MAC",
+      "target": "02:00:00:00:00:02",
+      "imei": "860000000000002",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-05 08:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C2-3",
+      "type": "MAC",
+      "target": "02:00:00:00:00:03",
+      "imei": "860000000000003",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-05 08:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C2-4",
+      "type": "MAC",
+      "target": "02:00:00:00:00:04",
+      "imei": "860000000000004",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-05 08:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C2-5",
+      "type": "MAC",
+      "target": "02:00:00:00:00:05",
+      "imei": "860000000000005",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-05 08:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C2-6",
+      "type": "MAC",
+      "target": "02:00:00:00:00:00",
+      "imei": "860000000000000",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-06 09:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C2-7",
+      "type": "MAC",
+      "target": "02:00:00:00:00:01",
+      "imei": "860000000000001",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-06 09:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C2-8",
+      "type": "MAC",
+      "target": "02:00:00:00:00:02",
+      "imei": "860000000000002",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-09",
+      "deviceId": "D8",
+      "time": "2026-10-06 09:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C2-9",
+      "type": "MAC",
+      "target": "02:00:00:00:00:03",
+      "imei": "860000000000003",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-10",
+      "deviceId": "D9",
+      "time": "2026-10-06 09:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C2-10",
+      "type": "MAC",
+      "target": "02:00:00:00:00:04",
+      "imei": "860000000000004",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-06 09:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C2-11",
+      "type": "MAC",
+      "target": "02:00:00:00:00:05",
+      "imei": "860000000000005",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-06 09:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C2-12",
+      "type": "MAC",
+      "target": "02:00:00:00:00:00",
+      "imei": "860000000000000",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-07 10:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C2-13",
+      "type": "MAC",
+      "target": "02:00:00:00:00:01",
+      "imei": "860000000000001",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-07 10:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C2-14",
+      "type": "MAC",
+      "target": "02:00:00:00:00:02",
+      "imei": "860000000000002",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-07 10:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C2-15",
+      "type": "MAC",
+      "target": "02:00:00:00:00:03",
+      "imei": "860000000000003",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-07 10:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C2-16",
+      "type": "MAC",
+      "target": "02:00:00:00:00:04",
+      "imei": "860000000000004",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-07 10:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C2-17",
+      "type": "MAC",
+      "target": "02:00:00:00:00:05",
+      "imei": "860000000000005",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-07 10:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C3-0",
+      "type": "人像",
+      "target": "人像-1",
+      "imei": "860000000000000",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-05 08:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C3-1",
+      "type": "人像",
+      "target": "人像-2",
+      "imei": "860000000000001",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-05 08:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C3-2",
+      "type": "人像",
+      "target": "人像-3",
+      "imei": "860000000000002",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-05 08:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C3-3",
+      "type": "人像",
+      "target": "人像-4",
+      "imei": "860000000000003",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-05 08:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C3-4",
+      "type": "人像",
+      "target": "人像-5",
+      "imei": "860000000000004",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-05 08:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C3-5",
+      "type": "人像",
+      "target": "人像-6",
+      "imei": "860000000000005",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-05 08:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C3-6",
+      "type": "人像",
+      "target": "人像-1",
+      "imei": "860000000000000",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-06 09:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C3-7",
+      "type": "人像",
+      "target": "人像-2",
+      "imei": "860000000000001",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-06 09:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C3-8",
+      "type": "人像",
+      "target": "人像-3",
+      "imei": "860000000000002",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-09",
+      "deviceId": "D8",
+      "time": "2026-10-06 09:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C3-9",
+      "type": "人像",
+      "target": "人像-4",
+      "imei": "860000000000003",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-10",
+      "deviceId": "D9",
+      "time": "2026-10-06 09:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C3-10",
+      "type": "人像",
+      "target": "人像-5",
+      "imei": "860000000000004",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-01",
+      "deviceId": "D0",
+      "time": "2026-10-06 09:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C3-11",
+      "type": "人像",
+      "target": "人像-6",
+      "imei": "860000000000005",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-02",
+      "deviceId": "D1",
+      "time": "2026-10-06 09:45:00",
+      "person": "P5",
+      "score": 12
+    },
+    {
+      "id": "C3-12",
+      "type": "人像",
+      "target": "人像-1",
+      "imei": "860000000000000",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-03",
+      "deviceId": "D2",
+      "time": "2026-10-07 10:00:00",
+      "person": "P0",
+      "score": 100
+    },
+    {
+      "id": "C3-13",
+      "type": "人像",
+      "target": "人像-2",
+      "imei": "860000000000001",
+      "site": "北区路口",
+      "region": "北区",
+      "device": "设备 A-04",
+      "deviceId": "D3",
+      "time": "2026-10-07 10:09:00",
+      "person": "P1",
+      "score": 92
+    },
+    {
+      "id": "C3-14",
+      "type": "人像",
+      "target": "人像-3",
+      "imei": "860000000000002",
+      "site": "南区商场",
+      "region": "南区",
+      "device": "设备 A-05",
+      "deviceId": "D4",
+      "time": "2026-10-07 10:18:00",
+      "person": "P2",
+      "score": 78
+    },
+    {
+      "id": "C3-15",
+      "type": "人像",
+      "target": "人像-4",
+      "imei": "860000000000003",
+      "site": "中心广场",
+      "region": "中心区",
+      "device": "设备 A-06",
+      "deviceId": "D5",
+      "time": "2026-10-07 10:27:00",
+      "person": "P3",
+      "score": 61
+    },
+    {
+      "id": "C3-16",
+      "type": "人像",
+      "target": "人像-5",
+      "imei": "860000000000004",
+      "site": "东区车站",
+      "region": "东区",
+      "device": "设备 A-07",
+      "deviceId": "D6",
+      "time": "2026-10-07 10:36:00",
+      "person": "P4",
+      "score": 35
+    },
+    {
+      "id": "C3-17",
+      "type": "人像",
+      "target": "人像-6",
+      "imei": "860000000000005",
+      "site": "西区公园",
+      "region": "西区",
+      "device": "设备 A-08",
+      "deviceId": "D7",
+      "time": "2026-10-07 10:45:00",
+      "person": "P5",
+      "score": 12
+    }
+  ],
+  "people": [
+    {
+      "id": "P0",
+      "name": "示例人员1",
+      "sex": "男",
+      "ethnic": "示例民族",
+      "phone": "13800000000",
+      "identity": "000000200001010000",
+      "resident": "中心区",
+      "landing": "中心广场",
+      "target": "460000000000000",
+      "appearance": "短发、深色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%2382a8c4%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%201%3C%2Ftext%3E%3C%2Fsvg%3E"
+    },
+    {
+      "id": "P1",
+      "name": "示例人员2",
+      "sex": "女",
+      "ethnic": "示例民族",
+      "phone": "13800000001",
+      "identity": "000000200001010001",
+      "resident": "东区",
+      "landing": "东区车站",
+      "target": "460000000000001",
+      "appearance": "长发、浅色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%2392b8a8%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%202%3C%2Ftext%3E%3C%2Fsvg%3E"
+    },
+    {
+      "id": "P2",
+      "name": "示例人员3",
+      "sex": "男",
+      "ethnic": "示例民族",
+      "phone": "13800000002",
+      "identity": "000000200001010002",
+      "resident": "西区",
+      "landing": "西区公园",
+      "target": "460000000000002",
+      "appearance": "短发、深色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%23b6a4ba%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%203%3C%2Ftext%3E%3C%2Fsvg%3E"
+    },
+    {
+      "id": "P3",
+      "name": "示例人员4",
+      "sex": "女",
+      "ethnic": "示例民族",
+      "phone": "13800000003",
+      "identity": "000000200001010003",
+      "resident": "北区",
+      "landing": "北区路口",
+      "target": "460000000000003",
+      "appearance": "长发、浅色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%2382a8c4%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%204%3C%2Ftext%3E%3C%2Fsvg%3E"
+    },
+    {
+      "id": "P4",
+      "name": "示例人员5",
+      "sex": "男",
+      "ethnic": "示例民族",
+      "phone": "13800000004",
+      "identity": "000000200001010004",
+      "resident": "南区",
+      "landing": "南区商场",
+      "target": "460000000000004",
+      "appearance": "短发、深色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%2392b8a8%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%205%3C%2Ftext%3E%3C%2Fsvg%3E"
+    },
+    {
+      "id": "P5",
+      "name": "示例人员6",
+      "sex": "女",
+      "ethnic": "示例民族",
+      "phone": "13800000005",
+      "identity": "000000200001010005",
+      "resident": "中心区",
+      "landing": "中心广场",
+      "target": "460000000000005",
+      "appearance": "长发、浅色衣服",
+      "image": "data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22160%22%20height%3D%22180%22%3E%3Crect%20width%3D%22160%22%20height%3D%22180%22%20fill%3D%22%23b6a4ba%22%2F%3E%3Ccircle%20cx%3D%2280%22%20cy%3D%2263%22%20r%3D%2229%22%20fill%3D%22%23e6eff3%22%2F%3E%3Cpath%20d%3D%22M26%20165%20Q26%20105%2080%20102%20Q134%20105%20134%20165%22%20fill%3D%22%23e6eff3%22%2F%3E%3Ctext%20x%3D%2280%22%20y%3D%22174%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%20fill%3D%22%23344b5b%22%3E%E8%99%9A%E6%9E%84%E4%BA%BA%E5%83%8F%206%3C%2Ftext%3E%3C%2Fsvg%3E"
+    }
+  ],
+  "analysis": {
+    "伴随任务": [
+      {
+        "id": "T00",
+        "name": "伴随分析示例 1",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000000",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      },
+      {
+        "id": "T01",
+        "name": "伴随分析示例 2",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000001",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      }
+    ],
+    "碰撞任务": [
+      {
+        "id": "T10",
+        "name": "碰撞分析示例 1",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000000",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      },
+      {
+        "id": "T11",
+        "name": "碰撞分析示例 2",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000001",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      }
+    ],
+    "区域统计": [
+      {
+        "id": "T20",
+        "name": "区域统计示例 1",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000000",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      },
+      {
+        "id": "T21",
+        "name": "区域统计示例 2",
+        "date": "2026-10-07",
+        "start": "2026-10-05T08:00",
+        "end": "2026-10-07T18:00",
+        "target": "460000000000001",
+        "regions": [
+          "中心区",
+          "东区",
+          "西区",
+          "北区",
+          "南区"
+        ],
+        "sites": [
+          "中心广场",
+          "东区车站",
+          "西区公园",
+          "北区路口",
+          "南区商场"
+        ],
+        "status": "成功",
+        "threshold": 60,
+        "account": "demo.admin"
+      }
+    ]
+  },
+  "libraries": [
+    {
+      "id": "LIB0",
+      "name": "重点人员示例库",
+      "category": "重点人员",
+      "people": [
+        "P0",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "id": "SET0",
+      "name": "检索集合 A",
+      "items": [
+        "C0-0",
+        "C0-6",
+        "C0-12"
+      ]
+    },
+    {
+      "id": "SET1",
+      "name": "检索集合 B",
+      "items": [
+        "C0-0",
+        "C0-5",
+        "C0-10",
+        "C0-15"
+      ]
+    }
+  ],
+  "watches": [
+    {
+      "id": "W0",
+      "name": "示例布控运行任务",
+      "account": "demo.admin",
+      "start": "2026-10-07T08:00",
+      "end": "2026-10-07T18:00",
+      "type": "电围",
+      "target": "460000000000000",
+      "person": "P0",
+      "status": "运行中",
+      "channel": "短信",
+      "recipient": "13800000000",
+      "hits": []
+    },
+    {
+      "id": "W1",
+      "name": "示例已结束布控",
+      "account": "demo.admin",
+      "start": "2026-10-07T06:00",
+      "end": "2026-10-07T07:00",
+      "type": "电围",
+      "target": "460000000000001",
+      "person": "P1",
+      "status": "已结束",
+      "channel": "平台",
+      "recipient": "demo.admin",
+      "hits": [
+        "C0-1",
+        "C0-7",
+        "C0-13"
+      ]
+    }
+  ],
+  "configs": [
+    {
+      "id": "CFG0",
+      "name": "核心组参数任务",
+      "region": "中心区",
+      "group": "核心组",
+      "deviceIds": [
+        "D0",
+        "D5"
+      ],
+      "params": {
+        "power": "20",
+        "interval": "60",
+        "mode": "自动"
+      },
+      "status": "成功"
+    }
+  ],
+  "reports": [
+    {
+      "id": "RP0",
+      "name": "电围区域日统计",
+      "date": "2026-10-07",
+      "mode": "单报表",
+      "type": "数据报表",
+      "subtype": "电围区域采集数据统计",
+      "period": "日",
+      "region": "中心区",
+      "status": "成功"
+    },
+    {
+      "id": "RP1",
+      "name": "运维多报表示例",
+      "date": "2026-10-07",
+      "mode": "多报表",
+      "type": "全部",
+      "subtypes": [
+        "设备实时在线率",
+        "设备实时状态",
+        "电围运营商数据统计",
+        "电围区域采集数据统计",
+        "电围设备采集数据统计",
+        "MAC数据统计",
+        "车牌数据统计",
+        "系统组件状态"
+      ],
+      "period": "月",
+      "region": "全部",
+      "status": "成功"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "N0",
+      "name": "设备状态日通知",
+      "channel": "短信",
+      "time": "10:00",
+      "recipient": "13800000000",
+      "status": "执行中",
+      "last": ""
+    }
+  ],
+  "models": [
+    {
+      "id": "M0",
+      "name": "常驻数据模型",
+      "days": 3,
+      "min": 2,
+      "label": "常驻",
+      "enabled": true
+    }
+  ],
+  "roles": [
+    {
+      "id": "R0",
+      "name": "超级管理员",
+      "menus": [
+        "系统首页",
+        "数据检索",
+        "综合分析",
+        "数据研判",
+        "布控预警",
+        "数据模型",
+        "运维服务",
+        "系统设置",
+        "共享入口"
+      ],
+      "sites": [
+        "中心广场",
+        "东区车站",
+        "西区公园",
+        "北区路口",
+        "南区商场"
+      ],
+      "secret": true
+    },
+    {
+      "id": "R1",
+      "name": "分析员",
+      "menus": [
+        "系统首页",
+        "数据检索",
+        "综合分析",
+        "数据研判",
+        "布控预警",
+        "数据模型",
+        "运维服务",
+        "系统设置",
+        "共享入口"
+      ],
+      "sites": [
+        "中心广场",
+        "东区车站",
+        "西区公园",
+        "北区路口",
+        "南区商场"
+      ],
+      "secret": false
+    },
+    {
+      "id": "R2",
+      "name": "涉密用户",
+      "menus": [
+        "系统首页",
+        "数据检索",
+        "综合分析",
+        "数据研判",
+        "布控预警",
+        "数据模型",
+        "运维服务",
+        "系统设置",
+        "共享入口"
+      ],
+      "sites": [
+        "中心广场",
+        "东区车站",
+        "西区公园",
+        "北区路口",
+        "南区商场"
+      ],
+      "secret": true
+    },
+    {
+      "id": "R3",
+      "name": "测试",
+      "menus": [
+        "系统首页",
+        "数据检索",
+        "综合分析",
+        "数据研判",
+        "布控预警",
+        "数据模型",
+        "运维服务",
+        "共享入口"
+      ],
+      "sites": [
+        "中心广场",
+        "东区车站",
+        "西区公园",
+        "北区路口",
+        "南区商场"
+      ],
+      "secret": false
+    },
+    {
+      "id": "R4",
+      "name": "未分配角色",
+      "menus": [
+        "系统首页"
+      ],
+      "sites": [],
+      "secret": false
+    }
+  ],
+  "users": [
+    {
+      "id": "U0",
+      "name": "管理员",
+      "account": "demo.admin",
+      "role": "R0",
+      "enabled": true,
+      "password": "demo123"
+    },
+    {
+      "id": "U1",
+      "name": "分析员",
+      "account": "demo.analyst",
+      "role": "R1",
+      "enabled": true,
+      "password": "demo123"
+    },
+    {
+      "id": "U2",
+      "name": "涉密用户",
+      "account": "demo.secret",
+      "role": "R2",
+      "enabled": true,
+      "password": "demo123"
+    },
+    {
+      "id": "U3",
+      "name": "测试用户",
+      "account": "demo.test",
+      "role": "R3",
+      "enabled": true,
+      "password": "demo123"
+    },
+    {
+      "id": "U4",
+      "name": "停用示例",
+      "account": "demo.disabled",
+      "role": "R1",
+      "enabled": false,
+      "password": "demo123"
+    }
+  ],
+  "logs": [
+    {
+      "id": "LOG0",
+      "user": "demo.admin",
+      "name": "管理员",
+      "action": "登录",
+      "time": "2026-10-07 08:00:00"
+    },
+    {
+      "id": "LOG1",
+      "user": "demo.analyst",
+      "name": "分析员",
+      "action": "数据查询",
+      "time": "2026-10-07 08:20:00"
+    }
+  ],
+  "sms": [
+    {
+      "id": "SMS0",
+      "name": "示例已结束布控",
+      "recipient": "13800000000",
+      "time": "2026-10-07 08:30:00",
+      "content": "Mock目标命中中心广场",
+      "status": "成功"
+    }
+  ],
+  "messages": []
+}

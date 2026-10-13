@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-10-08T07:52:52.423Z",
+  "browser": "154.0.4258.62",
+  "scope": "28-page smoke baseline + 3 targeted migration risk reproductions + 3 pure set parser assertions; this is not a full security audit or rerun of prior 69 cases.",
+  "pageCount": 28,
+  "pages": [
+    "系统首页",
+    "围栏检索",
+    "车牌检索",
+    "MAC检索",
+    "人像检索",
+    "人员库",
+    "地图研判",
+    "伴随任务",
+    "碰撞任务",
+    "区域统计",
+    "数据运算",
+    "综合布控",
+    "告警结果",
+    "图码档案",
+    "车码档案",
+    "数据态势",
+    "运维首页",
+    "场所管理",
+    "设备管理",
+    "设备分布",
+    "参数配置",
+    "运维报表",
+    "运维通知",
+    "用户管理",
+    "角色管理",
+    "操作日志",
+    "短信日志",
+    "任务中心"
+  ],
+  "baselineErrors": [],
+  "pureSetParserAssertions": 3,
+  "findings": [
+    {
+      "id": "R-XSS",
+      "observation": "CONFIRMED",
+      "source": "app.js:85 libraryPage raw p.sex + app.js:149 importLibraries row.sex",
+      "detail": "A benign imported sex value created an HTML img element and its error handler set an in-memory marker. Isolated synthetic browser data only; no network transmission or user storage modification.",
+      "productionImpact": "Stored XSS if this raw rendering/import pattern is carried into production."
+    },
+    {
+      "id": "R-AUTH",
+      "observation": "CONFIRMED",
+      "source": "app.js:23 role fallback to db.roles[0]",
+      "detail": "Analyst referencing a missing role still obtained all 28 menu entries through fallback. This is a client-side Mock behavior, not a demonstrated server authorization bypass.",
+      "productionImpact": "Unknown/deleted roles must fail closed; server must enforce permissions independently."
+    },
+    {
+      "id": "R-STORAGE",
+      "observation": "CONFIRMED",
+      "source": "app.js:19 only JSON parse guard; app.js:29 db.users.find",
+      "detail": "Syntactically valid but structurally invalid local storage {} broke login with a page error. Persisted-state schema/version recovery is required.",
+      "productionImpact": "Unavailable UI after incompatible or corrupted persisted state; avoid sensitive production state in localStorage."
+    }
+  ],
+  "corruptionErrors": [
+    "Cannot read properties of undefined (reading 'find')"
+  ]
+}

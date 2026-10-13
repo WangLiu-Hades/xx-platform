@@ -1,0 +1,501 @@
+{
+  "time": "2026-10-09T13:54:27.304Z",
+  "checks": [
+    {
+      "name": "HTTP library file uses approved template, ACTIVE upload and library import endpoint",
+      "ids": [
+        "PDF-064",
+        "PDF-067"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP single device import retains selected device and duplicate policy",
+      "ids": [
+        "PDF-154"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP dataset file creates a dataset and imports by versioned resource",
+      "ids": [
+        "PDF-109"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP face upload creates a task and renders server similarity and image",
+      "ids": [
+        "PDF-057",
+        "PDF-059",
+        "PDF-060"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP profile detail loads authorized links/evidence and composite trajectory",
+      "ids": [
+        "PDF-123",
+        "PDF-124",
+        "PDF-125"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP model tag view uses model result endpoint rather than stale people",
+      "ids": [
+        "PDF-130",
+        "PDF-132"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP map heat and drawn area read actual heat cells and area summary",
+      "ids": [
+        "PDF-070",
+        "PDF-165"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP task details display progress and row-level import results",
+      "ids": [],
+      "passed": true
+    }
+  ],
+  "calls": [
+    {
+      "id": "getCsrfToken",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "login",
+      "body": {
+        "loginName": "http.test",
+        "password": "not-real"
+      },
+      "query": ""
+    },
+    {
+      "id": "getCsrfToken",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getMe",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getClientConfig",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getDashboardSummary",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "listPersonLibraries",
+      "body": null,
+      "query": "?page=1&pageSize=20"
+    },
+    {
+      "id": "getImportTemplate",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "uploadFile",
+      "body": "------WebKitFormBoundaryWCHTqEuXBt2BfANL\r\nContent-Disposition: form-data; name=\"category\"\r\n\r\nPERSON_LIBRARY_IMPORT\r\n------WebKitFormBoundaryWCHTqEuXBt2BfANL\r\nContent-Disposition: form-data; name=\"file\"; filename=\"approved.json\"\r\nContent-Type: application/json\r\n\r\n[{\"captureId\":\"00000000-0000-4000-8000-000000000001\"}]\r\n------WebKitFormBoundaryWCHTqEuXBt2BfANL--\r\n",
+      "query": ""
+    },
+    {
+      "id": "getFileAsset",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "importPersonLibraries",
+      "body": {
+        "fileAssetId": "00000000-0000-4000-8000-000000000021",
+        "templateCode": "PERSON_LIBRARIES_V1",
+        "duplicatePolicy": "FAIL",
+        "reason": "用户确认导入人员库文件"
+      },
+      "query": ""
+    },
+    {
+      "id": "listDevices",
+      "body": null,
+      "query": "?page=1&pageSize=1"
+    },
+    {
+      "id": "getImportTemplate",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "uploadFile",
+      "body": "------WebKitFormBoundaryXe3PkUMbiiJzPtVA\r\nContent-Disposition: form-data; name=\"category\"\r\n\r\nDEVICE_IMPORT\r\n------WebKitFormBoundaryXe3PkUMbiiJzPtVA\r\nContent-Disposition: form-data; name=\"file\"; filename=\"approved.json\"\r\nContent-Type: application/json\r\n\r\n[{\"captureId\":\"00000000-0000-4000-8000-000000000001\"}]\r\n------WebKitFormBoundaryXe3PkUMbiiJzPtVA--\r\n",
+      "query": ""
+    },
+    {
+      "id": "getFileAsset",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "importDevices",
+      "body": {
+        "fileAssetId": "00000000-0000-4000-8000-000000000022",
+        "templateCode": "DEVICES_V1",
+        "duplicatePolicy": "FAIL",
+        "reason": "用户确认导入设备文件",
+        "targetDeviceId": "00000000-0000-4000-8000-000000000001"
+      },
+      "query": ""
+    },
+    {
+      "id": "listDatasets",
+      "body": null,
+      "query": "?page=1&pageSize=1"
+    },
+    {
+      "id": "getImportTemplate",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "uploadFile",
+      "body": "------WebKitFormBoundaryUqu4kUpUjSpZZMJN\r\nContent-Disposition: form-data; name=\"category\"\r\n\r\nDATASET_IMPORT\r\n------WebKitFormBoundaryUqu4kUpUjSpZZMJN\r\nContent-Disposition: form-data; name=\"file\"; filename=\"approved.json\"\r\nContent-Type: application/json\r\n\r\n[{\"captureId\":\"00000000-0000-4000-8000-000000000001\"}]\r\n------WebKitFormBoundaryUqu4kUpUjSpZZMJN--\r\n",
+      "query": ""
+    },
+    {
+      "id": "getFileAsset",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "createDataset",
+      "body": {
+        "name": "approved",
+        "datasetKind": "SINGLE",
+        "elementType": "CAPTURE"
+      },
+      "query": ""
+    },
+    {
+      "id": "importDatasetItems",
+      "body": {
+        "source": "FILE",
+        "fileAssetId": "00000000-0000-4000-8000-000000000023",
+        "templateCode": "DATASET_ITEMS_V1"
+      },
+      "query": ""
+    },
+    {
+      "id": "listSites",
+      "body": null,
+      "query": "?page=1&pageSize=100"
+    },
+    {
+      "id": "searchCaptures",
+      "body": {
+        "dataType": "FACE",
+        "timeRange": {
+          "from": "2026-10-08T14:54:00.000Z",
+          "to": "2026-10-09T13:55:00.000Z"
+        },
+        "pageSize": 1,
+        "sortBy": "captureTime",
+        "sortOrder": "DESC"
+      },
+      "query": ""
+    },
+    {
+      "id": "downloadFile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "uploadFile",
+      "body": "------WebKitFormBoundaryffajTaoxYvbxUoZx\r\nContent-Disposition: form-data; name=\"category\"\r\n\r\nFACE_SEARCH\r\n------WebKitFormBoundaryffajTaoxYvbxUoZx\r\nContent-Disposition: form-data; name=\"file\"; filename=\"face.png\"\r\nContent-Type: image/png\r\n\r\n�PNG\r\n\u001a\n\u0000\u0000\u0000\rIHDR\u0000\u0000\u0000\u0001\u0000\u0000\u0000\u0001\b\u0004\u0000\u0000\u0000�\u001c\f\u0002\u0000\u0000\u0000\u000bIDATx�c��\u001f\u0000\u0003\u0003\u0002\u0000�KW\u0000\u0000\u0000\u0000IEND�B`�\r\n------WebKitFormBoundaryffajTaoxYvbxUoZx--\r\n",
+      "query": ""
+    },
+    {
+      "id": "getFileAsset",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "createFaceSearchTask",
+      "body": {
+        "imageAssetId": "00000000-0000-4000-8000-000000000024",
+        "timeRange": {
+          "from": "2026-10-08T14:54:00.000Z",
+          "to": "2026-10-09T13:55:00.000Z"
+        },
+        "candidateLimit": 10,
+        "minSimilarity": 0
+      },
+      "query": ""
+    },
+    {
+      "id": "getTask",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "listFaceSearchResults",
+      "body": null,
+      "query": "?pageSize=100"
+    },
+    {
+      "id": "searchProfiles",
+      "body": {
+        "pageSize": 20,
+        "profileType": "PERSON"
+      },
+      "query": ""
+    },
+    {
+      "id": "getProfile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "listProfileTargets",
+      "body": null,
+      "query": "?dataType=FENCE&pageSize=20"
+    },
+    {
+      "id": "listProfileEvidence",
+      "body": null,
+      "query": "?pageSize=20"
+    },
+    {
+      "id": "listProfileTargets",
+      "body": null,
+      "query": "?dataType=FENCE&pageSize=20"
+    },
+    {
+      "id": "listProfileEvidence",
+      "body": null,
+      "query": "?pageSize=20"
+    },
+    {
+      "id": "getDeviceMapFeatures",
+      "body": null,
+      "query": "?bbox=-180,-85,180,85&zoom=12&limit=500&aggregation=NONE"
+    },
+    {
+      "id": "listProfileTrajectories",
+      "body": null,
+      "query": "?from=2026-10-08T13:54:00.000Z&to=2026-10-09T13:54:00.000Z&pageSize=1&sortOrder=ASC"
+    },
+    {
+      "id": "getCapture",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getProfile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "listTrendModels",
+      "body": null,
+      "query": "?page=1&pageSize=1"
+    },
+    {
+      "id": "listTrendModelResults",
+      "body": null,
+      "query": "?pageSize=20"
+    },
+    {
+      "id": "getDeviceMapFeatures",
+      "body": null,
+      "query": "?bbox=-180,-85,180,85&zoom=12&limit=500&aggregation=NONE"
+    },
+    {
+      "id": "listProfileTrajectories",
+      "body": null,
+      "query": "?from=2026-10-08T13:54:00.000Z&to=2026-10-09T13:54:00.000Z&pageSize=1&sortOrder=ASC"
+    },
+    {
+      "id": "getCapture",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getProfile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getDeviceMapFeatures",
+      "body": null,
+      "query": "?bbox=-180,-85,180,85&zoom=12&limit=500&aggregation=NONE"
+    },
+    {
+      "id": "createContext",
+      "body": {
+        "sourceModule": "M07",
+        "targets": [],
+        "filter": {
+          "filterType": "GENERAL",
+          "filterVersion": 1,
+          "timeRange": {
+            "from": "2026-10-08T14:54:00.000Z",
+            "to": "2026-10-09T13:55:00.000Z"
+          },
+          "dataTypes": [
+            "FENCE"
+          ]
+        }
+      },
+      "query": ""
+    },
+    {
+      "id": "queryTrajectory",
+      "body": {
+        "contextId": "00000000-0000-4000-8000-000000000005",
+        "timeRange": {
+          "from": "2026-10-08T14:54:00.000Z",
+          "to": "2026-10-09T13:55:00.000Z"
+        },
+        "pageSize": 1
+      },
+      "query": ""
+    },
+    {
+      "id": "getCapture",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getProfile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getDeviceMapFeatures",
+      "body": null,
+      "query": "?bbox=-180,-85,180,85&zoom=12&limit=500&aggregation=NONE"
+    },
+    {
+      "id": "createContext",
+      "body": {
+        "sourceModule": "M07",
+        "targets": [],
+        "filter": {
+          "filterType": "CAPTURE_SEARCH",
+          "filterVersion": 1,
+          "captureFilter": {
+            "dataType": "FENCE",
+            "timeRange": {
+              "from": "2026-10-08T14:54:00.000Z",
+              "to": "2026-10-09T13:55:00.000Z"
+            },
+            "imei": "860000000000001"
+          }
+        }
+      },
+      "query": ""
+    },
+    {
+      "id": "queryTrajectory",
+      "body": {
+        "contextId": "00000000-0000-4000-8000-000000000005",
+        "timeRange": {
+          "from": "2026-10-08T14:54:00.000Z",
+          "to": "2026-10-09T13:55:00.000Z"
+        },
+        "pageSize": 1
+      },
+      "query": ""
+    },
+    {
+      "id": "getCapture",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getProfile",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getMapHeatmap",
+      "body": null,
+      "query": "?bbox=-180,-85,180,85&zoom=12&limit=500&from=2026-10-08T14:54:00.000Z&to=2026-10-09T13:55:00.000Z"
+    },
+    {
+      "id": "getMapAreaSummary",
+      "body": {
+        "spatialRange": {
+          "selectionType": "AREA",
+          "coordinateSystem": "EPSG:4326",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  116.37437953948975,
+                  39.90849364793007
+                ],
+                [
+                  116.37437953948975,
+                  39.89150529915466
+                ],
+                [
+                  116.42562046051025,
+                  39.89150529915466
+                ],
+                [
+                  116.42562046051025,
+                  39.90849364793007
+                ],
+                [
+                  116.37437953948975,
+                  39.90849364793007
+                ]
+              ]
+            ]
+          }
+        },
+        "timeRange": {
+          "from": "2026-10-08T14:54:00.000Z",
+          "to": "2026-10-09T13:55:00.000Z"
+        },
+        "dataTypes": [
+          "FENCE",
+          "MAC",
+          "PLATE",
+          "FACE"
+        ]
+      },
+      "query": ""
+    },
+    {
+      "id": "listTasks",
+      "body": null,
+      "query": "?page=1&pageSize=1"
+    },
+    {
+      "id": "getTask",
+      "body": null,
+      "query": ""
+    },
+    {
+      "id": "getImportTaskResult",
+      "body": null,
+      "query": "?pageSize=100"
+    }
+  ],
+  "errors": []
+}

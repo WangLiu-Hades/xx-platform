@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-13T03:35:51.197432+00:00",
+  "origin": "http://127.0.0.1:5183",
+  "checks": [
+    {
+      "script": "vue-smoke.cjs",
+      "exitCode": 0,
+      "durationSeconds": 13.48
+    },
+    {
+      "script": "vue-map-selection.e2e.cjs",
+      "exitCode": 0,
+      "durationSeconds": 5.3
+    }
+  ]
+}

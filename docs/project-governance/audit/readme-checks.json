@@ -1,0 +1,365 @@
+{
+  "generatedAt": "2026-10-10T11:26:58.489401+00:00",
+  "scope": "README coverage, file purposes, local references and declared documentation changes; business tests were not rerun",
+  "passed": true,
+  "checks": {
+    "registered_directories_match_live_tree": true,
+    "all_key_directories_have_readmes": true,
+    "all_direct_files_have_purposes": true,
+    "all_subdirectories_explained": true,
+    "all_readmes_have_usage_and_maintenance": true,
+    "relative_links_resolve_inside_project": true,
+    "documented_commands_reference_existing_entries": true,
+    "existing_non_readme_changes_within_declared_scope": true,
+    "HTTP_browser_variable_matches_code": true,
+    "smoke_browser_limit_explicit": true,
+    "proxy_process_environment_limit_explicit": true,
+    "historical_baseline_and_assessment_limits_explicit": true,
+    "test_summary_freshness_limit_explicit": true
+  },
+  "issues": [],
+  "directoryCount": 38,
+  "readmeCount": 38,
+  "addedReadmes": 32,
+  "updatedReadmes": 6,
+  "directFilesExplained": 374,
+  "relativeLinksChecked": 506,
+  "baselineNonReadmeFilesChecked": 400,
+  "existingNonReadmeChanges": [
+    "docs/project-governance/audit/checks.json",
+    "docs/project-governance/audit/output-manifest.json",
+    "docs/project-governance/scripts/verify_deliverables.py"
+  ],
+  "excludedTrees": [
+    {
+      "path": ".git",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/project-governance/audit/render-temp",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/.npm-cache",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/node_modules",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    },
+    {
+      "path": "合同修订工作/render-temp",
+      "reason": "Third-party, Git, cache, temporary rendering tree or hashed build assets; explained by parent README"
+    }
+  ],
+  "readmes": [
+    {
+      "directory": ".",
+      "readme": "README.md",
+      "filesExplained": 2,
+      "sha256": "e27f7ab5522dbf46bc39128cf6e52cf00e9403aff2a4a64a1ac4b2fd4bd89474",
+      "bytes": 2847,
+      "change": "added"
+    },
+    {
+      "directory": "docs",
+      "readme": "docs/README.md",
+      "filesExplained": 0,
+      "sha256": "d492f33b3a76f2c5e0d02d23b85d272a1be4e4745438a22f3baa064eac3a8208",
+      "bytes": 1180,
+      "change": "added"
+    },
+    {
+      "directory": "docs/project-governance",
+      "readme": "docs/project-governance/README.md",
+      "filesExplained": 9,
+      "sha256": "4c2c19745e74d2758483662fb0fe59a1655d19d296bee5d396aec885b49fa793",
+      "bytes": 3097,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/project-governance/audit",
+      "readme": "docs/project-governance/audit/README.md",
+      "filesExplained": 26,
+      "sha256": "fd5f18c82e183175cabca73d895edf3d8d79fa13ee433bb349f2d534e9287926",
+      "bytes": 4674,
+      "change": "added"
+    },
+    {
+      "directory": "docs/project-governance/audit/word-render",
+      "readme": "docs/project-governance/audit/word-render/README.md",
+      "filesExplained": 19,
+      "sha256": "457a05f7fc236d662f5a41fa84b3fc1762fb8d7a8ac48e8535cfb2b17de70826",
+      "bytes": 2564,
+      "change": "added"
+    },
+    {
+      "directory": "docs/project-governance/scripts",
+      "readme": "docs/project-governance/scripts/README.md",
+      "filesExplained": 7,
+      "sha256": "0c4643b0292ba2723247bd43b886724512fd590ccbd6e14c407e6560ddcd2e36",
+      "bytes": 2985,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design",
+      "readme": "docs/system-design/README.md",
+      "filesExplained": 13,
+      "sha256": "1df7da074410e6c0354e1d61551b44f96a732fb78bd4a28d78da2da57eb6fa4e",
+      "bytes": 3457,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/system-design/adr",
+      "readme": "docs/system-design/adr/README.md",
+      "filesExplained": 8,
+      "sha256": "7e378e63ce961b79edf85daee632719946dd0fa0a3071b1948cdd5affb62746d",
+      "bytes": 1929,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/api",
+      "readme": "docs/system-design/api/README.md",
+      "filesExplained": 10,
+      "sha256": "ed09ca774a4d5e6471cce74f02d356d1b781a78835ae428b8ab725045acc2b94",
+      "bytes": 2985,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/system-design/database",
+      "readme": "docs/system-design/database/README.md",
+      "filesExplained": 9,
+      "sha256": "27be2418e9e6b17440fb917250a517aae00c1e61120b611de0df3662e5b80cf8",
+      "bytes": 2757,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/diagrams",
+      "readme": "docs/system-design/diagrams/README.md",
+      "filesExplained": 10,
+      "sha256": "b98108337d09887fc79d655dcd6a0cd3dda67d252e1dcc7f4856d95657eeec9c",
+      "bytes": 2246,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui",
+      "readme": "docs/system-design/ui/README.md",
+      "filesExplained": 3,
+      "sha256": "0df7bd2269e7d10a9a321ad8c644ba0dd9dfd0c4e4f866b2566f2f7f64277c85",
+      "bytes": 1801,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype",
+      "readme": "docs/system-design/ui/prototype/README.md",
+      "filesExplained": 9,
+      "sha256": "b2a83fb530be91f4b230afb995ae19443157ad360df8253cd16346a39d4a27c1",
+      "bytes": 7944,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit",
+      "readme": "docs/system-design/ui/prototype/audit/README.md",
+      "filesExplained": 3,
+      "sha256": "84c509b6ed426e8571156bde195aef6a55c56e5809b7a47ddfa6123faeee57b1",
+      "bytes": 1227,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit/vue-migration",
+      "readme": "docs/system-design/ui/prototype/audit/vue-migration/README.md",
+      "filesExplained": 27,
+      "sha256": "b8ab8ffb58bfe75be3721dc669ff57fcf063c82f7a039d11c0e7f9557908f4c8",
+      "bytes": 4192,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/audit/vue-migration/flows",
+      "readme": "docs/system-design/ui/prototype/audit/vue-migration/flows/README.md",
+      "filesExplained": 18,
+      "sha256": "4416fad1afa1c94eb07692fe700c074531060cc03685245c8a898087b4454801",
+      "bytes": 2999,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/dist",
+      "readme": "docs/system-design/ui/prototype/dist/README.md",
+      "filesExplained": 1,
+      "sha256": "9601b00770c8c6535c7f4c9d476fcf72fe396bc39dd531a9e6f31d8edfc6f72c",
+      "bytes": 945,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/scripts",
+      "readme": "docs/system-design/ui/prototype/scripts/README.md",
+      "filesExplained": 2,
+      "sha256": "d898d7ec0ab9b3cec360d89c6b0723c6ebdd892f66610635616e89657d54bc42",
+      "bytes": 1105,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src",
+      "readme": "docs/system-design/ui/prototype/src/README.md",
+      "filesExplained": 5,
+      "sha256": "c690dcbc7a27a2bd26dadb5690416cd7b448bf9b8de92458605227b8df2544f5",
+      "bytes": 1817,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/api",
+      "readme": "docs/system-design/ui/prototype/src/api/README.md",
+      "filesExplained": 11,
+      "sha256": "ca6e66ba6dc595d78a02a398efee727297297d3616c9f0f7aa3dcdf40050cbce",
+      "bytes": 2239,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/components",
+      "readme": "docs/system-design/ui/prototype/src/components/README.md",
+      "filesExplained": 13,
+      "sha256": "0149af0a3e555696b52d38213b4067aff0c0c75be2926aee777b387b4cc7aa08",
+      "bytes": 2003,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/mock",
+      "readme": "docs/system-design/ui/prototype/src/mock/README.md",
+      "filesExplained": 3,
+      "sha256": "5d68549e416dc7a825d32d9cd88e4f2cfe8b701b1533af6cd467296b652e00ce",
+      "bytes": 1120,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/pages",
+      "readme": "docs/system-design/ui/prototype/src/pages/README.md",
+      "filesExplained": 11,
+      "sha256": "dae7fedb9f86fcb4c74d21c05d4ebaf7aef96a1f4abed75d81ef0d1cbd2203fc",
+      "bytes": 1969,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/stores",
+      "readme": "docs/system-design/ui/prototype/src/stores/README.md",
+      "filesExplained": 1,
+      "sha256": "1656e5a3539710037963d824569bb051c02858b07e5fd9841f7d3cb57462a133",
+      "bytes": 901,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/src/utils",
+      "readme": "docs/system-design/ui/prototype/src/utils/README.md",
+      "filesExplained": 2,
+      "sha256": "d9e339afd3eb3f2c2e914845c523ab356bc6ddb4fb47d053d945a154296a65ff",
+      "bytes": 989,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/tests",
+      "readme": "docs/system-design/ui/prototype/tests/README.md",
+      "filesExplained": 15,
+      "sha256": "fe817c3a5f0bccb83506add875fb9bec43a02bed3df00419ee6ba6a535ab4df6",
+      "bytes": 3836,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/tests/evidence",
+      "readme": "docs/system-design/ui/prototype/tests/evidence/README.md",
+      "filesExplained": 55,
+      "sha256": "ce32d79c35916629eb2164777cc75ad59dacefd0d45ec7111ddccc7c3bb30eb1",
+      "bytes": 9075,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype/vendor",
+      "readme": "docs/system-design/ui/prototype/vendor/README.md",
+      "filesExplained": 2,
+      "sha256": "c349edae5de31af46618172427546fad6ab5278ae3ce3a5e91eb3bd713e0edb2",
+      "bytes": 767,
+      "change": "added"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype-migration-assessment",
+      "readme": "docs/system-design/ui/prototype-migration-assessment/README.md",
+      "filesExplained": 7,
+      "sha256": "ae4c925e4ac648c508290aa61383713fc3de42e4d83d119ed27fbcce275699c1",
+      "bytes": 2870,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/system-design/ui/prototype-v1-baseline",
+      "readme": "docs/system-design/ui/prototype-v1-baseline/README.md",
+      "filesExplained": 3,
+      "sha256": "a6b8bff64f3e9508d1a4089f90cfd0abd72ba393914a1fd994a4fc32ba0218ed",
+      "bytes": 3228,
+      "change": "updated"
+    },
+    {
+      "directory": "docs/system-design/ui/wireframes",
+      "readme": "docs/system-design/ui/wireframes/README.md",
+      "filesExplained": 1,
+      "sha256": "7f717712493302723faa13842203d09d72fcbfbf96310cdfd8682b4e7c209661",
+      "bytes": 1004,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作",
+      "readme": "合同修订工作/README.md",
+      "filesExplained": 13,
+      "sha256": "db2c1ba88881c0f7593fc27fc6eeaa02641a7b081048900598711dfd7a1697a6",
+      "bytes": 3653,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v1",
+      "readme": "合同修订工作/compact-render-v1/README.md",
+      "filesExplained": 9,
+      "sha256": "7d38bcdf3343600de8efa0de19a2a2e0f7131bde9558ef9599aa7552f0f2977a",
+      "bytes": 1557,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v2",
+      "readme": "合同修订工作/compact-render-v2/README.md",
+      "filesExplained": 10,
+      "sha256": "7f8d5e005350ba32fbd90203a180294c5ab8f9c778ab75911ba61638d7ab8abb",
+      "bytes": 1652,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/compact-render-v3",
+      "readme": "合同修订工作/compact-render-v3/README.md",
+      "filesExplained": 9,
+      "sha256": "40deed8e2737d5093a5a39f4a84eb3c67201dad0690d78bc09d8f8043dac1086",
+      "bytes": 1638,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/final-render-v1",
+      "readme": "合同修订工作/final-render-v1/README.md",
+      "filesExplained": 19,
+      "sha256": "7e1d6b219c23b48687df063c0d4be29d36e722180a7cb345e81885277dcfdd33",
+      "bytes": 2570,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/original-render",
+      "readme": "合同修订工作/original-render/README.md",
+      "filesExplained": 1,
+      "sha256": "c2f93475f5ff53bb079e1bbefeecf8e186d0dca57e87b5b3181c22c1ffbac3e7",
+      "bytes": 839,
+      "change": "added"
+    },
+    {
+      "directory": "合同修订工作/reference-render",
+      "readme": "合同修订工作/reference-render/README.md",
+      "filesExplained": 8,
+      "sha256": "3e3bdf58f022500c24b876f4a1a63901005dfdf19e1b7babbb81d05d31e13013",
+      "bytes": 1478,
+      "change": "added"
+    }
+  ]
+}

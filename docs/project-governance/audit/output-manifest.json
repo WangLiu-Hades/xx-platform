@@ -1,0 +1,207 @@
+[
+  {
+    "path": "docs/project-governance/DEPENDENCY_AUDIT.md",
+    "size": 2187,
+    "sha256": "a9b403009ff0c442a2682c6809c82fd2cba01ba5eb8665063d07c0a960920f42"
+  },
+  {
+    "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+    "size": 9355,
+    "sha256": "754b09734f4855ee61b9481fab0b3b7c50a0d9517b9a2e64b770c1a4ad1a7abd"
+  },
+  {
+    "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+    "size": 10969,
+    "sha256": "4eba8ad1d5d897e1950545a095ae3bfc1a688b46b12ac7ebbe26d74c6cf4e849"
+  },
+  {
+    "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+    "size": 7787,
+    "sha256": "50fc99951c1e543e04d7dc81a581c612519c7d624078eb801bcf249949adff4e"
+  },
+  {
+    "path": "docs/project-governance/MODIFICATIONS.md",
+    "size": 4345,
+    "sha256": "03013ee462c34a6632260a0ec459adfaea4804ce04d48b64671f6f1ff8a4fe5c"
+  },
+  {
+    "path": "docs/project-governance/PENDING_REGISTER.md",
+    "size": 6512,
+    "sha256": "111027dfbf3e93716d4242121fbaf7bc788331ae395f411246201165f4fe2985"
+  },
+  {
+    "path": "docs/project-governance/PROJECT_AUDIT.md",
+    "size": 10503,
+    "sha256": "6ae0e8d5863311bb8665ac453037f688d9885f6f079da396b687c3b273357dcc"
+  },
+  {
+    "path": "docs/project-governance/README.md",
+    "size": 3097,
+    "sha256": "4c2c19745e74d2758483662fb0fe59a1655d19d296bee5d396aec885b49fa793"
+  },
+  {
+    "path": "docs/project-governance/README_REVIEW.md",
+    "size": 6964,
+    "sha256": "9ec0368a451ee8199a95cafd3ecea82c641d53f3a34b3621e5233138e0fcbd85"
+  },
+  {
+    "path": "docs/project-governance/多维数据分析平台开发模块与人员分工（修订版）.docx",
+    "size": 64493,
+    "sha256": "184991c0ed19639ffe8a705281092983d519f2b37d254cfe4e99cb27453ad445"
+  },
+  {
+    "path": "docs/project-governance/audit/api-inventory.csv",
+    "size": 44754,
+    "sha256": "6da6581d61134219dfe36719b7294ce9b9fdc95b7f7af0bd0189c6566a5eaefc"
+  },
+  {
+    "path": "docs/project-governance/audit/api-inventory.json",
+    "size": 303872,
+    "sha256": "40b4e37c8572acb2e7f490c092947e55c66f893bf0a7a26c3cca64bd95e72f83"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-review-final.pdf",
+    "size": 838509,
+    "sha256": "e9f6ade3372f70d689b6215c20a6368ecab677a3cc93c7b9f2718c1caeef2181"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-review-v2.pdf",
+    "size": 833026,
+    "sha256": "6069825bcfa6c9451005e68cd8082332ea2a01523ef9fac29e2b86c688617e35"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-review-v3.pdf",
+    "size": 832233,
+    "sha256": "59ab27a35d629c9ac7e2c9a7d208254ba2bf088973780c9c9948c4752d743571"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-review-v4.pdf",
+    "size": 832581,
+    "sha256": "983fd998f002676b0d1b06c9967c2f94ddcb8b76ffbee5f873abf00bfc0b3f4f"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-review.pdf",
+    "size": 834877,
+    "sha256": "14b7a1ebcefd999b8356ac794a56dc746f455c5ed14bb3ec52e83075d0557283"
+  },
+  {
+    "path": "docs/project-governance/audit/assignment-reviewed.pdf",
+    "size": 837589,
+    "sha256": "74a7da3e4676ff98f3c83e53cd6170db6c66a32411261db49a5fb8b3e5c23cdc"
+  },
+  {
+    "path": "docs/project-governance/audit/checks.json",
+    "size": 19227,
+    "sha256": "f93ac2b914c3de7950e564ab6c52907f72358f24a5edcc9eb5990f1db5ea7488"
+  },
+  {
+    "path": "docs/project-governance/audit/contract-only-operations.md",
+    "size": 4360,
+    "sha256": "a2ce434d133f123c546e26e02ffea125244b34c322bc8c83db144548c0287773"
+  },
+  {
+    "path": "docs/project-governance/audit/dependency-current-run.json",
+    "size": 1949,
+    "sha256": "9d2f00c9647bdbff0fdc611830943eee35ba1db93a34585f864272997546089c"
+  },
+  {
+    "path": "docs/project-governance/audit/dependency-current.json",
+    "size": 365,
+    "sha256": "7a9a22969e1fa577314455555e171c7f9c36657dff8be7ca324ed132dfc1e7a8"
+  },
+  {
+    "path": "docs/project-governance/audit/dependency-current.stderr.txt",
+    "size": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "docs/project-governance/audit/dependency-pre-authorization.json",
+    "size": 209,
+    "sha256": "60e1734259f6ff756607477f77185ce7d216f58a690d85d33eb12ac81facb00d"
+  },
+  {
+    "path": "docs/project-governance/audit/external-docx-0.txt",
+    "size": 31824,
+    "sha256": "19d886bd5d02b7103e08594761da6434757d9fcffb8a2b3bb611412f57ea5c8a"
+  },
+  {
+    "path": "docs/project-governance/audit/readme-catalog.json",
+    "size": 18875,
+    "sha256": "b0f54b3349456473354777f8be16238bb5b2f93072e1e132f29c2fdcb737c920"
+  },
+  {
+    "path": "docs/project-governance/audit/readme-checks.json",
+    "size": 13828,
+    "sha256": "9b9b4e63e547a43c761fc142e672f14dfe87430863dc59b4e6a9168a9f4e13f7"
+  },
+  {
+    "path": "docs/project-governance/audit/readme-source-baseline.json",
+    "size": 69880,
+    "sha256": "ec5554e04322793ccf9c3931b4a5728e8affee26a1c17045e5bdecef6b1076b4"
+  },
+  {
+    "path": "docs/project-governance/audit/README.md",
+    "size": 4674,
+    "sha256": "fd5f18c82e183175cabca73d895edf3d8d79fa13ee433bb349f2d534e9287926"
+  },
+  {
+    "path": "docs/project-governance/audit/unit-current.json",
+    "size": 85243,
+    "sha256": "6cf4d47f618320d5a502278f4770732f88b253be78de3982837e2e67c62e6c7b"
+  },
+  {
+    "path": "docs/project-governance/audit/word-visual-review.json",
+    "size": 1184,
+    "sha256": "5cf550001847f485c691fa7833d787b00a48ebb034f66d069bbf83ab2f7ea439"
+  },
+  {
+    "path": "docs/project-governance/audit/work-packages.json",
+    "size": 5516,
+    "sha256": "cfc65344bbf6d7eae125d7d7c6358397f1c2cfe244ef14113901b4ca9dff9c22"
+  },
+  {
+    "path": "docs/project-governance/audit/workspace-inventory-summary.json",
+    "size": 1547,
+    "sha256": "746b8eb6d7d4ef9616ca92bfdcb102bad0df768de8951bdc97b9f6b61079f3af"
+  },
+  {
+    "path": "docs/project-governance/scripts/audit_dependencies.cjs",
+    "size": 3305,
+    "sha256": "e532b3a8515e77c67cb5149cea36aecb100010f3e5d4fc6d609eede003d0e4e8"
+  },
+  {
+    "path": "docs/project-governance/scripts/build_governance.py",
+    "size": 54566,
+    "sha256": "ce770f50f19ca572c1ffd2be7c22ea8e2d6269ebc560194c64d2728f17db5557"
+  },
+  {
+    "path": "docs/project-governance/scripts/inspect_api.cjs",
+    "size": 9254,
+    "sha256": "8d5dccda9e81d7e8eeee6940ee5fb7cec37b4bf2f955f585c908aeb824ba1fe0"
+  },
+  {
+    "path": "docs/project-governance/scripts/inspect_workspace.py",
+    "size": 5393,
+    "sha256": "6703751909cd6373878d98236fd9f57e4195d3af5c89ab0e3221a8f42c592fff"
+  },
+  {
+    "path": "docs/project-governance/scripts/README.md",
+    "size": 2985,
+    "sha256": "0c4643b0292ba2723247bd43b886724512fd590ccbd6e14c407e6560ddcd2e36"
+  },
+  {
+    "path": "docs/project-governance/scripts/render_word_review.py",
+    "size": 2184,
+    "sha256": "ca3940219b956bf7ee5eb9e3089b7694045567ffbbc7701f92c5376de51cd535"
+  },
+  {
+    "path": "docs/project-governance/scripts/verify_deliverables.py",
+    "size": 11484,
+    "sha256": "eada93605c1d281323307ee273a6c4916d059731b2ebd0f83c532a885eddaa64"
+  },
+  {
+    "path": "docs/project-governance/scripts/verify_readmes.py",
+    "size": 8930,
+    "sha256": "0394719b81055ca5ba088d11fc8689a638568a3d27b2b904b455989faf8280fb"
+  }
+]

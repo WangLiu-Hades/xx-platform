@@ -1,0 +1,17 @@
+flowchart LR
+  Source[设备与文件] --> Batch[M03 批次 校验 去重]
+  Batch --> Reject[隔离与质量记录]
+  Batch --> SourceEvent[(稳定源事件与批次行结果)]
+  SourceEvent --> Capture[(采集主表与类型扩展)]
+  Batch --> Counter[(设备状态与真实采集计数)]
+  Capture --> Search[M05 检索]
+  Search --> Context[M06 AnalysisContext]
+  Context --> Map[M07 地图轨迹]
+  Context --> Task[M08 M09 分析任务]
+  Capture --> Rule[M10 规则匹配]
+  Rule --> Alert[(告警事件)]
+  Alert --> Delivery[通知与回执]
+  Capture --> Refresh[批次与水位增量汇总]
+  Counter --> Refresh
+  Refresh --> Snapshot[(统一指标定义与桶快照)]
+  Snapshot --> Home[M04 M13 首页]

@@ -1,0 +1,40 @@
+{
+  "time": "2026-10-10T07:36:12.275282+00:00",
+  "root": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台",
+  "files": 22313,
+  "bytes": 637557746,
+  "categories": {
+    "git_metadata": 681,
+    "project_support": 10,
+    "design_or_governance": 60,
+    "dependency_cache": 973,
+    "verification_evidence": 160,
+    "generated_frontend": 32,
+    "third_party_dependency": 20309,
+    "active_frontend_source": 42,
+    "generated_contract": 4,
+    "historical_test": 1,
+    "active_frontend_test": 14,
+    "vendored_dependency": 2,
+    "historical_prototype": 13,
+    "contract_work_reference": 12
+  },
+  "read_errors": [],
+  "json_errors": [],
+  "external_sources": [
+    {
+      "path": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\多维数据分析平台开发模块与人员分工.docx",
+      "sha256": "82c0300a26d0eae91e8266393b8a6e8d7e518d60735d3ae79be162cac6c0a255",
+      "text_chars": 12771,
+      "extraction": "external-docx-0.txt"
+    },
+    {
+      "path": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\平台功能设计（原始）.pdf",
+      "sha256": "b702a1122d5a23f2fab21e6ba645619f6cf7b7c2c9f65e53919d528cb2e0c9dd"
+    }
+  ],
+  "exclusions": [
+    "current docs/project-governance/audit output; final deliverables verified separately"
+  ],
+  "method": "All enumerated regular files read and SHA-256 hashed; owned text extracted; dependency/cache/compiled bytes inventoried, not individually semantically reviewed."
+}

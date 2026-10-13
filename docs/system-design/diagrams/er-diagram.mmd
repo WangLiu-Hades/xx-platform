@@ -1,0 +1,2151 @@
+%%{init: {"maxTextSize": 250000, "maxEdges": 1000}}%%
+erDiagram
+    auth_app_user {
+        uuid id PK
+        varchar user_code
+        varchar login_name
+        varchar display_name
+        varchar password_hash
+        varchar status
+        varchar secret_clearance
+        bigint authz_version
+        timestamptz last_login_at
+        timestamptz password_changed_at
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    auth_role {
+        uuid id PK
+        varchar role_code
+        varchar name
+        varchar description
+        boolean management_all_sites
+        boolean data_all_sites
+        boolean own_only
+        varchar scope_policy_version
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    auth_permission {
+        varchar code PK
+        varchar name
+        varchar module_code
+        varchar description
+        varchar risk_level
+        boolean assignable
+        timestamptz created_at
+    }
+    auth_menu {
+        uuid id PK
+        uuid parent_id FK
+        varchar code
+        varchar label
+        varchar route
+        bigint sort_order
+        varchar required_permission_code FK
+        boolean enabled
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    auth_user_role {
+        uuid user_id PK,FK
+        uuid role_id PK,FK
+        timestamptz created_at
+    }
+    auth_role_permission {
+        uuid role_id PK,FK
+        varchar permission_code PK,FK
+        timestamptz created_at
+    }
+    auth_role_menu {
+        uuid role_id PK,FK
+        uuid menu_id PK,FK
+        timestamptz created_at
+    }
+    auth_role_site {
+        uuid role_id PK,FK
+        uuid site_id PK,FK
+        varchar scope_kind PK
+        timestamptz created_at
+    }
+    auth_role_data_type {
+        uuid role_id PK,FK
+        varchar data_type PK
+        timestamptz created_at
+    }
+    auth_user_scope {
+        uuid user_id PK,FK
+        boolean management_all_sites
+        boolean data_all_sites
+        boolean own_only
+        bigint scope_version
+        varchar policy_version
+        timestamptz created_at
+    }
+    auth_user_scope_site {
+        uuid user_id PK,FK
+        uuid site_id PK,FK
+        varchar scope_kind PK
+        timestamptz created_at
+    }
+    auth_user_scope_data_type {
+        uuid user_id PK,FK
+        varchar data_type PK
+        timestamptz created_at
+    }
+    auth_user_session {
+        uuid id PK
+        uuid user_id FK
+        bytea sid_hash
+        timestamptz last_seen_at
+        timestamptz idle_expires_at
+        timestamptz absolute_expires_at
+        timestamptz revoked_at
+        varchar client_label
+        varchar trace_id
+        timestamptz created_at
+    }
+    auth_csrf_session {
+        uuid id PK
+        uuid session_id FK
+        bytea cookie_hash
+        bytea token_hash
+        timestamptz expires_at
+        timestamptz created_at
+    }
+    core_dictionary {
+        varchar code PK
+        varchar name
+        varchar catalog_version
+        boolean enabled
+        timestamptz created_at
+    }
+    core_dictionary_item {
+        varchar dictionary_code PK,FK
+        varchar code PK
+        varchar label
+        bigint sort_order
+        boolean enabled
+        timestamptz created_at
+    }
+    core_dictionary_binding {
+        varchar field_key PK
+        varchar dictionary_code FK
+        varchar label
+        timestamptz created_at
+    }
+    core_config_item {
+        varchar config_key PK
+        varchar schema_code
+        varchar schema_version
+        bigint config_version
+        jsonb value
+        boolean public_readable
+        boolean enabled
+        timestamptz created_at
+    }
+    core_feature_config {
+        varchar feature_code PK
+        boolean enabled
+        text pending_reason
+        varchar policy_version
+        timestamptz created_at
+    }
+    core_upload_policy {
+        varchar category PK
+        bigint max_bytes
+        textArray allowed_mime_types
+        textArray allowed_extensions
+        boolean enabled
+        timestamptz created_at
+    }
+    core_import_template {
+        varchar template_code PK
+        varchar template_version PK
+        textArray formats
+        varchar transaction_policy
+        varchar encoding
+        text description
+        timestamptz created_at
+    }
+    core_import_column {
+        varchar template_code PK,FK
+        varchar template_version PK,FK
+        varchar column_name PK
+        varchar label
+        bigint sort_order
+        boolean required
+        varchar value_type
+        text description
+        timestamptz created_at
+    }
+    core_region {
+        varchar region_code PK
+        varchar parent_region_code FK
+        varchar name
+        geometry boundary
+        varchar boundary_version
+        timestamptz created_at
+    }
+    core_site {
+        uuid id PK
+        varchar site_code
+        varchar name
+        varchar region_code FK
+        varchar address
+        geometry location
+        boolean enabled
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    core_device {
+        uuid id PK
+        varchar serial_number
+        varchar name
+        uuid site_id FK
+        varchar category_code
+        varchar power_class_code
+        varchar manufacturer
+        varchar model
+        varchar protocol_version
+        geometry location
+        timestamptz installed_at
+        varchar status
+        timestamptz status_since
+        timestamptz last_seen_at
+        bigint parameter_version
+        bigint reset_count
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    core_device_group {
+        uuid id PK
+        uuid site_id FK
+        varchar name
+        varchar description
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    core_device_group_member {
+        uuid group_id PK,FK
+        uuid device_id PK,FK
+        timestamptz created_at
+    }
+    core_device_revision {
+        uuid id PK
+        uuid device_id FK
+        bigint revision_no
+        uuid site_id FK
+        jsonb metadata_snapshot
+        timestamptz effective_at
+        uuid actor_user_id FK
+        varchar reason
+        timestamptz created_at
+    }
+    core_device_status_event {
+        uuid id PK
+        uuid device_id FK
+        varchar previous_status
+        varchar status
+        timestamptz occurred_at
+        varchar source
+        varchar reason
+        varchar policy_version
+        varchar trace_id
+        timestamptz created_at
+    }
+    core_device_parameter_definition {
+        uuid id PK
+        varchar manufacturer
+        varchar model
+        varchar protocol_version
+        varchar parameter_code
+        varchar label
+        varchar value_type
+        varchar unit
+        numeric minimum
+        numeric maximum
+        jsonb allowed_values
+        boolean read_only
+        boolean enabled
+        timestamptz created_at
+    }
+    core_device_parameter_value {
+        uuid id PK
+        uuid device_id FK
+        uuid definition_id FK
+        varchar value_type FK
+        bigint parameter_version
+        varchar value_kind
+        text text_value
+        bigint integer_value
+        numeric number_value
+        boolean boolean_value
+        uuid command_id FK
+        timestamptz observed_at
+        timestamptz created_at
+    }
+    core_file_asset {
+        uuid id PK
+        varchar storage_key
+        varchar file_name
+        varchar category
+        varchar mime_type
+        bigint byte_size
+        char sha256
+        uuid owner_user_id FK
+        varchar security_class
+        varchar status
+        timestamptz expires_at
+        varchar error_code
+        varchar trace_id
+        timestamptz created_at
+    }
+    core_idempotency_request {
+        uuid id PK
+        uuid user_id FK
+        varchar operation_id
+        varchar idempotency_key
+        char request_digest
+        varchar status
+        varchar response_schema_version
+        integer response_status
+        jsonb response_snapshot
+        timestamptz expires_at
+        timestamptz created_at
+    }
+    core_outbox_event {
+        uuid id PK
+        varchar event_type
+        varchar aggregate_type
+        uuid aggregate_id
+        varchar schema_version
+        jsonb payload
+        uuid manifest_file_id FK
+        varchar status
+        timestamptz next_attempt_at
+        bigint attempt_count
+        varchar trace_id
+        timestamptz created_at
+    }
+    core_consumer_inbox {
+        varchar consumer_code PK
+        uuid event_id PK,FK
+        timestamptz consumed_at
+        timestamptz created_at
+    }
+    analysis_analysis_context {
+        uuid id PK
+        uuid owner_user_id FK
+        varchar source_module
+        varchar filter_type
+        bigint filter_schema_version
+        jsonb filter_snapshot
+        varchar spatial_selection_type
+        geometry spatial_geometry
+        bigint permission_version
+        timestamptz expires_at
+        varchar trace_id
+        timestamptz created_at
+    }
+    analysis_context_target {
+        uuid context_id PK,FK
+        uuid target_id PK,FK
+        varchar target_type FK
+        timestamptz created_at
+    }
+    analysis_input_snapshot {
+        uuid id PK
+        uuid owner_user_id FK
+        varchar source_kind
+        varchar source_schema_version
+        jsonb filter_snapshot
+        char snapshot_digest
+        timestamptz snapshot_at
+        varchar status
+        varchar storage_mode
+        uuid manifest_file_id FK
+        bigint capture_count
+        bigint target_count
+        bigint permission_version
+        timestamptz created_at
+    }
+    analysis_input_snapshot_reference {
+        uuid snapshot_id PK,FK
+        bigint sequence_no PK
+        varchar source_kind
+        uuid capture_id FK
+        uuid target_id FK
+        uuid dataset_id FK
+        bigint dataset_version FK
+        uuid analysis_result_id FK
+        uuid profile_id FK
+        timestamptz created_at
+    }
+    analysis_async_task {
+        uuid id PK
+        varchar name
+        varchar task_type
+        uuid owner_user_id FK
+        uuid context_id FK
+        uuid input_snapshot_id FK
+        varchar status
+        smallint progress
+        smallint priority
+        varchar parameter_schema_version
+        jsonb parameter_snapshot
+        char parameter_hash
+        varchar idempotency_key
+        varchar algorithm_version
+        varchar resource_type
+        uuid resource_id
+        timestamptz submitted_at
+        timestamptz started_at
+        timestamptz finished_at
+        varchar lease_owner
+        timestamptz lease_until
+        bigint lease_generation
+        timestamptz next_run_at
+        timestamptz cancel_requested_at
+        bigint retry_count
+        bigint current_attempt_no
+        varchar error_code
+        varchar error_message
+        uuid result_asset_id FK
+        varchar trace_id
+        boolean deleted
+        bigint version
+        timestamptz created_at
+    }
+    analysis_task_attempt {
+        uuid task_id PK,FK
+        bigint attempt_no PK
+        timestamptz started_at
+        timestamptz finished_at
+        varchar worker_id
+        bigint lease_generation
+        varchar result
+        varchar error_code
+        varchar error_message
+        timestamptz created_at
+    }
+    analysis_task_event {
+        uuid id PK
+        uuid task_id FK
+        bigint attempt_no
+        varchar previous_status
+        varchar status
+        timestamptz occurred_at
+        varchar reason
+        varchar trace_id
+        timestamptz created_at
+    }
+    analysis_import_job {
+        uuid task_id PK,FK
+        uuid file_asset_id FK
+        varchar template_code FK
+        varchar template_version FK
+        varchar duplicate_policy
+        uuid dataset_id FK
+        uuid library_id FK
+        uuid target_device_id FK
+        bigint imported_count
+        bigint skipped_count
+        timestamptz created_at
+    }
+    analysis_import_row_result {
+        uuid task_id PK,FK
+        bigint attempt_no PK,FK
+        bigint row_number PK
+        varchar status
+        uuid library_id FK
+        uuid member_id FK
+        uuid profile_id FK
+        uuid device_id FK
+        uuid dataset_id FK
+        uuid item_id FK
+        timestamptz created_at
+    }
+    analysis_task_row_error {
+        uuid id PK
+        uuid task_id FK
+        bigint attempt_no FK
+        bigint row_number
+        varchar source_record_key
+        varchar field_name
+        varchar error_code
+        varchar reason
+        timestamptz created_at
+    }
+    analysis_export_job {
+        uuid task_id PK,FK
+        varchar source_type
+        varchar source_schema_version
+        jsonb source_snapshot
+        uuid input_snapshot_id FK
+        varchar format
+        textArray columns
+        varchar export_scope
+        uuid output_file_id FK
+        varchar purpose
+        timestamptz created_at
+    }
+    capture_ingestion_source {
+        varchar source_code PK
+        varchar name
+        varchar source_kind
+        varchar adapter_code
+        varchar protocol_version
+        boolean enabled
+        timestamptz created_at
+    }
+    capture_source_mapping_version {
+        varchar source_code PK,FK
+        varchar mapping_version PK
+        varchar schema_version
+        jsonb mapping_definition
+        varchar dedup_rule_version
+        timestamptz effective_at
+        boolean enabled
+        timestamptz created_at
+    }
+    capture_ingestion_batch {
+        uuid id PK
+        uuid task_id FK
+        varchar source_code FK
+        uuid source_file_id FK
+        varchar mapping_version FK
+        varchar dedup_rule_version
+        varchar mode
+        uuid original_batch_id FK
+        timestamptz time_from
+        timestamptz time_to
+        varchar status
+        bigint accepted_count
+        bigint rejected_count
+        bigint duplicate_count
+        timestamptz finished_at
+        varchar error_summary
+        varchar reason
+        varchar trace_id
+        timestamptz created_at
+    }
+    capture_source_event {
+        uuid id PK
+        varchar source_code FK
+        varchar source_record_key
+        varchar data_type
+        varchar source_device_key
+        timestamptz source_capture_time
+        uuid raw_file_id FK
+        bigint raw_offset
+        char payload_digest
+        timestamptz first_received_at
+        timestamptz created_at
+    }
+    capture_ingestion_item {
+        uuid id PK
+        uuid batch_id FK
+        bigint row_number
+        uuid source_event_id FK
+        uuid capture_id FK
+        varchar processing_status
+        timestamptz processed_at
+        timestamptz created_at
+        varchar record_kind
+        uuid device_status_event_id FK
+        uuid counter_sample_id FK
+    }
+    capture_quality_issue {
+        uuid id PK
+        uuid ingestion_item_id FK
+        varchar issue_code
+        varchar field_name
+        varchar reason
+        varchar source_device_key
+        uuid device_id FK
+        timestamptz occurred_at
+        varchar rule_version
+        timestamptz created_at
+    }
+    capture_source_counter_sample {
+        uuid id PK
+        varchar source_code FK
+        uuid device_id FK
+        varchar source_device_key
+        varchar sample_key
+        timestamptz period_from
+        timestamptz period_to
+        bigint reported_count
+        bigint reported_cumulative_count
+        varchar counter_epoch
+        timestamptz as_of
+        timestamptz created_at
+    }
+    capture_target {
+        uuid id PK
+        varchar target_type
+        bytea identifier_cipher
+        varchar cipher_key_version
+        varchar normalization_version
+        timestamptz created_at
+    }
+    capture_target_lookup {
+        uuid target_id PK,FK
+        varchar target_type FK
+        varchar normalization_version PK
+        varchar hmac_key_version PK
+        bytea lookup_hash
+        timestamptz created_at
+    }
+    capture_target_attribution {
+        uuid id PK
+        uuid target_id FK
+        varchar country_code
+        varchar province_code
+        varchar region_code FK
+        varchar source_code
+        varchar source_version
+        timestamptz valid_from
+        timestamptz valid_until
+        timestamptz created_at
+    }
+    capture_capture_event {
+        uuid id PK
+        uuid source_event_id FK
+        uuid batch_id FK
+        varchar data_type
+        uuid primary_target_id FK
+        varchar target_type FK
+        uuid device_id FK
+        uuid site_id FK
+        varchar region_code_at_capture FK
+        varchar device_category_at_capture
+        timestamptz capture_time
+        timestamptz ingested_at
+        geometry location
+        varchar location_source
+        uuid attribution_id FK
+        varchar status
+        varchar trace_id
+        timestamptz created_at
+    }
+    capture_capture_target {
+        uuid capture_id PK,FK
+        uuid target_id PK,FK
+        varchar target_type FK
+        timestamptz created_at
+    }
+    capture_fence_record {
+        uuid capture_id PK,FK
+        uuid imsi_target_id FK
+        uuid imei_target_id FK
+        varchar carrier_code
+        varchar radio_type
+        timestamptz created_at
+    }
+    capture_mac_record {
+        uuid capture_id PK,FK
+        uuid mac_target_id FK
+        varchar wireless_type
+        timestamptz created_at
+    }
+    capture_plate_record {
+        uuid capture_id PK,FK
+        uuid plate_target_id FK
+        varchar plate_color
+        uuid vehicle_image_asset_id FK
+        timestamptz created_at
+    }
+    capture_face_record {
+        uuid capture_id PK,FK
+        uuid image_asset_id FK
+        varchar model_version
+        numeric quality_score
+        timestamptz created_at
+    }
+    capture_face_feature {
+        uuid capture_id PK,FK
+        varchar model_version PK
+        uuid feature_asset_id FK
+        timestamptz created_at
+    }
+    capture_capture_revision {
+        uuid id PK
+        uuid capture_id FK
+        bigint revision_no
+        varchar previous_status
+        varchar status
+        uuid actor_user_id FK
+        varchar reason
+        timestamptz occurred_at
+        varchar trace_id
+        timestamptz created_at
+    }
+    analysis_analysis_job {
+        uuid id PK
+        uuid task_id FK
+        varchar name
+        varchar kind
+        uuid context_id FK
+        uuid input_snapshot_id FK
+        varchar algorithm_version
+        uuid revised_from_id FK
+        varchar revision_reason
+        bigint result_count
+        bigint published_attempt_no FK
+        bigint version
+        boolean deleted
+        timestamptz created_at
+    }
+    analysis_companion_parameter {
+        uuid analysis_job_id PK,FK
+        uuid target_id FK
+        varchar target_type FK
+        timestamptz time_from
+        timestamptz time_to
+        bigint time_window_seconds
+        numeric spatial_window_meters
+        numeric min_result_score
+        timestamptz created_at
+    }
+    analysis_collision_parameter {
+        uuid analysis_job_id PK,FK
+        timestamptz time_from
+        timestamptz time_to
+        varchar rule_code
+        varchar rule_version
+        geometry spatial_geometry
+        numeric min_result_score
+        timestamptz created_at
+    }
+    analysis_region_parameter {
+        uuid analysis_job_id PK,FK
+        timestamptz time_from
+        timestamptz time_to
+        textArray data_types
+        numeric min_result_score
+        timestamptz created_at
+    }
+    analysis_analysis_scope_site {
+        uuid analysis_job_id PK,FK
+        uuid site_id PK,FK
+        timestamptz created_at
+    }
+    analysis_analysis_scope_region {
+        uuid analysis_job_id PK,FK
+        varchar region_code PK,FK
+        timestamptz created_at
+    }
+    analysis_analysis_selected_target {
+        uuid analysis_job_id PK,FK
+        uuid target_id PK,FK
+        varchar target_type FK
+        timestamptz created_at
+    }
+    analysis_selected_region {
+        uuid analysis_job_id PK,FK
+        bigint region_no PK
+        geometry geometry
+        timestamptz created_at
+    }
+    analysis_analysis_result {
+        uuid id PK
+        uuid analysis_job_id FK
+        uuid task_id FK
+        bigint attempt_no FK
+        uuid target_id FK
+        varchar target_type FK
+        varchar data_type
+        varchar kind
+        bigint capture_count
+        bigint site_count
+        bigint region_count
+        timestamptz first_seen_at
+        varchar algorithm_version
+        timestamptz generated_at
+        timestamptz created_at
+    }
+    analysis_companion_result {
+        uuid result_id PK,FK
+        bigint common_occurrence_count
+        bigint shared_site_count
+        bigint trajectory_overlap_count
+        numeric association_score
+        timestamptz created_at
+    }
+    analysis_collision_result {
+        uuid result_id PK,FK
+        bigint collision_count
+        numeric match_rate
+        timestamptz created_at
+    }
+    analysis_region_result {
+        uuid result_id PK,FK
+        bigint visited_selected_region_count
+        bigint total_selected_region_count
+        numeric coverage_rate
+        timestamptz created_at
+    }
+    analysis_collision_event {
+        uuid id PK
+        uuid result_id FK
+        timestamptz occurred_at
+        geometry location
+        timestamptz created_at
+    }
+    analysis_result_evidence {
+        uuid result_id PK,FK
+        uuid capture_id PK,FK
+        timestamptz created_at
+    }
+    analysis_result_region {
+        uuid result_id PK,FK
+        varchar region_code PK,FK
+        timestamptz created_at
+    }
+    analysis_result_selected_region {
+        uuid result_id PK,FK
+        uuid analysis_job_id FK
+        bigint region_no PK,FK
+        timestamptz created_at
+    }
+    analysis_dataset {
+        uuid id PK,FK
+        varchar name
+        uuid owner_user_id FK
+        varchar dataset_kind
+        varchar element_type
+        varchar status
+        bigint current_version FK
+        uuid source_context_id FK
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    analysis_dataset_version {
+        uuid dataset_id PK,FK
+        bigint version_no PK
+        varchar operation
+        bigint item_count
+        uuid source_snapshot_id FK
+        uuid created_by FK
+        timestamptz created_at
+        varchar name_snapshot
+    }
+    analysis_dataset_item {
+        uuid id PK
+        uuid dataset_id FK
+        varchar element_type FK
+        uuid capture_id FK
+        uuid target_id FK
+        varchar target_type FK
+        uuid source_capture_id FK
+        bigint valid_from_version FK
+        bigint valid_to_version FK
+        uuid added_by FK
+        timestamptz added_at
+        timestamptz created_at
+    }
+    analysis_dataset_grant {
+        uuid id PK
+        uuid dataset_id FK
+        uuid user_id FK
+        uuid role_id FK
+        varchar access_level
+        timestamptz expires_at
+        timestamptz created_at
+    }
+    analysis_set_job {
+        uuid id PK
+        uuid task_id FK
+        varchar name
+        varchar operator
+        varchar expression
+        varchar element_type
+        varchar dedup_rule_version
+        uuid result_dataset_id FK
+        bigint result_dataset_version FK
+        bigint result_count
+        timestamptz created_at
+    }
+    analysis_set_operand {
+        uuid set_job_id PK,FK
+        varchar symbol PK
+        uuid dataset_id FK
+        bigint dataset_version FK
+        timestamptz created_at
+    }
+    analysis_profile {
+        uuid id PK
+        varchar profile_type
+        varchar display_label
+        numeric confidence
+        varchar source
+        timestamptz first_seen_at
+        timestamptz last_seen_at
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    analysis_person_profile {
+        uuid profile_id PK,FK
+        varchar profile_type FK
+        bytea name_cipher
+        varchar gender_code
+        varchar ethnicity_code
+        bytea phone_cipher
+        bytea identity_number_cipher
+        varchar cipher_key_version
+        varchar residence_region_code FK
+        uuid suspected_site_id FK
+        varchar suspected_landing_text
+        varchar appearance_description
+        uuid portrait_asset_id FK
+        timestamptz created_at
+    }
+    analysis_vehicle_profile {
+        uuid profile_id PK,FK
+        varchar profile_type FK
+        uuid primary_plate_target_id FK
+        varchar plate_color
+        varchar vehicle_type_code
+        uuid vehicle_image_asset_id FK
+        timestamptz created_at
+        varchar plate_target_type FK
+    }
+    analysis_profile_identifier_index {
+        uuid profile_id PK,FK
+        varchar field_code PK
+        varchar hmac_key_version PK
+        varchar normalization_version PK
+        bytea lookup_hash
+        timestamptz created_at
+    }
+    analysis_profile_link {
+        uuid id PK
+        uuid profile_id FK
+        uuid target_id FK
+        varchar target_type FK
+        varchar source
+        varchar algorithm_version
+        numeric confidence
+        varchar review_status
+        timestamptz first_seen_at
+        timestamptz last_seen_at
+        timestamptz valid_from
+        timestamptz valid_until
+        timestamptz created_at
+    }
+    analysis_profile_evidence {
+        uuid id PK
+        uuid profile_id FK
+        uuid capture_id FK
+        varchar source
+        varchar source_version
+        varchar relation
+        numeric confidence
+        timestamptz collected_at
+        varchar review_status
+        timestamptz created_at
+    }
+    analysis_profile_link_evidence {
+        uuid link_id PK,FK
+        uuid evidence_id PK,FK
+        timestamptz created_at
+    }
+    analysis_profile_revision {
+        uuid id PK
+        uuid profile_id FK
+        uuid task_id FK
+        bigint revision_no
+        varchar action
+        varchar reason
+        uuid actor_user_id FK
+        jsonb before_snapshot
+        jsonb after_snapshot
+        timestamptz occurred_at
+        varchar trace_id
+        timestamptz created_at
+    }
+    analysis_profile_revision_member {
+        uuid revision_id PK,FK
+        uuid profile_id PK,FK
+        varchar direction PK
+        timestamptz created_at
+    }
+    analysis_profile_revision_evidence {
+        uuid revision_id PK,FK
+        uuid evidence_id PK,FK
+        timestamptz created_at
+    }
+    analysis_profile_conflict {
+        uuid id PK
+        uuid profile_id FK
+        varchar field_code
+        varchar description
+        jsonb candidate_values
+        varchar status
+        uuid resolved_revision_id FK
+        timestamptz created_at
+    }
+    analysis_profile_conflict_evidence {
+        uuid conflict_id PK,FK
+        uuid evidence_id PK,FK
+        timestamptz created_at
+    }
+    analysis_person_library {
+        uuid id PK
+        varchar name
+        varchar category_code
+        varchar description
+        uuid owner_user_id FK
+        boolean management_all_sites
+        boolean data_all_sites
+        boolean own_only
+        bigint scope_version
+        varchar scope_policy_version
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    analysis_library_scope_site {
+        uuid library_id PK,FK
+        uuid site_id PK,FK
+        varchar scope_kind PK
+        timestamptz created_at
+    }
+    analysis_library_scope_data_type {
+        uuid library_id PK,FK
+        varchar data_type PK
+        timestamptz created_at
+    }
+    analysis_person_library_member {
+        uuid id PK
+        uuid library_id FK
+        uuid profile_id FK
+        uuid primary_target_link_id FK
+        varchar source
+        uuid added_by FK
+        timestamptz added_at
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    analysis_algorithm_version {
+        uuid id PK
+        varchar algorithm_code
+        varchar version_code
+        varchar algorithm_kind
+        varchar parameter_schema_version
+        varchar status
+        timestamptz effective_at
+        timestamptz created_at
+    }
+    analysis_face_search_job {
+        uuid task_id PK,FK
+        uuid image_asset_id FK
+        uuid input_snapshot_id FK
+        timestamptz time_from
+        timestamptz time_to
+        numeric min_similarity
+        bigint candidate_limit
+        varchar model_version
+        bigint published_attempt_no FK
+        timestamptz created_at
+    }
+    analysis_face_search_result {
+        uuid task_id PK,FK
+        bigint attempt_no PK,FK
+        uuid capture_id PK,FK
+        numeric similarity
+        varchar model_version
+        boolean review_required
+        bigint rank_no
+        timestamptz created_at
+    }
+    analysis_trend_model {
+        uuid id PK,FK
+        varchar code
+        varchar name
+        varchar description
+        varchar model_type
+        boolean enabled
+        uuid current_parameter_version_id FK
+        varchar filter_schema_version
+        jsonb effective_data_filter
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    analysis_model_parameter_definition {
+        uuid id PK
+        uuid model_id FK
+        varchar parameter_code
+        bigint definition_version
+        varchar label
+        varchar value_type
+        varchar unit
+        numeric minimum
+        numeric maximum
+        boolean required
+        text description
+        timestamptz created_at
+    }
+    analysis_model_parameter_version {
+        uuid id PK
+        uuid model_id FK
+        bigint version_no
+        varchar algorithm_version
+        timestamptz effective_at
+        uuid created_by FK
+        varchar reason
+        timestamptz created_at
+    }
+    analysis_model_parameter_value {
+        uuid parameter_version_id PK,FK
+        uuid definition_id PK,FK
+        varchar value_type FK
+        text text_value
+        bigint integer_value
+        numeric number_value
+        boolean boolean_value
+        timestamptz created_at
+    }
+    analysis_model_matching_rule {
+        uuid parameter_version_id PK,FK
+        varchar rule_code PK
+        varchar label
+        varchar algorithm_version
+        text description
+        timestamptz created_at
+    }
+    analysis_model_tag {
+        varchar tag_code PK
+        varchar label
+        varchar description
+        boolean enabled
+        timestamptz created_at
+    }
+    analysis_model_tag_binding {
+        uuid model_id PK,FK
+        varchar tag_code PK,FK
+        timestamptz created_at
+    }
+    analysis_model_rule_output_tag {
+        uuid parameter_version_id PK,FK
+        varchar rule_code PK,FK
+        varchar tag_code PK,FK
+        timestamptz created_at
+    }
+    analysis_model_execution {
+        uuid task_id PK,FK
+        uuid model_id FK
+        uuid parameter_version_id FK
+        uuid input_snapshot_id FK
+        bigint published_attempt_no FK
+        timestamptz created_at
+    }
+    analysis_model_result {
+        uuid id PK
+        uuid execution_task_id FK
+        bigint attempt_no FK
+        uuid target_id FK
+        varchar target_type FK
+        varchar data_type
+        numeric confidence
+        varchar algorithm_version
+        timestamptz generated_at
+        varchar review_status
+        timestamptz created_at
+    }
+    analysis_model_result_tag {
+        uuid result_id PK,FK
+        varchar tag_code PK,FK
+        timestamptz created_at
+    }
+    analysis_model_result_evidence {
+        uuid id PK
+        uuid result_id FK
+        uuid capture_id FK
+        uuid profile_evidence_id FK
+        timestamptz created_at
+    }
+    operation_watch_rule {
+        uuid id PK,FK
+        varchar name
+        uuid owner_user_id FK
+        uuid context_id FK
+        varchar status
+        timestamptz effective_from
+        timestamptz effective_until
+        bigint current_rule_version FK
+        timestamptz ended_at
+        bigint hit_count
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    operation_watch_rule_revision {
+        uuid rule_id PK,FK
+        bigint rule_version PK
+        varchar name_snapshot
+        timestamptz effective_from
+        timestamptz effective_until
+        varchar match_rule_code
+        varchar match_rule_version
+        textArray data_types
+        varchar notification_template_code FK
+        varchar notification_template_version FK
+        varchar condition_schema_version
+        jsonb condition_snapshot
+        jsonb notification_snapshot
+        uuid created_by FK
+        timestamptz created_at
+    }
+    operation_watch_rule_target {
+        uuid rule_id PK,FK
+        bigint rule_version PK,FK
+        uuid target_id PK,FK
+        varchar target_type FK
+        uuid source_profile_id FK
+        uuid source_library_id FK
+        timestamptz created_at
+    }
+    operation_watch_rule_site {
+        uuid rule_id PK,FK
+        bigint rule_version PK,FK
+        uuid site_id PK,FK
+        timestamptz created_at
+    }
+    operation_alert_event {
+        uuid id PK
+        uuid rule_id FK
+        bigint rule_version FK
+        uuid capture_id FK
+        uuid target_id FK
+        varchar target_type FK
+        uuid site_id FK
+        uuid device_id FK
+        timestamptz occurred_at
+        varchar severity
+        varchar status
+        varchar dedup_key
+        varchar dedup_rule_version
+        varchar trace_id
+        timestamptz created_at
+    }
+    operation_watch_statistics_run {
+        uuid rule_id PK,FK
+        bigint final_rule_version FK
+        boolean final
+        bigint hit_count
+        bigint distinct_target_count
+        bigint site_count
+        bigint region_count
+        timestamptz first_seen_at
+        timestamptz as_of
+        varchar metric_definition_version
+        timestamptz created_at
+    }
+    operation_watch_statistics {
+        uuid rule_id PK,FK
+        uuid target_id PK,FK
+        varchar target_type FK
+        bigint capture_count
+        bigint site_count
+        bigint region_count
+        timestamptz first_seen_at
+        uuid most_frequent_site_id FK
+        varchar most_frequent_site_name_snapshot
+        timestamptz created_at
+    }
+    operation_notification_channel {
+        uuid id PK
+        varchar channel_type
+        varchar adapter_code
+        varchar adapter_version
+        varchar credential_reference
+        boolean enabled
+        timestamptz created_at
+    }
+    operation_notification_template {
+        varchar template_code PK
+        varchar template_version PK
+        varchar name
+        varchar purpose
+        textArray channels
+        varchar title_template
+        text body_template
+        boolean enabled
+        timestamptz created_at
+    }
+    operation_notification_template_variable {
+        varchar template_code PK,FK
+        varchar template_version PK,FK
+        varchar variable_code PK
+        varchar description
+        boolean required
+        timestamptz created_at
+    }
+    operation_notification_plan {
+        uuid id PK,FK
+        varchar name
+        uuid owner_user_id FK
+        varchar status
+        varchar schedule_type
+        timestamptz scheduled_at
+        time_without_time_zone local_time
+        varchar time_zone
+        date start_date
+        date end_date
+        timestamptz next_run_at
+        timestamptz last_sent_at
+        uuid last_execution_task_id FK
+        bigint current_plan_version FK
+        timestamptz cancelled_at
+        timestamptz created_at
+        uuid created_by FK
+        timestamptz updated_at
+        uuid updated_by FK
+        boolean deleted
+        bigint version
+    }
+    operation_notification_plan_revision {
+        uuid plan_id PK,FK
+        bigint plan_version PK
+        varchar name_snapshot
+        varchar template_code FK
+        varchar template_version FK
+        jsonb schedule_snapshot
+        uuid created_by FK
+        timestamptz created_at
+    }
+    operation_notification_recipient {
+        uuid id PK
+        varchar channel_type
+        uuid recipient_user_id FK
+        bytea recipient_cipher
+        bytea recipient_hash
+        varchar hmac_key_version
+        varchar cipher_key_version
+        varchar normalization_version
+        uuid owner_user_id FK
+        timestamptz created_at
+    }
+    operation_notification_plan_recipient {
+        uuid plan_id PK,FK
+        bigint plan_version PK,FK
+        uuid recipient_id PK,FK
+        timestamptz created_at
+    }
+    operation_watch_notification_recipient {
+        uuid rule_id PK,FK
+        bigint rule_version PK,FK
+        uuid recipient_id PK,FK
+        timestamptz created_at
+    }
+    operation_notification_execution {
+        uuid task_id PK,FK
+        uuid plan_id FK
+        bigint plan_version FK
+        varchar occurrence_key
+        timestamptz scheduled_for
+        timestamptz created_at
+    }
+    operation_delivery {
+        uuid id PK
+        uuid execution_task_id FK
+        uuid plan_id FK
+        bigint plan_version FK
+        uuid alert_id FK
+        uuid rule_id FK
+        bigint rule_version FK
+        uuid recipient_id FK
+        varchar channel_type
+        uuid channel_id FK
+        varchar template_code FK
+        varchar template_version FK
+        varchar task_name_snapshot
+        varchar content_summary
+        bytea content_cipher
+        varchar cipher_key_version
+        varchar status
+        varchar dedup_key
+        bigint retry_count
+        timestamptz sent_at
+        timestamptz acknowledged_at
+        varchar provider_message_id
+        varchar provider_receipt_ref
+        varchar error_code
+        varchar error_reason
+        varchar trace_id
+        timestamptz created_at
+    }
+    operation_delivery_attempt {
+        uuid delivery_id PK,FK
+        bigint attempt_no PK
+        timestamptz requested_at
+        timestamptz responded_at
+        varchar status
+        varchar provider_receipt_ref
+        varchar error_code
+        varchar error_reason
+        timestamptz created_at
+    }
+    operation_platform_message {
+        uuid id PK
+        uuid delivery_id FK
+        uuid recipient_user_id FK
+        uuid alert_id FK
+        uuid plan_id FK
+        varchar title
+        text content
+        timestamptz created_at
+    }
+    operation_sms_modem {
+        uuid id PK
+        uuid channel_id FK
+        varchar name
+        varchar serial_number
+        varchar carrier_code
+        boolean enabled
+        timestamptz created_at
+    }
+    operation_sms_modem_status {
+        uuid modem_id PK,FK
+        timestamptz as_of PK
+        boolean online
+        bigint uptime_seconds
+        numeric signal_quality
+        numeric signal_strength
+        bigint network_registration_count
+        varchar sim_status
+        bigint sent_success_count
+        bigint sent_total_count
+        varchar sim_balance_display
+        varchar collection_status
+        varchar error_code
+        timestamptz created_at
+    }
+    core_metric_definition {
+        varchar metric_code PK
+        varchar definition_version PK
+        varchar name
+        varchar calculation_code
+        varchar unit
+        varchar time_zone
+        varchar refresh_policy
+        varchar source_kind
+        boolean additive
+        boolean enabled
+        timestamptz created_at
+    }
+    core_metric_scope {
+        uuid id PK
+        varchar scope_kind
+        varchar region_code FK
+        uuid site_id FK
+        uuid device_id FK
+        varchar data_type
+        varchar device_category_code
+        varchar power_class_code
+        varchar carrier_code
+        varchar radio_type
+        varchar origin_class
+        varchar attribution_code
+        varchar operation_category
+        varchar canonical_key
+        timestamptz created_at
+    }
+    core_metric_snapshot {
+        varchar metric_code PK,FK
+        varchar definition_version PK,FK
+        uuid scope_id PK,FK
+        varchar granularity PK
+        timestamptz bucket_start PK
+        timestamptz bucket_end
+        numeric value
+        numeric numerator
+        numeric denominator
+        timestamptz as_of
+        varchar status
+        varchar error_code
+        timestamptz created_at
+    }
+    core_metric_refresh_checkpoint {
+        varchar metric_code PK,FK
+        varchar definition_version PK,FK
+        varchar source_key PK
+        jsonb checkpoint
+        timestamptz updated_at
+        varchar lease_owner
+        timestamptz lease_until
+        timestamptz created_at
+    }
+    core_anomaly_event {
+        uuid id PK
+        varchar category_code
+        uuid device_id FK
+        varchar source_device_key
+        uuid ingestion_item_id FK
+        timestamptz period_from
+        timestamptz period_to
+        numeric observed_value
+        numeric baseline_value
+        varchar rule_version
+        timestamptz detected_at
+        timestamptz created_at
+    }
+    core_component_status_snapshot {
+        varchar component_code PK
+        varchar instance_code PK
+        varchar label
+        varchar status
+        timestamptz checked_at PK
+        varchar version_label
+        varchar failure_summary
+        timestamptz created_at
+    }
+    operation_device_command_job {
+        uuid task_id PK,FK
+        varchar name
+        varchar command_type
+        uuid group_id FK
+        varchar group_name_snapshot
+        varchar region_code FK
+        varchar selection_schema_version
+        jsonb selection_snapshot
+        varchar reason
+        uuid revised_from_task_id FK
+        uuid confirmation_record_id FK
+        bigint version
+        boolean deleted
+        timestamptz created_at
+    }
+    operation_device_command {
+        uuid id PK
+        uuid job_task_id FK
+        uuid device_id FK
+        varchar device_name_snapshot
+        varchar command_type
+        varchar parameter_schema_version
+        jsonb parameter_snapshot
+        varchar status
+        varchar delivery_state
+        varchar idempotency_key
+        timestamptz expires_at
+        bigint current_attempt_no
+        timestamptz started_at
+        timestamptz finished_at
+        varchar acknowledgement_id
+        varchar error_code
+        varchar error_message
+        timestamptz created_at
+    }
+    operation_device_command_attempt {
+        uuid command_id PK,FK
+        bigint attempt_no PK
+        timestamptz requested_at
+        timestamptz responded_at
+        varchar status
+        varchar acknowledgement_id
+        varchar error_code
+        varchar error_message
+        timestamptz created_at
+    }
+    operation_report_job {
+        uuid id PK
+        uuid task_id FK
+        varchar name
+        varchar mode
+        uuid input_snapshot_id FK
+        varchar output_format
+        uuid output_file_id FK
+        timestamptz completed_at
+        bigint published_attempt_no FK
+        bigint version
+        boolean deleted
+        timestamptz created_at
+    }
+    operation_report_definition {
+        uuid id PK
+        uuid report_id FK
+        bigint definition_no
+        varchar report_type
+        varchar granularity
+        date period_start
+        date period_end
+        varchar region_code FK
+        varchar scope_schema_version
+        jsonb scope_snapshot
+        jsonb metric_definition_versions
+        timestamptz as_of
+        bigint device_count
+        bigint capture_count
+        timestamptz created_at
+    }
+    operation_report_definition_site {
+        uuid definition_id PK,FK
+        uuid site_id PK,FK
+        timestamptz created_at
+    }
+    operation_report_device_row {
+        uuid definition_id PK,FK
+        bigint attempt_no PK
+        bigint row_no PK
+        uuid device_id FK
+        varchar serial_number
+        varchar name
+        uuid site_id FK
+        varchar site_name
+        varchar region_code FK
+        varchar category_code
+        varchar status
+        timestamptz last_seen_at
+        geometry location
+        timestamptz device_updated_at
+        bigint device_version
+        uuidArray group_ids_snapshot
+        bigint reset_count
+        bigint capture_count
+        timestamptz as_of
+        timestamptz created_at
+    }
+    operation_report_region_row {
+        uuid definition_id PK,FK
+        bigint attempt_no PK
+        varchar region_code PK,FK
+        varchar region_name
+        bigint device_count
+        bigint online_count
+        numeric online_rate
+        timestamptz created_at
+    }
+    operation_report_metric_row {
+        uuid definition_id PK,FK
+        bigint attempt_no PK
+        bigint row_no PK
+        varchar metric_code FK
+        varchar definition_version FK
+        varchar label
+        numeric value
+        varchar unit
+        varchar status
+        timestamptz as_of
+        timestamptz created_at
+    }
+    operation_report_series {
+        uuid id PK
+        uuid definition_id FK
+        bigint attempt_no
+        varchar metric_code FK
+        varchar definition_version FK
+        varchar carrier_code
+        varchar carrier_label
+        uuid device_id FK
+        varchar device_name_snapshot
+        varchar region_code FK
+        varchar series_key
+        timestamptz created_at
+    }
+    operation_report_series_point {
+        uuid series_id PK,FK
+        timestamptz bucket_start PK
+        timestamptz bucket_end
+        numeric value
+        timestamptz created_at
+    }
+    operation_report_component_row {
+        uuid definition_id PK,FK
+        bigint attempt_no PK
+        varchar component_code PK
+        varchar instance_code PK
+        varchar label
+        varchar status
+        timestamptz checked_at
+        timestamptz created_at
+    }
+    operation_report_output_file {
+        uuid id PK
+        uuid report_id FK
+        uuid definition_id FK
+        bigint attempt_no
+        uuid file_asset_id FK
+        varchar output_role
+        varchar file_name
+        varchar format
+        timestamptz created_at
+    }
+    audit_audit_event {
+        uuid id PK
+        uuid actor_user_id FK
+        varchar actor_login_name_snapshot
+        varchar actor_display_name_snapshot
+        varchar action
+        varchar action_category
+        varchar resource_type
+        uuid resource_id
+        timestamptz occurred_at
+        varchar result
+        varchar failure_code
+        varchar before_summary
+        varchar after_summary
+        inet source_ip
+        uuid business_task_id FK
+        varchar request_id
+        varchar trace_id
+        timestamptz created_at
+    }
+    operation_decryption_request {
+        uuid id PK
+        uuid requester_user_id FK
+        uuid recipient_user_id FK
+        uuid context_id FK
+        uuid input_snapshot_id FK
+        uuid input_file_id FK
+        varchar purpose
+        varchar status
+        varchar policy_version
+        timestamptz expires_at
+        timestamptz created_at
+    }
+    operation_decryption_capture {
+        uuid request_id PK,FK
+        uuid capture_id PK,FK
+        timestamptz created_at
+    }
+    audit_sensitive_action_review {
+        uuid id PK
+        varchar action_type
+        uuid decryption_request_id FK
+        uuid device_command_task_id FK
+        uuid export_task_id FK
+        uuid actor_user_id FK
+        varchar decision
+        varchar reason
+        varchar policy_version
+        timestamptz occurred_at
+        varchar trace_id
+        timestamptz created_at
+    }
+    operation_decryption_result_grant {
+        uuid id PK
+        uuid request_id FK
+        uuid authorized_user_id FK
+        uuid result_file_id FK
+        timestamptz valid_from
+        timestamptz expires_at
+        timestamptz revoked_at
+        timestamptz created_at
+    }
+    analysis_collision_event_evidence {
+        uuid collision_event_id PK,FK
+        uuid capture_id PK,FK
+        timestamptz created_at
+    }
+    auth_app_user |o--o{ auth_app_user : "created_by"
+    auth_app_user |o--o{ auth_app_user : "updated_by"
+    auth_app_user |o--o{ auth_role : "created_by"
+    auth_app_user |o--o{ auth_role : "updated_by"
+    auth_app_user |o--o{ auth_menu : "created_by"
+    auth_app_user |o--o{ auth_menu : "updated_by"
+    auth_menu |o--o{ auth_menu : "parent_id"
+    auth_permission |o--o{ auth_menu : "required_permission_code"
+    auth_app_user ||--o{ auth_user_role : "user_id"
+    auth_role ||--o{ auth_user_role : "role_id"
+    auth_role ||--o{ auth_role_permission : "role_id"
+    auth_permission ||--o{ auth_role_permission : "permission_code"
+    auth_role ||--o{ auth_role_menu : "role_id"
+    auth_menu ||--o{ auth_role_menu : "menu_id"
+    auth_role ||--o{ auth_role_site : "role_id"
+    core_site ||--o{ auth_role_site : "site_id"
+    auth_role ||--o{ auth_role_data_type : "role_id"
+    auth_app_user ||--o| auth_user_scope : "user_id"
+    auth_user_scope ||--o{ auth_user_scope_site : "user_id"
+    core_site ||--o{ auth_user_scope_site : "site_id"
+    auth_user_scope ||--o{ auth_user_scope_data_type : "user_id"
+    auth_app_user ||--o{ auth_user_session : "user_id"
+    auth_user_session |o--o{ auth_csrf_session : "session_id"
+    core_dictionary ||--o{ core_dictionary_item : "dictionary_code"
+    core_dictionary ||--o{ core_dictionary_binding : "dictionary_code"
+    core_import_template ||--o{ core_import_column : "template_code,template_version"
+    core_region |o--o{ core_region : "parent_region_code"
+    auth_app_user |o--o{ core_site : "created_by"
+    auth_app_user |o--o{ core_site : "updated_by"
+    core_region ||--o{ core_site : "region_code"
+    auth_app_user |o--o{ core_device : "created_by"
+    auth_app_user |o--o{ core_device : "updated_by"
+    core_site ||--o{ core_device : "site_id"
+    auth_app_user |o--o{ core_device_group : "created_by"
+    auth_app_user |o--o{ core_device_group : "updated_by"
+    core_site ||--o{ core_device_group : "site_id"
+    core_device_group ||--o{ core_device_group_member : "group_id"
+    core_device ||--o{ core_device_group_member : "device_id"
+    core_device ||--o{ core_device_revision : "device_id"
+    core_site ||--o{ core_device_revision : "site_id"
+    auth_app_user |o--o{ core_device_revision : "actor_user_id"
+    core_device ||--o{ core_device_status_event : "device_id"
+    core_device ||--o{ core_device_parameter_value : "device_id"
+    core_device_parameter_definition ||--o{ core_device_parameter_value : "definition_id,value_type"
+    operation_device_command |o--o{ core_device_parameter_value : "command_id"
+    auth_app_user |o--o{ core_file_asset : "owner_user_id"
+    auth_app_user ||--o{ core_idempotency_request : "user_id"
+    core_file_asset |o--o{ core_outbox_event : "manifest_file_id"
+    core_outbox_event ||--o{ core_consumer_inbox : "event_id"
+    auth_app_user ||--o{ analysis_analysis_context : "owner_user_id"
+    analysis_analysis_context ||--o{ analysis_context_target : "context_id"
+    capture_target ||--o{ analysis_context_target : "target_id,target_type"
+    auth_app_user ||--o{ analysis_input_snapshot : "owner_user_id"
+    core_file_asset |o--o{ analysis_input_snapshot : "manifest_file_id"
+    analysis_input_snapshot ||--o{ analysis_input_snapshot_reference : "snapshot_id"
+    capture_capture_event |o--o{ analysis_input_snapshot_reference : "capture_id"
+    capture_target |o--o{ analysis_input_snapshot_reference : "target_id"
+    analysis_analysis_result |o--o{ analysis_input_snapshot_reference : "analysis_result_id"
+    analysis_profile |o--o{ analysis_input_snapshot_reference : "profile_id"
+    analysis_dataset_version |o--o{ analysis_input_snapshot_reference : "dataset_id,dataset_version"
+    auth_app_user ||--o{ analysis_async_task : "owner_user_id"
+    analysis_analysis_context |o--o{ analysis_async_task : "context_id"
+    analysis_input_snapshot |o--o{ analysis_async_task : "input_snapshot_id"
+    core_file_asset |o--o{ analysis_async_task : "result_asset_id"
+    analysis_async_task ||--o{ analysis_task_attempt : "task_id"
+    analysis_async_task ||--o{ analysis_task_event : "task_id"
+    analysis_async_task ||--o| analysis_import_job : "task_id"
+    core_file_asset ||--o{ analysis_import_job : "file_asset_id"
+    analysis_dataset |o--o{ analysis_import_job : "dataset_id"
+    analysis_person_library |o--o{ analysis_import_job : "library_id"
+    core_device |o--o{ analysis_import_job : "target_device_id"
+    core_import_template ||--o{ analysis_import_job : "template_code,template_version"
+    analysis_task_attempt ||--o{ analysis_import_row_result : "task_id,attempt_no"
+    analysis_person_library |o--o{ analysis_import_row_result : "library_id"
+    analysis_person_library_member |o--o{ analysis_import_row_result : "member_id"
+    analysis_profile |o--o{ analysis_import_row_result : "profile_id"
+    core_device |o--o{ analysis_import_row_result : "device_id"
+    analysis_dataset |o--o{ analysis_import_row_result : "dataset_id"
+    analysis_dataset_item |o--o{ analysis_import_row_result : "item_id"
+    analysis_task_attempt ||--o{ analysis_task_row_error : "task_id,attempt_no"
+    analysis_async_task ||--o| analysis_export_job : "task_id"
+    analysis_input_snapshot |o--o{ analysis_export_job : "input_snapshot_id"
+    core_file_asset |o--o{ analysis_export_job : "output_file_id"
+    capture_ingestion_source ||--o{ capture_source_mapping_version : "source_code"
+    analysis_async_task ||--o| capture_ingestion_batch : "task_id"
+    core_file_asset |o--o{ capture_ingestion_batch : "source_file_id"
+    capture_ingestion_batch |o--o{ capture_ingestion_batch : "original_batch_id"
+    capture_source_mapping_version ||--o{ capture_ingestion_batch : "source_code,mapping_version"
+    capture_ingestion_source ||--o{ capture_source_event : "source_code"
+    core_file_asset |o--o{ capture_source_event : "raw_file_id"
+    capture_ingestion_batch ||--o{ capture_ingestion_item : "batch_id"
+    capture_source_event |o--o{ capture_ingestion_item : "source_event_id"
+    capture_capture_event |o--o{ capture_ingestion_item : "capture_id"
+    capture_ingestion_item ||--o{ capture_quality_issue : "ingestion_item_id"
+    core_device |o--o{ capture_quality_issue : "device_id"
+    capture_ingestion_source ||--o{ capture_source_counter_sample : "source_code"
+    core_device |o--o{ capture_source_counter_sample : "device_id"
+    capture_target ||--o{ capture_target_lookup : "target_id,target_type"
+    capture_target ||--o{ capture_target_attribution : "target_id"
+    core_region |o--o{ capture_target_attribution : "region_code"
+    capture_source_event ||--o| capture_capture_event : "source_event_id"
+    capture_ingestion_batch ||--o{ capture_capture_event : "batch_id"
+    core_device |o--o{ capture_capture_event : "device_id"
+    core_site |o--o{ capture_capture_event : "site_id"
+    capture_target_attribution |o--o{ capture_capture_event : "attribution_id"
+    core_region |o--o{ capture_capture_event : "region_code_at_capture"
+    capture_target |o--o{ capture_capture_event : "primary_target_id,target_type"
+    capture_capture_event ||--o{ capture_capture_target : "capture_id"
+    capture_target ||--o{ capture_capture_target : "target_id,target_type"
+    capture_capture_event ||--o| capture_fence_record : "capture_id"
+    capture_capture_event ||--o| capture_mac_record : "capture_id"
+    capture_capture_event ||--o| capture_plate_record : "capture_id"
+    capture_capture_event ||--o| capture_face_record : "capture_id"
+    capture_target |o--o{ capture_fence_record : "imsi_target_id"
+    capture_target |o--o{ capture_fence_record : "imei_target_id"
+    capture_target |o--o{ capture_mac_record : "mac_target_id"
+    capture_target |o--o{ capture_plate_record : "plate_target_id"
+    core_file_asset |o--o{ capture_plate_record : "vehicle_image_asset_id"
+    core_file_asset ||--o{ capture_face_record : "image_asset_id"
+    capture_face_record ||--o{ capture_face_feature : "capture_id"
+    core_file_asset ||--o{ capture_face_feature : "feature_asset_id"
+    capture_capture_event ||--o{ capture_capture_revision : "capture_id"
+    auth_app_user |o--o{ capture_capture_revision : "actor_user_id"
+    analysis_async_task ||--o| analysis_analysis_job : "task_id"
+    analysis_analysis_context ||--o{ analysis_analysis_job : "context_id"
+    analysis_input_snapshot ||--o{ analysis_analysis_job : "input_snapshot_id"
+    analysis_analysis_job |o--o{ analysis_analysis_job : "revised_from_id"
+    analysis_task_attempt |o--o{ analysis_analysis_job : "task_id,published_attempt_no"
+    analysis_analysis_job ||--o| analysis_companion_parameter : "analysis_job_id"
+    capture_target ||--o{ analysis_companion_parameter : "target_id,target_type"
+    analysis_analysis_job ||--o| analysis_collision_parameter : "analysis_job_id"
+    analysis_analysis_job ||--o| analysis_region_parameter : "analysis_job_id"
+    analysis_analysis_job ||--o{ analysis_analysis_scope_site : "analysis_job_id"
+    core_site ||--o{ analysis_analysis_scope_site : "site_id"
+    analysis_analysis_job ||--o{ analysis_analysis_scope_region : "analysis_job_id"
+    core_region ||--o{ analysis_analysis_scope_region : "region_code"
+    analysis_analysis_job ||--o{ analysis_analysis_selected_target : "analysis_job_id"
+    capture_target ||--o{ analysis_analysis_selected_target : "target_id,target_type"
+    analysis_analysis_job ||--o{ analysis_selected_region : "analysis_job_id"
+    analysis_analysis_job ||--o{ analysis_analysis_result : "analysis_job_id,task_id"
+    analysis_task_attempt ||--o{ analysis_analysis_result : "task_id,attempt_no"
+    capture_target ||--o{ analysis_analysis_result : "target_id,target_type"
+    analysis_analysis_result ||--o| analysis_companion_result : "result_id"
+    analysis_analysis_result ||--o| analysis_collision_result : "result_id"
+    analysis_analysis_result ||--o| analysis_region_result : "result_id"
+    analysis_collision_result ||--o{ analysis_collision_event : "result_id"
+    analysis_analysis_result ||--o{ analysis_result_evidence : "result_id"
+    capture_capture_event ||--o{ analysis_result_evidence : "capture_id"
+    analysis_analysis_result ||--o{ analysis_result_region : "result_id"
+    core_region ||--o{ analysis_result_region : "region_code"
+    analysis_region_result ||--o{ analysis_result_selected_region : "result_id"
+    analysis_selected_region ||--o{ analysis_result_selected_region : "analysis_job_id,region_no"
+    auth_app_user |o--o{ analysis_dataset : "created_by"
+    auth_app_user |o--o{ analysis_dataset : "updated_by"
+    auth_app_user ||--o{ analysis_dataset : "owner_user_id"
+    analysis_analysis_context |o--o{ analysis_dataset : "source_context_id"
+    analysis_dataset ||--o{ analysis_dataset_version : "dataset_id"
+    analysis_input_snapshot |o--o{ analysis_dataset_version : "source_snapshot_id"
+    auth_app_user ||--o{ analysis_dataset_version : "created_by"
+    analysis_dataset_version ||--o{ analysis_dataset : "id,current_version"
+    analysis_dataset ||--o{ analysis_dataset_item : "dataset_id,element_type"
+    capture_capture_event |o--o{ analysis_dataset_item : "capture_id"
+    capture_target |o--o{ analysis_dataset_item : "target_id,target_type"
+    capture_capture_event |o--o{ analysis_dataset_item : "source_capture_id"
+    auth_app_user ||--o{ analysis_dataset_item : "added_by"
+    analysis_dataset_version ||--o{ analysis_dataset_item : "dataset_id,valid_from_version"
+    analysis_dataset_version |o--o{ analysis_dataset_item : "dataset_id,valid_to_version"
+    analysis_dataset ||--o{ analysis_dataset_grant : "dataset_id"
+    auth_app_user |o--o{ analysis_dataset_grant : "user_id"
+    auth_role |o--o{ analysis_dataset_grant : "role_id"
+    analysis_async_task ||--o| analysis_set_job : "task_id"
+    analysis_dataset_version |o--o{ analysis_set_job : "result_dataset_id,result_dataset_version"
+    analysis_set_job ||--o{ analysis_set_operand : "set_job_id"
+    analysis_dataset_version ||--o{ analysis_set_operand : "dataset_id,dataset_version"
+    auth_app_user |o--o{ analysis_profile : "created_by"
+    auth_app_user |o--o{ analysis_profile : "updated_by"
+    analysis_profile ||--o{ analysis_person_profile : "profile_id,profile_type"
+    core_region |o--o{ analysis_person_profile : "residence_region_code"
+    core_site |o--o{ analysis_person_profile : "suspected_site_id"
+    core_file_asset |o--o{ analysis_person_profile : "portrait_asset_id"
+    analysis_profile ||--o{ analysis_vehicle_profile : "profile_id,profile_type"
+    capture_target ||--o{ analysis_vehicle_profile : "primary_plate_target_id"
+    core_file_asset |o--o{ analysis_vehicle_profile : "vehicle_image_asset_id"
+    analysis_profile ||--o{ analysis_profile_identifier_index : "profile_id"
+    analysis_profile ||--o{ analysis_profile_link : "profile_id"
+    capture_target ||--o{ analysis_profile_link : "target_id,target_type"
+    analysis_profile ||--o{ analysis_profile_evidence : "profile_id"
+    capture_capture_event ||--o{ analysis_profile_evidence : "capture_id"
+    analysis_profile_link ||--o{ analysis_profile_link_evidence : "link_id"
+    analysis_profile_evidence ||--o{ analysis_profile_link_evidence : "evidence_id"
+    analysis_profile ||--o{ analysis_profile_revision : "profile_id"
+    analysis_async_task |o--o{ analysis_profile_revision : "task_id"
+    auth_app_user ||--o{ analysis_profile_revision : "actor_user_id"
+    analysis_profile_revision ||--o{ analysis_profile_revision_member : "revision_id"
+    analysis_profile ||--o{ analysis_profile_revision_member : "profile_id"
+    analysis_profile_revision ||--o{ analysis_profile_revision_evidence : "revision_id"
+    analysis_profile_evidence ||--o{ analysis_profile_revision_evidence : "evidence_id"
+    analysis_profile ||--o{ analysis_profile_conflict : "profile_id"
+    analysis_profile_revision |o--o{ analysis_profile_conflict : "resolved_revision_id"
+    analysis_profile_conflict ||--o{ analysis_profile_conflict_evidence : "conflict_id"
+    analysis_profile_evidence ||--o{ analysis_profile_conflict_evidence : "evidence_id"
+    auth_app_user |o--o{ analysis_person_library : "created_by"
+    auth_app_user |o--o{ analysis_person_library : "updated_by"
+    auth_app_user ||--o{ analysis_person_library : "owner_user_id"
+    analysis_person_library ||--o{ analysis_library_scope_site : "library_id"
+    core_site ||--o{ analysis_library_scope_site : "site_id"
+    analysis_person_library ||--o{ analysis_library_scope_data_type : "library_id"
+    auth_app_user |o--o{ analysis_person_library_member : "created_by"
+    auth_app_user |o--o{ analysis_person_library_member : "updated_by"
+    analysis_person_library ||--o{ analysis_person_library_member : "library_id"
+    analysis_profile ||--o{ analysis_person_library_member : "profile_id"
+    analysis_profile_link ||--o{ analysis_person_library_member : "primary_target_link_id"
+    auth_app_user ||--o{ analysis_person_library_member : "added_by"
+    analysis_async_task ||--o| analysis_face_search_job : "task_id"
+    core_file_asset ||--o{ analysis_face_search_job : "image_asset_id"
+    analysis_input_snapshot ||--o{ analysis_face_search_job : "input_snapshot_id"
+    analysis_task_attempt |o--o{ analysis_face_search_job : "task_id,published_attempt_no"
+    analysis_task_attempt ||--o{ analysis_face_search_result : "task_id,attempt_no"
+    capture_face_record ||--o{ analysis_face_search_result : "capture_id"
+    auth_app_user |o--o{ analysis_trend_model : "created_by"
+    auth_app_user |o--o{ analysis_trend_model : "updated_by"
+    analysis_trend_model ||--o{ analysis_model_parameter_definition : "model_id"
+    analysis_trend_model ||--o{ analysis_model_parameter_version : "model_id"
+    auth_app_user ||--o{ analysis_model_parameter_version : "created_by"
+    analysis_model_parameter_version ||--o{ analysis_model_parameter_value : "parameter_version_id"
+    analysis_model_parameter_definition ||--o{ analysis_model_parameter_value : "definition_id,value_type"
+    analysis_model_parameter_version ||--o{ analysis_model_matching_rule : "parameter_version_id"
+    analysis_trend_model ||--o{ analysis_model_tag_binding : "model_id"
+    analysis_model_tag ||--o{ analysis_model_tag_binding : "tag_code"
+    analysis_model_matching_rule ||--o{ analysis_model_rule_output_tag : "parameter_version_id,rule_code"
+    analysis_model_tag ||--o{ analysis_model_rule_output_tag : "tag_code"
+    analysis_async_task ||--o| analysis_model_execution : "task_id"
+    analysis_model_parameter_version ||--o{ analysis_model_execution : "parameter_version_id,model_id"
+    analysis_input_snapshot ||--o{ analysis_model_execution : "input_snapshot_id"
+    analysis_task_attempt |o--o{ analysis_model_execution : "task_id,published_attempt_no"
+    analysis_model_execution ||--o{ analysis_model_result : "execution_task_id"
+    analysis_task_attempt ||--o{ analysis_model_result : "execution_task_id,attempt_no"
+    capture_target ||--o{ analysis_model_result : "target_id,target_type"
+    analysis_model_result ||--o{ analysis_model_result_tag : "result_id"
+    analysis_model_tag ||--o{ analysis_model_result_tag : "tag_code"
+    analysis_model_result ||--o{ analysis_model_result_evidence : "result_id"
+    capture_capture_event |o--o{ analysis_model_result_evidence : "capture_id"
+    analysis_profile_evidence |o--o{ analysis_model_result_evidence : "profile_evidence_id"
+    auth_app_user |o--o{ operation_watch_rule : "created_by"
+    auth_app_user |o--o{ operation_watch_rule : "updated_by"
+    auth_app_user ||--o{ operation_watch_rule : "owner_user_id"
+    analysis_analysis_context ||--o{ operation_watch_rule : "context_id"
+    operation_watch_rule ||--o{ operation_watch_rule_revision : "rule_id"
+    auth_app_user ||--o{ operation_watch_rule_revision : "created_by"
+    operation_watch_rule_revision ||--o{ operation_watch_rule : "id,current_rule_version"
+    operation_notification_template |o--o{ operation_watch_rule_revision : "notification_template_code,notification_template_version"
+    operation_watch_rule_revision ||--o{ operation_watch_rule_target : "rule_id,rule_version"
+    capture_target ||--o{ operation_watch_rule_target : "target_id,target_type"
+    analysis_profile |o--o{ operation_watch_rule_target : "source_profile_id"
+    analysis_person_library |o--o{ operation_watch_rule_target : "source_library_id"
+    operation_watch_rule_revision ||--o{ operation_watch_rule_site : "rule_id,rule_version"
+    core_site ||--o{ operation_watch_rule_site : "site_id"
+    operation_watch_rule_revision ||--o{ operation_alert_event : "rule_id,rule_version"
+    capture_capture_event ||--o{ operation_alert_event : "capture_id"
+    capture_target ||--o{ operation_alert_event : "target_id,target_type"
+    core_site |o--o{ operation_alert_event : "site_id"
+    core_device |o--o{ operation_alert_event : "device_id"
+    operation_watch_rule_revision ||--o{ operation_watch_statistics_run : "rule_id,final_rule_version"
+    operation_watch_statistics_run ||--o{ operation_watch_statistics : "rule_id"
+    capture_target ||--o{ operation_watch_statistics : "target_id,target_type"
+    core_site |o--o{ operation_watch_statistics : "most_frequent_site_id"
+    operation_notification_template ||--o{ operation_notification_template_variable : "template_code,template_version"
+    auth_app_user |o--o{ operation_notification_plan : "created_by"
+    auth_app_user |o--o{ operation_notification_plan : "updated_by"
+    auth_app_user ||--o{ operation_notification_plan : "owner_user_id"
+    analysis_async_task |o--o{ operation_notification_plan : "last_execution_task_id"
+    operation_notification_plan ||--o{ operation_notification_plan_revision : "plan_id"
+    operation_notification_template ||--o{ operation_notification_plan_revision : "template_code,template_version"
+    auth_app_user ||--o{ operation_notification_plan_revision : "created_by"
+    operation_notification_plan_revision ||--o{ operation_notification_plan : "id,current_plan_version"
+    auth_app_user |o--o{ operation_notification_recipient : "recipient_user_id"
+    auth_app_user ||--o{ operation_notification_recipient : "owner_user_id"
+    operation_notification_plan_revision ||--o{ operation_notification_plan_recipient : "plan_id,plan_version"
+    operation_notification_recipient ||--o{ operation_notification_plan_recipient : "recipient_id"
+    operation_watch_rule_revision ||--o{ operation_watch_notification_recipient : "rule_id,rule_version"
+    operation_notification_recipient ||--o{ operation_watch_notification_recipient : "recipient_id"
+    analysis_async_task ||--o| operation_notification_execution : "task_id"
+    operation_notification_plan_revision ||--o{ operation_notification_execution : "plan_id,plan_version"
+    analysis_async_task |o--o{ operation_delivery : "execution_task_id"
+    operation_alert_event |o--o{ operation_delivery : "alert_id"
+    operation_notification_recipient ||--o{ operation_delivery : "recipient_id"
+    operation_notification_channel |o--o{ operation_delivery : "channel_id"
+    operation_notification_plan_revision |o--o{ operation_delivery : "plan_id,plan_version"
+    operation_watch_rule_revision |o--o{ operation_delivery : "rule_id,rule_version"
+    operation_notification_template ||--o{ operation_delivery : "template_code,template_version"
+    operation_delivery ||--o{ operation_delivery_attempt : "delivery_id"
+    operation_delivery ||--o| operation_platform_message : "delivery_id"
+    auth_app_user ||--o{ operation_platform_message : "recipient_user_id"
+    operation_alert_event |o--o{ operation_platform_message : "alert_id"
+    operation_notification_plan |o--o{ operation_platform_message : "plan_id"
+    operation_notification_channel ||--o{ operation_sms_modem : "channel_id"
+    operation_sms_modem ||--o{ operation_sms_modem_status : "modem_id"
+    core_region |o--o{ core_metric_scope : "region_code"
+    core_site |o--o{ core_metric_scope : "site_id"
+    core_device |o--o{ core_metric_scope : "device_id"
+    core_metric_definition ||--o{ core_metric_snapshot : "metric_code,definition_version"
+    core_metric_scope ||--o{ core_metric_snapshot : "scope_id"
+    core_metric_definition ||--o{ core_metric_refresh_checkpoint : "metric_code,definition_version"
+    core_device |o--o{ core_anomaly_event : "device_id"
+    capture_ingestion_item |o--o{ core_anomaly_event : "ingestion_item_id"
+    analysis_async_task ||--o| operation_device_command_job : "task_id"
+    core_device_group |o--o{ operation_device_command_job : "group_id"
+    core_region |o--o{ operation_device_command_job : "region_code"
+    operation_device_command_job |o--o{ operation_device_command_job : "revised_from_task_id"
+    audit_sensitive_action_review |o--o{ operation_device_command_job : "confirmation_record_id"
+    operation_device_command_job ||--o{ operation_device_command : "job_task_id"
+    core_device ||--o{ operation_device_command : "device_id"
+    operation_device_command ||--o{ operation_device_command_attempt : "command_id"
+    analysis_async_task ||--o| operation_report_job : "task_id"
+    analysis_input_snapshot ||--o{ operation_report_job : "input_snapshot_id"
+    core_file_asset |o--o{ operation_report_job : "output_file_id"
+    analysis_task_attempt |o--o{ operation_report_job : "task_id,published_attempt_no"
+    operation_report_job ||--o{ operation_report_definition : "report_id"
+    core_region ||--o{ operation_report_definition : "region_code"
+    operation_report_definition ||--o{ operation_report_definition_site : "definition_id"
+    core_site ||--o{ operation_report_definition_site : "site_id"
+    operation_report_definition ||--o{ operation_report_device_row : "definition_id"
+    core_device ||--o{ operation_report_device_row : "device_id"
+    core_site ||--o{ operation_report_device_row : "site_id"
+    core_region ||--o{ operation_report_device_row : "region_code"
+    operation_report_definition ||--o{ operation_report_region_row : "definition_id"
+    core_region ||--o{ operation_report_region_row : "region_code"
+    operation_report_definition ||--o{ operation_report_metric_row : "definition_id"
+    core_metric_definition ||--o{ operation_report_metric_row : "metric_code,definition_version"
+    operation_report_definition ||--o{ operation_report_series : "definition_id"
+    core_metric_definition ||--o{ operation_report_series : "metric_code,definition_version"
+    core_device |o--o{ operation_report_series : "device_id"
+    core_region |o--o{ operation_report_series : "region_code"
+    operation_report_series ||--o{ operation_report_series_point : "series_id"
+    operation_report_definition ||--o{ operation_report_component_row : "definition_id"
+    operation_report_job ||--o{ operation_report_output_file : "report_id"
+    operation_report_definition |o--o{ operation_report_output_file : "definition_id"
+    core_file_asset ||--o{ operation_report_output_file : "file_asset_id"
+    auth_app_user |o--o{ audit_audit_event : "actor_user_id"
+    analysis_async_task |o--o{ audit_audit_event : "business_task_id"
+    auth_app_user ||--o{ operation_decryption_request : "requester_user_id"
+    auth_app_user |o--o{ operation_decryption_request : "recipient_user_id"
+    analysis_analysis_context ||--o{ operation_decryption_request : "context_id"
+    analysis_input_snapshot ||--o{ operation_decryption_request : "input_snapshot_id"
+    core_file_asset |o--o{ operation_decryption_request : "input_file_id"
+    operation_decryption_request ||--o{ operation_decryption_capture : "request_id"
+    capture_capture_event ||--o{ operation_decryption_capture : "capture_id"
+    operation_decryption_request |o--o{ audit_sensitive_action_review : "decryption_request_id"
+    operation_device_command_job |o--o{ audit_sensitive_action_review : "device_command_task_id"
+    analysis_export_job |o--o{ audit_sensitive_action_review : "export_task_id"
+    auth_app_user ||--o{ audit_sensitive_action_review : "actor_user_id"
+    operation_decryption_request ||--o{ operation_decryption_result_grant : "request_id"
+    auth_app_user ||--o{ operation_decryption_result_grant : "authorized_user_id"
+    core_file_asset ||--o{ operation_decryption_result_grant : "result_file_id"
+    core_device_status_event |o--o{ capture_ingestion_item : "device_status_event_id"
+    capture_source_counter_sample |o--o{ capture_ingestion_item : "counter_sample_id"
+    analysis_collision_event ||--o{ analysis_collision_event_evidence : "collision_event_id"
+    capture_capture_event ||--o{ analysis_collision_event_evidence : "capture_id"
+    analysis_model_parameter_version |o--o{ analysis_trend_model : "current_parameter_version_id,id"
+    analysis_analysis_result ||--o{ analysis_result_selected_region : "result_id,analysis_job_id"
+    operation_notification_execution |o--o{ operation_delivery : "execution_task_id,plan_id,plan_version"
+    operation_alert_event |o--o{ operation_delivery : "alert_id,rule_id,rule_version"
+    capture_target ||--o{ analysis_vehicle_profile : "primary_plate_target_id,plate_target_type"

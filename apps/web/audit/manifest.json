@@ -1,0 +1,29 @@
+{
+  "source": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\平台功能设计（原始）.pdf",
+  "sha256": "b702a1122d5a23f2fab21e6ba645619f6cf7b7c2c9f65e53919d528cb2e0c9dd",
+  "pages": 26,
+  "embeddedImages": 64,
+  "imageSourceSizes": [
+    [
+      2,
+      2
+    ]
+  ],
+  "baselineSha256": "db1fead842017e3f4e68058f721f8bfdf0119608d482ae93fb87954ce249f0d1",
+  "scope": "214 readable textual acceptance items; original screenshots absent",
+  "validatedRequirements": 214,
+  "differences": 212,
+  "browser": "154.0.4258.62",
+  "tests": 69,
+  "passed": 69,
+  "consoleErrors": [],
+  "xlsxValidationCount": 29,
+  "baseline": "docs/system-design/ui/prototype-audit-baseline.html",
+  "verificationTime": "2026-10-07T08:01:53.413Z",
+  "sourceFiles": {
+    "index.html": "808c187a04113e16d97f595e6393aece8eddd5403a684e699801145d2e5918e9",
+    "app.js": "0b0d906b9478a89706f7d40ccfd17fca602b33d57c810fdfcb0626806fd14776",
+    "app.css": "f10c288ad67a17bbae2530b2c6ddb9091a42fed384066adebfc7d38069df268f",
+    "vendor/jszip.min.js": "acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e"
+  }
+}

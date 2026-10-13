@@ -1,0 +1,7 @@
+node_modules/
+.npm-cache/
+.vite/
+coverage/
+test-results/
+.env.local
+.env.*.local

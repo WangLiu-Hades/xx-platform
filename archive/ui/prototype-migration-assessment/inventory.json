@@ -1,0 +1,1854 @@
+{
+  "inspectedAt": "2026-10-08T07:42:29.038Z",
+  "method": "Babel AST: top-level named function declarations/arrow bindings; action equality comparisons; AST event listener registrations; SHA256 against prior audit manifest. Counts are structural, not complexity or coverage guarantees.",
+  "appBytes": 105735,
+  "groups": {
+    "系统首页": [
+      "系统首页"
+    ],
+    "数据检索": [
+      "围栏检索",
+      "车牌检索",
+      "MAC检索",
+      "人像检索",
+      "人员库"
+    ],
+    "综合分析": [
+      "地图研判"
+    ],
+    "数据研判": [
+      "伴随任务",
+      "碰撞任务",
+      "区域统计",
+      "数据运算"
+    ],
+    "布控预警": [
+      "综合布控",
+      "告警结果"
+    ],
+    "数据模型": [
+      "图码档案",
+      "车码档案",
+      "数据态势"
+    ],
+    "运维服务": [
+      "运维首页",
+      "场所管理",
+      "设备管理",
+      "设备分布",
+      "参数配置",
+      "运维报表",
+      "运维通知"
+    ],
+    "系统设置": [
+      "用户管理",
+      "角色管理",
+      "操作日志",
+      "短信日志"
+    ],
+    "共享入口": [
+      "任务中心"
+    ]
+  },
+  "pageCount": 28,
+  "namedFunctionCount": 100,
+  "variables": [
+    "groups",
+    "types",
+    "day",
+    "key",
+    "E",
+    "B",
+    "L",
+    "card",
+    "db",
+    "active",
+    "session",
+    "detail",
+    "history",
+    "pageStates",
+    "scopes",
+    "modalSave",
+    "modalPrevious",
+    "importHandler",
+    "drawer",
+    "faceSource",
+    "faceReference",
+    "operands",
+    "mapState",
+    "toastTimer",
+    "ps",
+    "uid",
+    "user",
+    "role",
+    "superuser",
+    "visibleSites",
+    "allowed",
+    "captureRows",
+    "selectSites",
+    "contextData",
+    "chartSnapshots",
+    "wizard",
+    "regionTimer",
+    "boxDrag"
+  ],
+  "seedKeys": [
+    "sites",
+    "devices",
+    "captures",
+    "people",
+    "analysis",
+    "libraries",
+    "datasets",
+    "watches",
+    "configs",
+    "reports",
+    "notifications",
+    "models",
+    "roles",
+    "users",
+    "logs",
+    "sms",
+    "messages"
+  ],
+  "seedEntityCount": 17,
+  "events": [
+    {
+      "target": "document",
+      "event": "click",
+      "line": 185
+    },
+    {
+      "target": "document",
+      "event": "submit",
+      "line": 186
+    },
+    {
+      "target": "document",
+      "event": "change",
+      "line": 187
+    },
+    {
+      "target": "document",
+      "event": "input",
+      "line": 196
+    },
+    {
+      "target": "document",
+      "event": "contextmenu",
+      "line": 197
+    },
+    {
+      "target": "document",
+      "event": "keydown",
+      "line": 198
+    },
+    {
+      "target": "document",
+      "event": "mouseover",
+      "line": 199
+    },
+    {
+      "target": "document",
+      "event": "mouseout",
+      "line": 199
+    },
+    {
+      "target": "document",
+      "event": "pointerdown",
+      "line": 200
+    },
+    {
+      "target": "document",
+      "event": "pointermove",
+      "line": 200
+    },
+    {
+      "target": "document",
+      "event": "pointerup",
+      "line": 200
+    },
+    {
+      "target": "document",
+      "event": "dragstart",
+      "line": 201
+    },
+    {
+      "target": "document",
+      "event": "dragover",
+      "line": 201
+    },
+    {
+      "target": "document",
+      "event": "dragleave",
+      "line": 201
+    },
+    {
+      "target": "document",
+      "event": "drop",
+      "line": 201
+    },
+    {
+      "target": "window",
+      "event": "scroll",
+      "line": 203
+    }
+  ],
+  "innerHTML": [
+    31,
+    31,
+    35,
+    36,
+    59,
+    60,
+    156,
+    192,
+    193,
+    199
+  ],
+  "actionNames": [
+    "add-admin",
+    "add-analysis",
+    "add-config",
+    "add-dataset",
+    "add-library",
+    "add-model",
+    "add-notification",
+    "add-person",
+    "add-report",
+    "add-watch",
+    "analysis-detail",
+    "back",
+    "chart-export",
+    "chart-toggle",
+    "clear-face",
+    "close-modal",
+    "compute-set",
+    "config-detail",
+    "config-prev",
+    "context",
+    "dataset-action",
+    "dataset-go",
+    "dataset-help",
+    "decrypt",
+    "decrypt-search",
+    "delete-dataset",
+    "delete-person",
+    "delete-scope",
+    "device-info",
+    "device-operation",
+    "download-report",
+    "drawer",
+    "drawer-add",
+    "edit-admin",
+    "edit-analysis",
+    "edit-config",
+    "edit-library",
+    "edit-model",
+    "edit-notification",
+    "edit-person",
+    "edit-watch",
+    "export-analysis",
+    "export-captures",
+    "export-libraries",
+    "export-logs",
+    "export-scope",
+    "finish-watch",
+    "hit-action",
+    "home-region",
+    "import-dataset",
+    "import-libraries",
+    "import-template",
+    "library-detail",
+    "login",
+    "logout",
+    "map-analysis",
+    "map-cluster",
+    "map-devices",
+    "map-heat",
+    "map-layer",
+    "map-point",
+    "map-reset",
+    "map-sites",
+    "map-tool",
+    "map-trajectory",
+    "map-zoom",
+    "messages",
+    "nav",
+    "notification-detail",
+    "page",
+    "person-info",
+    "person-watch",
+    "profile-detail",
+    "profile-track",
+    "remove-operand",
+    "report-detail",
+    "reset-devices",
+    "reset-query",
+    "result-action",
+    "result-tab",
+    "revoke-notification",
+    "revoke-watch",
+    "same-face",
+    "save-face",
+    "select-dataset",
+    "simulate-hit",
+    "simulate-notification",
+    "site-info",
+    "sort",
+    "state",
+    "stats-action",
+    "upload-face",
+    "watch-detail",
+    "watch-result-action",
+    "watch-tab",
+    "伴随",
+    "位置追踪",
+    "复制",
+    "布控",
+    "检索",
+    "统计",
+    "轨迹"
+  ],
+  "actionComparisonCount": 102,
+  "functions": [
+    {
+      "name": "E",
+      "line": 5,
+      "bytes": 105,
+      "nodes": 31,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "String"
+      ]
+    },
+    {
+      "name": "B",
+      "line": 6,
+      "bytes": 182,
+      "nodes": 31,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "L",
+      "line": 7,
+      "bytes": 128,
+      "nodes": 18,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "card",
+      "line": 8,
+      "bytes": 93,
+      "nodes": 16,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "portrait",
+      "line": 9,
+      "bytes": 470,
+      "nodes": 30,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "encodeURIComponent"
+      ]
+    },
+    {
+      "name": "seed",
+      "line": 10,
+      "bytes": 4948,
+      "nodes": 1266,
+      "branches": 7,
+      "templates": 2,
+      "calls": [
+        "String",
+        "portrait",
+        "reportTypes"
+      ]
+    },
+    {
+      "name": "reportTypes",
+      "line": 18,
+      "bytes": 233,
+      "nodes": 13,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "ps",
+      "line": 21,
+      "bytes": 127,
+      "nodes": 34,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "uid",
+      "line": 22,
+      "bytes": 66,
+      "nodes": 26,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "user",
+      "line": 23,
+      "bytes": 49,
+      "nodes": 20,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "role",
+      "line": 23,
+      "bytes": 53,
+      "nodes": 23,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "user"
+      ]
+    },
+    {
+      "name": "superuser",
+      "line": 23,
+      "bytes": 22,
+      "nodes": 7,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "user"
+      ]
+    },
+    {
+      "name": "visibleSites",
+      "line": 24,
+      "bytes": 74,
+      "nodes": 25,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "role",
+        "superuser"
+      ]
+    },
+    {
+      "name": "allowed",
+      "line": 25,
+      "bytes": 89,
+      "nodes": 29,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "role",
+        "superuser"
+      ]
+    },
+    {
+      "name": "save",
+      "line": 26,
+      "bytes": 61,
+      "nodes": 14,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "log",
+      "line": 27,
+      "bytes": 172,
+      "nodes": 47,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "save",
+        "uid",
+        "user"
+      ]
+    },
+    {
+      "name": "toast",
+      "line": 28,
+      "bytes": 224,
+      "nodes": 54,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "clearTimeout",
+        "setTimeout"
+      ]
+    },
+    {
+      "name": "enter",
+      "line": 29,
+      "bytes": 490,
+      "nodes": 111,
+      "branches": 2,
+      "templates": 0,
+      "calls": [
+        "log",
+        "render"
+      ]
+    },
+    {
+      "name": "logout",
+      "line": 30,
+      "bytes": 140,
+      "nodes": 31,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "log"
+      ]
+    },
+    {
+      "name": "nav",
+      "line": 31,
+      "bytes": 602,
+      "nodes": 147,
+      "branches": 3,
+      "templates": 3,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "show",
+      "line": 32,
+      "bytes": 514,
+      "nodes": 126,
+      "branches": 6,
+      "templates": 0,
+      "calls": [
+        "allowed",
+        "closeContext",
+        "closeModal",
+        "log",
+        "ps",
+        "render",
+        "structuredClone",
+        "toast"
+      ]
+    },
+    {
+      "name": "back",
+      "line": 33,
+      "bytes": 122,
+      "nodes": 38,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "render"
+      ]
+    },
+    {
+      "name": "openDetail",
+      "line": 34,
+      "bytes": 147,
+      "nodes": 45,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "log",
+        "render",
+        "structuredClone"
+      ]
+    },
+    {
+      "name": "modal",
+      "line": 35,
+      "bytes": 654,
+      "nodes": 69,
+      "branches": 1,
+      "templates": 2,
+      "calls": [
+        "B",
+        "E"
+      ]
+    },
+    {
+      "name": "closeModal",
+      "line": 36,
+      "bytes": 130,
+      "nodes": 26,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "formError",
+      "line": 37,
+      "bytes": 111,
+      "nodes": 26,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "field",
+      "line": 38,
+      "bytes": 418,
+      "nodes": 99,
+      "branches": 5,
+      "templates": 4,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "checkFields",
+      "line": 39,
+      "bytes": 251,
+      "nodes": 55,
+      "branches": 1,
+      "templates": 2,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "controls",
+      "line": 40,
+      "bytes": 326,
+      "nodes": 61,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "B",
+        "field",
+        "ps"
+      ]
+    },
+    {
+      "name": "filters",
+      "line": 41,
+      "bytes": 438,
+      "nodes": 125,
+      "branches": 5,
+      "templates": 0,
+      "calls": [
+        "String",
+        "prop",
+        "ps"
+      ]
+    },
+    {
+      "name": "selected",
+      "line": 42,
+      "bytes": 57,
+      "nodes": 13,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "ps"
+      ]
+    },
+    {
+      "name": "rowsSelected",
+      "line": 43,
+      "bytes": 98,
+      "nodes": 24,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "selected"
+      ]
+    },
+    {
+      "name": "table",
+      "line": 44,
+      "bytes": 2026,
+      "nodes": 393,
+      "branches": 11,
+      "templates": 8,
+      "calls": [
+        "B",
+        "E",
+        "String",
+        "ps",
+        "renderRow",
+        "rowsSelected",
+        "selected"
+      ]
+    },
+    {
+      "name": "captureRows",
+      "line": 49,
+      "bytes": 99,
+      "nodes": 32,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "role",
+        "superuser"
+      ]
+    },
+    {
+      "name": "searchRows",
+      "line": 50,
+      "bytes": 126,
+      "nodes": 26,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "captureRows",
+        "filters"
+      ]
+    },
+    {
+      "name": "selectSites",
+      "line": 51,
+      "bytes": 47,
+      "nodes": 14,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "visibleSites"
+      ]
+    },
+    {
+      "name": "captureTable",
+      "line": 52,
+      "bytes": 369,
+      "nodes": 89,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "E",
+        "L",
+        "table"
+      ]
+    },
+    {
+      "name": "currentDatasetRows",
+      "line": 53,
+      "bytes": 146,
+      "nodes": 29,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "dataDrawer",
+      "line": 54,
+      "bytes": 682,
+      "nodes": 87,
+      "branches": 2,
+      "templates": 3,
+      "calls": [
+        "B",
+        "E",
+        "currentDatasetRows"
+      ]
+    },
+    {
+      "name": "statsFor",
+      "line": 55,
+      "bytes": 437,
+      "nodes": 133,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "statsPanel",
+      "line": 56,
+      "bytes": 975,
+      "nodes": 177,
+      "branches": 2,
+      "templates": 3,
+      "calls": [
+        "B",
+        "E",
+        "card",
+        "ps",
+        "selected"
+      ]
+    },
+    {
+      "name": "searchPage",
+      "line": 57,
+      "bytes": 754,
+      "nodes": 100,
+      "branches": 6,
+      "templates": 2,
+      "calls": [
+        "B",
+        "captureTable",
+        "controls",
+        "role",
+        "searchRows",
+        "selectSites",
+        "statsPanel"
+      ]
+    },
+    {
+      "name": "facePage",
+      "line": 58,
+      "bytes": 1549,
+      "nodes": 240,
+      "branches": 3,
+      "templates": 5,
+      "calls": [
+        "B",
+        "E",
+        "Number",
+        "controls",
+        "portrait",
+        "ps",
+        "searchRows",
+        "selectSites",
+        "selected"
+      ]
+    },
+    {
+      "name": "closeContext",
+      "line": 59,
+      "bytes": 77,
+      "nodes": 13,
+      "branches": 0,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "contextMenu",
+      "line": 60,
+      "bytes": 524,
+      "nodes": 122,
+      "branches": 1,
+      "templates": 2,
+      "calls": [
+        "E",
+        "closeContext"
+      ]
+    },
+    {
+      "name": "contextFor",
+      "line": 62,
+      "bytes": 528,
+      "nodes": 112,
+      "branches": 3,
+      "templates": 0,
+      "calls": [
+        "contextMenu",
+        "rowsSelected"
+      ]
+    },
+    {
+      "name": "dataAction",
+      "line": 63,
+      "bytes": 1210,
+      "nodes": 263,
+      "branches": 9,
+      "templates": 1,
+      "calls": [
+        "E",
+        "analysisForm",
+        "modal",
+        "ps",
+        "render",
+        "show",
+        "statsFor",
+        "toast",
+        "watchForm"
+      ]
+    },
+    {
+      "name": "lineChart",
+      "line": 65,
+      "bytes": 1746,
+      "nodes": 404,
+      "branches": 7,
+      "templates": 5,
+      "calls": [
+        "E",
+        "Number",
+        "ps"
+      ]
+    },
+    {
+      "name": "homeMap",
+      "line": 71,
+      "bytes": 325,
+      "nodes": 60,
+      "branches": 0,
+      "templates": 2,
+      "calls": [
+        "E"
+      ]
+    },
+    {
+      "name": "dashboard",
+      "line": 72,
+      "bytes": 3116,
+      "nodes": 513,
+      "branches": 7,
+      "templates": 16,
+      "calls": [
+        "B",
+        "Number",
+        "card",
+        "homeMap",
+        "lineChart",
+        "ps"
+      ]
+    },
+    {
+      "name": "mapDevices",
+      "line": 73,
+      "bytes": 333,
+      "nodes": 103,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "filters",
+        "ps",
+        "role",
+        "superuser"
+      ]
+    },
+    {
+      "name": "mapResults",
+      "line": 74,
+      "bytes": 150,
+      "nodes": 39,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "ps",
+        "searchRows"
+      ]
+    },
+    {
+      "name": "mapPage",
+      "line": 75,
+      "bytes": 5168,
+      "nodes": 954,
+      "branches": 19,
+      "templates": 18,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "captureTable",
+        "card",
+        "checkFields",
+        "controls",
+        "mapDevices",
+        "mapResults",
+        "ps",
+        "role",
+        "selectSites",
+        "superuser",
+        "visibleSites"
+      ]
+    },
+    {
+      "name": "analysisForm",
+      "line": 81,
+      "bytes": 2026,
+      "nodes": 480,
+      "branches": 9,
+      "templates": 3,
+      "calls": [
+        "E",
+        "Error",
+        "Number",
+        "checkFields",
+        "closeModal",
+        "field",
+        "modal",
+        "ps",
+        "render",
+        "save",
+        "show",
+        "toast",
+        "uid",
+        "user",
+        "visibleSites"
+      ]
+    },
+    {
+      "name": "analysisResult",
+      "line": 82,
+      "bytes": 740,
+      "nodes": 228,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "captureRows"
+      ]
+    },
+    {
+      "name": "taskPage",
+      "line": 83,
+      "bytes": 1871,
+      "nodes": 375,
+      "branches": 9,
+      "templates": 3,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "analysisResult",
+        "card",
+        "controls",
+        "filters",
+        "ps",
+        "table",
+        "taskPage"
+      ]
+    },
+    {
+      "name": "libraryPage",
+      "line": 85,
+      "bytes": 1147,
+      "nodes": 249,
+      "branches": 2,
+      "templates": 2,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "card",
+        "controls",
+        "filters",
+        "libraryPage",
+        "table"
+      ]
+    },
+    {
+      "name": "libraryForm",
+      "line": 87,
+      "bytes": 624,
+      "nodes": 153,
+      "branches": 3,
+      "templates": 1,
+      "calls": [
+        "Error",
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "personForm",
+      "line": 88,
+      "bytes": 859,
+      "nodes": 218,
+      "branches": 2,
+      "templates": 1,
+      "calls": [
+        "closeModal",
+        "field",
+        "modal",
+        "portrait",
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "personInfo",
+      "line": 89,
+      "bytes": 485,
+      "nodes": 99,
+      "branches": 0,
+      "templates": 2,
+      "calls": [
+        "E",
+        "modal"
+      ]
+    },
+    {
+      "name": "datasetPage",
+      "line": 90,
+      "bytes": 1828,
+      "nodes": 228,
+      "branches": 1,
+      "templates": 5,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "String",
+        "captureTable",
+        "card",
+        "ps",
+        "rowsSelected"
+      ]
+    },
+    {
+      "name": "addDataset",
+      "line": 91,
+      "bytes": 455,
+      "nodes": 90,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "setEvaluate",
+      "line": 92,
+      "bytes": 804,
+      "nodes": 201,
+      "branches": 7,
+      "templates": 0,
+      "calls": [
+        "Error",
+        "atom",
+        "expr"
+      ]
+    },
+    {
+      "name": "watchPage",
+      "line": 93,
+      "bytes": 2100,
+      "nodes": 436,
+      "branches": 7,
+      "templates": 4,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "card",
+        "controls",
+        "filters",
+        "ps",
+        "rowsSelected",
+        "statsFor",
+        "table",
+        "watchPage"
+      ]
+    },
+    {
+      "name": "watchForm",
+      "line": 95,
+      "bytes": 1354,
+      "nodes": 329,
+      "branches": 3,
+      "templates": 1,
+      "calls": [
+        "Error",
+        "closeModal",
+        "field",
+        "modal",
+        "ps",
+        "render",
+        "save",
+        "show",
+        "toast",
+        "uid",
+        "user"
+      ]
+    },
+    {
+      "name": "simulateHit",
+      "line": 96,
+      "bytes": 573,
+      "nodes": 155,
+      "branches": 4,
+      "templates": 0,
+      "calls": [
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "profilePage",
+      "line": 97,
+      "bytes": 899,
+      "nodes": 218,
+      "branches": 5,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "captureRows",
+        "controls",
+        "filters",
+        "profileDetail",
+        "table"
+      ]
+    },
+    {
+      "name": "profileDetail",
+      "line": 98,
+      "bytes": 538,
+      "nodes": 116,
+      "branches": 2,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "captureRows",
+        "captureTable",
+        "card",
+        "ps"
+      ]
+    },
+    {
+      "name": "modelPage",
+      "line": 99,
+      "bytes": 856,
+      "nodes": 213,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "captureRows",
+        "controls",
+        "filters",
+        "table"
+      ]
+    },
+    {
+      "name": "modelForm",
+      "line": 100,
+      "bytes": 890,
+      "nodes": 210,
+      "branches": 3,
+      "templates": 1,
+      "calls": [
+        "Error",
+        "Number",
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "opsPage",
+      "line": 101,
+      "bytes": 2498,
+      "nodes": 426,
+      "branches": 3,
+      "templates": 7,
+      "calls": [
+        "B",
+        "E",
+        "card",
+        "field",
+        "lineChart",
+        "ps"
+      ]
+    },
+    {
+      "name": "adminPage",
+      "line": 102,
+      "bytes": 2469,
+      "nodes": 598,
+      "branches": 11,
+      "templates": 2,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "controls",
+        "filters",
+        "ps",
+        "role",
+        "selectSites",
+        "superuser",
+        "table",
+        "visibleSites"
+      ]
+    },
+    {
+      "name": "adminForm",
+      "line": 108,
+      "bytes": 3628,
+      "nodes": 952,
+      "branches": 23,
+      "templates": 2,
+      "calls": [
+        "Error",
+        "checkFields",
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "toast",
+        "uid",
+        "user",
+        "visibleSites"
+      ]
+    },
+    {
+      "name": "deviceInfo",
+      "line": 119,
+      "bytes": 542,
+      "nodes": 122,
+      "branches": 1,
+      "templates": 2,
+      "calls": [
+        "B",
+        "E",
+        "modal"
+      ]
+    },
+    {
+      "name": "deviceOperation",
+      "line": 120,
+      "bytes": 1741,
+      "nodes": 368,
+      "branches": 13,
+      "templates": 4,
+      "calls": [
+        "E",
+        "Error",
+        "Number",
+        "closeModal",
+        "exportRows",
+        "field",
+        "importDialog",
+        "lineChart",
+        "modal",
+        "render",
+        "save",
+        "toast"
+      ]
+    },
+    {
+      "name": "configPage",
+      "line": 121,
+      "bytes": 488,
+      "nodes": 111,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "controls",
+        "filters",
+        "table"
+      ]
+    },
+    {
+      "name": "configForm",
+      "line": 123,
+      "bytes": 2108,
+      "nodes": 519,
+      "branches": 12,
+      "templates": 3,
+      "calls": [
+        "B",
+        "Error",
+        "Number",
+        "checkFields",
+        "closeModal",
+        "configForm",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "structuredClone",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "configDetail",
+      "line": 124,
+      "bytes": 375,
+      "nodes": 96,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "modal"
+      ]
+    },
+    {
+      "name": "reportPage",
+      "line": 125,
+      "bytes": 608,
+      "nodes": 111,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "controls",
+        "filters",
+        "table"
+      ]
+    },
+    {
+      "name": "reportForm",
+      "line": 126,
+      "bytes": 995,
+      "nodes": 164,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "Error",
+        "checkFields",
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "reportTypes",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "reportData",
+      "line": 127,
+      "bytes": 1309,
+      "nodes": 384,
+      "branches": 12,
+      "templates": 0,
+      "calls": []
+    },
+    {
+      "name": "reportChartRows",
+      "line": 128,
+      "bytes": 796,
+      "nodes": 242,
+      "branches": 3,
+      "templates": 0,
+      "calls": [
+        "Number",
+        "String",
+        "reportData"
+      ]
+    },
+    {
+      "name": "reportDetail",
+      "line": 133,
+      "bytes": 1391,
+      "nodes": 293,
+      "branches": 6,
+      "templates": 5,
+      "calls": [
+        "B",
+        "E",
+        "Number",
+        "lineChart",
+        "modal",
+        "reportChartRows",
+        "reportData",
+        "toast"
+      ]
+    },
+    {
+      "name": "notificationPage",
+      "line": 134,
+      "bytes": 601,
+      "nodes": 98,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "B",
+        "E",
+        "L",
+        "controls",
+        "filters",
+        "table"
+      ]
+    },
+    {
+      "name": "notificationForm",
+      "line": 135,
+      "bytes": 786,
+      "nodes": 151,
+      "branches": 2,
+      "templates": 1,
+      "calls": [
+        "closeModal",
+        "field",
+        "modal",
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "sendNotification",
+      "line": 136,
+      "bytes": 438,
+      "nodes": 110,
+      "branches": 1,
+      "templates": 1,
+      "calls": [
+        "render",
+        "save",
+        "toast",
+        "uid"
+      ]
+    },
+    {
+      "name": "logPage",
+      "line": 137,
+      "bytes": 908,
+      "nodes": 188,
+      "branches": 7,
+      "templates": 0,
+      "calls": [
+        "B",
+        "E",
+        "controls",
+        "filters",
+        "superuser",
+        "table",
+        "user"
+      ]
+    },
+    {
+      "name": "deleteScope",
+      "line": 138,
+      "bytes": 647,
+      "nodes": 165,
+      "branches": 5,
+      "templates": 0,
+      "calls": [
+        "ps",
+        "render",
+        "rowsSelected",
+        "save",
+        "toast"
+      ]
+    },
+    {
+      "name": "workbook",
+      "line": 139,
+      "bytes": 2368,
+      "nodes": 227,
+      "branches": 1,
+      "templates": 3,
+      "calls": [
+        "String",
+        "col",
+        "xml"
+      ]
+    },
+    {
+      "name": "download",
+      "line": 142,
+      "bytes": 213,
+      "nodes": 60,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "setTimeout"
+      ]
+    },
+    {
+      "name": "exportRows",
+      "line": 143,
+      "bytes": 126,
+      "nodes": 25,
+      "branches": 0,
+      "templates": 0,
+      "calls": [
+        "download",
+        "toast",
+        "workbook"
+      ]
+    },
+    {
+      "name": "downloadReport",
+      "line": 144,
+      "bytes": 370,
+      "nodes": 87,
+      "branches": 1,
+      "templates": 0,
+      "calls": [
+        "download",
+        "exportRows",
+        "reportData",
+        "toast",
+        "workbook"
+      ]
+    },
+    {
+      "name": "readImport",
+      "line": 145,
+      "bytes": 1797,
+      "nodes": 496,
+      "branches": 13,
+      "templates": 0,
+      "calls": [
+        "Error",
+        "Number"
+      ]
+    },
+    {
+      "name": "importDialog",
+      "line": 147,
+      "bytes": 758,
+      "nodes": 100,
+      "branches": 2,
+      "templates": 1,
+      "calls": [
+        "B",
+        "Error",
+        "apply",
+        "closeModal",
+        "modal",
+        "render",
+        "save",
+        "structuredClone",
+        "toast"
+      ]
+    },
+    {
+      "name": "importDataset",
+      "line": 148,
+      "bytes": 697,
+      "nodes": 222,
+      "branches": 2,
+      "templates": 0,
+      "calls": [
+        "Error",
+        "Number",
+        "importDialog",
+        "uid"
+      ]
+    },
+    {
+      "name": "importLibraries",
+      "line": 149,
+      "bytes": 819,
+      "nodes": 229,
+      "branches": 5,
+      "templates": 0,
+      "calls": [
+        "Error",
+        "importDialog",
+        "portrait",
+        "uid"
+      ]
+    },
+    {
+      "name": "exportLibraries",
+      "line": 150,
+      "bytes": 447,
+      "nodes": 126,
+      "branches": 2,
+      "templates": 0,
+      "calls": [
+        "exportRows",
+        "rowsSelected",
+        "toast"
+      ]
+    },
+    {
+      "name": "states",
+      "line": 151,
+      "bytes": 385,
+      "nodes": 53,
+      "branches": 0,
+      "templates": 1,
+      "calls": [
+        "B"
+      ]
+    },
+    {
+      "name": "render",
+      "line": 152,
+      "bytes": 2788,
+      "nodes": 530,
+      "branches": 26,
+      "templates": 3,
+      "calls": [
+        "B",
+        "E",
+        "String",
+        "adminPage",
+        "allowed",
+        "card",
+        "configPage",
+        "dashboard",
+        "dataDrawer",
+        "datasetPage",
+        "facePage",
+        "libraryPage",
+        "logPage",
+        "mapPage",
+        "modelPage",
+        "nav",
+        "notificationPage",
+        "opsPage",
+        "profilePage",
+        "ps",
+        "reportPage",
+        "searchPage",
+        "searchRows",
+        "states",
+        "table",
+        "taskPage",
+        "watchPage"
+      ]
+    },
+    {
+      "name": "handle",
+      "line": 158,
+      "bytes": 11736,
+      "nodes": 2596,
+      "branches": 123,
+      "templates": 4,
+      "calls": [
+        "B",
+        "E",
+        "Error",
+        "Number",
+        "String",
+        "addDataset",
+        "adminForm",
+        "analysisForm",
+        "analysisResult",
+        "back",
+        "captureRows",
+        "closeContext",
+        "closeModal",
+        "configDetail",
+        "configForm",
+        "currentDatasetRows",
+        "dataAction",
+        "deleteScope",
+        "deviceInfo",
+        "deviceOperation",
+        "download",
+        "downloadReport",
+        "enter",
+        "exportLibraries",
+        "exportRows",
+        "fetch",
+        "importDataset",
+        "importLibraries",
+        "libraryForm",
+        "logout",
+        "modal",
+        "modelForm",
+        "notificationForm",
+        "openDetail",
+        "personForm",
+        "personInfo",
+        "portrait",
+        "ps",
+        "render",
+        "reportDetail",
+        "reportForm",
+        "rowsSelected",
+        "save",
+        "sendNotification",
+        "setEvaluate",
+        "show",
+        "simulateHit",
+        "toast",
+        "uid",
+        "user",
+        "watchForm"
+      ]
+    }
+  ],
+  "requirementsByPage": {
+    "系统首页": 14,
+    "围栏检索": 16,
+    "车牌检索": 13,
+    "MAC检索": 13,
+    "人像检索": 6,
+    "人员库": 7,
+    "地图研判": 8,
+    "伴随任务": 9,
+    "碰撞任务": 8,
+    "区域统计": 9,
+    "数据运算": 9,
+    "综合布控": 9,
+    "图码档案": 4,
+    "车码档案": 4,
+    "数据态势": 3,
+    "运维首页": 9,
+    "场所管理": 5,
+    "设备管理": 11,
+    "设备分布": 9,
+    "参数配置": 7,
+    "运维报表": 16,
+    "运维通知": 6,
+    "角色管理": 7,
+    "用户管理": 5,
+    "操作日志": 4,
+    "短信日志": 3
+  },
+  "requirementCount": 214,
+  "tests": {
+    "timestamp": "2026-10-07T08:01:53.413Z",
+    "total": 69,
+    "passed": 69,
+    "failed": 0,
+    "consoleErrors": [],
+    "uniqueIds": 69
+  },
+  "hashes": {
+    "index.html": {
+      "expected": "808c187a04113e16d97f595e6393aece8eddd5403a684e699801145d2e5918e9",
+      "actual": "808c187a04113e16d97f595e6393aece8eddd5403a684e699801145d2e5918e9",
+      "match": true
+    },
+    "app.js": {
+      "expected": "0b0d906b9478a89706f7d40ccfd17fca602b33d57c810fdfcb0626806fd14776",
+      "actual": "0b0d906b9478a89706f7d40ccfd17fca602b33d57c810fdfcb0626806fd14776",
+      "match": true
+    },
+    "app.css": {
+      "expected": "f10c288ad67a17bbae2530b2c6ddb9091a42fed384066adebfc7d38069df268f",
+      "actual": "f10c288ad67a17bbae2530b2c6ddb9091a42fed384066adebfc7d38069df268f",
+      "match": true
+    },
+    "vendor/jszip.min.js": {
+      "expected": "acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e",
+      "actual": "acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e",
+      "match": true
+    }
+  },
+  "apiOperationCount": 193,
+  "apiContractSHA256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd"
+}

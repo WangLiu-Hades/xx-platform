@@ -1,0 +1,189 @@
+[
+  {
+    "file": "MAC数据统计验收.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "MAC检索查询结果.xlsx",
+    "rows": 5,
+    "columns": 11,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "人员库.xlsx",
+    "rows": 2,
+    "columns": 10,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "伴随任务结果.xlsx",
+    "rows": 17,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "区域统计结果.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "围栏检索查询结果.xlsx",
+    "rows": 5,
+    "columns": 11,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "操作日志.xlsx",
+    "rows": 7,
+    "columns": 5,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "数据运算详情.xlsx",
+    "rows": 4,
+    "columns": 11,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "数据量异常设备.xlsx",
+    "rows": 13,
+    "columns": 2,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "电围分类统计.xlsx",
+    "rows": 31,
+    "columns": 4,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "电围区域采集数据统计验收.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "电围设备采集数据统计验收.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "电围运营商数据统计验收.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "短信日志.xlsx",
+    "rows": 2,
+    "columns": 6,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "碰撞任务结果.xlsx",
+    "rows": 17,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "系统组件状态验收.xlsx",
+    "rows": 5,
+    "columns": 4,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "设备 A-01.xlsx",
+    "rows": 2,
+    "columns": 13,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "设备实时在线率验收.xlsx",
+    "rows": 6,
+    "columns": 4,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "设备实时状态验收.xlsx",
+    "rows": 11,
+    "columns": 4,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "车牌数据统计验收.xlsx",
+    "rows": 19,
+    "columns": 7,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "车牌检索查询结果.xlsx",
+    "rows": 5,
+    "columns": 11,
+    "readable": true,
+    "warnings": []
+  },
+  {
+    "file": "多报表验收.zip/设备实时在线率.xlsx",
+    "rows": 6,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/设备实时状态.xlsx",
+    "rows": 11,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/电围运营商数据统计.xlsx",
+    "rows": 7,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/电围区域采集数据统计.xlsx",
+    "rows": 7,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/电围设备采集数据统计.xlsx",
+    "rows": 7,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/MAC数据统计.xlsx",
+    "rows": 7,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/车牌数据统计.xlsx",
+    "rows": 7,
+    "readable": true
+  },
+  {
+    "file": "多报表验收.zip/系统组件状态.xlsx",
+    "rows": 5,
+    "readable": true
+  }
+]

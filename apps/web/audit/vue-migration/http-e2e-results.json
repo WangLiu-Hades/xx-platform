@@ -1,0 +1,83 @@
+{
+  "time": "2026-10-09T13:06:23.077Z",
+  "checks": [
+    {
+      "name": "HTTP 登录与会话初始化",
+      "passed": true
+    },
+    {
+      "name": "首页不伪造空值指标",
+      "passed": true
+    },
+    {
+      "name": "检索和运维走 API",
+      "passed": true
+    },
+    {
+      "name": "设备列表和地图走 API",
+      "passed": true
+    },
+    {
+      "name": "无浏览器脚本异常",
+      "passed": true
+    }
+  ],
+  "calls": [
+    {
+      "id": "getCsrfToken",
+      "path": "/auth/csrf",
+      "method": "GET"
+    },
+    {
+      "id": "login",
+      "path": "/auth/login",
+      "method": "POST"
+    },
+    {
+      "id": "getCsrfToken",
+      "path": "/auth/csrf",
+      "method": "GET"
+    },
+    {
+      "id": "getMe",
+      "path": "/me",
+      "method": "GET"
+    },
+    {
+      "id": "getClientConfig",
+      "path": "/client-config",
+      "method": "GET"
+    },
+    {
+      "id": "getDashboardSummary",
+      "path": "/dashboard/summary",
+      "method": "GET"
+    },
+    {
+      "id": "listSites",
+      "path": "/sites",
+      "method": "GET"
+    },
+    {
+      "id": "searchCaptures",
+      "path": "/captures/search",
+      "method": "POST"
+    },
+    {
+      "id": "getOperationSummary",
+      "path": "/operations/summary",
+      "method": "GET"
+    },
+    {
+      "id": "listDevices",
+      "path": "/devices",
+      "method": "GET"
+    },
+    {
+      "id": "getDeviceMapFeatures",
+      "path": "/map/devices",
+      "method": "GET"
+    }
+  ],
+  "errors": []
+}

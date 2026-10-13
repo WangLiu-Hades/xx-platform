@@ -1,0 +1,782 @@
+[
+  {
+    "path": "README.md",
+    "backup": "local-only/path-optimization/original-content/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  },
+  {
+    "path": "apps/web/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/README.md",
+    "reasons": [
+      "路径/协作导航更新",
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/requirements.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/requirements.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "apps/web/audit/vue-migration/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "apps/web/audit/vue-migration/dashboard-smoke.png",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/dashboard-smoke.png",
+    "reasons": [
+      "本次实际浏览器回归会更新报告，保留旧报告原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/vue-migration/flows/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/flows/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "apps/web/audit/vue-migration/map-selection-results.json",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/map-selection-results.json",
+    "reasons": [
+      "本次实际浏览器回归会更新报告，保留旧报告原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/vue-migration/map-selection.png",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/map-selection.png",
+    "reasons": [
+      "保留本次地图回归更新前的截图原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/vue-migration/openapi-generation.json",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/openapi-generation.json",
+    "reasons": [
+      "后续实际契约生成会刷新记录，保留迁移前原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/audit/vue-migration/openapi-operations.json",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/openapi-operations.json",
+    "reasons": [
+      "后续实际契约生成会刷新记录，保留迁移前原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "apps/web/audit/vue-migration/smoke-final.json",
+    "backup": "local-only/path-optimization/original-content/apps/web/audit/vue-migration/smoke-final.json",
+    "reasons": [
+      "本次实际浏览器回归会更新报告，保留旧报告原件"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/scripts/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/scripts/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/scripts/audit.mjs",
+    "backup": "local-only/path-optimization/original-content/apps/web/scripts/audit.mjs",
+    "reasons": [
+      "前端契约生成/汇总相对路径修复"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/scripts/generate-api.mjs",
+    "backup": "local-only/path-optimization/original-content/apps/web/scripts/generate-api.mjs",
+    "reasons": [
+      "前端契约生成/汇总相对路径修复"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/api/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/api/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/components/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/components/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/mock/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/mock/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/pages/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/pages/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/stores/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/stores/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/src/utils/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/src/utils/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/tests/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/tests/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "apps/web/tests/evidence/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/tests/evidence/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "apps/web/vendor/README.md",
+    "backup": "local-only/path-optimization/original-content/apps/web/vendor/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/design-project-root/README.md",
+    "backup": "local-only/path-optimization/original-content/archive/design-project-root/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/design-project-root/docs/README.md",
+    "backup": "local-only/path-optimization/original-content/archive/design-project-root/docs/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/design-project-root/prototype-audit-report.md",
+    "backup": "local-only/path-optimization/original-content/archive/design-project-root/prototype-audit-report.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/design-project-root/prototype-vue-migration-assessment.md",
+    "backup": "local-only/path-optimization/original-content/archive/design-project-root/prototype-vue-migration-assessment.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/legacy-sites/README.md",
+    "backup": "local-only/path-optimization/original-content/archive/legacy-sites/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/ui/prototype-migration-assessment/README.md",
+    "backup": "local-only/path-optimization/original-content/archive/ui/prototype-migration-assessment/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "archive/ui/prototype-v1-baseline/README.md",
+    "backup": "local-only/path-optimization/original-content/archive/ui/prototype-v1-baseline/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/api/FRONTEND_INTEGRATION.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/FRONTEND_INTEGRATION.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/api/OPENAPI_CHANGELOG.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/OPENAPI_CHANGELOG.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "contracts/api/OPENAPI_COVERAGE.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/OPENAPI_COVERAGE.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/api/OPENAPI_PENDING.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/OPENAPI_PENDING.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/api/README.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/api/api-conventions.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/api-conventions.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "contracts/api/api-coverage-matrix.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/api-coverage-matrix.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "contracts/api/error-codes.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/error-codes.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "contracts/api/openapi-audit-report.md",
+    "backup": "local-only/path-optimization/original-content/contracts/api/openapi-audit-report.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "contracts/database/README.md",
+    "backup": "local-only/path-optimization/original-content/contracts/database/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "contracts/database/pending-design.md",
+    "backup": "local-only/path-optimization/original-content/contracts/database/pending-design.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/DEPENDENCY_AUDIT.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/DEPENDENCY_AUDIT.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/DEVELOPMENT_PLAN.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/FRONTEND_API_HANDOFF.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/MODIFICATIONS.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/MODIFICATIONS.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/PENDING_REGISTER.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/PENDING_REGISTER.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/PROJECT_AUDIT.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/PROJECT_AUDIT.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/README_REVIEW.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/README_REVIEW.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/audit/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/audit/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/audit/word-render/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/audit/word-render/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "docs/project-governance/scripts/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/audit_dependencies.cjs",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/audit_dependencies.cjs",
+    "reasons": [
+      "脚本读取新仓库路径"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/build_governance.py",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/build_governance.py",
+    "reasons": [
+      "脚本读取新仓库路径"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/inspect_api.cjs",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/inspect_api.cjs",
+    "reasons": [
+      "脚本读取新仓库路径"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/inspect_workspace.py",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/inspect_workspace.py",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/verify_deliverables.py",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/verify_deliverables.py",
+    "reasons": [
+      "脚本读取新仓库路径",
+      "旧快照核对入口转发当前布局检查，原脚本备份保留"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/project-governance/scripts/verify_readmes.py",
+    "backup": "local-only/path-optimization/original-content/docs/project-governance/scripts/verify_readmes.py",
+    "reasons": [
+      "脚本读取新仓库路径",
+      "旧快照核对入口转发当前布局检查，原脚本备份保留"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/00_需求追踪与设计说明.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/00_需求追踪与设计说明.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/01_总体系统架构设计.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/01_总体系统架构设计.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/03_数据库与数据架构设计.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/03_数据库与数据架构设计.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/04_API与接口契约设计.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/04_API与接口契约设计.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/05_UIUX与交互设计.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/05_UIUX与交互设计.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/10_开发联调与集成方案.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/10_开发联调与集成方案.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/11_架构风险与待确认事项.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/11_架构风险与待确认事项.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/adr/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/adr/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/diagrams/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/diagrams/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/ui/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/ui/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/ui/wireframes/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/ui/wireframes/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/system-design/系统设计说明书.md",
+    "backup": "local-only/path-optimization/original-content/docs/system-design/系统设计说明书.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "docs/team/README.md",
+    "backup": "local-only/path-optimization/original-content/docs/team/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  },
+  {
+    "path": "local-only/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  },
+  {
+    "path": "local-only/contract-revisions/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "local-only/contract-revisions/compact-render-v1/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/compact-render-v1/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/contract-revisions/compact-render-v2/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/compact-render-v2/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/contract-revisions/compact-render-v3/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/compact-render-v3/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/contract-revisions/final-render-v1/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/final-render-v1/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/contract-revisions/original-render/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/original-render/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/contract-revisions/reference-render/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/contract-revisions/reference-render/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": false
+  },
+  {
+    "path": "local-only/path-optimization/pre-build-dist/README.md",
+    "backup": "local-only/path-optimization/original-content/local-only/path-optimization/pre-build-dist/README.md",
+    "reasons": [
+      "路径/协作导航更新"
+    ],
+    "originalMigrationFile": true,
+    "contentChanged": true
+  },
+  {
+    "path": "reports/path-optimization/README.md",
+    "backup": "local-only/path-optimization/original-content/reports/path-optimization/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  },
+  {
+    "path": "tools/layout/README.md",
+    "backup": "local-only/path-optimization/original-content/tools/layout/README.md",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  },
+  {
+    "path": "tools/layout/verify_layout.py",
+    "backup": "local-only/path-optimization/original-content/tools/layout/verify_layout.py",
+    "reasons": [
+      "迁移后检查修复当前说明/脚本"
+    ],
+    "originalMigrationFile": false
+  }
+]

@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-10-08T08:18:12.831Z",
+  "timezone": "Asia/Shanghai",
+  "scope": "Evaluation arithmetic, scope/evidence consistency and source snapshot checks; not a Vue implementation test or a zero-vulnerability certification.",
+  "basePersonDays": {
+    "low": 46,
+    "high": 73
+  },
+  "pagePersonDays": {
+    "low": 23,
+    "high": 37
+  },
+  "scenarios": [
+    {
+      "id": "A",
+      "baseLow": 46,
+      "baseHigh": 73,
+      "budgetLow": 56,
+      "budgetHigh": 88
+    },
+    {
+      "id": "B",
+      "baseLow": 52,
+      "baseHigh": 85,
+      "budgetLow": 63,
+      "budgetHigh": 102
+    },
+    {
+      "id": "C",
+      "baseLow": 56,
+      "baseHigh": 93,
+      "budgetLow": 68,
+      "budgetHigh": 112
+    }
+  ],
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "results": [
+    {
+      "id": "C01",
+      "name": "All 28 pages covered once; AST and fresh browser agree",
+      "status": "passed"
+    },
+    {
+      "id": "C02",
+      "name": "All 214 unique textual requirements within page scope",
+      "status": "passed"
+    },
+    {
+      "id": "C03",
+      "name": "Page effort equals W05; subtable not counted twice",
+      "status": "passed"
+    },
+    {
+      "id": "C04",
+      "name": "Budget and scenario arithmetic independently recalculated",
+      "status": "passed"
+    },
+    {
+      "id": "C05",
+      "name": "WBS and page table ranges match machine-readable estimate",
+      "status": "passed"
+    },
+    {
+      "id": "C06",
+      "name": "Scenario increments, assumptions and calendar windows explicit",
+      "status": "passed"
+    },
+    {
+      "id": "C07",
+      "name": "All referenced source functions present; independent action count agrees",
+      "status": "passed"
+    },
+    {
+      "id": "C08",
+      "name": "Prior 69-case result distinguished from fresh 28-page smoke check",
+      "status": "passed"
+    },
+    {
+      "id": "C09",
+      "name": "Three reproduced findings disclosed separately from clean normal-state console",
+      "status": "passed"
+    },
+    {
+      "id": "C10",
+      "name": "Prototype hashes unchanged from audit baseline",
+      "status": "passed"
+    },
+    {
+      "id": "C11",
+      "name": "OpenAPI snapshot unchanged and operation count unique",
+      "status": "passed"
+    },
+    {
+      "id": "C12",
+      "name": "Each requested technology and deployment/type-check boundary covered",
+      "status": "passed"
+    },
+    {
+      "id": "C13",
+      "name": "Local evidence files and primary-source links exist in report",
+      "status": "passed"
+    }
+  ]
+}

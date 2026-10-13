@@ -1,0 +1,32 @@
+import JSZip from 'jszip';
+// JSZip 3.10.1 exposes this streaming API; its bundled declarations omit the entry method.
+interface ZipEntryStream {on(event:'data',fn:(chunk:Uint8Array)=>void):ZipEntryStream;on(event:'error',fn:(error:Error)=>void):ZipEntryStream;on(event:'end',fn:()=>void):ZipEntryStream;pause():ZipEntryStream;resume():ZipEntryStream;}
+type StreamingZipEntry=JSZip.JSZipObject&{internalStream(type:'uint8array'):ZipEntryStream};
+const xml=(value:unknown)=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]||c));
+const column=(n:number):string=>{let s='';for(n++;n;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s;return s;};
+export async function workbook(rows:Record<string,unknown>[]){
+ const zip=new JSZip(),headers=[...new Set(rows.flatMap(r=>Object.keys(r)))];
+ const matrix=[headers,...rows.map(r=>headers.map(k=>{const v=r[k];return v&&typeof v==='object'?JSON.stringify(v):v;}))];
+ const sheet='<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'+matrix.map((row,i)=>'<row r="'+(i+1)+'">'+row.map((value,j)=>'<c r="'+column(j)+(i+1)+'" t="inlineStr"><is><t xml:space="preserve">'+xml(value)+'</t></is></c>').join('')+'</row>').join('')+'</sheetData></worksheet>';
+ zip.file('[Content_Types].xml','<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>');
+ zip.file('_rels/.rels','<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+ zip.file('xl/workbook.xml','<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="数据" sheetId="1" r:id="rId1"/></sheets></workbook>');
+ zip.file('xl/_rels/workbook.xml.rels','<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>');
+ zip.file('xl/worksheets/sheet1.xml',sheet);return zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+export function download(blob:Blob,name:string){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name.replace(/[<>:"/\\|?*\x00-\x1f]/g,'_');a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export async function exportRows(name:string,rows:Record<string,unknown>[]){download(await workbook(rows),name+'.xlsx');}
+export async function parseImport(file:File):Promise<Record<string,unknown>[]>{
+ if(file.size>5*1024*1024)throw new Error('演示导入文件不可超过 5 MB');
+ const ext=file.name.split('.').at(-1)?.toLowerCase();
+ let result:unknown;
+ if(ext==='json')result=JSON.parse(await file.text());
+ else if(ext==='csv'){const text=(await file.text()).replace(/^\uFEFF/,'');const matrix:string[][]=[];let row:string[]=[],field='',quote=false;for(let i=0;i<text.length;i++){const c=text[i];if(c==='"'){if(quote&&text[i+1]==='"'){field+='"';i++;}else quote=!quote;}else if(c===','&&!quote){row.push(field);field='';}else if((c==='\n'||c==='\r')&&!quote){if(c==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v))matrix.push(row);row=[];field='';}else field+=c;}if(quote)throw new Error('CSV 引号未闭合');row.push(field);if(row.some(v=>v))matrix.push(row);const header=matrix.shift()||[];if(new Set(header).size!==header.length)throw new Error('表头重复');result=matrix.map(r=>Object.fromEntries(header.map((h,i)=>[h,r[i]||''])));}
+ else if(ext==='xlsx'){const zip=await JSZip.loadAsync(await file.arrayBuffer());let expanded=0;const entries=Object.values(zip.files),texts=new Map<string,string>();if(entries.length>5000)throw new Error('Excel 文件条目过多');for(const entry of entries){if(entry.dir)continue;const keep=['xl/sharedStrings.xml','xl/worksheets/sheet1.xml'].includes(entry.name),chunks:Uint8Array[]=[];await new Promise<void>((resolve,reject)=>{let stopped=false;const stream=(entry as StreamingZipEntry).internalStream('uint8array');stream.on('data',chunk=>{if(stopped)return;expanded+=chunk.byteLength;if(expanded>20*1024*1024){stopped=true;stream.pause();reject(new Error('Excel 解压内容超过限制'));return;}if(keep)chunks.push(chunk);}).on('error',reject).on('end',()=>{if(!stopped)resolve();});stream.resume();});if(keep){const length=chunks.reduce((sum,c)=>sum+c.byteLength,0),bytes=new Uint8Array(length);let at=0;for(const chunk of chunks){bytes.set(chunk,at);at+=chunk.byteLength;}texts.set(entry.name,new TextDecoder().decode(bytes));}}
+  const parse=(s:string)=>{const doc=new DOMParser().parseFromString(s,'application/xml');if(doc.querySelector('parsererror'))throw new Error('Excel XML 格式错误');return doc;};
+  const shared=texts.get('xl/sharedStrings.xml'),strings=shared?[...parse(shared).getElementsByTagName('si')].map(x=>x.textContent||''):[];
+  const part=texts.get('xl/worksheets/sheet1.xml');if(!part)throw new Error('缺少工作表');const records=[...parse(part).getElementsByTagName('row')].map(row=>{const cells:string[]=[];for(const cell of row.getElementsByTagName('c')){const ref=cell.getAttribute('r')||'A1';const n=ref.replace(/\d/g,'').split('').reduce((a,c)=>a*26+c.charCodeAt(0)-64,0)-1;const v=cell.getElementsByTagName('v')[0]?.textContent||'';cells[n]=cell.getAttribute('t')==='s'?strings[Number(v)]||'':cell.getAttribute('t')==='inlineStr'?cell.textContent||'':v;}return cells;});const header=records.shift()||[];if(new Set(header).size!==header.length)throw new Error('表头重复');result=records.map(r=>Object.fromEntries(header.map((h,i)=>[h,r[i]||''])));}
+ else throw new Error('请选择 JSON、CSV 或 XLSX 文件');
+ if(!Array.isArray(result)||!result.length||result.length>1000||result.some(r=>!r||typeof r!=='object'||Array.isArray(r)))throw new Error('文件应包含 1–1000 行对象数据');
+ return result as Record<string,unknown>[];
+}

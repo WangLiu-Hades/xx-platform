@@ -1,0 +1,17 @@
+sequenceDiagram
+  actor User as 用户
+  participant Web as 研判页面
+  participant API as API任务模块
+  participant DB as PostgreSQL任务表
+  participant Worker as Python Worker
+  User->>Web: 提交伴随/碰撞/区域统计
+  Web->>API: POST /analysis-tasks + contextId + 幂等键
+  API->>DB: 同事务保存参数快照与 PENDING
+  API-->>Web: 202 taskId
+  Worker->>DB: 输入READY PENDING转QUEUED
+  Worker->>DB: SKIP LOCKED 增加lease_generation与attempt_no
+  Worker->>DB: 按租约版本续租 逐attempt写typed结果与证据
+  Worker->>DB: 同事务校验租约 发布attempt与SUCCESS或记录FAILED/CANCELLED
+  Web->>API: GET /tasks/taskId 轮询
+  API->>DB: 当前状态与权限复核
+  API-->>Web: 进度 结果引用 或错误码

@@ -1,0 +1,14 @@
+{
+  "pdf": "C:\\Users\\C-Linglong\\Desktop\\Claude\u6742\u9879\\\u5e73\u53f0\\\u5206\u5de5\\\u5e73\u53f0\u529f\u80fd\u8bbe\u8ba1\uff08\u539f\u59cb\uff09.pdf",
+  "pdfSHA256": "b702a1122d5a23f2fab21e6ba645619f6cf7b7c2c9f65e53919d528cb2e0c9dd",
+  "pdfPages": 26,
+  "embeddedImages": 64,
+  "imageSizes": [
+    [
+      2,
+      2
+    ]
+  ],
+  "openapi": "C:\\Users\\C-Linglong\\Desktop\\Claude\u6742\u9879\\\u5e73\u53f0\\\u5206\u5de5\\\u6570\u636e\u5206\u6790\u5e73\u53f0\\docs\\system-design\\api\\openapi.yaml",
+  "openapiSHA256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd"
+}

@@ -1,0 +1,9 @@
+{
+  "source": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台 - 路径优化\\contracts\\api\\openapi.yaml",
+  "sha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd",
+  "operations": 193,
+  "schemas": 581,
+  "generator": "openapi-typescript",
+  "note": "Generated operations/DTOs plus Axios typed facade; no backend implementation.",
+  "time": "2026-10-13T03:32:22.014Z"
+}

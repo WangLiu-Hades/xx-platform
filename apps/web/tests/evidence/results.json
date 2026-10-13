@@ -1,0 +1,355 @@
+{
+  "timestamp": "2026-10-07T08:01:53.413Z",
+  "browser": "154.0.4258.62",
+  "total": 69,
+  "passed": 69,
+  "failed": 0,
+  "consoleErrors": [],
+  "results": [
+    {
+      "id": "E01",
+      "name": "登录失败、禁用账号、正常登录回首页",
+      "status": "passed"
+    },
+    {
+      "id": "E02",
+      "name": "28页遍历及所有页面7种状态恢复",
+      "status": "passed"
+    },
+    {
+      "id": "E03",
+      "name": "首页12区布局、四入口、图例隐藏",
+      "status": "passed"
+    },
+    {
+      "id": "E04",
+      "name": "首页地区悬停一秒与左击传区域",
+      "status": "passed"
+    },
+    {
+      "id": "E05",
+      "name": "首页类型分类切换与月Excel报表",
+      "status": "passed"
+    },
+    {
+      "id": "S101",
+      "name": "围栏检索查询组合、空结果、重置、排序分页",
+      "status": "passed"
+    },
+    {
+      "id": "S102",
+      "name": "围栏检索九项右键顺序、选择约束、边界关闭",
+      "status": "passed"
+    },
+    {
+      "id": "S103",
+      "name": "围栏检索复制、右侧统计与多选禁伴随",
+      "status": "passed"
+    },
+    {
+      "id": "S104",
+      "name": "围栏检索轨迹传目标、返回保留选择、检索回填",
+      "status": "passed"
+    },
+    {
+      "id": "S105",
+      "name": "围栏检索伴随带时空表单与临时布控",
+      "status": "passed"
+    },
+    {
+      "id": "S106",
+      "name": "围栏检索无选择区域统计弹窗和全部查询结果数据集",
+      "status": "passed"
+    },
+    {
+      "id": "S107",
+      "name": "围栏检索位置追踪与条件Excel导出",
+      "status": "passed"
+    },
+    {
+      "id": "S201",
+      "name": "车牌检索查询组合、空结果、重置、排序分页",
+      "status": "passed"
+    },
+    {
+      "id": "S202",
+      "name": "车牌检索九项右键顺序、选择约束、边界关闭",
+      "status": "passed"
+    },
+    {
+      "id": "S203",
+      "name": "车牌检索复制、右侧统计与多选禁伴随",
+      "status": "passed"
+    },
+    {
+      "id": "S204",
+      "name": "车牌检索轨迹传目标、返回保留选择、检索回填",
+      "status": "passed"
+    },
+    {
+      "id": "S205",
+      "name": "车牌检索伴随带时空表单与临时布控",
+      "status": "passed"
+    },
+    {
+      "id": "S206",
+      "name": "车牌检索无选择区域统计弹窗和全部查询结果数据集",
+      "status": "passed"
+    },
+    {
+      "id": "S207",
+      "name": "车牌检索位置追踪与条件Excel导出",
+      "status": "passed"
+    },
+    {
+      "id": "S301",
+      "name": "MAC检索查询组合、空结果、重置、排序分页",
+      "status": "passed"
+    },
+    {
+      "id": "S302",
+      "name": "MAC检索九项右键顺序、选择约束、边界关闭",
+      "status": "passed"
+    },
+    {
+      "id": "S303",
+      "name": "MAC检索复制、右侧统计与多选禁伴随",
+      "status": "passed"
+    },
+    {
+      "id": "S304",
+      "name": "MAC检索轨迹传目标、返回保留选择、检索回填",
+      "status": "passed"
+    },
+    {
+      "id": "S305",
+      "name": "MAC检索伴随带时空表单与临时布控",
+      "status": "passed"
+    },
+    {
+      "id": "S306",
+      "name": "MAC检索无选择区域统计弹窗和全部查询结果数据集",
+      "status": "passed"
+    },
+    {
+      "id": "S307",
+      "name": "MAC检索位置追踪与条件Excel导出",
+      "status": "passed"
+    },
+    {
+      "id": "F01",
+      "name": "涉密解密入口、校验及检索明文",
+      "status": "passed"
+    },
+    {
+      "id": "F02",
+      "name": "人像悬停搜索保存、阈值、上传自动搜图",
+      "status": "passed"
+    },
+    {
+      "id": "F03",
+      "name": "人像选择后右键轨迹伴随布控位置追踪",
+      "status": "passed"
+    },
+    {
+      "id": "L01",
+      "name": "人员库新增查询编辑、人员增改详情及布控",
+      "status": "passed"
+    },
+    {
+      "id": "L02",
+      "name": "人员库导入确认、导出Excel、选中删除",
+      "status": "passed"
+    },
+    {
+      "id": "M01",
+      "name": "地图真实拖拽框选、单选、右侧区域任务",
+      "status": "passed"
+    },
+    {
+      "id": "M02",
+      "name": "地图四类搜索、缩放图层热力轨迹时间轴重置",
+      "status": "passed"
+    },
+    {
+      "id": "M03",
+      "name": "设备分布条件勾选聚合缩放、详情带选区、右键详情",
+      "status": "passed"
+    },
+    {
+      "id": "A101",
+      "name": "伴随任务新增任务、详情多类型结果、编辑与二次操作",
+      "status": "passed"
+    },
+    {
+      "id": "A102",
+      "name": "伴随任务组合检索、选中导出与删除",
+      "status": "passed"
+    },
+    {
+      "id": "A201",
+      "name": "碰撞任务新增任务、详情多类型结果、编辑与二次操作",
+      "status": "passed"
+    },
+    {
+      "id": "A202",
+      "name": "碰撞任务组合检索、选中导出与删除",
+      "status": "passed"
+    },
+    {
+      "id": "A301",
+      "name": "区域统计新增任务、详情多类型结果、编辑与二次操作",
+      "status": "passed"
+    },
+    {
+      "id": "A302",
+      "name": "区域统计组合检索、选中导出与删除",
+      "status": "passed"
+    },
+    {
+      "id": "D01",
+      "name": "数据集拖拽交并差混合运算及说明删除",
+      "status": "passed"
+    },
+    {
+      "id": "D02",
+      "name": "数据集Excel导出再导入及复制检索轨迹入口",
+      "status": "passed"
+    },
+    {
+      "id": "W01",
+      "name": "布控四条件、人员选择、新增编辑命中统计状态",
+      "status": "passed"
+    },
+    {
+      "id": "W02",
+      "name": "布控列表下方撤销、删除、结果二次操作",
+      "status": "passed"
+    },
+    {
+      "id": "P01",
+      "name": "图码车码档案基本信息四类拟合与综合轨迹",
+      "status": "passed"
+    },
+    {
+      "id": "P02",
+      "name": "常驻模型参数修改、标签筛选实际变化",
+      "status": "passed"
+    },
+    {
+      "id": "O01",
+      "name": "运维四区域、全部类型指标范围与导出一致",
+      "status": "passed"
+    },
+    {
+      "id": "O02",
+      "name": "场所新增编辑查询设备与删除",
+      "status": "passed"
+    },
+    {
+      "id": "O03",
+      "name": "设备新增、参数校验修改、离线历史、复位删除",
+      "status": "passed"
+    },
+    {
+      "id": "O04",
+      "name": "设备操作列Excel导出、导入确认修改",
+      "status": "passed"
+    },
+    {
+      "id": "O05",
+      "name": "参数配置三步关联分组、返回、批量生效、详情编辑删除",
+      "status": "passed"
+    },
+    {
+      "id": "O06",
+      "name": "报表全部单类型、年月日、详情下载与ZIP内容",
+      "status": "passed"
+    },
+    {
+      "id": "O07",
+      "name": "通知新增短信邮件、详情、发送平台与日志、撤销删除",
+      "status": "passed"
+    },
+    {
+      "id": "R01",
+      "name": "角色占用禁止删除、新增编辑菜单场所权限生效",
+      "status": "passed"
+    },
+    {
+      "id": "R02",
+      "name": "用户编号编辑、先禁用后删除、测试菜单权限",
+      "status": "passed"
+    },
+    {
+      "id": "R03",
+      "name": "操作日志查询、普通用户仅本人、右上导出账户全日志",
+      "status": "passed"
+    },
+    {
+      "id": "R04",
+      "name": "短信日志三条件查询、重置、当前页Excel导出",
+      "status": "passed"
+    },
+    {
+      "id": "V01",
+      "name": "窄视口全部页面及弹窗无横向整体溢出",
+      "status": "passed"
+    },
+    {
+      "id": "V02",
+      "name": "刷新保持Mock变更与清晰导入错误反馈",
+      "status": "passed"
+    },
+    {
+      "id": "V03",
+      "name": "右键菜单点击其他按钮关闭、伴随带全部时空",
+      "status": "passed"
+    },
+    {
+      "id": "V04",
+      "name": "外貌搜索与两类档案四维综合轨迹",
+      "status": "passed"
+    },
+    {
+      "id": "V05",
+      "name": "测试角色不能被赋予系统设置权限、用户新增登录",
+      "status": "passed"
+    },
+    {
+      "id": "V06",
+      "name": "设备全部删除后首页与运维零在线状态",
+      "status": "passed"
+    },
+    {
+      "id": "V07",
+      "name": "人像同人搜索依据当前参考目标改变相似度",
+      "status": "passed"
+    },
+    {
+      "id": "V08",
+      "name": "定时通知到达配置时间自动生成平台消息",
+      "status": "passed"
+    },
+    {
+      "id": "V09",
+      "name": "无效多行导入回滚、布控统计严格使用任务命中",
+      "status": "passed"
+    },
+    {
+      "id": "V10",
+      "name": "右侧添加当前结果及报表区域日期与曲线联动",
+      "status": "passed"
+    },
+    {
+      "id": "V11",
+      "name": "全部查询页面组合条件无结果及原位置重置",
+      "status": "passed"
+    },
+    {
+      "id": "V12",
+      "name": "设备分布查询框场所和设备勾选、在线率统计图",
+      "status": "passed"
+    }
+  ]
+}

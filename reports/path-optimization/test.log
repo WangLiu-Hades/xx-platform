@@ -1,0 +1,17 @@
+
+> multidimensional-platform-prototype@2.0.0 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v5.0.3 C:/Users/C-Linglong/Desktop/Claude杂项/平台 - 路径优化/apps/web
+
+
+ Test Files  7 passed (7)
+      Tests  283 passed (283)
+   Start at  11:32:25
+   Duration  9.93s (import 58%, tests 31%, transform 11%, worker 1%)
+
+     Import  29 modules were evaluated 55 times · 4.97s total, 58% of tracked time
+             ~2.35s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+

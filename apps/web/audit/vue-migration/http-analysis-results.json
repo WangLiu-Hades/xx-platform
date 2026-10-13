@@ -1,0 +1,323 @@
+{
+  "time": "2026-10-10T08:05:32.246Z",
+  "checks": [
+    {
+      "name": "HTTP companion form submits proxy target and explicit windows",
+      "ids": [
+        "PDF-079",
+        "PDF-082"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP collision form retains both resolved targets and rule",
+      "ids": [
+        "PDF-088",
+        "PDF-091"
+      ],
+      "passed": true
+    },
+    {
+      "name": "HTTP region form draws a WGS84 rectangle and submits AREA context",
+      "ids": [
+        "PDF-096",
+        "PDF-100"
+      ],
+      "passed": true
+    }
+  ],
+  "calls": [
+    {
+      "id": "getCsrfToken",
+      "body": null
+    },
+    {
+      "id": "login",
+      "body": {
+        "loginName": "http.test",
+        "password": "not-real"
+      }
+    },
+    {
+      "id": "getCsrfToken",
+      "body": null
+    },
+    {
+      "id": "getMe",
+      "body": null
+    },
+    {
+      "id": "getClientConfig",
+      "body": null
+    },
+    {
+      "id": "getDashboardSummary",
+      "body": null
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    },
+    {
+      "id": "listSites",
+      "body": null
+    },
+    {
+      "id": "resolveTargets",
+      "body": {
+        "items": [
+          {
+            "targetType": "IMSI",
+            "value": "460000000000001"
+          }
+        ],
+        "registerMissing": true,
+        "purpose": "前端分析或布控选择"
+      }
+    },
+    {
+      "id": "createContext",
+      "body": {
+        "sourceModule": "M08",
+        "targets": [
+          {
+            "targetId": "00000000-0000-4000-8000-000000000002",
+            "targetType": "IMSI"
+          }
+        ],
+        "filter": {
+          "filterType": "GENERAL",
+          "filterVersion": 1,
+          "dataTypes": [
+            "FENCE"
+          ],
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          }
+        }
+      }
+    },
+    {
+      "id": "createAnalysisTask",
+      "body": {
+        "kind": "COMPANION",
+        "name": "伴随接口测试",
+        "contextId": "00000000-0000-4000-8000-000000000005",
+        "parameters": {
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          },
+          "regionCodes": [],
+          "target": {
+            "targetId": "00000000-0000-4000-8000-000000000002",
+            "targetType": "IMSI"
+          },
+          "timeWindowSeconds": 60,
+          "spatialWindowMeters": 100,
+          "siteIds": []
+        }
+      }
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    },
+    {
+      "id": "listSites",
+      "body": null
+    },
+    {
+      "id": "resolveTargets",
+      "body": {
+        "items": [
+          {
+            "targetType": "IMSI",
+            "value": "460000000000001"
+          },
+          {
+            "targetType": "IMSI",
+            "value": "460000000000002"
+          }
+        ],
+        "registerMissing": true,
+        "purpose": "前端分析或布控选择"
+      }
+    },
+    {
+      "id": "createContext",
+      "body": {
+        "sourceModule": "M08",
+        "targets": [
+          {
+            "targetId": "00000000-0000-4000-8000-000000000002",
+            "targetType": "IMSI"
+          },
+          {
+            "targetId": "00000000-0000-4000-8000-000000000003",
+            "targetType": "IMSI"
+          }
+        ],
+        "filter": {
+          "filterType": "GENERAL",
+          "filterVersion": 1,
+          "dataTypes": [
+            "FENCE"
+          ],
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          }
+        }
+      }
+    },
+    {
+      "id": "createAnalysisTask",
+      "body": {
+        "kind": "COLLISION",
+        "name": "碰撞接口测试",
+        "contextId": "00000000-0000-4000-8000-000000000005",
+        "parameters": {
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          },
+          "regionCodes": [],
+          "targets": [
+            {
+              "targetId": "00000000-0000-4000-8000-000000000002",
+              "targetType": "IMSI"
+            },
+            {
+              "targetId": "00000000-0000-4000-8000-000000000003",
+              "targetType": "IMSI"
+            }
+          ],
+          "ruleCode": "APPROVED_RULE_V1"
+        }
+      }
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    },
+    {
+      "id": "listSites",
+      "body": null
+    },
+    {
+      "id": "createContext",
+      "body": {
+        "sourceModule": "M08",
+        "targets": [],
+        "filter": {
+          "filterType": "GENERAL",
+          "filterVersion": 1,
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          },
+          "dataTypes": [
+            "FENCE",
+            "PLATE",
+            "MAC"
+          ]
+        },
+        "spatialRange": {
+          "selectionType": "AREA",
+          "coordinateSystem": "EPSG:4326",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -38.39062929153442,
+                  15.623036831528239
+                ],
+                [
+                  -38.39062929153442,
+                  -15.623036831528267
+                ],
+                [
+                  38.39062929153444,
+                  -15.623036831528267
+                ],
+                [
+                  38.39062929153444,
+                  15.623036831528239
+                ],
+                [
+                  -38.39062929153442,
+                  15.623036831528239
+                ]
+              ]
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "createAnalysisTask",
+      "body": {
+        "kind": "REGION_STATISTICS",
+        "name": "区域接口测试",
+        "contextId": "00000000-0000-4000-8000-000000000005",
+        "parameters": {
+          "timeRange": {
+            "from": "2026-10-09T08:05:00.000Z",
+            "to": "2026-10-10T08:05:00.000Z"
+          },
+          "regionCodes": [],
+          "regions": [
+            {
+              "type": "Polygon",
+              "coordinates": [
+                [
+                  [
+                    -38.39062929153442,
+                    15.623036831528239
+                  ],
+                  [
+                    -38.39062929153442,
+                    -15.623036831528267
+                  ],
+                  [
+                    38.39062929153444,
+                    -15.623036831528267
+                  ],
+                  [
+                    38.39062929153444,
+                    15.623036831528239
+                  ],
+                  [
+                    -38.39062929153442,
+                    15.623036831528239
+                  ]
+                ]
+              ]
+            }
+          ],
+          "dataTypes": [
+            "FENCE",
+            "PLATE",
+            "MAC"
+          ]
+        }
+      }
+    },
+    {
+      "id": "listAnalysisTasks",
+      "body": null
+    }
+  ],
+  "errors": []
+}

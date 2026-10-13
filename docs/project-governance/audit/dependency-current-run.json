@@ -1,0 +1,61 @@
+{
+  "startedAt": "2026-10-10T09:27:58.929Z",
+  "finishedAt": "2026-10-10T09:28:01.461Z",
+  "authorization": {
+    "source": "explicit user reply",
+    "date": "2026-10-10",
+    "answer": "授权发送并补做检查",
+    "destination": "https://registry.npmjs.org/"
+  },
+  "executable": "C:\\Program Files\\nodejs\\node.exe",
+  "nodeVersion": "v24.16.0",
+  "npmCLI": "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+  "npmVersion": "11.13.0",
+  "args": [
+    "audit",
+    "--json",
+    "--registry=https://registry.npmjs.org/",
+    "--include=dev",
+    "--include=optional",
+    "--include=peer",
+    "--audit-level=low",
+    "--ignore-scripts",
+    "--fund=false",
+    "--update-notifier=false",
+    "--fetch-timeout=30000",
+    "--fetch-retries=1"
+  ],
+  "scope": "lockfile dependency tree including production, development, optional and peer dependencies",
+  "cwd": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\docs\\system-design\\ui\\prototype",
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "status": "completed",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "dependencies": {
+    "prod": 126,
+    "dev": 120,
+    "optional": 27,
+    "peer": 0,
+    "peerOptional": 0,
+    "total": 245
+  },
+  "inputSHA256": {
+    "package.json": "5bf317bd9bbf932290eac397faf110142e1b4baf5b5343c19c17d42b082aa412",
+    "package-lock.json": "b02eb84cdf38dec3ba87846e6bfa747362a006402171dac1197d3fdb0be4fdc7"
+  },
+  "afterSHA256": {
+    "package.json": "5bf317bd9bbf932290eac397faf110142e1b4baf5b5343c19c17d42b082aa412",
+    "package-lock.json": "b02eb84cdf38dec3ba87846e6bfa747362a006402171dac1197d3fdb0be4fdc7"
+  },
+  "inputsUnchanged": true,
+  "reportSHA256": "7a9a22969e1fa577314455555e171c7f9c36657dff8be7ca324ed132dfc1e7a8",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,3 @@
+# ADR 001 架构风格
+
+**状态：拟议。** Context：S2 的 15 模块由四类角色负责，权限/采集/研判上下文高度共享；S0 优先稳定和低复杂度。Decision：Spring Boot 模块化单体 API 与独立 Python Worker，共用 PostgreSQL 契约。Alternatives：普通单体把分析放同进程；每模块微服务；多服务混合架构。Consequences：在线与长任务隔离、少量部署件；需严守包边界和数据库所有权，热点成熟后才拆服务。

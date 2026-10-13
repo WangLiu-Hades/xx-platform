@@ -1,0 +1,1606 @@
+{
+  "generatedAt": "2026-10-10T11:06:20.787255+00:00",
+  "scope": "Existing project-owned non-README files before documentation work; excludes dependency/cache/git/temp trees",
+  "files": [
+    {
+      "path": "prototype-audit-report.md",
+      "sha256": "54ed8167c0774839cc5d5ec6864ba44487335924e47593ff96c968583926aabc"
+    },
+    {
+      "path": "prototype-vue-migration-assessment.md",
+      "sha256": "0068dc6977708fe70db51762708f9eb7cc6aaea0f410912aff264bc1b438d72c"
+    },
+    {
+      "path": "合同修订工作/artifact.md",
+      "sha256": "74e351fc69b728d60f6a1812208b9d942f46c953caaf2aa24a8d78f62ff25e17"
+    },
+    {
+      "path": "合同修订工作/compact-text.txt",
+      "sha256": "a54e499ef5af6be39777a4849ac00beba76f50920488f464bbbb64f3460de186"
+    },
+    {
+      "path": "合同修订工作/compact-verification.json",
+      "sha256": "730f299bc5c0908bc4f13b35a2a6b4d4a50cc6a14dbc19414dd8125b3dd6a75e"
+    },
+    {
+      "path": "合同修订工作/compact_contract.py",
+      "sha256": "e7b871b1e2d1e9b5f23169eb2878c2829d79430f47a85a512d2561a61079cfce"
+    },
+    {
+      "path": "合同修订工作/export_pdf.ps1",
+      "sha256": "930fc86b85c1ce792697f304f72d929ec930e4caca2716beea59e4f21b40acfc"
+    },
+    {
+      "path": "合同修订工作/final-compact-review.json",
+      "sha256": "a331dd1e40ce242b065941cd7b992daa6f5476a37c06af4bb6ee35aedae65be6"
+    },
+    {
+      "path": "合同修订工作/final_compact_review.py",
+      "sha256": "d53fbfc640b7a7ba8dd361840b9613b485f9617e6291ec8b4f9260ce3dc2bc45"
+    },
+    {
+      "path": "合同修订工作/render_with_word_pdf.py",
+      "sha256": "60fea879faf8036cd90303e3a37e3f48157e2ac51a9b5d9a4fbd3df1a909068b"
+    },
+    {
+      "path": "合同修订工作/revised-text.txt",
+      "sha256": "ef25a9522cb5312cd2fa8957b1da1392b634a9ff9f254e7036690874e270cb66"
+    },
+    {
+      "path": "合同修订工作/revise_contract.py",
+      "sha256": "14444b2fd1e80ea93fa2120d1a4c64264fc0564f1c98c65c938028413ff2e2a1"
+    },
+    {
+      "path": "合同修订工作/verification.json",
+      "sha256": "cbcae1a3ad0fb13a33c82cac4b32c40d7f25f26bd2a80fce01a3c99ddaf29711"
+    },
+    {
+      "path": "合同修订工作/多维数据分析平台合同v1.0 - 副本.docx",
+      "sha256": "31571d05ca882c232ea4502885f1f14069d25d2025b1221cd2f7658250292733"
+    },
+    {
+      "path": "合同修订工作/多维数据分析平台合同v1.0 - 副本_正文精简.docx",
+      "sha256": "9bd0b9a986ce1c4e7bd32332efee5392f4fb00d420783c3e467d748e6af6340a"
+    },
+    {
+      "path": "docs/project-governance/DEPENDENCY_AUDIT.md",
+      "sha256": "a9b403009ff0c442a2682c6809c82fd2cba01ba5eb8665063d07c0a960920f42"
+    },
+    {
+      "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+      "sha256": "754b09734f4855ee61b9481fab0b3b7c50a0d9517b9a2e64b770c1a4ad1a7abd"
+    },
+    {
+      "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+      "sha256": "4eba8ad1d5d897e1950545a095ae3bfc1a688b46b12ac7ebbe26d74c6cf4e849"
+    },
+    {
+      "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+      "sha256": "50fc99951c1e543e04d7dc81a581c612519c7d624078eb801bcf249949adff4e"
+    },
+    {
+      "path": "docs/project-governance/MODIFICATIONS.md",
+      "sha256": "03013ee462c34a6632260a0ec459adfaea4804ce04d48b64671f6f1ff8a4fe5c"
+    },
+    {
+      "path": "docs/project-governance/PENDING_REGISTER.md",
+      "sha256": "111027dfbf3e93716d4242121fbaf7bc788331ae395f411246201165f4fe2985"
+    },
+    {
+      "path": "docs/project-governance/PROJECT_AUDIT.md",
+      "sha256": "6ae0e8d5863311bb8665ac453037f688d9885f6f079da396b687c3b273357dcc"
+    },
+    {
+      "path": "docs/project-governance/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "sha256": "184991c0ed19639ffe8a705281092983d519f2b37d254cfe4e99cb27453ad445"
+    },
+    {
+      "path": "docs/system-design/00_需求追踪与设计说明.md",
+      "sha256": "354cc71ba721c740dc74dcbe5b2c9d31fd09f4ce7ca7b30f8bc5b13a687f5a55"
+    },
+    {
+      "path": "docs/system-design/01_总体系统架构设计.md",
+      "sha256": "22d4d0ec73fe2af2d9a94878ea689e971a9d825b25fc957a4d427219779caa70"
+    },
+    {
+      "path": "docs/system-design/02_技术栈选型与ADR.md",
+      "sha256": "fb00a7a8c11ec7578087012b8bcfa9c0146397588fb7348733f203f57506f99b"
+    },
+    {
+      "path": "docs/system-design/03_数据库与数据架构设计.md",
+      "sha256": "1bbaa5cfa2edc7c8c8e71e66e2d6b59f3136be599cbd851819dff27533f4b2c2"
+    },
+    {
+      "path": "docs/system-design/04_API与接口契约设计.md",
+      "sha256": "3c2811a7860a4ab206ee7318cefb2f60404c1a2bf8905aee50462e1e706df0aa"
+    },
+    {
+      "path": "docs/system-design/05_UIUX与交互设计.md",
+      "sha256": "bc9d89d5ac64a1e082bc1356224706ee1f31cd22af244358700a5cf08e9eda0e"
+    },
+    {
+      "path": "docs/system-design/06_安全架构设计.md",
+      "sha256": "7990053f469628b82c826a2eded97ffe1360afd2367d02eeda93b39182747e3d"
+    },
+    {
+      "path": "docs/system-design/07_性能与容量设计.md",
+      "sha256": "be893d814da0ef223031c939e23d3df86f6795ba674004ceb218a80e67cc87cf"
+    },
+    {
+      "path": "docs/system-design/08_可靠性与可观测性设计.md",
+      "sha256": "9a5dd23bac4e78a8541484291a031855d70628dee12fc3061690ff8d37826037"
+    },
+    {
+      "path": "docs/system-design/09_部署架构设计.md",
+      "sha256": "4a2b6ccef59f53961dcac810b8a767ed2b5b61d0280fd7ab4d2b653fea280041"
+    },
+    {
+      "path": "docs/system-design/10_开发联调与集成方案.md",
+      "sha256": "05bfdf667626884e962117b1e0e3cc6de1a124c39c9dabc8cb9580eeba2be383"
+    },
+    {
+      "path": "docs/system-design/11_架构风险与待确认事项.md",
+      "sha256": "1dca9db8eea05eb1e14c7884692c5919f2d6f4ea078141b277f88c35fad796f4"
+    },
+    {
+      "path": "docs/system-design/系统设计说明书.md",
+      "sha256": "04869503ace844114b20e4b71fa847c39b8d093e9dea52ebd80bd5ebb959f3f5"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.csv",
+      "sha256": "6da6581d61134219dfe36719b7294ce9b9fdc95b7f7af0bd0189c6566a5eaefc"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.json",
+      "sha256": "40b4e37c8572acb2e7f490c092947e55c66f893bf0a7a26c3cca64bd95e72f83"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-final.pdf",
+      "sha256": "e9f6ade3372f70d689b6215c20a6368ecab677a3cc93c7b9f2718c1caeef2181"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v2.pdf",
+      "sha256": "6069825bcfa6c9451005e68cd8082332ea2a01523ef9fac29e2b86c688617e35"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v3.pdf",
+      "sha256": "59ab27a35d629c9ac7e2c9a7d208254ba2bf088973780c9c9948c4752d743571"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v4.pdf",
+      "sha256": "983fd998f002676b0d1b06c9967c2f94ddcb8b76ffbee5f873abf00bfc0b3f4f"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review.pdf",
+      "sha256": "14b7a1ebcefd999b8356ac794a56dc746f455c5ed14bb3ec52e83075d0557283"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-reviewed.pdf",
+      "sha256": "74a7da3e4676ff98f3c83e53cd6170db6c66a32411261db49a5fb8b3e5c23cdc"
+    },
+    {
+      "path": "docs/project-governance/audit/checks.json",
+      "sha256": "2a78c463396aff0a94003a55c34b570a0bb6a7a4f773118f9ca5af4eb1835535"
+    },
+    {
+      "path": "docs/project-governance/audit/contract-only-operations.md",
+      "sha256": "a2ce434d133f123c546e26e02ffea125244b34c322bc8c83db144548c0287773"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current-run.json",
+      "sha256": "9d2f00c9647bdbff0fdc611830943eee35ba1db93a34585f864272997546089c"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.json",
+      "sha256": "7a9a22969e1fa577314455555e171c7f9c36657dff8be7ca324ed132dfc1e7a8"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-pre-authorization.json",
+      "sha256": "60e1734259f6ff756607477f77185ce7d216f58a690d85d33eb12ac81facb00d"
+    },
+    {
+      "path": "docs/project-governance/audit/external-docx-0.txt",
+      "sha256": "19d886bd5d02b7103e08594761da6434757d9fcffb8a2b3bb611412f57ea5c8a"
+    },
+    {
+      "path": "docs/project-governance/audit/first-party-text.txt",
+      "sha256": "cb9219a82f9772f0425f1cd33ff7ec58a4ed07dae5ab2be513c0f3c3223e21c2"
+    },
+    {
+      "path": "docs/project-governance/audit/output-manifest.json",
+      "sha256": "fb82cc055c8be0f913e67df6f78e55a3c90e1e7a001fa9d30efc0344542c0298"
+    },
+    {
+      "path": "docs/project-governance/audit/unit-current.json",
+      "sha256": "6cf4d47f618320d5a502278f4770732f88b253be78de3982837e2e67c62e6c7b"
+    },
+    {
+      "path": "docs/project-governance/audit/word-visual-review.json",
+      "sha256": "5cf550001847f485c691fa7833d787b00a48ebb034f66d069bbf83ab2f7ea439"
+    },
+    {
+      "path": "docs/project-governance/audit/work-packages.json",
+      "sha256": "cfc65344bbf6d7eae125d7d7c6358397f1c2cfe244ef14113901b4ca9dff9c22"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-docx-text.json",
+      "sha256": "8493af5f84e288b33cabe26b03740513e0e80d4f28cadd35d2001dd17a60599b"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-files.jsonl",
+      "sha256": "78dce8f4339662012bce5abf0d61ffa98c517f72bd3e690294ff33b174b78f7d"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-inventory-summary.json",
+      "sha256": "746b8eb6d7d4ef9616ca92bfdcb102bad0df768de8951bdc97b9f6b61079f3af"
+    },
+    {
+      "path": "docs/project-governance/scripts/audit_dependencies.cjs",
+      "sha256": "e532b3a8515e77c67cb5149cea36aecb100010f3e5d4fc6d609eede003d0e4e8"
+    },
+    {
+      "path": "docs/project-governance/scripts/build_governance.py",
+      "sha256": "ce770f50f19ca572c1ffd2be7c22ea8e2d6269ebc560194c64d2728f17db5557"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_api.cjs",
+      "sha256": "8d5dccda9e81d7e8eeee6940ee5fb7cec37b4bf2f955f585c908aeb824ba1fe0"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_workspace.py",
+      "sha256": "6703751909cd6373878d98236fd9f57e4195d3af5c89ab0e3221a8f42c592fff"
+    },
+    {
+      "path": "docs/project-governance/scripts/render_word_review.py",
+      "sha256": "ca3940219b956bf7ee5eb9e3089b7694045567ffbbc7701f92c5376de51cd535"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_deliverables.py",
+      "sha256": "4db11488002bbebec3c182f3057b85f65c2a0b44bac5986f8dfa0a05f0581dba"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-1.png",
+      "sha256": "b5f82d232dd9f670db7de7913a9596176813f1f5c86a03495233420d25f39c45"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-10.png",
+      "sha256": "6f9f166c1bc8c1c5c7ae04cb9c48f7cc158ca0741d037a46df663b7b54e6527c"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-11.png",
+      "sha256": "8d430368bb39b51acc6b24a755c9775fec60608bce4d27a80918826fee14129a"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-12.png",
+      "sha256": "9acbed6d812ec36f4690176874a126cd7817b009a598b30710d6395fed8666c4"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-13.png",
+      "sha256": "d00307c413a56b85d3ef2db928249154e60dbac9146b444de734bbc7513dc0b1"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-14.png",
+      "sha256": "cfde184a8a6a991365789945650257f833884ea891ef68afd2cd8aaa76d7af91"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-15.png",
+      "sha256": "f0ef7c594b83613de2ab5a2b65f65acf66cfaa77828a9b5366f43c08e52daa3f"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-16.png",
+      "sha256": "8c0b49e8161b9d115220621226f0dfb9e7778cbe239e8eced43971e33418a908"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-17.png",
+      "sha256": "f993ca7e90f4c051236f32074ec8d27069dce880681908f9972bf97d5c5fef79"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-18.png",
+      "sha256": "7a386a1fc1a0d687b39ed0cdc88443e2d0f1d7dec46359acf466eee47bb7ba57"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-19.png",
+      "sha256": "770606eacc0f50b0778081c87aead18c23e57cc413d50e7d88456814b4013491"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-2.png",
+      "sha256": "b3e68d9e4fb3b3de8ddee77e65d85d2517592d63d29991cf495ee818f1dbcf00"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-3.png",
+      "sha256": "bb4ae2e64ae7d9cafaafca56c6d301ec4d94ffa42a72ddb3f6833a0b0bdac554"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-4.png",
+      "sha256": "e9785297d820fd1e770fec4c0cd04630d7fe34846af38b5e79d0bd8eff44e9b2"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-5.png",
+      "sha256": "a31429c954829e6b22b68c16a42cccebd9257642bed05465f9fc59d1933b8695"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-6.png",
+      "sha256": "20f301188806d2b64f13051e36bbcc5837fd36b1c74894bb2e7d9c259b4b68fd"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-7.png",
+      "sha256": "5016195c0f8b1c57fca92aa361286a862d958786173e4e17ad9fcf7572eaba08"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-8.png",
+      "sha256": "82235bb979851ada54e10724a84009068e44347ce22a8d0561f27c5b5675a160"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-9.png",
+      "sha256": "4d4650c2452b1a8409ddf7a4a501a827817684b35d87f95aa9b9679256c98a11"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-001-architecture.md",
+      "sha256": "e84dffb4b59806a8cfd2b3f326d82fa59c49abac726989aabb0fe32fad46cd16"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-002-backend.md",
+      "sha256": "ecdc1f1ba706f5405ca3de8db946128f903848b5b706ba6a3dbc38929c1b1fd8"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-003-database.md",
+      "sha256": "8663ccda8c1fc15b72c3462286e673a3d176ab29e692620e45107f79a6137d39"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-004-gis.md",
+      "sha256": "2918c596a49aa704dea4cf1e1ae59e8d2c5788650a19371f79b699c66fff5339"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-005-async-task.md",
+      "sha256": "3b2fa2066aa222320d989bd5f6bd49b3cc992d1ff7e2c014cd1afca6d4c04848"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-006-api.md",
+      "sha256": "467e43021cf5ddd648a6dc8af841c65de4d1d23b48ab2ba2144061ae7f675f16"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-007-authentication.md",
+      "sha256": "9be7c226cea114fad21d5c376052bdd84a76f25af395208a16e3ecd2ee566c9d"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-008-deployment.md",
+      "sha256": "262ddcd379afe25a5d84adfdafe021fb9d876511766249c742992c79faadc03f"
+    },
+    {
+      "path": "docs/system-design/api/api-conventions.md",
+      "sha256": "7e9835235a311fb8c2044dccbc714f4ba5c52eb8a1eff09921c9f474b7acb8fd"
+    },
+    {
+      "path": "docs/system-design/api/api-coverage-matrix.md",
+      "sha256": "824c4904e0e46177ffc6869432f18987db4fcdbe707e96cbacbfa8c43715c9ed"
+    },
+    {
+      "path": "docs/system-design/api/error-codes.md",
+      "sha256": "6a25a1b5afbe3fe5cf24eda79b72587fc437ff5e710bc5820929969adabf45b1"
+    },
+    {
+      "path": "docs/system-design/api/FRONTEND_INTEGRATION.md",
+      "sha256": "1be586515286e9f88199492e6370c81d82043ecebb86c08f63f9feac0641ebee"
+    },
+    {
+      "path": "docs/system-design/api/openapi - 副本.yaml",
+      "sha256": "146d8915eb8101fdbe3f33e74ab2c29dc6f4daae492334a2d2a872a04636e283"
+    },
+    {
+      "path": "docs/system-design/api/openapi-audit-report.md",
+      "sha256": "4fefd684ba82d4c3c7e650a129a0d7cb2271662f405fc0145ddcb09fc3a4bcd7"
+    },
+    {
+      "path": "docs/system-design/api/openapi.yaml",
+      "sha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd"
+    },
+    {
+      "path": "docs/system-design/api/OPENAPI_CHANGELOG.md",
+      "sha256": "8ad57d79f423fcbe0662f67237a9bd8c4811d392142f3c3e25d0cb97b7b7c5d5"
+    },
+    {
+      "path": "docs/system-design/api/OPENAPI_COVERAGE.md",
+      "sha256": "c68d80451b0448a0076fe99047096fc788e3a455796db0b5753c74d1326081e7"
+    },
+    {
+      "path": "docs/system-design/api/OPENAPI_PENDING.md",
+      "sha256": "a12e0b3e6a69d9195cc69764a35d67bb1a48e9f260d091d7255f7430497b04e6"
+    },
+    {
+      "path": "docs/system-design/database/api-storage-map.md",
+      "sha256": "b5f9d61e2cc11e1251362cb6246e994431dc1baa3d0755da851153a2abd20c32"
+    },
+    {
+      "path": "docs/system-design/database/data-dictionary.md",
+      "sha256": "c3ea88f36d93855c570f6a469ac73983d43fff84495833721a4009dd40537ebd"
+    },
+    {
+      "path": "docs/system-design/database/design-changelog.md",
+      "sha256": "78add25217bab332e37fd1646ba9d3b74aa31e9565199b7776d09f36d5fa5e93"
+    },
+    {
+      "path": "docs/system-design/database/design-validation.md",
+      "sha256": "8ed3a684f1468f2e615dff23569731036ef23ea5a687f4945480b6110eafecc5"
+    },
+    {
+      "path": "docs/system-design/database/index-design.md",
+      "sha256": "a2eb9ba19a80b04c0cad10af279fac193843ab4c73579465e99179810928b2b6"
+    },
+    {
+      "path": "docs/system-design/database/migration-plan.md",
+      "sha256": "cc9ececc727b44979af85172925e3f270540539e81f16f287a3c6ccd852dbf3d"
+    },
+    {
+      "path": "docs/system-design/database/pending-design.md",
+      "sha256": "bdc154bd8bf0f7021dcc52e1ad30ae60993508aacdae530b7d8c36fd0596003f"
+    },
+    {
+      "path": "docs/system-design/database/query-examples.sql",
+      "sha256": "b0f0b3181bddc4e813aa5f634132bc1f8d0001d220aa256358ed416dcdd9a345"
+    },
+    {
+      "path": "docs/system-design/database/schema.sql",
+      "sha256": "7d3534b536e46a5879d338df08cc70a02012ef86d0efe423d25747cf37a26ab1"
+    },
+    {
+      "path": "docs/system-design/diagrams/analysis-task-sequence.mmd",
+      "sha256": "24fa1261979c0a1c72f35c6d1bb2b95f4f12559b78261eb7d8079bd2cf489ec2"
+    },
+    {
+      "path": "docs/system-design/diagrams/auth-sequence.mmd",
+      "sha256": "c2f933bbc20d98d5722c73128ffec50ae3fc2056040de60898572441c635f374"
+    },
+    {
+      "path": "docs/system-design/diagrams/component-architecture.mmd",
+      "sha256": "7f7cab6da5e49331b68beda0c9a7ae336a60f31bb0b2ac780624fe6675baf7f7"
+    },
+    {
+      "path": "docs/system-design/diagrams/container-architecture.mmd",
+      "sha256": "34abe2b8672340bf003bf36de946f9e02181e3dc8c108bfbb5fa2b83975e9bfa"
+    },
+    {
+      "path": "docs/system-design/diagrams/data-flow.mmd",
+      "sha256": "f6c1a1562ffb11aef6a1917ee32b31aeb46c4c5612d9cf3e8a8be40157c67d72"
+    },
+    {
+      "path": "docs/system-design/diagrams/deployment.mmd",
+      "sha256": "72840e994e549273c448b09836a215f93acb44670a64f77864657fd42453ad49"
+    },
+    {
+      "path": "docs/system-design/diagrams/er-diagram.mmd",
+      "sha256": "06487a739d06eb4b32018b5b0bfcdd882612c2c492f12ba25a44da220126faf3"
+    },
+    {
+      "path": "docs/system-design/diagrams/module-dependency.mmd",
+      "sha256": "736001ead2f480a2048d97b39f53e41885042e86cada9861253aa3ff666e58f8"
+    },
+    {
+      "path": "docs/system-design/diagrams/search-sequence.mmd",
+      "sha256": "a5ca10d252469c6be32b477d90701e2b808eb0c5618d1095532dafafc79055e5"
+    },
+    {
+      "path": "docs/system-design/diagrams/system-context.mmd",
+      "sha256": "354306d7b951300a19f18470ffd96797fc1e03eb661377f4167bcc22c6741496"
+    },
+    {
+      "path": "docs/system-design/ui/design-system.md",
+      "sha256": "41c11c0d86ae3015426f66662e0678aaf5a67bd8c9fecfe78b934ee4104a675f"
+    },
+    {
+      "path": "docs/system-design/ui/information-architecture.md",
+      "sha256": "6c0d627aecaaa94af392d16a7f3dd7b8a46967e484e207f014c2a67b7ccdab28"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-audit-baseline.html",
+      "sha256": "db1fead842017e3f4e68058f721f8bfdf0119608d482ae93fb87954ce249f0d1"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/.env.example",
+      "sha256": "e1511e32252823fd4d684d0f4cfac2152e721d67b040e63a5d78d3077152e9d9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/.gitignore",
+      "sha256": "319461d43de25a880a29df6afad17e02b5d782e8e7b658a7328b4e32dcae2014"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/CHANGES.md",
+      "sha256": "c5358fed433179a758e9df75fd271319cf4d843fb4807992b2cac2311c36a306"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/index.html",
+      "sha256": "c59ce6e497c69f78c5c7cb4c022b0ca315ffca43a7c33f672a93ad7bd334363f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/MIGRATION_PLAN.md",
+      "sha256": "6894e9094e6d19df67dfc939a93b7034996edb9ca3fc7bc5967006affab366f8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/package-lock.json",
+      "sha256": "b02eb84cdf38dec3ba87846e6bfa747362a006402171dac1197d3fdb0be4fdc7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/package.json",
+      "sha256": "5bf317bd9bbf932290eac397faf110142e1b4baf5b5343c19c17d42b082aa412"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tsconfig.json",
+      "sha256": "18852aa99699535123aa5e15babb7f11304c999be22f49dfa8b3bb52f7f77c83"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/vite.config.ts",
+      "sha256": "43b4dd23281d5ce81920b793785255938acd6b536de14ae65175a6346a85cfd5"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/assessment-verification.json",
+      "sha256": "70f70199880c17b129cce4a76f207c94671e6c475777a12963696cec6cef61ef"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/baseline-verification.json",
+      "sha256": "42cb8cd6d26b6166d18cd0240fc94816cfb33abe15c79a4e4b59050cca0dddd0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/estimate.json",
+      "sha256": "ee5e58ab28b6a956c425ae0dfb0e1a2d5f3b2588020168e46fcb5ecb3cea29f7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/inspect.cjs",
+      "sha256": "4a44560914783edd84be00b3b3047e87b5de66989864ac86369c21c9f15a93ed"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/inventory.json",
+      "sha256": "4ca15167ea2750e6b2f277e3adc2bcbf625578023e01db6c45c360bb5ba6a6a7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/verify-assessment.cjs",
+      "sha256": "4477ec6edc78aa809153a84a2565f964ab9909e7d3cc3e2ebc73a88439dcbccb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-migration-assessment/verify-baseline.cjs",
+      "sha256": "e37f3bc36dad2b01ed381256bda51249db4f78c392b62616d202b86982356f43"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-v1-baseline/app.css",
+      "sha256": "f10c288ad67a17bbae2530b2c6ddb9091a42fed384066adebfc7d38069df268f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-v1-baseline/app.js",
+      "sha256": "0b0d906b9478a89706f7d40ccfd17fca602b33d57c810fdfcb0626806fd14776"
+    },
+    {
+      "path": "docs/system-design/ui/prototype-v1-baseline/index.html",
+      "sha256": "808c187a04113e16d97f595e6393aece8eddd5403a684e699801145d2e5918e9"
+    },
+    {
+      "path": "docs/system-design/ui/wireframes/核心页面线框.md",
+      "sha256": "92dcc3331a7913a8ffc008c91984b3d292a556778c430c39070df487f9d23176"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/manifest.json",
+      "sha256": "172ff6949938b544005fe5e773bc7c1743b2d5910075087a2792da423bf1023c"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/requirements.json",
+      "sha256": "d480917ca2930626599c313b84910b2e0dbfc80728e04bc404cf8935e0cab687"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/requirements.md",
+      "sha256": "d9788431ade93cf28c7f92a73b719efe2b814a5a13d033d8cd8552c3039500c5"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/index.html",
+      "sha256": "68e3491cc927db511fef5f7f5a076e7ad06659dcb65555c05da6aec40c97bd64"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/scripts/audit.mjs",
+      "sha256": "fe6d9fe696c863a29a52e01b2b00cb6dc3db185cbc2f76411de8e8c75f4aefeb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/scripts/generate-api.mjs",
+      "sha256": "de0b8f41dd5d88101d9ee8cd518358ae90b1ddee481d112822c127f60b14c8a7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/App.vue",
+      "sha256": "195c2f940dee67de24281f42c81d956a96ec87f17be83184d0c5c1dd266a7868"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/domain.ts",
+      "sha256": "77520c51314de595ff36160e7cb9c3eca51d27cb3131df4ce85655021f46a2e8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/main.ts",
+      "sha256": "74b5aee341399477b6f299a976b167d5079ccd4cba0672763460fb58a4732a93"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/router.ts",
+      "sha256": "51a010e5bca282e8c279976ce44b89405356a578434c370029ee2aae61334112"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/style.css",
+      "sha256": "450916ec9735718c387a0ae279244703b79db5a06ab88054f25eb9db02896b5d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/audit.e2e.cjs",
+      "sha256": "e074fc905a69e655cda23a07d0b61c6f92648ecb5caeba9e659944acb52a27e2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/contracts.test.ts",
+      "sha256": "280e37e8fc84cf2c45713898f0278b06e6e996ae15d7b01dc6e02c1830e797d9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/files.test.ts",
+      "sha256": "a8f2e51cd06a334afb258a23f4196e642441e785dc90998863d653115821a517"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/http-forms.test.ts",
+      "sha256": "18ab71dae66e127559b2a81c4e10ddbca600304e192a9b614948e288f903bb09"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/http-resources.test.ts",
+      "sha256": "0e3e11ddfd68838b752a56ca79386a98169fcb854446dc991635b96afadca661"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/platform.test.ts",
+      "sha256": "1ef1279f16cd3660f8db9ce599d6cb67bed47efd33e41714572ad7b316bc7249"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/session.test.ts",
+      "sha256": "d80ee7aa972c8d937cc267c25434d9e164e0a1df3d5b24384281c10e98239477"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/sets.test.ts",
+      "sha256": "dd06470cacd4fcc24cbdaf3c0e66f63423b2eaa9ac07dd11661ca9e545a33c50"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-flows.e2e.cjs",
+      "sha256": "73a25a1ded33440abe568601455471040cb681c5b16a62ad285c4ce30d187e18"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-http-analysis.e2e.cjs",
+      "sha256": "1880660b0fd3314390c877640eb505bd7f80bac4a005cb360dd06c3279d6ba53"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-http-resources.e2e.cjs",
+      "sha256": "997e9d228ecfb8e54ef7c2f1042417c2b4d6ef55450f4d5b1084dd85a354c619"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-http.e2e.cjs",
+      "sha256": "b532426fc67b224180bf3f51ab1eda39d3c20e0c1e4bc3bfe7f7a9f9ee7c824f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-map-selection.e2e.cjs",
+      "sha256": "5703b299b1f43a3c8b8143a41fa4d03d2517677d4e9fd7ea12e362885bdec6d2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue-smoke.cjs",
+      "sha256": "b2df729e3dfb7bfb35f7faa92c48bd4bc99ce294a634ce286510127e0e29e6aa"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/vue.e2e.cjs",
+      "sha256": "65f040b1294b348cd032d03cd85257d0f7f8e3085a7780a1419d0167547c694e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/vendor/JSZip-LICENSE.md",
+      "sha256": "566c953c6090b1218ca6217dd7359d45dde46581968586dc607d59a78af6a9c4"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/vendor/jszip.min.js",
+      "sha256": "acc7e41455a80765b5fd9c7ee1b8078a6d160bbbca455aeae854de65c947d59e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-final.png",
+      "sha256": "e83e31f82e8359348d2db9f60679fb8eef5d86940f3782ccf35f5bfd6da918d7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-initial.png",
+      "sha256": "10877dd96cf793a8dd232446cd4300535316a35d65c14cfccd6f14c35d806d8f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-smoke.png",
+      "sha256": "c78b7eec2a5f89a77a689925677aafa69fc513e57581571ea75302fdbd689845"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dependency-audit.json",
+      "sha256": "bed8d2b04f3ec4209e29526242a4b71230559f2781ebf6b4f26399b4f3744adc"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/final-audit.json",
+      "sha256": "9fbcb69cfe2f45da5920ee4fa6e81d3acdc2c4673d4adec27d621625e8a4a65d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/final-audit.md",
+      "sha256": "fbc5bcb9eba8ec5d8146c7cc18cb7f62c8e846401ea2d286ca5d5ca141f51b62"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/FRONTEND_REMAINING.md",
+      "sha256": "553f6b7cfc502028372ac99317f137f241bbc3503daaf567977734e8737b0bab"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-analysis-failure.png",
+      "sha256": "dec956c55189d9beda6d822e03ffc1527331c834b918e47c403a0d8f8c8614b5"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-analysis-results.json",
+      "sha256": "36b4e4915bb2f6bfbb66f2e6f4b7725d39628226b48ed11fec8c87f976f9cd02"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-e2e-results.json",
+      "sha256": "0f7dd2a05859a37898cae10735f8f2086831ae162fc0d875428dfab636ca1955"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-resources-failure.png",
+      "sha256": "b161ea4775c79ccc3868030997ba2e937ff53b2e505e9125834e70da1eaf9591"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-resources-results.json",
+      "sha256": "d38d231d71591439532ea8589abfc062c2c8a2e3a2b56f47b99bdb93929805b7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-final.png",
+      "sha256": "10f9fb612cf086dc42f73209ede26d17c7c2b02107216dbe2d2adbc0d2b7ce87"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-selection-failure.png",
+      "sha256": "e77b3653083659efcb5f42016a1d0018136a85eec2706c5094a8c33e786f588a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-selection-results.json",
+      "sha256": "cd008ec3065aabf8af17fedab694fc32c0ec8a66dc0430aefcc60dbb13883491"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-selection.png",
+      "sha256": "09b55b4d063439411df60f85c6ab42bdc56a47cad12d19e0b0879880efa9cfa9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/openapi-generation.json",
+      "sha256": "fc1de025b91ccaf084e993db37ca9a1816947b8769b6fe7a72ce42f861631670"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/openapi-operations.json",
+      "sha256": "c06232bcd123aa6db8f5bfb4bbdefd07c9d24cdff1833bbfdedf5ab5b4a0ae8d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/pdf-text.txt",
+      "sha256": "3bcb8e214b9c517033d3ab9f604c4a78411fbbcd63aa9048c36bb9ec932090bd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/requirements-source.json",
+      "sha256": "cfc485689a37ccda45b0dc556db11623ee7e219caa98899a463196598157c400"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/search-context-final.png",
+      "sha256": "3c1d6ca5608a15559a397b79ae3dbea2495c96ee637270ebd0d015398aab8c7d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/smoke-final.json",
+      "sha256": "15eed58031b6364044eb3a0c33cae66b81eebb34cce2813b3472ab8e66f1dd50"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/smoke-initial.json",
+      "sha256": "4ec3439c2110c8757c7658c5fc3a2ddec51317e15dd406fe12e0f9e401cbadaf"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/source-manifest.json",
+      "sha256": "c5671fc183e44892873038c1a6e364f5dcbfc539f3990c0c9c7673143325a7fd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/unit-final.json",
+      "sha256": "6cf4d47f618320d5a502278f4770732f88b253be78de3982837e2e67c62e6c7b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/unit-initial.json",
+      "sha256": "76126ee177035aa6c5c1e6df4245588a0b433ad7aa1376efcf9111c026c88575"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/vue-e2e-results.json",
+      "sha256": "efdf9d70b392450382b7072986a70ad2f3e8c3a9a7a0d20dff2f70c6953f899b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-1.png",
+      "sha256": "674d3a8c84dbcd028d085667001e0fdf917aedd88b512ac048d98bf91316c038"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-10.png",
+      "sha256": "17d77a10db3aa6e59cacf0cf3afb44698026039a57f2e0d55950de99ce81fc5d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-11.png",
+      "sha256": "4911e777daf81cb0d04f7d1da4cbd7de49f9d380b3c71223f98005f482994d13"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-13.png",
+      "sha256": "79c23a7d52dce723e5a421e20e78e837c7bb4d2deb47de3134376f8c9737fc7e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-15.png",
+      "sha256": "9c4082351f5383f32ac3001039528742f16fdbfaa83914042ecfc5fd878734d9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-17.png",
+      "sha256": "ac6a4fa239eeffbdfe21caa3e38a71e4128b13f2fbac793aca4524562753685f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-18.png",
+      "sha256": "90e25154489626b4b4a647ce8e5101ce91806c94e0f4967cf576a727b765a591"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-19.png",
+      "sha256": "ebc9259ace88b46eb46c3b70a867f35bb5bd59b3772acc929dbf4205492d3936"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-2.png",
+      "sha256": "abc2ec136424793d0a1239e43cb18b1ca064d6de361d93a9e05af8fea522c246"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-20.png",
+      "sha256": "a0bbbb367a726d8afa16858a2af7a0236641cbf0d0bbf04026f176122990f8f1"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-21.png",
+      "sha256": "0ef9a43728b7520916ffb3d2be9c102fdf5f2b5c1499f9fe96eeb9f7717596af"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-3.png",
+      "sha256": "1e9aebba396ae80a161e6c87965b5babec2a42f574d5e87b68ea7f2d541a7258"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-4.png",
+      "sha256": "c9455fea1dc8fbdd347a0c68c04a101773409809d13cf2d3f41844c7b121d4e8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-5.png",
+      "sha256": "209ae34e6c66c99200f23958a7d614aa051f024f79c3aed687613d623fa44cdb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-7.png",
+      "sha256": "5278adfc5dca2b9a57f2e3450fdf51cb301dedbcacee5c6895941a6a20c412d8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-8.png",
+      "sha256": "39929ebcd812adcf8192ef3b1275d73d242461c5425b1a205e9a93e60885ba83"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-9.png",
+      "sha256": "873ba8426049f5425177f9a9eec941c35eb8ae2f546bf1d05a3c240e257acf9b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/results.json",
+      "sha256": "0d04652978e9c83e413df4284278ce86c8193a0fc3b943e5febd32365b468aa9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/AdminPage-CfTZfVSP.js",
+      "sha256": "0e906ac0f994bf668d405cb8d160ef2ba2d97d0cd49b983936ad3ac2f6c42d73"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/AnalysisPage-Ba7bBL6u.js",
+      "sha256": "5ec105f3b289cf8d78675668e9dd7519e62e0378ddfca14f12c726099ee9d684"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/ChartPanel-DkzPMV9z.css",
+      "sha256": "e2f9ea925612f678226fe1ff53b05a137261b7e998c66952f590a7245b1eb233"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/ChartPanel-TwsSzg5p.js",
+      "sha256": "2013c9a4b167f829dc1eafbe32b8ededb658ece3f97dba3282ac4efa86fff63c"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/charts-Dtu2f5Eo.js",
+      "sha256": "eb74bd68f61113e7bc711d93154b9202e72f43a5027247939d99344a9160d52a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/DashboardPage-D_NWm7FM.js",
+      "sha256": "4c0a6484d2603a09b7206d2e646d4dca4fbf16ee05a1845eba257a4fe1255902"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/DatasetsPage-CqYmLM17.js",
+      "sha256": "b7bca4cdfe6439062192c8243d57d05c0d6486aaa11923f94a95a89d56e4658d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/DataTable-D6vjZNnT.js",
+      "sha256": "44973bac1b36e61f6afa21659337f5c92d7992bf5147aab3759f0910ee0bc9e0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/element-DqI9DH9N.js",
+      "sha256": "84af54e57f908dbc960cc64c94ccb57abec6038311a6ee3c4c215ec9ad419a16"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/element-usAqAh6T.css",
+      "sha256": "1d73e6aaec51f11726394fcd716c063acaff0aefe2b4787389876ba3e329d9b4"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/index-CX7QP4XZ.js",
+      "sha256": "2dfc9a1c4ccac8f053b4ee842c33f51b800e7f4228e002cd5c06f4a2925b9f03"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/index-GmVr_16I.css",
+      "sha256": "08cb4ca2fceec447fc75f8fca9b3cb2ddb98334cad8bfdc1a88d404666b4461e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/LibraryPage-CIzzbclk.js",
+      "sha256": "18ac68e44aa86e97a84427cca8c6f32a9934bca3c51ec77dec46c477ce1392ad"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/MapPage-DLek-jSx.js",
+      "sha256": "5c8f0121894e6530efb07a7e53d9df348bc915584a1633b0d567265fa28ff2d4"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/maps-1Iy-_6Bz.js",
+      "sha256": "0e656983a10994f1a7cd55a1ba601c95f9f6e001a28d0d1e57e12b38bc99c6f8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/maps-c_1sG1-7.css",
+      "sha256": "3a2b8467811c3aa89ce93c07ec06cb0598e8c8c6e9570c10da44590ddfd08c77"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/OperationsPage-C3FJy--F.js",
+      "sha256": "fafb9971dbbd9fdb2670b05a02cf8618d03d5da65e3f85d8a0e75dbb86423836"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/ProfilesPage-DCYzYy5d.js",
+      "sha256": "9723c5b9372aa7d624bdd52262dcf184d820726bb09d176227f46d6960d928e0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/QueryForm-BgzYgXSI.js",
+      "sha256": "4aa8320ee5a51806e0e9465b1847e229e0b78d67b66ce91183e5064c3337d182"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/RegionPicker-7cTk2AA7.css",
+      "sha256": "4f947fd7ec90cda88a5f6c7fc46023a2f970cd2ce261b870e4b75324da548f5b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/RegionPicker-CesOCo_E.js",
+      "sha256": "c1b99dc6be36fcb06a7464a5f5eb6261469f7ac38425b8199db89ff4363b7ec2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/RemoteAssetImage-bs_w0BkR.css",
+      "sha256": "74781198b3df95e9ba35a4bef50e0eb325445a469b4027099d2b55858ecb0ad3"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/RemoteAssetImage-CfNtWMqm.js",
+      "sha256": "93597b02239e1030e0579e6c5f422ad0939baac8a0d43f55bc0a0e4b5785a833"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/rolldown-runtime-C0FnF6B9.js",
+      "sha256": "e0a79ad36c6ca1ffbc796c80aa5661803a9d1bc684e29d1587f48b4ba9a82714"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/SearchPage-DtSX3AOd.js",
+      "sha256": "6f8b676e158e27193ca42cde31b81f69d68b29fc7905e03073822315a0101c06"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/ServicePage-DnvMyX9-.js",
+      "sha256": "a6cc24c5859a32da7dc2b46da4903d21b9aa9194ef2152bd731ca75bdceabbd8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/validation-BCYsUbhZ.js",
+      "sha256": "a0704ee794170d3573190887f7f2214de0ff3aa6555f6470cdb48dedc9dacd57"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/vue-D--tPQgM.js",
+      "sha256": "dbfa2e9f5397bd026c92fb5510bf264f3f051779c2ab7857821966daf2a028cb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/WatchPage-BlAN4UGF.css",
+      "sha256": "03cb6e9a66bc71bb163d78378aa232943adcfb67f7f62a598ba8eb444f3d82f0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/WatchPage-WJzPLBPq.js",
+      "sha256": "1b4213fbd64fc315faad6c3e798ed85819d9a5ab2bb32a79df7c18ef05b5c2cf"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/dist/assets/_plugin-vue_export-helper-BDNMzG2s.js",
+      "sha256": "27e87fe62aa760227b7529576953d8314891fd2aec28e0a3f03aece406f2d7d7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/client.ts",
+      "sha256": "4f799c05290d5abfe4a7fe3b67d28230eb1138be61a1155d7a110fdc2e97df4c"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/contract.json",
+      "sha256": "c4ec519679507bb229d3a618035e8e72b0863a71f8f52e36fc5b969bed2a0d35"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/gateway.ts",
+      "sha256": "b154cb41816b460451471d2b79550954983548f2c8c69f7712397e5ab5c79727"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/httpForms.ts",
+      "sha256": "cce322bb53897ba7ddacb749d895f3f045b03731ae3995ae70087f2ee28e9131"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/mutations.ts",
+      "sha256": "69f6def8ca2ad2ab80691ff282803e9bd8b637beaa3d68c3a5e6150654151029"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/operations.ts",
+      "sha256": "3f67163c55b6dd16809bf71b0a634cbc121ab120ecdd74e2240653ec2b612bae"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/resources.ts",
+      "sha256": "794527e247004fc98fcdd482efeecba7f9daedc21a7fbd78501082702ec881cd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/schema.ts",
+      "sha256": "b0cd832a11bc385d8a833e3b6a8f247cf15a8ec9eb3f9ab62e6e423e44e7bf5e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/tasks.ts",
+      "sha256": "f660a62ee602d244479ffbd13c377337ea49e8738164ca8f2f7961190501c0f8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/validation-contract.json",
+      "sha256": "27c1e5687d9e461c6962f3cceeedae9d71651820f123a181ce39207722f6731f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/api/validation.ts",
+      "sha256": "5a7eb3457cbe3e34e958ca61e153d20de0d63d82a4915db960e379e07293c50a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/ChartPanel.vue",
+      "sha256": "9da23d89c2901b4bdf06ead40519db803e49f39ee0b3173eb8d5c8d20c383470"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/DataTable.vue",
+      "sha256": "dc59a67ad6623bb37ddbc373d5222498c3338efc98590702fbee60e499a1a725"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/DeviceMap.vue",
+      "sha256": "2df005a2b9f60ec596e953d6e0d94130ad7ea41b8346156496734727a945eb77"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/FormDialog.vue",
+      "sha256": "8eb3a4c467a3d0b0bc4a7df6ea42162165c1d95b4d447c0160c8c56e934f8a0b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/QueryForm.vue",
+      "sha256": "eaf4bcbd4c06019fba6ea107c7d093c056f7564128187fcc3237428fff59a53d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RegionPicker.vue",
+      "sha256": "69a34edb4fb7d3e7a088bada1fcb64780d9524774d1880cce88e6de937fa24b9"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteAssetImage.vue",
+      "sha256": "fa12c625c9a97cea748573144905f838f2be861de5c523110cb490ba5efc306f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteDashboard.vue",
+      "sha256": "9e1d428ef450e08a368e5dbba9fd18c4675f6241e2a8cc7e0c2bb4642ac8670f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteMap.vue",
+      "sha256": "4fa2f97b6f15d036ab15a75887aa4dc6c8dfb6a6ae60e137fad29cdff31f4abe"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteOperations.vue",
+      "sha256": "c2fc27b19e476dc60ee5ca102b5bc6ee5e5b026067d607941466f169b1464da0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteProfiles.vue",
+      "sha256": "6801bfd41d5fcd8c4464ae3f46da9a1e362a5932ea5976d8914014b5d024a6f6"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteReportPreview.vue",
+      "sha256": "47188ba7a2ff11623bc3c17640110a7387d9317ecddc63a23736b3bd45c1b1ff"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/components/RemoteTaskDetails.vue",
+      "sha256": "c173c3e148da1f575ff5c38ee73dc420511cb0d26852cbd47a4e54c2c637219d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/mock/fixture.json",
+      "sha256": "116e7657f1a2698a6f9b2273a81bb40df16f75c25f8157ffc04d482c07519574"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/mock/imports.ts",
+      "sha256": "ec0a813a64b93b8f88a15245be0cd2aa35bdfbb0fa395bbfea80f3801c3dd5ab"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/mock/repository.ts",
+      "sha256": "5b7b5d26d8b8a4a67c782686760dba9bd3a83d7701c16bbe6880805389ec7fdd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/AdminPage.vue",
+      "sha256": "3fbcf5474a3639bbad0e41e4a3912d12bf62cfcce8dfbf9214fa32dba4d2055f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/AnalysisPage.vue",
+      "sha256": "c9be8d76b866bb948c0dd6bc9b9bb7c81e31d014d6ce45452f8702e8520c87c1"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/DashboardPage.vue",
+      "sha256": "d0da8b132d7b33ccfec48911bf92ea79143572400ff42c5fadc2ca7f4f072377"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/DatasetsPage.vue",
+      "sha256": "e89c9cee973f5230ca0c9f08ceed802527c2c3e7f65be79d567b89b89c0f4b0e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/LibraryPage.vue",
+      "sha256": "3a6e78a767d48d8bfa702a537b00f0eacd96b4934ee60ed8361b49bc9f4e53a2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/MapPage.vue",
+      "sha256": "a5880e45947e950122163174a74d794e2f9fc72dc35d7951fb732552907d2e15"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/OperationsPage.vue",
+      "sha256": "7625ae35fe0e9446f27d9749eddaa8723fb5e8617d22752df0a258e74d682542"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/ProfilesPage.vue",
+      "sha256": "e3515344472d7b0c2e1f38e59c50f4c090df3f6171c3df0906ac164a0ffec888"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/SearchPage.vue",
+      "sha256": "3619d8cbc50f63d3b4341f4086e7fcb17fe5175107d62998eb20f57f298ed13f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/ServicePage.vue",
+      "sha256": "0c27717cd6ae35709670051f37ffbe8a42d4236b4e12167c0e9f40a17d900477"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/pages/WatchPage.vue",
+      "sha256": "519dc8eca73892302efe29f0023d0124fe7ba3ec9835cdbb4c17b19b62580008"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/stores/platform.ts",
+      "sha256": "9116f8fe139a3791b7826b115297eddaadd7fc713c970dd604dde983f82acfb8"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/utils/files.ts",
+      "sha256": "f6da2bb93a8394ea7361bd41d9002c1a6d1457f5c51d1ba4538f5ccbf66f8c3a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/src/utils/sets.ts",
+      "sha256": "2efa073e29b0cb9679a24e4fb96c6a73f0c8419fa28b26fc35b64cd93b9b8f08"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/MAC数据统计验收.xlsx",
+      "sha256": "87f50bda587d2076197e7f8378d9971f31f306719e049c74354a32cb0e024b34"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/MAC检索.png",
+      "sha256": "41cb5402334e5c6b8d1be5ad39426a0e5ec6ec5d6c3760bf5f7c5a8879772a17"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/MAC检索查询结果.xlsx",
+      "sha256": "aa56d9f41bb5c6c13826df0145948ad96852a27564edddbee90bee80dc28e5d1"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/results.json",
+      "sha256": "ec0c6f8b623a18c4c62c0d6bcdf771a541042aa3154e11056192f6aff3976d16"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/workbook-validation.json",
+      "sha256": "86b9184a45e5e49075bb28f32f9c51a2694be1af2c33655ed0b78149d41d0f94"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人像-1.svg",
+      "sha256": "738773433c752306edd032b35135d47cbde4b6e2bcd38a4621787b77a8ac2583"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人像检索.png",
+      "sha256": "e8b6257a47a3979221b504c712fd29de7bc562318227e0d1f40b0ad38593d66e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人员库.png",
+      "sha256": "88d235bfcc2239dbc3b54071392cb2e271ddc054ede25bbc3a126724592c306c"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人员库.xlsx",
+      "sha256": "17b69a33d39c3617b0cbbaabd304a776f27857e3a876f2c4822747a9e3e98301"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/任务中心.png",
+      "sha256": "37e6eefc6f8353256e1e0a83bf94d36531a2c9ee1476ff9ce46b7f60d3ccedac"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/伴随任务.png",
+      "sha256": "b0d37d3cf44c88634682d8fdb9913eefa5e56fc8ff9cf576a300beb5e2e3201d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/伴随任务结果.xlsx",
+      "sha256": "6a39cb120a86cfb75944159989138b8cc2e1a7d15985a4b076290629415018bb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/区域统计.png",
+      "sha256": "547ddb886ab417fbb7ff9ba9bac5a82f4627e3612a92592c00f807014c5d5d4f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/区域统计结果.xlsx",
+      "sha256": "a3e94398f114d1c561959b914591fcfbd69ae53a2e7f991a351cb8786b40107a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/参数配置.png",
+      "sha256": "2a879fb11a06bca55aa94cda4f6f3e8ff8bd6c76ffdf79319c95bef98def3047"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/告警结果.png",
+      "sha256": "304bc11c24ef5905711120d68a0c548f94de864d40797e34df76973540585ae3"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/围栏检索.png",
+      "sha256": "a2052a4261679357e913a6e40dd0ea37b89d09dfd0693d6f421de7797df20af2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/围栏检索查询结果.xlsx",
+      "sha256": "a0606a3b20ef685349f8a367a104b02a421497104945aeb7541329bfc285ad20"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/图码档案.png",
+      "sha256": "53741b5319b522e1544aae599847437f21568191d0505a6d0b223f48166f8fba"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/地图框选证据.png",
+      "sha256": "b1231ac29d63eefa630f6c1ea9d9f98abd9cc54707b3812b08073cc6d3ae9c70"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/地图研判.png",
+      "sha256": "226953b3791a3ad72d4d15951600f5f61ac44cf6f7792dd6d9cbbe75ff47133d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/场所管理.png",
+      "sha256": "3974e4a3e0fcd72f5c3c250be222e0e8506744ebddc384d732ce8727e4361829"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/多报表验收.zip",
+      "sha256": "dbc18dc00add72358ab0ca0c3e19bb5a8a7af5e2d90043340ef0e07b84ff766c"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/操作日志.png",
+      "sha256": "ea451977188ce9c68e99c2bf6005ce850aa44db8de3070d1abdf14bba2079c9e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/操作日志.xlsx",
+      "sha256": "efcc02c809f6acd05aa1bbd47c24a9ddd30024b12ec209be6b42dae90247660d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据态势.png",
+      "sha256": "ad9e05cc02b053feea0a7616c53906c21515e469c505b24d187ac213a4784abc"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据运算.png",
+      "sha256": "b0b95c53ab64d2374a4c1f943132390114bcfc5c0f3a2dce90385371d0a74bbc"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据运算详情.xlsx",
+      "sha256": "8695c4a144af9f0ecbb17698f2db249ac668e3309c3188d3dfe8fca1ce0a31fd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据量异常设备.xlsx",
+      "sha256": "5d5a12bb40eb753244d6562541d737fa6edec2d82adf5cf47a3cec69d6dd35ca"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/用户管理.png",
+      "sha256": "c9331192f48b96d920a4403e45212124aa26141a66986f3e4cea487ec58ec29d"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/电围分类统计.xlsx",
+      "sha256": "bcbd6577a27223914b67cc82ee9e96314290ce0796cd8a60e984c8f8240f5f78"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/电围区域采集数据统计验收.xlsx",
+      "sha256": "3b5184338f56c2e629b6ddb5ed398ad107a2d6ca2606ffd3f947a04154d0001f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/电围设备采集数据统计验收.xlsx",
+      "sha256": "3b5184338f56c2e629b6ddb5ed398ad107a2d6ca2606ffd3f947a04154d0001f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/电围运营商数据统计验收.xlsx",
+      "sha256": "3b5184338f56c2e629b6ddb5ed398ad107a2d6ca2606ffd3f947a04154d0001f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/短信日志.png",
+      "sha256": "fac9d86818f6c13040f6c357ef2b9bb7c847352b2e2403b3e97cc4fb3afb79db"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/短信日志.xlsx",
+      "sha256": "43aa420b394099f92a37f530035ae57e7c0db70a6e9b6207577817be6ad33318"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/碰撞任务.png",
+      "sha256": "663bcda7752a20d6b2820b62c2b4a0894db1838ec50f8d0cff2f3092a068103b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/碰撞任务结果.xlsx",
+      "sha256": "0fdf6f91b49b7b5389170591cd7847d35fe3346e62b93198d441b8d40cd1ec53"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/系统组件状态验收.xlsx",
+      "sha256": "4521cdca87f311a58917bec7e84f95acf411c34eba5862fec95a8f2b590f1384"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/系统首页.png",
+      "sha256": "fccce19b375979490469a9fedc3403a272658ce85f9e82314fd9b58f3c7f7b3f"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/综合布控.png",
+      "sha256": "167b266077b50002cd1f6f8e0d5be704bff161b108c905cf254a18801ef2f5e2"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/角色管理.png",
+      "sha256": "94dca2dd18967051b3f109226a150334b0edb46c59abc15f179ef522b932ee0b"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备 A-01.xlsx",
+      "sha256": "b55f2d4f19da9f95e23d336e1800d63bf39137259beaa1091d9de1e2832677da"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备分布.png",
+      "sha256": "dc81587c60426acf6650a31a60b5ad36a677d6ff9ea6c5f0a2b51e56fda95d16"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备分布勾选与在线率.png",
+      "sha256": "e68d0f07dcbe932332d2e6ad7a805618f1429ce5a3caea8f64f0ed11b08e6fd6"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备实时在线率验收.xlsx",
+      "sha256": "06868b86d86788acd80df4bfa5bceca78be9301ec4ca689607f36a454ab4bd19"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备实时状态验收.xlsx",
+      "sha256": "0e6bdb6227bc28a9aa4657d9708deff17400cbb08aa1bb39feda52b19760b6d0"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备管理.png",
+      "sha256": "143854cc06d9cd1d957a5364fadf30814cdd9c20039c698cf303caecda3f2818"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车牌数据统计验收.xlsx",
+      "sha256": "0453047e55ddaa3cc5cdfb506483c992814d881ef83481faa81c9650b2cb69cd"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车牌检索.png",
+      "sha256": "972b6e3f33045f822c3d1c3645ded9eb82776170a5ebcde5fc146ac221fc7acb"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车牌检索查询结果.xlsx",
+      "sha256": "f00aff163ef75d3e62a774261faa53be187090ebb4b305c6233505062cd6af20"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车码档案.png",
+      "sha256": "bca028ac7414641abf32e3dc3c6f9323c292995dda74d4c900ee0f332ea1612e"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维报表.png",
+      "sha256": "105d518885fa8e9149a1c4c0ffe2346d052695794cf6bf82389a3050bdea8df7"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维通知.png",
+      "sha256": "49b05829141dc6537a3e510f3d9cc1e9fbb15aaace520dc944ccbe5a3cd2167a"
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维首页.png",
+      "sha256": "6c5812c1e315a61c31f5578bf93e964fa5807229dabe7965adf91711d3576d18"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/compact.pdf",
+      "sha256": "da558348e5716b68efcdea0a27a663bcf635e4e1d056b0df46a9811677d52ba3"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-1.png",
+      "sha256": "e89dd8ff7c2be7d42da5f5868a2a71c47903bda60601a9b61e4e473699839f69"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-2.png",
+      "sha256": "3f28f3e7260f51eac5a3bda054026e57a5e3c3df8e76c9cc23a7bd62f82e6781"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-3.png",
+      "sha256": "c93e56fea23ac268d999c8c1a48141f890c24f51b7af6249bc0a5efcdea57f85"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-4.png",
+      "sha256": "98dc89d290f5b376ad20b1ac2510c6cfccd6da8bc3783d6d6a8bf842239061d9"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-5.png",
+      "sha256": "d2ece33107743e946a08fc3fcebe42cc7c7f122d302f5fc0d78971470bd61d97"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-6.png",
+      "sha256": "c2fbd84c7d2bb9444fec626078df07a31037bf16cea270ed9ba25aa172911ca5"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-7.png",
+      "sha256": "08d373d38a44028445e06de6841c6795cbf5d983c9b8896a7887a2b27aa02301"
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-8.png",
+      "sha256": "82732bb259a6d2910322ee1d9b8ce6959450063dfe959f6b65a16d9689f722a1"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/compact.pdf",
+      "sha256": "69cae49a12a9989be2f5420f56cfcbbff8b3d98d6aaf3f6594713779fc23f8bb"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-1.png",
+      "sha256": "086b3b495590c99e8e648608e826e4a5ad7b5707cbed6d985719ace26b7a5883"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-2.png",
+      "sha256": "34a50d3ef152a41da6920549e8b333c6efa1c0cfdd02cb5abcaf8f6cc77c4e5e"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-3.png",
+      "sha256": "e78e0d5a87dc8aec384cefd0a9e691b3de1357bcb8ef0db6c1932e095b829b53"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-4.png",
+      "sha256": "19e97fe9bbc227cba4932b3554c82f935f7d9aeb3f035e7bfbbd93f9720eda5d"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-5.png",
+      "sha256": "ec2dbcc1353debe01e56955e619574cefafa9ca3b96125fe6ea9b932cf024a06"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-6.png",
+      "sha256": "14e9739f02d513163a01b7fbdf7cbe5fbce68a5fdc362993725b09e9bfd9b38b"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-7.png",
+      "sha256": "8af39fa56c1de29926919108ccda64800fc74fd2cd6321fc9373b242c9f35427"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-8.png",
+      "sha256": "2880397da4d52505cebdb6b71009604d25aec6ec692fa2ec12769557b8ff7c43"
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-9.png",
+      "sha256": "e0dc50a5655763610024d34a47e7cc163f6c1c342e7304c7eeed44d41f346fc9"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/compact.pdf",
+      "sha256": "d40fd284906314877ac91b9b4da7f8f8b9cda0e28ba6aa3cd23220878828fcbd"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-1.png",
+      "sha256": "86112c26afb1c60df836bf21398c1fb87367faa469c1c0ec86e4b51db93a471e"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-2.png",
+      "sha256": "d61a5f3a7d8355461a16cbf325c2c19098011d8feed27cb8855a83cef1c4c3a7"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-3.png",
+      "sha256": "38a505315a8f2284e43dc80c50d9459f4a578c8285530df2007d68759b0a8508"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-4.png",
+      "sha256": "1883843d7a8d0cfead9688d57e7a2ee2256100edaa0a3a9c6c713b50a8854262"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-5.png",
+      "sha256": "6427825a776fcdc34c7eb4460a02f8dc5c074d09be0c72c31d9305cda2010f91"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-6.png",
+      "sha256": "3ee1a6492ce57b7649bfd12b5c1eeff611d77226135f56e1b3c49211611a05b2"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-7.png",
+      "sha256": "08d373d38a44028445e06de6841c6795cbf5d983c9b8896a7887a2b27aa02301"
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-8.png",
+      "sha256": "82732bb259a6d2910322ee1d9b8ce6959450063dfe959f6b65a16d9689f722a1"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-1.png",
+      "sha256": "ab05fa632466a024001e81936d4f43c0e8588cc82ddd4cf9312bccd28f514b2d"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-10.png",
+      "sha256": "0b9eebad39d2f3256da96b8bd0ad4c2192f1d89ee321c51da886be917ef2c795"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-11.png",
+      "sha256": "3a180105f79615a4378dd783b7cdb01de9f3599f4f2f965c3982a6b35f725b3b"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-12.png",
+      "sha256": "9e30b8aac23282a1195b105e01b90a94cbc6af48d7084ba0ad5dec2d9a52f941"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-13.png",
+      "sha256": "1ade7ba995a8e7addd15da3d574b5cef1e4723f582d091ad3859fe4cc0914018"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-14.png",
+      "sha256": "de6556f2cb8405ebd7e39eea59c46b2ae825e253357e5311559467fd81866953"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-15.png",
+      "sha256": "a5d431fa287942ff78f835050bf0daa44cfb50490830ebda60f641b7292e1667"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-16.png",
+      "sha256": "4516f235083548ad7f5d038b74e5293aa082d52379b1a75be90ec65961d7dca6"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-17.png",
+      "sha256": "932e8459bf87334f4ed9d883bab2f5714557d3ca28e73333a26eeae56dc25226"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-18.png",
+      "sha256": "eb3d254a9ddba2e10961af489d9b7608d0e850495d5d0341379f074534a022f1"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-2.png",
+      "sha256": "6629d5da79c17ad95b93005b2e237f37e9de08761df3a4d883e7de8306ff9b48"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-3.png",
+      "sha256": "3fc68c179927a1e8a05c4a39741eb7a8deb17c3266c29593e65f9fa1fbb91664"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-4.png",
+      "sha256": "a46b00f2b4def91afbf446b5330c50e89184024cda628aca27c89c77df1ca186"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-5.png",
+      "sha256": "ec032f0e4063b4d7121dad058bcca75d9bfa6952770863e3e5d4d1bc2294698a"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-6.png",
+      "sha256": "ea05ee03c0b9cebd9828417dcc143513edfe38fc958dad3fbd1cf0dd02933a5a"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-7.png",
+      "sha256": "1473450883f3cbf5e6dd568503a99f77e021d22f68d6f7b30e4df874bb114313"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-8.png",
+      "sha256": "959b92e5c01041c3513a62e64cb5a41c1fdd29f7ba4e9f5e3d49de6214a0561b"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-9.png",
+      "sha256": "45893cb78b5da76a0e4a24987ff5e21777e3f57c026040ab66661dfe04de8b69"
+    },
+    {
+      "path": "合同修订工作/final-render-v1/revised.pdf",
+      "sha256": "6d09a8a1c221de1f84dc22d8a2eb24b401a5fa0543c7a48a5c6030a73a3d8ae9"
+    },
+    {
+      "path": "合同修订工作/original-render/original.pdf",
+      "sha256": "21e1065ea0b7df1a831917629db34cacd51f5f4acbefcc4fa234a747bedd3cef"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-1.png",
+      "sha256": "8686b18359b86d6c95d513d50e0753ade5e79a230357f31582438e41af9a1a2f"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-2.png",
+      "sha256": "e4fd4e96f60d7247a34fcfbaa04bdf74c5c8c571722e63bd5b0e23aa98aea784"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-3.png",
+      "sha256": "c73630ee67df70163549bbfb6464b2379e24cf1523e1240fabaed63b3c1be95f"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-4.png",
+      "sha256": "dbc9f0b9dd82c50c4753a0319fcba182add85fd54c26d1166941bcf835672fee"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-5.png",
+      "sha256": "eb3add6bb2798f070bc662a9a71faa224ea01d4406dff783f3d9f361aaa3d3fb"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-6.png",
+      "sha256": "1e05328769005afa372b9481b7b68971a4d1b485a0ec8717afb44ab378553fba"
+    },
+    {
+      "path": "合同修订工作/reference-render/page-7.png",
+      "sha256": "fe0d640c202cc3c0719f68277863fa0987c19c3f616d3237b252d61cc7809f0f"
+    },
+    {
+      "path": "合同修订工作/reference-render/reference.pdf",
+      "sha256": "37f6f682aa99abaa1879d97e28634d4bfc1d0773400b36a2833eaf3ecd53746d"
+    }
+  ]
+}

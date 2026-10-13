@@ -1,0 +1,44 @@
+{
+  "reviewedAt": "2026-10-10T09:17:27.835475+00:00",
+  "reviewer": "Codex visual inspection",
+  "docxSHA256": "184991c0ed19639ffe8a705281092983d519f2b37d254cfe4e99cb27453ad445",
+  "pdfSHA256": "74a7da3e4676ff98f3c83e53cd6170db6c66a32411261db49a5fb8b3e5c23cdc",
+  "renderPDF": "docs/project-governance/audit/assignment-reviewed.pdf",
+  "pagesReviewed": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "imageDetail": "original; every final page inspected at 100%",
+  "passed": true,
+  "findings": {
+    "clippedText": 0,
+    "overlappingContent": 0,
+    "emptyOrIsolatedReferencePages": 0,
+    "tableIdentifierOverflow": 0
+  },
+  "resolved": [
+    "Repeated table headers and readable contrast",
+    "Module identifiers fit table columns",
+    "Task and acceptance labels kept with following content",
+    "Legacy responsibility and set-identity conflicts corrected",
+    "Reference note kept with the original minimum-delivery section"
+  ],
+  "scope": "Document content and layout review; does not sign off production platform behavior"
+}

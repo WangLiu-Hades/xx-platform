@@ -1,0 +1,17 @@
+flowchart TB
+  subgraph PROD[PROD 环境示意 单环境独立资源]
+    Browser[浏览器] --> Proxy[反向代理 TLS]
+    Proxy --> Front[Web 静态资源]
+    Proxy --> API[Spring Boot API]
+    API --> PG[(PostgreSQL PostGIS 持久卷)]
+    Worker[Python Worker] --> PG
+    API --> FS[(受控文件卷)]
+    Worker --> FS
+    API --> Obs[日志 指标 告警]
+    Worker --> Obs
+    PG --> Backup[数据库备份]
+    FS --> Backup
+  end
+  DEV[DEV 独立 Compose] -.同构配置.-> PROD
+  TEST[TEST 独立栈] -.同构配置.-> PROD
+  UAT[UAT 独立栈] -.同构配置.-> PROD

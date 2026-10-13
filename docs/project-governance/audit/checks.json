@@ -1,0 +1,659 @@
+{
+  "generatedAt": "2026-10-10T11:27:01.153877+00:00",
+  "scope": "project handoff and frontend regression; not production platform signoff",
+  "checks": {
+    "all_initial_files_read": true,
+    "initial_JSON_valid": true,
+    "source_PDF_unchanged": true,
+    "source_DOCX_unchanged": true,
+    "OpenAPI_unchanged": true,
+    "DDL_unchanged": true,
+    "API_inventory_complete": true,
+    "CSV_matches_JSON": true,
+    "public_API_owner_unique": true,
+    "pending_21_unique": true,
+    "P012_resolution_scoped": true,
+    "effort_sum_DEV-01": true,
+    "effort_sum_DEV-03": true,
+    "effort_sum_DEV-02": true,
+    "effort_sum_DEV-04": true,
+    "current_unit_283": true,
+    "current_28_page_smoke": true,
+    "current_11_map_regressions": true,
+    "current_3_HTTP_analysis_regressions": true,
+    "build_newer_than_source": true,
+    "Word_15_modules_preserved": true,
+    "Word_10_handoffs": true,
+    "Word_effort_matches": true,
+    "Word_obsolete_scope_removed": true,
+    "Word_legacy_ownership_conflicts_removed": true,
+    "Word_source_priority_explicit": true,
+    "render_after_DOCX": true,
+    "Word_PDF_has_all_sections": true,
+    "Word_PDF_no_empty_pages": true,
+    "Word_PNG_page_count": true,
+    "all_Word_pages_visually_reviewed": true,
+    "owned_images_PDF_DOCX_parse": true,
+    "new_handoff_links_resolve": true,
+    "dependency_scan_completed": true,
+    "dependency_registry_and_full_scope": true,
+    "dependency_inputs_and_evidence_match": true,
+    "dependency_current_audit_date": true,
+    "dependency_no_known_vulnerabilities": true,
+    "dependency_result_documented": true
+  },
+  "passed": true,
+  "warnings": [],
+  "binaryChecks": [
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-final.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-initial.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/dashboard-smoke.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-10.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-11.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-13.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-15.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-17.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-18.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-19.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-20.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-21.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-8.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/flows/failure-9.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-analysis-failure.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/http-resources-failure.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-final.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-selection-failure.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/map-selection.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/audit/vue-migration/search-context-final.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/MAC检索.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人像检索.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/人员库.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/任务中心.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/伴随任务.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/区域统计.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/参数配置.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/告警结果.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/围栏检索.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/图码档案.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/地图框选证据.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/地图研判.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/场所管理.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/操作日志.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据态势.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/数据运算.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/用户管理.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/短信日志.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/碰撞任务.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/系统首页.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/综合布控.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/角色管理.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备分布.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备分布勾选与在线率.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/设备管理.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车牌检索.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/车码档案.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维报表.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维通知.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "docs/system-design/ui/prototype/tests/evidence/运维首页.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/compact.pdf",
+      "check": "PDF_parse",
+      "pages": 8,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-6.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v1/page-8.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/compact.pdf",
+      "check": "PDF_parse",
+      "pages": 9,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-6.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-8.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v2/page-9.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/compact.pdf",
+      "check": "PDF_parse",
+      "pages": 8,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-6.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/compact-render-v3/page-8.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-10.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-11.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-12.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-13.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-14.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-15.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-16.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-17.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-18.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-6.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-8.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/page-9.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/final-render-v1/revised.pdf",
+      "check": "PDF_parse",
+      "pages": 18,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/original-render/original.pdf",
+      "check": "PDF_parse",
+      "pages": 11,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-1.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-2.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-3.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-4.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-5.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-6.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/page-7.png",
+      "check": "image_decode",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/reference-render/reference.pdf",
+      "check": "PDF_parse",
+      "pages": 7,
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/多维数据分析平台合同v1.0 - 副本.docx",
+      "check": "OOXML_parse",
+      "passed": true
+    },
+    {
+      "path": "合同修订工作/多维数据分析平台合同v1.0 - 副本_正文精简.docx",
+      "check": "OOXML_parse",
+      "passed": true
+    }
+  ],
+  "sourceSnapshotFiles": 22313,
+  "counts": {
+    "generatedAt": "2026-10-10T08:18:21.057Z",
+    "openapiSha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd",
+    "operations": 193,
+    "schemas": 581,
+    "operationPending": 65,
+    "referenced": 127,
+    "contractOnly": 66,
+    "unmapped": [],
+    "unresolvedCalls": [],
+    "duplicateIds": 0,
+    "missingRefs": [],
+    "generatedCatalogMatches": true,
+    "method": "TS AST runtime string references and request-call literal/conditional resolution; static references do not prove a reachable button or successful real HTTP integration."
+  },
+  "effort": {
+    "DEV-01": [
+      105,
+      157
+    ],
+    "DEV-03": [
+      104,
+      158
+    ],
+    "DEV-02": [
+      41,
+      65
+    ],
+    "DEV-04": [
+      79,
+      116
+    ]
+  }
+}

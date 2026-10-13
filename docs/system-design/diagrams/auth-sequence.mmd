@@ -1,0 +1,14 @@
+sequenceDiagram
+  actor User as 用户
+  participant Web as Web
+  participant API as API认证与权限
+  participant DB as PostgreSQL
+  User->>Web: 输入账号口令
+  Web->>API: POST /auth/login + CSRF/Origin
+  API->>DB: 校验账号与口令哈希 保存sid_hash与idle/absolute期限
+  DB-->>API: 用户状态与角色/范围
+  API-->>Web: HttpOnly Secure SID Cookie + traceId
+  Web->>API: GET /me
+  API->>DB: 会话状态及当前权限
+  API-->>Web: 菜单与权限展示数据
+  Note over API,DB: 每个业务请求都重新强制检查权限和数据范围

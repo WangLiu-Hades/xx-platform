@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-13T09:49:05.286504+00:00",
+  "localLinks": 97,
+  "broken": [],
+  "powershellBlocks": 31,
+  "gitRehearsalPassed": 23,
+  "gitRehearsalFailed": 0,
+  "guideSha256": "9fad518b5e182555cdf89be1fafbaca5f467b417cebcff35f76cc7eac4b6a572",
+  "githubPushed": false
+}

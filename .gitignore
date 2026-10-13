@@ -1,0 +1,35 @@
+# 本机保留历史、合同、预算、原始Git元数据
+/local-only/*
+!/local-only/README.md
+# 第三方依赖、构建、缓存与运行时
+**/node_modules/
+**/.npm-cache/
+**/dist/
+**/build/
+**/.next/
+**/.vinext/
+**/.sites-runtime/
+**/.wrangler*/
+**/.openai/
+**/.vite/
+**/.vite-temp/
+**/coverage/
+**/playwright-report/
+**/test-results/
+# 环境文件与个人设置；配置样例可提交
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.*.example
+**/.DS_Store
+**/Thumbs.db
+**/~$*
+**/*.log
+!/reports/path-optimization/*.log
+**/__pycache__/
+**/*.pyc
+# 历史审查中的全文提取，原件另有正式入口
+**/first-party-text.txt
+**/workspace-docx-text.json
+**/external-docx-*.txt
+**/audit/word-review/render-temp/

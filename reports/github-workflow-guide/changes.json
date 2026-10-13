@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-13",
+  "updated": [
+    {
+      "path": "README.md",
+      "backup": "local-only/github-guide-2026-10-13/README.md"
+    },
+    {
+      "path": "docs/START_HERE.md",
+      "backup": "local-only/github-guide-2026-10-13/docs/START_HERE.md"
+    },
+    {
+      "path": "docs/team/README.md",
+      "backup": "local-only/github-guide-2026-10-13/docs/team/README.md"
+    },
+    {
+      "path": "tools/README.md",
+      "backup": "local-only/github-guide-2026-10-13/tools/README.md"
+    },
+    {
+      "path": "contracts/api/README.md",
+      "backup": "local-only/github-guide-2026-10-13/contracts/api/README.md"
+    },
+    {
+      "path": "docs/requirements/source/README.md",
+      "backup": "local-only/github-guide-2026-10-13/docs/requirements/source/README.md"
+    }
+  ],
+  "new": [
+    "docs/team/GitHub上传与分角色开发操作指南.md",
+    "reports/github-workflow-guide/REVIEW.md",
+    "reports/github-workflow-guide/document-checks.json",
+    "reports/github-workflow-guide/powershell-syntax.json",
+    "reports/github-workflow-guide/rehearsal.json",
+    "tools/git/README.md",
+    "tools/git/prepare_upload.py"
+  ]
+}

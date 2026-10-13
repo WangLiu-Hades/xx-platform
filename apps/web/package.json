@@ -1,0 +1,40 @@
+{
+  "name": "multidimensional-platform-prototype",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "preview": "vite preview --host 127.0.0.1",
+    "generate:api": "node scripts/generate-api.mjs",
+    "typecheck": "vue-tsc --noEmit",
+    "build": "npm run typecheck && vite build",
+    "test": "vitest run --pool=threads --maxWorkers=1",
+    "test:e2e": "node tests/vue.e2e.cjs",
+    "audit": "node scripts/audit.mjs"
+  },
+  "dependencies": {
+    "vue": "3.5.43",
+    "vue-router": "4.6.4",
+    "element-plus": "2.14.7",
+    "pinia": "3.0.4",
+    "axios": "1.20.0",
+    "echarts": "6.1.0",
+    "ol": "10.11.0",
+    "jszip": "3.10.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.9",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.12",
+    "vite": "8.3.3",
+    "vitest": "5.0.3",
+    "@vue/test-utils": "2.5.1",
+    "@types/node": "24.19.1",
+    "openapi-typescript": "7.13.0",
+    "yaml": "2.9.1",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "playwright": "1.64.0"
+  }
+}

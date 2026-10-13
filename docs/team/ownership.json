@@ -1,0 +1,30 @@
+{
+  "status": "role-based; individual accounts not supplied",
+  "repository": "https://github.com/WangLiu-Hades/xx-platform",
+  "owners": {
+    "DEV-01": [
+      "apps/api/",
+      "workers/delivery/",
+      "contracts/api/",
+      "contracts/database/ (migration merge)"
+    ],
+    "DEV-02": [
+      "apps/web/"
+    ],
+    "DEV-03": [
+      "workers/data/",
+      "contracts/database/ (data fields, query, projection proposals)"
+    ],
+    "DEV-04": [
+      "infra/",
+      "tests/",
+      "tools/layout/",
+      ".github/workflows/"
+    ]
+  },
+  "shared": [
+    "docs/",
+    "contracts/"
+  ],
+  "details": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md"
+}
