@@ -7,7 +7,7 @@
 | 目录 | 放什么 | 主责 / 使用入口 |
 | --- | --- | --- |
 | [apps/web](apps/web/README.md) | 当前 Vue 3 / TypeScript / Vite 前端源码 | [DEV-02 前端](docs/team/DEV-02-frontend.md) |
-| [apps/api](apps/api/README.md) | 正式 HTTP API 的预留开发位置；目前只有说明 | [DEV-01 后端](docs/team/DEV-01-backend.md) |
+| [apps/api](apps/api/README.md) | 正式 HTTP API（Spring Boot 3.5.16 / Java 17）；已有可编译的骨架与基础配置，业务接口待实现 | [DEV-01 后端](docs/team/DEV-01-backend.md) |
 | [workers/data](workers/data/README.md) | 数据接入、ETL、查询、分析计算的预留位置 | [DEV-03 数据/算法](docs/team/DEV-03-data.md) |
 | [workers/delivery](workers/delivery/README.md) | 消息、设备命令等外部动作的预留位置 | DEV-01 |
 | [contracts/api](contracts/api/README.md) | 当前 OpenAPI、接口约定、错误码和待确认项 | DEV-01 主责，DEV-02/03/04共同使用 |

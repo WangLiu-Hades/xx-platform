@@ -1,0 +1,20 @@
+# Maven 构建产物
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# 契约生成物落在 target/generated-sources/openapi，随 target/ 一并忽略。
+# 不要把生成代码提交进仓库：契约变更后重新执行 mvn generate-sources 即可。
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# 本机配置（不要提交真实数据库口令、短信/邮件通道凭据、设备协议密钥）
+src/main/resources/application-local.yml
+src/main/resources/application-local.properties
