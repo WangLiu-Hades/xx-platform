@@ -1,0 +1,48 @@
+# 多维数据分析平台 · 正式 HTTP API 基础配置
+# 契约：contracts/api/openapi.yaml（Base URL /api/v1，版本 1.0.0-dev.2）
+# 约定：contracts/api/api-conventions.md ｜ 对接：contracts/api/FRONTEND_INTEGRATION.md
+#
+# 本文件只放"骨架级"配置。会话、CSRF、权限、幂等、任务租约、文件存储等
+# 需要真实依赖的配置，随各阶段实现一并加入，不要提前写死猜测值。
+
+server:
+  port: 8080
+  # 业务路由统一带 /api/v1 前缀，与契约 servers.url 一致；
+  # 前端 Vite 开发代理默认目标就是 http://127.0.0.1:8080（FRONTEND_INTEGRATION.md §3）。
+  servlet:
+    context-path: /api/v1
+    encoding:
+      charset: UTF-8
+      force: true
+  error:
+    # 不使用 Spring Boot 默认错误页/默认错误体，所有错误一律走契约错误壳
+    # （由 common/GlobalExceptionHandler 统一输出）。
+    whitelabel:
+      enabled: false
+  shutdown: graceful
+
+spring:
+  application:
+    name: xx-platform-api
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  threads:
+    virtual:
+      # Java 17 运行时不支持虚拟线程，Java 21+ 可改为 true（与 spring-boot-starter-parent 的 java.version 同步调整）
+      enabled: false
+  mvc:
+    problemdetails:
+      # 关闭 RFC 7807，避免与契约错误壳（code/message/data/traceId/details）混用两套错误格式
+      enabled: false
+
+# 日志：traceId 由 common/RequestIdFilter 写入 MDC，这里把它打进每一行，
+# 便于联调时"浏览器请求 → 服务端日志"对齐同一个 traceId（H06 验收要求）。
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId:-no-trace}] %logger{36} - %msg%n"
+  level:
+    root: INFO
+    com.xxplatform.api: DEBUG
+
+# 契约自带 GET /health 与 GET /ready（M15，PUBLIC），
+# 因此不启用 actuator，避免出现第二套健康端点造成语义重复。如需运维端点再单独评估。
