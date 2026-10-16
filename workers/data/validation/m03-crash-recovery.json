@@ -1,0 +1,7 @@
+{
+  "processExitCode": 17,
+  "uncommittedFactsAfterCrash": 0,
+  "recoveredAttempt": 2,
+  "finalFactsForBatch": 1,
+  "recoveryProvider": "isolated lab fixture"
+}

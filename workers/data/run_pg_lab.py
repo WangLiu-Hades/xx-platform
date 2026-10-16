@@ -129,7 +129,7 @@ def main():
         text = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
         (root / "lab-run.json").write_text(text, encoding="utf-8")
         (EVIDENCE / "postgres-checks.json").write_text(text, encoding="utf-8")
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    print(json.dumps({k: v for k, v in report.items() if k != "sourceHashes"}, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "PASS" else 2
 
 

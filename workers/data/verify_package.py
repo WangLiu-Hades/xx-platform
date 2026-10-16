@@ -76,11 +76,15 @@ def main():
                 expect(target.is_file() or target.is_dir(), "Broken link in " + relative + ": " + link)
     hashes = source_hashes()
     if args.require_validation:
-        local = read(ROOT / "validation/local.json")
-        pg = read(ROOT / "validation/postgres.json")
-        expect(local.get("status") == "PASS" and local.get("tests", {}).get("total") == 67, "Local validation missing")
+        local = read(ROOT / "validation/m03-local.json")
+        pg = read(ROOT / "validation/m03-postgres.json")
+        expect(local.get("status") == "PASS" and local.get("tests", {}).get("total", 0) >= 67
+               and local["tests"].get("total") == sum(local["tests"].get("counts", {}).values())
+               and local["tests"].get("counts", {}).get("tests_m03", 0) > 0, "Local validation missing")
         expect(local.get("sourceHashes") == hashes, "Local evidence does not match package source")
-        expect(pg.get("status") == "PASS" and pg.get("testsRun") == 12, "PostgreSQL validation missing")
+        expect(pg.get("status") == "PASS" and pg.get("testsRun", 0) >= 12
+               and pg.get("testsRun") == sum(pg.get("testGroups", {}).values())
+               and pg.get("testGroups", {}).get("m03", 0) > 0, "PostgreSQL validation missing")
         expect(pg.get("sourceHashes") == hashes, "PostgreSQL evidence does not match package source")
         expect(pg.get("clusterStopExitCode") == 0, "Test cluster did not stop cleanly")
         for field in ("failures", "errors", "skipped"):
@@ -92,7 +96,7 @@ def main():
         "validationRequired": args.require_validation, "sourceHashes": hashes, "errors": errors,
         "postgresExecutedByThisCheck": False,
     }
-    (ROOT / "validation/package-checks.json").write_bytes((json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
+    (ROOT / "validation/m03-package-checks.json").write_bytes((json.dumps(report, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
     print(json.dumps({k: v for k, v in report.items() if k != "sourceHashes"}, ensure_ascii=False, indent=2))
     return 0 if not errors else 1
 

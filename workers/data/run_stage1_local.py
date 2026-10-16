@@ -45,13 +45,14 @@ def main(argv=None):
 
     samples = PACKAGE_ROOT / "fixtures/plate-v0"
     frozen = snapshot(samples)
+    source_before = snapshot(PROJECT)
     report = {"checkedAtUtc": datetime.now(timezone.utc).isoformat(), "localChecks": "FAIL",
               "s1Status": "INCOMPLETE", "postgresExecutedThisRun": False,
               "h04Integration": "NOT_IMPLEMENTED", "vendorProtocol": "PENDING",
-              "scope": "Synthetic SQLite execution, unit regression and engineering metrics"}
+              "scope": "Synthetic SQLite, M03 execution/read contracts, regression and engineering metrics"}
     try:
         suites, counts = [], {}
-        for folder in ("tests", "tests_pg_unit", "tests_metrics"):
+        for folder in ("tests", "tests_pg_unit", "tests_metrics", "tests_m03"):
             suite = unittest.TestLoader().discover(str(PROJECT / folder), pattern="test_*.py")
             suites.append(suite)
             counts[folder] = suite.countTestCases()
@@ -118,23 +119,29 @@ def main(argv=None):
             "path": pg_path.relative_to(OUTPUT_ROOT).as_posix(), "sha256": file_digest(pg_path) if pg_path.is_file() else None,
             "recorded": pg_record}
         pg_passed = (pg_record.get("status") == "PASS" and pg_record.get("postgresExecuted") is True
-                     and pg_record.get("schemaApplied") is True and pg_record.get("testsRun") == 12
+                     and pg_record.get("schemaApplied") is True and type(pg_record.get("testsRun")) is int
+                     and pg_record["testsRun"] >= 12
+                     and pg_record["testsRun"] == sum(pg_record.get("testGroups", {}).values())
+                     and pg_record.get("testGroups", {}).get("m03", 0) > 0
+                     and pg_record.get("sourceHashes") == source_before
                      and all(pg_record.get(key) == 0 for key in ("failures", "errors", "skipped"))
                      and pg_record.get("clusterStopExitCode") == 0)
         report["postgresVerification"] = "PASS" if pg_passed else "PENDING"
         report["openItems"] = [
             "DEV-01 agreement and actual H04 claim/renew/cancel/retry/publication integration",
-            "Resolve task row lock duration before long-running ingestion",
+            "Agree bounded ingestion limits, quality policy and public cursor/session ownership with DEV-01",
             "Business approval of P-006/P-020 and missing source counters/telemetry",
             "DEV-04 independent reproduction"]
         if not pg_passed:
-            report["openItems"].insert(0, "Run 12 prepared PostgreSQL tests and collect actual query plans")
+            report["openItems"].insert(0, "Run the current PostgreSQL suite against this source snapshot and collect plans/control probes")
+        check(snapshot(PROJECT) == source_before, "Worker source changed during local validation",
+              "SOURCE_CHANGED_DURING_TEST")
         report["localChecks"] = "PASS"
     except (WorkerError, OSError, ValueError, subprocess.SubprocessError) as exc:
         report["errorCode"] = getattr(exc, "code", "LOCAL_REVIEW_FAILED")
         report["errorType"] = type(exc).__name__
         # Do not copy raw input, environment variables, DSNs or SQL to the report.
-    report["codeHashes"] = snapshot(PROJECT)
+    report["codeHashes"] = source_before
     report["sampleHashes"] = frozen
     report["artifactHashes"] = {p.relative_to(destination).as_posix(): file_digest(p)
                                 for p in sorted(destination.rglob("*")) if p.is_file()}

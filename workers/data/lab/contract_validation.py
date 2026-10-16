@@ -1,4 +1,4 @@
-"""Independent PLATE OpenAPI subset checker used only by tests."""
+"""Independent PLATE/M03 OpenAPI subset checker used only by tests."""
 from datetime import datetime, timezone
 import math
 import re
@@ -17,7 +17,7 @@ def instant(value):
     return result.astimezone(timezone.utc)
 
 def validate_dto(value, spec, schemas, path="record"):
-    """Only the keyword subset used by the supplied PLATE DTOs; not a general OpenAPI validator."""
+    """Only the keyword subset used by the supplied PLATE and M03 DTOs; not a general OpenAPI validator."""
     if "$ref" in spec:
         return validate_dto(value, schemas[spec["$ref"].rsplit("/",1)[-1]], schemas, path)
     if value is None:
@@ -33,6 +33,12 @@ def validate_dto(value, spec, schemas, path="record"):
         for key,child in value.items():
             if key in props:
                 validate_dto(child,props[key],schemas,path+"."+key)
+    elif kind == "array":
+        require(isinstance(value, list), path + ": expected array")
+        if "minItems" in spec: require(len(value) >= spec["minItems"], path + ": too few items")
+        if "maxItems" in spec: require(len(value) <= spec["maxItems"], path + ": too many items")
+        for index, child in enumerate(value):
+            validate_dto(child, spec["items"], schemas, path + "[" + str(index) + "]")
     elif kind == "string":
         require(isinstance(value,str),path + ": expected string")
         if spec.get("format") == "uuid":

@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import os
+import runpy
 from pathlib import Path
 import sys
 import uuid
@@ -35,6 +36,9 @@ def main():
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(json.dumps({"event": "pg.stage", "phase": name, **fields}), flush=True)
 
+    checker = runpy.run_path(str(PACKAGE_ROOT / "verify_package.py"))
+    source_before = checker["source_hashes"]()
+    report["sourceHashes"] = source_before
     admin = database = None
     try:
         stage("load_driver")
@@ -80,6 +84,8 @@ def main():
         from lab.integration import run_integration
         report.update(run_integration(database_dsn, output_path(args.assets), output, progress=stage))
         report["platformTables"] = table_count
+        check(checker["source_hashes"]() == source_before, "Worker source changed during PG validation",
+              "SOURCE_CHANGED_DURING_TEST")
         stage("completed")
     except Exception as exc:
         report.update(status="FAIL" if report["postgresExecuted"] else "NOT_RUN",
@@ -93,7 +99,7 @@ def main():
         report["checkedAtUtc"] = datetime.now(timezone.utc).isoformat()
         (output / "integration-checks.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
                                                        encoding="utf-8")
-    print(json.dumps(report, ensure_ascii=False, indent=2))
+    print(json.dumps({k: v for k, v in report.items() if k != "sourceHashes"}, ensure_ascii=False, indent=2))
     return 0 if report["status"] == "PASS" else 2
 
 

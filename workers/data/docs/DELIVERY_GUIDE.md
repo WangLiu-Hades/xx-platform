@@ -1,6 +1,6 @@
 # DEV-03 阶段交付指南
 
-本分支交付D3-01～08：65条字段映射和合成协议、离线接入、PG事务写入/范围查询、H04草案、工程指标和复验脚本。代码位于workers/data，可随仓库克隆。
+本包已具备合成PLATE接入、离线回放、PG事务写入/查询及工程指标审计。本轮补上有界准备/短事务发布、控制检查、批次列表/详情/错误分页/质量汇总，以及并发故障用例。正式代码位于workers/data，可随仓库克隆。
 
 ## 复验
 
@@ -12,21 +12,21 @@ python workers/data/run_pg_lab.py
 python workers/data/run_stage1_local.py
 ```
 
-先验证67项本地测试及实际重启/重试；再用本机PG/PostGIS执行12项真实库测试；最后将PG证据引用进新的阶段报告。环境和输出目录见[模块README](../README.md)。
+先跑93项本地测试和3个CLI进程；再用本机PG/PostGIS执行27项真实库测试；最后生成引用该次PG证据的阶段报告。环境与D3_ARTIFACT_ROOT输出设置见[模块README](../README.md)。本地PASS不代表PG已执行，必须核对postgresVerification及sourceHashes。
 
-163张平台表按原schema加载；72条处理结果、16条基线事实、8组查询应匹配预期，完整库另含2条并发探针。即使两组测试通过，正式H04与独立复验未完成时s1Status仍为INCOMPLETE。
+163张平台表按原schema加载；72条处理结果、16条基线事实、8组查询匹配冻结预期。故障/并发探针会额外写入专用记录，最终库存取当次报告。旧67项/12项报告保留为历史；新版本结果查[验证记录](../validation/README.md)中的m03系列文件。虚拟环境、完整数据库和个人路径只保留本地。
 
-[验证记录](../validation/README.md)只保存适合共享的摘要、测试日志和计划。完整实例、虚拟环境、SQLite状态和个人路径留在本地；新克隆应自行复验。
-
-## 接收与责任
+## 如何接收
 
 | 接收方 | 接入要求 |
 | --- | --- |
-| DEV-01 | 接收PgIngestor、CaptureQuerySession和协议；创建合法任务/批次/参照，注入同事务publisher，计算重校TrustedScope并包装公开API |
-| DEV-04 | 按固定样本独立复验，负责共享环境、部署、容量与备份恢复 |
-| DEV-03 | 数据模块、自测与缺陷修复；继续完成长任务控制及正式H04适配 |
-| 业务/厂商 | 获准源协议/样本、指标公式与P清单签认 |
+| DEV-01 | 提供H04、同事务publisher、control及预算；创建合法任务/批次/文件/参照；计算并重校TrustedScope/TrustedBatchScope；签认质量口径与公开错误映射；包装API及游标会话 |
+| DEV-04 | 在隔离共享环境独立执行当前套件，提供CI、实际数据规模、容量与恢复验收条件 |
+| DEV-03 | 数据执行/查询、自测和缺陷修复；接到正式H04后完成D3-13联调，配合D3-14 |
+| DEV-02、业务/厂商 | DEV-02确认既有入口的字段/状态；业务与厂商提供获准首源协议/样本及规则签认 |
 
-下一步先解决整批任务行锁阻塞续租/取消，明确短发布事务与大批暂存可见性，再完成实际任务领取/恢复/失败/重试联调。真实厂商与生产报表另行验收。
+具体调用方式、预算、质量统计和游标边界见[M03执行与读取交接](m03-execution-and-reads-v0.md)。PgIngestor接口已要求显式control/budget，publisher使用同事务PublishSession；调用方不能用外层事务包装ingest。lab控制、成功发布及恢复仅为实验夹具，不能部署成正式任务服务。
 
-详见[字段草案](data-contract-v0.md)、[任务协议](worker-contract-v0.md)和[指标目录](metric-catalog-v0.md)。本分支不修改权威DDL/OpenAPI或关闭P清单。
+D3-09方案仍待协作签认；D3-10/11为数据侧实现；D3-12当前覆盖实验故障场景。DEV-01暂无H04/API实现，D3-13依赖其交付；D3-14需DEV-04独立复验。即使本轮全部测试通过，S1与M03整体仍未验收，真实四源、BACKFILL、设备状态和源计数仍待后续工作。
+
+另见[字段草案](data-contract-v0.md)、[任务协议](worker-contract-v0.md)和[指标目录](metric-catalog-v0.md)。权威DDL/OpenAPI和P清单保持原样。

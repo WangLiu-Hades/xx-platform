@@ -1,6 +1,5 @@
 """Actual PostgreSQL tests. Imported only by the real database runner, never the unit runner."""
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
 from copy import deepcopy
 from dataclasses import replace
 import hashlib
@@ -19,6 +18,7 @@ from data_worker.pg.ingest import Lease, PgIngestor, StoragePlateAdapter
 from data_worker.pg.query import TrustedScope, QuerySpec, QueryBudget, CaptureQuerySession
 from data_worker.settings import Batch, PACKAGE_ROOT, load_settings, REPO_ROOT
 from .fixtures import LAB_WORKER, seed_references, seed_batch, publish_for_lab
+from .control import LabControl, LAB_INGEST_BUDGET
 
 PROJECT = Path(__file__).resolve().parents[1]
 SAMPLES = PACKAGE_ROOT / "fixtures/plate-v0"
@@ -37,23 +37,10 @@ def write_lines(path, values):
     path.write_text("".join(canonical(value) + "\n" for value in values), encoding="utf-8")
 
 
-class ProbeRollback(Exception):
-    pass
-
-
-@contextmanager
-def rollback_probe(db):
-    try:
-        with db.transaction():
-            yield
-            raise ProbeRollback()
-    except ProbeRollback:
-        pass
-
-
 def make_writer(db, settings):
     refs = read_json(SAMPLES / "reference-data.json")
-    return PgIngestor(db, StoragePlateAdapter(refs), settings, publish_for_lab)
+    return PgIngestor(db, StoragePlateAdapter(refs), settings, publish_for_lab,
+                      control=LabControl(db), budget=LAB_INGEST_BUDGET)
 
 
 def lease_for(batch):
@@ -215,52 +202,50 @@ class RealPostgresTests(unittest.TestCase):
         self.assertEqual(error.exception.code, "BATCH_INPUT_CHANGED")
 
     def test_transaction_failure_rolls_back_then_retry_succeeds(self):
-        with rollback_probe(self.db):
-            batch = self.custom("ROLLBACK")
-            seed_batch(self.db, self.settings, batch, self.assets, self.owner)
-            original = self.writer._write_row
-            def fail(row, lease, occurred):
-                original(row, lease, occurred)
-                raise RuntimeError("Injected worker interruption after database writes")
-            with patch.object(self.writer, "_write_row", side_effect=fail), self.assertRaises(RuntimeError):
-                self.writer.ingest(batch, lease_for(batch))
-            self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
-                                             (batch.id,)).fetchone()["n"], 0)
-            self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.ingestion_item WHERE batch_id=%s::uuid",
-                                             (batch.id,)).fetchone()["n"], 0)
-            summary, _, _ = self.writer.ingest(batch, lease_for(batch))
-            self.assertEqual(summary["acceptedCount"], 1)
+        batch = self.custom("ROLLBACK")
+        seed_batch(self.db, self.settings, batch, self.assets, self.owner)
+        original = self.writer._write_row
+        def fail(row, lease, occurred):
+            original(row, lease, occurred)
+            raise RuntimeError("Injected worker interruption after database writes")
+        with patch.object(self.writer, "_write_row", side_effect=fail), self.assertRaises(RuntimeError):
+            self.writer.ingest(batch, lease_for(batch))
+        self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
+                                         (batch.id,)).fetchone()["n"], 0)
+        self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.ingestion_item WHERE batch_id=%s::uuid",
+                                         (batch.id,)).fetchone()["n"], 0)
+        summary, _, _ = self.writer.ingest(batch, lease_for(batch))
+        self.assertEqual(summary["acceptedCount"], 1)
 
     def test_invalid_storage_values_are_isolated_and_do_not_claim_key(self):
-        with rollback_probe(self.db):
-            raw = read_lines(SAMPLES / "raw/initial.jsonl")[0]
-            raw["recordId"] = "STORAGE-TEST"
-            batch = self.custom("STORAGE", [dict(raw, plateColor="x" * 201), raw])
-            seed_batch(self.db, self.settings, batch, self.assets, self.owner)
-            summary, rows, _ = self.writer.ingest(batch, lease_for(batch))
-            self.assertEqual((summary["acceptedCount"], summary["rejectedCount"]), (1, 1))
-            self.assertEqual(rows[0]["reasonCode"], "STORAGE_FIELD_TOO_LONG")
+        raw = read_lines(SAMPLES / "raw/initial.jsonl")[0]
+        # Probe rows must stay outside the frozen capture-query time window.
+        raw.update(recordId="STORAGE-TEST", captureTime="2026-10-18T02:00:00Z")
+        batch = self.custom("STORAGE", [dict(raw, plateColor="x" * 201), raw])
+        seed_batch(self.db, self.settings, batch, self.assets, self.owner)
+        summary, rows, _ = self.writer.ingest(batch, lease_for(batch))
+        self.assertEqual((summary["acceptedCount"], summary["rejectedCount"]), (1, 1))
+        self.assertEqual(rows[0]["reasonCode"], "STORAGE_FIELD_TOO_LONG")
 
     def test_source_file_hash_mismatch_is_rejected_before_claiming_events(self):
-        with rollback_probe(self.db):
-            batch = self.custom("SOURCE-FILE-MISMATCH")
-            seed_batch(self.db, self.settings, batch, self.assets, self.owner)
-            self.db.execute("""
-                UPDATE core.file_asset SET sha256=%s
-                WHERE id=(SELECT source_file_id FROM capture.ingestion_batch WHERE id=%s::uuid)
-                """, ("0" * 64, batch.id))
-            with self.assertRaises(WorkerError) as error:
-                self.writer.ingest(batch, lease_for(batch))
-            self.assertEqual(error.exception.code, "PG_SOURCE_FILE_INVALID")
-            self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
-                                             (batch.id,)).fetchone()["n"], 0)
+        batch = self.custom("SOURCE-FILE-MISMATCH")
+        seed_batch(self.db, self.settings, batch, self.assets, self.owner)
+        self.db.execute("""
+            UPDATE core.file_asset SET sha256=%s
+            WHERE id=(SELECT source_file_id FROM capture.ingestion_batch WHERE id=%s::uuid)
+            """, ("0" * 64, batch.id))
+        with self.assertRaises(WorkerError) as error:
+            self.writer.ingest(batch, lease_for(batch))
+        self.assertEqual(error.exception.code, "PG_SOURCE_FILE_INVALID")
+        self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
+                                         (batch.id,)).fetchone()["n"], 0)
 
     def test_lease_cancel_expiry_generation_and_attempt_guards(self):
         cases = [("cancel_requested_at=clock_timestamp()", "CANCELLED"),
                  ("lease_until=clock_timestamp()-interval '1 second'", "EXPIRED"),
                  ("lease_generation=2", "STALE"), ("current_attempt_no=2", "ATTEMPT")]
         for assignment, label in cases:
-            with self.subTest(label=label), rollback_probe(self.db):
+            with self.subTest(label=label):
                 batch = self.custom(label)
                 seed_batch(self.db, self.settings, batch, self.assets, self.owner)
                 self.db.execute("UPDATE analysis.async_task SET " + assignment + " WHERE id=%s::uuid",
@@ -270,42 +255,51 @@ class RealPostgresTests(unittest.TestCase):
                 self.assertEqual(error.exception.code, "TASK_LEASE_INVALID")
 
     def test_publisher_expiry_rolls_back_domain_and_task_together(self):
-        with rollback_probe(self.db):
-            batch = self.custom("PUBLISH-EXPIRED")
-            seed_batch(self.db, self.settings, batch, self.assets, self.owner)
-            def expire_and_publish(db, lease, current):
-                db.execute("UPDATE analysis.async_task SET lease_until=clock_timestamp()-interval '1 second' WHERE id=%s::uuid",
-                           (lease.task_id,))
-                return publish_for_lab(db, lease, current)
-            writer = PgIngestor(self.db, self.writer.adapter, self.settings, expire_and_publish)
-            with self.assertRaises(WorkerError):
-                writer.ingest(batch, lease_for(batch))
-            self.assertEqual(self.db.execute("SELECT status FROM capture.ingestion_batch WHERE id=%s::uuid",
-                                             (batch.id,)).fetchone()["status"], "RUNNING")
-            self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
-                                             (batch.id,)).fetchone()["n"], 0)
+        batch = self.custom("PUBLISH-EXPIRED")
+        seed_batch(self.db, self.settings, batch, self.assets, self.owner)
+        def expire_and_publish(db, lease, current):
+            db.execute("UPDATE analysis.async_task SET lease_until=clock_timestamp()-interval '1 second' WHERE id=%s::uuid",
+                       (lease.task_id,))
+            return publish_for_lab(db, lease, current)
+        writer = PgIngestor(self.db, self.writer.adapter, self.settings, expire_and_publish,
+                            control=LabControl(self.db), budget=LAB_INGEST_BUDGET)
+        with self.assertRaises(WorkerError):
+            writer.ingest(batch, lease_for(batch))
+        self.assertEqual(self.db.execute("SELECT status FROM capture.ingestion_batch WHERE id=%s::uuid",
+                                         (batch.id,)).fetchone()["status"], "RUNNING")
+        self.assertEqual(self.db.execute("SELECT count(*) AS n FROM capture.capture_event WHERE batch_id=%s::uuid",
+                                         (batch.id,)).fetchone()["n"], 0)
 
     def test_z_concurrent_batches_with_same_event_create_one_fact(self):
-        first = self.custom("CONCURRENT-A")
-        raw = read_lines(first.input_path)
-        second = self.custom("CONCURRENT-B", raw)
-        for batch in (first, second):
-            seed_batch(self.db, self.settings, batch, self.assets, self.owner)
-        before = self.writer.fact_count()
-        barrier = threading.Barrier(2)
-        def execute(batch):
-            db = connect(self.dsn)
-            try:
-                barrier.wait(timeout=10)
-                return make_writer(db, self.settings).ingest(batch, lease_for(batch))[0]
-            finally:
-                db.close()
-        with ThreadPoolExecutor(max_workers=2) as pool:
-            results = list(pool.map(execute, [first, second]))
-        self.assertEqual(sum(r["acceptedCount"] for r in results), 1)
-        self.assertEqual(sum(r["duplicateCount"] for r in results), 1)
-        self.assertEqual(self.writer.fact_count(), before + 1)
-        write_json(self.output / "concurrency-probe.json", results)
+        probes = []
+        for index in range(5):
+            with self.subTest(race=index):
+                first = self.custom("CONCURRENT-" + str(index) + "-A")
+                second = self.custom("CONCURRENT-" + str(index) + "-B", read_lines(first.input_path))
+                for batch in (first, second):
+                    seed_batch(self.db, self.settings, batch, self.assets, self.owner)
+                before = self.writer.fact_count()
+                barrier = threading.Barrier(2)
+                def execute(batch):
+                    db = connect(self.dsn)
+                    try:
+                        writer = make_writer(db, self.settings)
+                        original = writer._write_fact
+                        def synchronized(*values):
+                            # Align at the competing unique-index insert, after preparation and locks.
+                            barrier.wait(timeout=2)
+                            return original(*values)
+                        writer._write_fact = synchronized
+                        return writer.ingest(batch, lease_for(batch))[0]
+                    finally:
+                        db.close()
+                with ThreadPoolExecutor(max_workers=2) as pool:
+                    results = list(pool.map(execute, [first, second]))
+                self.assertEqual(sum(r["acceptedCount"] for r in results), 1)
+                self.assertEqual(sum(r["duplicateCount"] for r in results), 1)
+                self.assertEqual(self.writer.fact_count(), before + 1)
+                probes.append(results)
+        write_json(self.output / "concurrency-probe.json", {"races": probes, "factsAdded": len(probes)})
 
     def test_zz_repeatable_read_snapshot_excludes_concurrent_late_arrival(self):
         expected = read_json(SAMPLES / "expected/queries.json")[0]["expectedCaptureIds"]
@@ -343,7 +337,13 @@ def run_integration(dsn, assets, output, progress=None):
     RealPostgresTests.owner = owner
     RealPostgresTests.golden_rows, RealPostgresTests.golden_facts, RealPostgresTests.golden_batches = rows, facts, batches
     stream = io.StringIO()
-    suite = unittest.defaultTestLoader.loadTestsFromTestCase(RealPostgresTests)
+    from .m03_integration import M03PostgresTests
+    for name in ("dsn", "settings", "assets", "output", "owner", "golden_rows", "golden_facts", "golden_batches"):
+        setattr(M03PostgresTests, name, getattr(RealPostgresTests, name))
+    suites = [unittest.defaultTestLoader.loadTestsFromTestCase(cls)
+              for cls in (RealPostgresTests, M03PostgresTests)]
+    groups = {name: suite.countTestCases() for name, suite in zip(("platform", "m03"), suites)}
+    suite = unittest.TestSuite(suites)
     progress("run_database_tests", preparedTests=suite.countTestCases())
     result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)
     (output / "integration-tests.txt").write_text(stream.getvalue(), encoding="utf-8")
@@ -355,8 +355,10 @@ def run_integration(dsn, assets, output, progress=None):
     finally:
         db.close()
     return {"status": "PASS" if result.wasSuccessful() and not result.skipped else "FAIL",
-            "testsRun": result.testsRun, "failures": len(result.failures), "errors": len(result.errors),
+            "testsRun": result.testsRun, "testGroups": groups, "failures": len(result.failures), "errors": len(result.errors),
             "skipped": len(result.skipped), "postgresExecuted": True, "versions": versions,
             "goldenProcessingRows": len(rows), "goldenFacts": len(facts), "goldenQueryCases": 8,
             "finalFactsIncludingConcurrencyProbes": final_facts,
-            "taskPublisher": "isolated test stand-in, not DEV-01 production H04"}
+            "taskPublisher": "isolated test stand-in, not DEV-01 production H04",
+            "m03ControlProvider": "LabControl and recovery fixture; not DEV-01 H04",
+            "h04Integration": "NOT_IMPLEMENTED"}
