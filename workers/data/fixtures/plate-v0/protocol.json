@@ -1,0 +1,66 @@
+{
+  "synthetic": true,
+  "version": "plate-synthetic-v0",
+  "status": "FIXTURE_ONLY_NOT_VENDOR_APPROVED",
+  "seed": 20261016,
+  "encoding": "UTF-8 JSONL; one JSON object per nonblank physical line",
+  "max_record_id_characters": 200,
+  "required": [
+    "recordId",
+    "dataType",
+    "deviceKey",
+    "captureTime",
+    "plateText"
+  ],
+  "optional": [
+    "longitude",
+    "latitude",
+    "crs",
+    "plateColor",
+    "vehicleImageRef"
+  ],
+  "unknown_fields": "REJECT",
+  "fields": {
+    "recordId": "nonblank string <=200 characters; stable within source",
+    "dataType": "literal PLATE",
+    "deviceKey": "nonblank string; source-scoped fixture lookup, unmatched accepted as deviceId/siteId null",
+    "captureTime": "RFC3339 with seconds, optional 1-6 fractional digits, Z or explicit +/-HH:MM; no numeric timestamps",
+    "plateText": "nonblank synthetic token; exact explicit reference lookup; no real plate format validation or identity inference",
+    "longitude": "finite JSON number excluding boolean, [-180,180]; paired null or paired omission allowed",
+    "latitude": "finite JSON number excluding boolean, [-90,90]; paired with longitude",
+    "crs": "must equal EPSG:4326 when numeric coordinates are supplied; omitted for unknown location",
+    "plateColor": "optional string or null; no vendor enum assumed",
+    "vehicleImageRef": "optional registered synthetic file reference, non-null; omitted when unavailable"
+  },
+  "versions": {
+    "mapping": "plate-map-v0",
+    "dedup": "plate-dedup-v0",
+    "quality": "plate-quality-v0"
+  },
+  "stable_identity": [
+    "source",
+    "recordId"
+  ],
+  "canonical_digest": "SHA256(UTF8(json.dumps(raw,ensure_ascii=False,sort_keys=True,separators=(',',':'),allow_nan=False)))",
+  "digest_scope": "whole raw business object including recordId; excludes batch, row number and receivedAt",
+  "duplicate": "same stable identity + same digest => DUPLICATE; keep original capture and ingestedAt",
+  "key_conflict": "same stable identity + different digest => REJECTED/FIXTURE_KEY_CONFLICT; do not overwrite",
+  "invalid_rows": "reject before claiming stable identity; one primary reason per row in this fixture",
+  "unknown_device": "ACCEPTED + FIXTURE_DEVICE_UNMAPPED warning; deviceId/siteId null; excluded from site-scoped queries",
+  "unknown_target": "ACCEPTED + FIXTURE_TARGET_UNRESOLVED warning; targetId null, targetType PLATE",
+  "display_mask": "always SYNTH-PLATE-****; isMasked=true; only tests absence of raw token in public output",
+  "uuid_recipe": "UUID5(namespace from reference-data.json, str(seed)+':'+entity_label); labels are documented in generator",
+  "accepted_fact_status": "VALID",
+  "empty_scope": "authorizedSiteIds=[] or authorizedDataTypes=[] => no results",
+  "query_interval": "[from,to); stable captureTime DESC,captureId DESC; plain expected pages, not signed API cursors",
+  "raw_null_policy": "CommonCaptureRecord nullable fields must still be present; PlateRecord.vehicleImageAssetId is omitted, never null",
+  "production_pending": [
+    "P-002",
+    "P-004",
+    "P-005",
+    "P-008",
+    "P-010",
+    "P-016"
+  ],
+  "no_real_side_effects": "task IDs, file IDs and reference resources are synthetic metadata; no database rows, active files, API requests or tasks were created"
+}

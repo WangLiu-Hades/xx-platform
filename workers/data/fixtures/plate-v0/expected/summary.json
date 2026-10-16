@@ -1,0 +1,48 @@
+{
+  "batches": [
+    {
+      "acceptedCount": 14,
+      "batchId": "a3264423-b617-508e-8f5f-2a24724518b7",
+      "duplicateCount": 1,
+      "factCountAfter": 14,
+      "inputRows": 34,
+      "name": "B01_INITIAL",
+      "rejectedCount": 19
+    },
+    {
+      "acceptedCount": 0,
+      "batchId": "5e013b77-f66c-5caf-8345-0ff3da7642d7",
+      "duplicateCount": 15,
+      "factCountAfter": 14,
+      "inputRows": 34,
+      "name": "B02_REPLAY",
+      "rejectedCount": 19
+    },
+    {
+      "acceptedCount": 1,
+      "batchId": "687a8454-f15a-5fe4-b741-7ca70728e31f",
+      "duplicateCount": 1,
+      "factCountAfter": 15,
+      "inputRows": 3,
+      "name": "B03_INCREMENTAL",
+      "rejectedCount": 1
+    },
+    {
+      "acceptedCount": 1,
+      "batchId": "30e5f855-8f81-5364-b099-12d48690945b",
+      "duplicateCount": 0,
+      "factCountAfter": 16,
+      "inputRows": 1,
+      "name": "B04_SOURCE_NAMESPACE",
+      "rejectedCount": 0
+    }
+  ],
+  "expectedFinalFacts": 16,
+  "expectedTotals": {
+    "ACCEPTED": 16,
+    "DUPLICATE": 17,
+    "REJECTED": 39
+  },
+  "synthetic": true,
+  "totalProcessingRows": 72
+}

@@ -1,0 +1,9 @@
+/.artifacts/
+/.venv-pg/
+__pycache__/
+*.pyc
+*.sqlite3
+*.sqlite3-*
+.env
+.env.*
+!.env.example

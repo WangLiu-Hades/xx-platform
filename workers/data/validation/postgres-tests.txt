@@ -1,0 +1,17 @@
+test_cursor_tamper_scope_change_and_new_session_are_rejected (lab.integration.RealPostgresTests) ... ok
+test_golden_rows_facts_counts_and_actual_dtos (lab.integration.RealPostgresTests) ... ok
+test_invalid_storage_values_are_isolated_and_do_not_claim_key (lab.integration.RealPostgresTests) ... ok
+test_lease_cancel_expiry_generation_and_attempt_guards (lab.integration.RealPostgresTests) ... ok
+test_publisher_expiry_rolls_back_domain_and_task_together (lab.integration.RealPostgresTests) ... ok
+test_query_eight_frozen_cases_and_query_plan (lab.integration.RealPostgresTests) ... ok
+test_query_sort_options_and_authority (lab.integration.RealPostgresTests) ... ok
+test_same_batch_retry_and_changed_input (lab.integration.RealPostgresTests) ... ok
+test_source_file_hash_mismatch_is_rejected_before_claiming_events (lab.integration.RealPostgresTests) ... ok
+test_transaction_failure_rolls_back_then_retry_succeeds (lab.integration.RealPostgresTests) ... ok
+test_z_concurrent_batches_with_same_event_create_one_fact (lab.integration.RealPostgresTests) ... ok
+test_zz_repeatable_read_snapshot_excludes_concurrent_late_arrival (lab.integration.RealPostgresTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.425s
+
+OK

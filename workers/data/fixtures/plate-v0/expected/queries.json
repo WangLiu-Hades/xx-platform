@@ -1,0 +1,282 @@
+[
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "expectedCaptureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "691932f0-eb03-538e-9f04-442b43ebec0f",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "expectedPages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "691932f0-eb03-538e-9f04-442b43ebec0f"
+      ],
+      [
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d"
+      ],
+      [
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20"
+      ],
+      [
+        "564002f9-b165-5779-b600-374866a015c3",
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "site_a_window",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:00Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "expectedCaptureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "expectedPages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f"
+      ],
+      [
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1"
+      ],
+      [
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+        "564002f9-b165-5779-b600-374866a015c3"
+      ],
+      [
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "target_a_site_a",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": "5ec2a369-9fe3-5de6-8f10-bf6838e0f213",
+    "to": "2026-10-16T01:00:00Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "d5a7b52d-140e-5afa-8a11-6264beebddb1"
+    ],
+    "expectedCaptureIds": [
+      "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+      "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+    ],
+    "expectedPages": [
+      [
+        "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+        "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+      ]
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "site_b_window",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:00Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [],
+    "expectedCaptureIds": [],
+    "expectedPages": [
+      []
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "empty_site_scope",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:00Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "MAC"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4",
+      "d5a7b52d-140e-5afa-8a11-6264beebddb1"
+    ],
+    "expectedCaptureIds": [],
+    "expectedPages": [
+      []
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "wrong_data_type",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:00Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "expectedCaptureIds": [
+      "e54b6c00-98b2-5b5d-a1df-00f5cf445473"
+    ],
+    "expectedPages": [
+      [
+        "e54b6c00-98b2-5b5d-a1df-00f5cf445473"
+      ]
+    ],
+    "from": "2026-10-16T01:00:00Z",
+    "name": "end_boundary_next_window",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:01Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "expectedCaptureIds": [
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be"
+    ],
+    "expectedPages": [
+      [
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be"
+      ]
+    ],
+    "from": "2026-10-16T00:30:00Z",
+    "name": "same_second_stable_order",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T00:30:01Z"
+  },
+  {
+    "authorizedDataTypes": [
+      "PLATE"
+    ],
+    "authorizedSiteIds": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4",
+      "d5a7b52d-140e-5afa-8a11-6264beebddb1"
+    ],
+    "expectedCaptureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "691932f0-eb03-538e-9f04-442b43ebec0f",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "6c633bdb-6d94-58e1-a76a-386a17e721f1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "expectedPages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "691932f0-eb03-538e-9f04-442b43ebec0f"
+      ],
+      [
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d"
+      ],
+      [
+        "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+      ],
+      [
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+        "564002f9-b165-5779-b600-374866a015c3"
+      ],
+      [
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "name": "both_authorized_sites",
+    "pageSize": 3,
+    "sort": [
+      "captureTime DESC",
+      "captureId DESC"
+    ],
+    "targetId": null,
+    "to": "2026-10-16T01:00:00Z"
+  }
+]

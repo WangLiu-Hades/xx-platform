@@ -1,0 +1,21 @@
+{
+  "scope": "Historical workspace version before repository path migration",
+  "checkedAtUtc": "2026-10-16T04:01:56.407151+00:00",
+  "postgresStatus": "PASS",
+  "postgresVersion": "16.15",
+  "postgisVersion": "3.4.1",
+  "testsRun": 12,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "platformTables": 163,
+  "schemaSha256": "7d3534b536e46a5879d338df08cc70a02012ef86d0efe423d25747cf37a26ab1",
+  "goldenProcessingRows": 72,
+  "goldenFacts": 16,
+  "goldenQueryCases": 8,
+  "finalFactsIncludingConcurrencyProbes": 18,
+  "clusterStopExitCode": 0,
+  "localTests": 67,
+  "formalH04": "NOT_IMPLEMENTED",
+  "repositoryMigrationRevalidation": "REQUIRED"
+}
