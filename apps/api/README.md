@@ -48,6 +48,23 @@ mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"
 curl.exe http://127.0.0.1:8080/api/v1/smoke
 ```
 
+要连数据库（`GET /auth/csrf` 等端点需要），加上 `db` profile 与连接信息：
+
+```powershell
+# 口令不要写进仓库；本地真实值放 apps/api/.env.local（已被 .gitignore 排除）
+$env:SPRING_PROFILES_ACTIVE      = 'dev,db'
+$env:SPRING_DATASOURCE_URL       = 'jdbc:postgresql://127.0.0.1:5432/xxplatform'
+$env:SPRING_DATASOURCE_USERNAME  = 'xxplatform_owner'
+$env:SPRING_DATASOURCE_PASSWORD  = '***'
+mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
+```
+
+启动日志里应能看到 `Successfully validated 1 migration` 与
+`Schema "public" is up to date`——说明 Flyway 已接上，库结构与契约一致。
+
+**不带 `db` profile 时应用完全不连库**：没有 PostgreSQL 的机器照样能
+`mvn compile` / 起服务 / 跑 `/smoke`。这是刻意的（原因见 `application-db.yml` 头部注释）。
+
 端口 **8080**、上下文路径 **`/api/v1`**（在 `application.yml` 里配死），与前端 Vite 开发代理的默认目标一致。
 
 一键自检脚本（编译 + 提示下一步）：
@@ -179,7 +196,10 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | traceId 链路 | `common/RequestIdFilter` | 写 MDC、回写 `X-Trace-Id` 响应头；**默认由服务端生成**，保证头与体内一致 |
 | 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/未知字段/**方法不支持**/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
 | JSON 口径 | `config/WebConfiguration` | **未知字段拒绝**（`failOnUnknownProperties=true`，对齐 `additionalProperties:false`）；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
-| 开发期 CORS | `config/WebConfiguration` | 映射必须写 `/**`（见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；生产必须换真实 Origin 白名单 |
+| 开发期 CORS | `config/WebConfiguration`、`config/ContractCorsProcessor` | 自定义 `CorsFilter`（映射必须写 `/**`，见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；**拒绝时返回契约错误壳**而不是纯文本；生产必须换真实 Origin 白名单 |
+| 数据库接入 | `application-db.yml` | 数据源**只在 `db` profile 下启用**；默认启动不连库，没装 PostgreSQL 的机器也能编译/起服务 |
+| Flyway 启动迁移 | `application-db.yml`（`spring.flyway`） | `db` profile 启动时先 `validate` 再 `migrate`；校验和漂移会让进程**启动失败**而不是带病服务 |
+| CSRF 令牌 | `auth/AuthController`、`auth/CsrfTokenService`、`auth/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**沙箱内因 Mockito 自附加受限跑不了，见 §9**） |
 | dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
@@ -236,6 +256,92 @@ HTTP 200   {"code":"0",...,"data":{"name":"abc","count":3}}
 
 回归脚本：[`scripts/verify-skeleton.ps1`](scripts/verify-skeleton.ps1)（需服务已在 dev profile 启动）。
 
+### `GET /auth/csrf`（任务 4，2026-10-17 实现）
+
+契约出处：`openapi.yaml` → `/auth/csrf`（`x-permission: PUBLIC`，匿名可取）。
+
+**请求**：`GET /api/v1/auth/csrf`，无参数、无请求体。
+
+**响应**：
+
+```
+HTTP 200
+Set-Cookie: CSRFID=<43 字符 base64url>; Path=/api/v1; HttpOnly; SameSite=Lax
+X-Trace-Id: ea0abf6d-1120-494d-9455-42e7ad7299ac
+
+{"code":"0","message":"success",
+ "data":{"token":"<43 字符 base64url>","headerName":"X-CSRF-Token"},
+ "traceId":"ea0abf6d-1120-494d-9455-42e7ad7299ac"}
+```
+
+**四个设计决定（都有取舍，改动前先读）**
+
+1. **Cookie 值与 body token 是两个不同的随机值，不是同一个。**
+   只发同一个值就是"双重提交 Cookie"，而双重提交挡不住 Cookie 注入攻击（攻击者能往
+   受害者域写同名 Cookie）。服务端把两者的 SHA-256 都存进 `auth.csrf_session` 并按
+   Cookie 关联，于是伪造的 Cookie 找不到匹配的 token。代价是每个浏览器会话多一行数据、
+   写请求要查一次库（走 `cookie_hash` 唯一索引，代价可忽略）。
+
+2. **只存哈希，不存原文。** 表里 `cookie_hash`/`token_hash` 都是 32 字节 SHA-256。
+   即使库被读，也拿不到可用的 Cookie/Token。验收脚本会断言
+   `cookie_hash == sha256(收到的 Cookie 值)`，这是"确实在存哈希"的直接证据。
+
+3. **`Secure` 是可配置的，默认 `false`。** 契约写死 `Secure`，但本地
+   `http://127.0.0.1` 调试时浏览器不会回传 Secure Cookie，链路直接断。
+   因此 `xx.csrf.secure-cookie` 控制它，非 HTTPS 时**打 WARN 日志**。
+   **生产必须设为 `true` 并强制 TLS**（SD06）。这是"契约 vs 可调试性"的取舍，
+   不是疏漏——`OPENAPI_PENDING.md` 的 P-001 里也还留着跨域部署边界待签认。
+
+4. **同源校验做两次。** CORS 过滤器先挡一道（浏览器发起的跨源请求根本到不了控制器），
+   控制器里的 `Origin`/`Referer` 校验是第二道，用于 CORS 被关闭或非浏览器场景。
+   两者都失败为 `403 AUTH_CSRF_INVALID`——**不要**改成 `PERMISSION_DENIED`：
+   来源校验失败时我们连调用者是谁都不知道，与"已认证用户越权"是两回事，
+   混用会让安全审计无法区分跨站伪造和越权。
+
+**`session_id` 现在是 `NULL`。** CSRF 必须在登录前就能拿到（登录请求本身要带 token），
+所以此刻还没有会话可绑；登录成功后由会话服务回填（任务 5）。表上该列本身就允许 NULL。
+
+**验收**：
+
+```
+# 服务需带 db profile 启动（本端点要写库）
+$env:SPRING_PROFILES_ACTIVE='db'
+$env:SPRING_DATASOURCE_URL='jdbc:postgresql://127.0.0.1:5432/xxplatform'
+$env:SPRING_DATASOURCE_USERNAME='xxplatform_owner'
+$env:SPRING_DATASOURCE_PASSWORD='...'
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=db"
+
+# 另开终端
+$env:DB_PASSWORD='...'
+powershell -ExecutionPolicy Bypass -File scripts\verify-csrf.ps1
+# => RESULT: 34 passed, 0 failed
+```
+
+脚本覆盖 34 条：信封与 `traceId` 一致性、token 长度与 `headerName` 枚举、
+Cookie 四属性、Cookie≠token、两次调用不复用、同源 200 / 异源 403 且**响应体是契约壳**
+（不是纯文本 `Invalid CORS request`）、无 Origin 的非浏览器请求放行、
+以及 8 条数据库断言（每次签发插一行、哈希 32 字节、`sha256` 可复算、
+原文不入库、`session_id` 为 NULL、`created_at < expires_at`）。
+
+### CORS 拒绝响应为什么要自定义（2026-10-17）
+
+Spring 默认在 Origin 不在白名单时返回 **纯文本** `Invalid CORS request`。这违反
+`api-conventions.md` 的统一响应壳，前端统一按 `code` 分支时会直接抛 JSON 解析异常，
+用户看到"网络错误"而不是"请求来源不可信"。
+
+因此 CORS 从 `addCorsMappings` 改成自定义 `CorsFilter` +
+[`config/ContractCorsProcessor`](src/main/java/com/xxplatform/api/config/ContractCorsProcessor.java)，
+把拒绝响应改写成 `403 AUTH_CSRF_INVALID` 的标准错误壳。
+
+**两个容易踩的点**：
+
+- Spring 6.2 的 `DefaultCorsProcessor.rejectRequest` 是**单参数**
+  `rejectRequest(ServerHttpResponse)`（旧版本是双参数带 message）。签名写错**不会编译失败**，
+  只是静默不生效、继续返回纯文本——所以 `verify-csrf.ps1` 专门有一条断言检查"体是 JSON"。
+- `RequestIdFilter` 必须排在 CORS 过滤器**之前**（`HIGHEST_PRECEDENCE` vs
+  `HIGHEST_PRECEDENCE + 10`），否则拒绝响应里 `traceId` 拿不到，会出现
+  "响应头有值、体内是 `unknown-trace`"的不一致。
+
 ### 契约生成器验证记录（2026-10-17，实测）
 
 ```
@@ -261,7 +367,8 @@ $ mvn -B -Pgenerate-api compile
 
 **基础设施（平台侧先做，另一侧只调用）**
 
-- [ ] 会话与 CSRF：SID Cookie（HttpOnly/Secure/SameSite=Lax/Path=/api/v1）、`GET /auth/csrf`、login 轮换 SID、写请求校验 `X-CSRF-Token` + 可信 Origin
+- [x] CSRF 令牌签发：`GET /auth/csrf`、`CSRFID` Cookie 属性、同步器 token 落库（任务 4，2026-10-17）
+- [ ] 会话与登录：SID Cookie（HttpOnly/Secure/SameSite=Lax/Path=/api/v1）、`POST /auth/login`、login 轮换 SID 并回填 `csrf_session.session_id`、写请求校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（任务 5）
 - [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面，列表/详情/导出/文件每次重校
 - [ ] 幂等：`Idempotency-Key`（16–160 字符），同键同 payload 返原响应，异 payload 409
 - [ ] 乐观锁：`If-Match` ↔ `version`，冲突 409 `RESOURCE_VERSION_CONFLICT`
@@ -269,7 +376,7 @@ $ mvn -B -Pgenerate-api compile
 - [ ] 任务底座：`async_task` 表 + 状态机 + 领取/续租/取消/重试/发布协议（H04 交接物）
 - [ ] 文件底座：multipart 分类策略、`PROCESSING→ACTIVE`、受权下载（不返回永久裸 URL）
 - [ ] 审计埋点、`client-config.features` 能力开关（未签认能力返回 422 `REQUIREMENT_PENDING`）
-- [ ] 数据库迁移框架（DDL 版本化，只有平台侧统一合并）
+- [x] 数据库迁移框架（DDL 版本化，只有平台侧统一合并）+ 启动时自动迁移（任务 3，2026-10-17）
 
 **业务接口**：193 个操作全部未实现，按分工方案的模块归属与阶段推进。
 
@@ -424,6 +531,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | 手工用 `.m2` 拼 classpath 启动会报 snakeyaml 找不到 | 别手工拼 classpath（会带上别的项目的旧版 slf4j/devtools），用 `mvn spring-boot:run` |
 | 直接 `java -jar` 跑不了 | 还没执行过 `package`；先 `mvn package` 生成可执行 jar |
 | `mvnw`/`mvnw.cmd` 报奇怪的 `'xx' is not recognized` | `.cmd` 必须是 **CRLF + ASCII**：cmd.exe 逐行解析批处理，LF 换行或 UTF-8 中文注释都会让它错乱。改这个文件时注意别被编辑器改成 LF |
+| `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
+| `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
+| `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
+| `mvn test` 全量跑挂但单测本身没问题 | `ApiApplicationTests` 需要 Mockito 自附加；只跑守卫测试用 `-Dtest=MigrationBaselineTests` |
+| CORS 拒绝返回纯文本 `Invalid CORS request` | `DefaultCorsProcessor` 默认行为，且 Spring 6.2 的 `rejectRequest` 是**单参数**——签名写错不编译失败、只是静默不生效。见 §4 `ContractCorsProcessor` |
 
 ---
 
@@ -432,6 +544,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 1. **先跑 `mvn -o -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
-4. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
-5. 需要新增分层或改包结构，先在这里更新 §2，别让下一个人对着过时文档写代码。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1` 确认库和迁移都正常。
+4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
+5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
+6. 需要新增分层或改包结构，先在这里更新 §2，别让下一个人对着过时文档写代码。

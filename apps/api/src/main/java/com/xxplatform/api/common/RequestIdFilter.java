@@ -37,8 +37,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * </ol>
  * 任一不满足就用服务端生成的值，<b>不做静默截断</b>。这样既修掉"谁都能决定"的问题，
  * 又不用等将来接网关时再推翻。
+ *
+ * <p><b>顺序必须是 {@code HIGHEST_PRECEDENCE}</b>：CORS 过滤器（{@code HIGHEST_PRECEDENCE + 10}）
+ * 可能在进入 MVC 之前就拒绝请求，而拒绝响应里也要写 traceId。排在最前面才能保证
+ * 任何后续过滤器/控制器出错时，{@code X-Trace-Id} 与响应壳里的 {@code traceId} 都一致。
  */
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RequestIdFilter extends OncePerRequestFilter {
 
     /** 请求/响应用的追踪头名，契约固定。 */

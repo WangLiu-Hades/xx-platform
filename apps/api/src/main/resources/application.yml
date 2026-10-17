@@ -55,3 +55,19 @@ xx:
   trace:
     accept-client-trace-id: false
 
+  # CSRF / Cookie 策略（见 common/CsrfProperties 与 docs：OPENAPI_PENDING P-001）
+  #
+  # ⚠ 这里的默认值**不代表业务已签认**，只是让链路可运行的保守初值。
+  #   P-001 待签认的是：空闲/绝对超时、并发登录、跨域部署边界。
+  #   签认后只改本文件，不要改代码。
+  csrf:
+    # CSRF 会话存活时长（auth.csrf_session.expires_at）
+    ttl: 2h
+    # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试须为 false，
+    # 否则浏览器不回传 Secure Cookie，整条链路无法联调。
+    secure-cookie: false
+    # 契约固定值，改了前端就失联
+    cookie-name: CSRFID
+    cookie-path: /api/v1
+
+

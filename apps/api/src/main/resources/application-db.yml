@@ -1,0 +1,50 @@
+# 数据库 profile：`SPRING_PROFILES_ACTIVE=db`（或 --spring.profiles.active=db）
+#
+# 为什么把数据源放在独立 profile，而不是写进 application.yml：
+#   1. 骨架阶段的多数端点和测试**不需要**数据库。数据源一旦在默认 profile 里，
+#      没有 PostgreSQL 的机器连 `mvn test`（上下文启动）都会失败；
+#   2. 有了 profile，接入数据库的端点会在没启用时**启动即失败**（依赖注入缺
+#      DataSource），而不是运行到一半才报错——错误暴露得更早、更清楚；
+#   3. 部署时"这个进程要不要连库"变成显式声明，而不是隐式行为。
+#
+# 口令不要写进本文件：用环境变量注入（见 apps/api/.env.example）。
+#   $env:SPRING_PROFILES_ACTIVE='db'
+#   $env:SPRING_DATASOURCE_URL='jdbc:postgresql://127.0.0.1:5432/xxplatform'
+#   $env:SPRING_DATASOURCE_USERNAME='xxplatform_app'
+#   $env:SPRING_DATASOURCE_PASSWORD='...'
+
+spring:
+  datasource:
+    # 默认值只用于本地开发；生产必须由环境变量覆盖
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5432/xxplatform}
+    username: ${SPRING_DATASOURCE_USERNAME:xxplatform_owner}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: org.postgresql.Driver
+
+    # HikariCP：连接池宁小勿大。首版 API 是 IO 型，10 个连接足够；
+    # 超过数据库 max_connections/实例数 才是真正的故障来源。
+    hikari:
+      pool-name: xxplatform-api
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 5000
+      # 必须小于 PostgreSQL 的 statement_timeout，否则连接会先被服务端掐断
+      validation-timeout: 3000
+      # UTC：契约要求 timestamptz 以 UTC 存储/返回，连接级时区也要一致，
+      # 否则 now() 与 Java 侧时间在夏令时等场景下会错位
+      connection-init-sql: SET TIME ZONE 'UTC'
+
+  # Flyway 在应用启动时自动迁移。
+  #
+  # 与 `mvn -Pdb-migrate flyway:migrate` 是**同一套脚本、同一张历史表**：
+  #   - 部署/CI 可以先用 Maven 插件迁移，再启动应用（应用届时只做 validate）；
+  #   - 本地开发直接启动应用也会自动补齐，不必记两条命令。
+  # 两者都读 `classpath:db/migration`，所以 V1 只会应用一次。
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    # 不允许应用在迁移失败后继续启动（默认就是 false，这里写出来是为了显式）
+    fail-on-missing-locations: true
+    # clean 在生产是灾难操作，必须禁用（与 Maven 插件里的 cleanDisabled 一致）
+    clean-disabled: true
+    validate-on-migrate: true

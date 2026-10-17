@@ -45,11 +45,63 @@
     </dependency>
 
     <!--
+      持久化：Spring JDBC + PostgreSQL 驱动。
+
+      为什么用 JdbcTemplate 而不是 JPA/MyBatis：
+        - 契约的 DDL 已经写死（163 表、复合主键、部分唯一索引、触发器），
+          JPA 的自动 DDL / 实体映射会与它打架，而且复合主键、`text[]`、geometry
+          这些类型映射成本远高于直接写 SQL；
+        - 本项目的读路径大量依赖部分索引谓词（`WHERE deleted=false`）和
+          `FOR UPDATE SKIP LOCKED`，这些在 JdbcTemplate 下是透明 SQL，
+          在 ORM 里要么做不到要么要绕；
+        - 分工方案要求"不允许跨包直接写他人的表"，显式 SQL 让越界一眼可见。
+
+      注意：数据源只在 `db` profile 下启用（见 application-db.yml）。
+      默认启动不连数据库，`mvn test` / `mvn compile` 在没有数据库的机器上仍然可用。
+    -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!--
+      Flyway 运行期依赖（与 `db-migrate` profile 里的 flyway-maven-plugin 是**两回事**）。
+
+      为什么要运行期也带上：
+        - 启动时自动补齐迁移，本地开发只要带上 db profile 即可，
+          不必先记着跑 `mvn -Pdb-migrate flyway:migrate`；
+        - 应用启动会先 `validate` 历史表，**版本号或校验和漂移会让进程启动失败**，
+          而不是带着半旧的库继续对外服务——这是比"记得手动迁移"更强的保证。
+
+      为什么不会被默认构建拖累：
+        FlywayAutoConfiguration 只在存在 DataSource 时生效，而数据源只在 `db` profile 下
+        配置（application-db.yml）。不带该 profile 启动时 Flyway 完全不参与。
+
+      并发安全：Flyway 在 `flyway_schema_history` 上取咨询锁，多实例同时启动只有一个
+      真正执行，其余等待。因此不需要额外的"谁先迁移"编排。
+
+      `flyway-database-postgresql` 是 Flyway 10+ 拆出来的模块，缺了它 PG 方言不被识别
+      （报 "Unsupported Database: PostgreSQL"）。
+    -->
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-database-postgresql</artifactId>
+    </dependency>
+
+    <!--
       以下依赖按分工分阶段加入，当前故意不引入，避免骨架跑不起来：
-      - spring-boot-starter-data-jpa / mybatis：持久化（等 contracts/database/schema.sql 落地迁移后）
-      - spring-session-jdbc：SID Cookie 会话（P-001 签认后）
-      - spring-boot-starter-data-redis：幂等键/游标/限流缓存（按需）
-      - spring-boot-starter-actuator：契约已自带 /health、/ready，是否叠加 actuator 待定
+      - spring-session-jdbc：SID Cookie 会话（P-001 签认后；当前自己管理 auth.user_session）
+      - spring-boot-starter-data-redis：幂等键/游标/限流缓存（按需，首版按设计不引入）
+      - spring-boot-starter-actuator：契约已自带 /health、/ready，不叠加 agent 端点
     -->
 
     <dependency>
