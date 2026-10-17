@@ -3,16 +3,13 @@ package com.xxplatform.api.auth;
 import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ApiResponses;
 import com.xxplatform.api.common.ErrorCode;
+import com.xxplatform.api.common.Instants;
+import com.xxplatform.api.common.RequestCookies;
 import com.xxplatform.api.common.RequestIdFilter;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -26,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 认证相关端点（M01）。已实现 {@code GET /auth/csrf}（任务 4）与
- * {@code POST /auth/login}（任务 5）。
+ * 认证相关端点（M01）。已实现 {@code GET /auth/csrf}（任务 4）、
+ * {@code POST /auth/login}（任务 5）与 {@code GET /me}（任务 6）。
  *
  * <p>契约要点（{@code openapi.yaml} → {@code /auth/csrf}）：
  * {@code x-permission: PUBLIC}、{@code security: []}（匿名也能取）、同源且校验
@@ -50,13 +47,19 @@ public class AuthController {
     private final CsrfTokenService csrfTokenService;
     private final LoginService loginService;
     private final SessionProperties sessionProperties;
+    private final SessionAuthenticator sessionAuthenticator;
+    private final MeService meService;
 
     public AuthController(CsrfTokenService csrfTokenService,
                           LoginService loginService,
-                          SessionProperties sessionProperties) {
+                          SessionProperties sessionProperties,
+                          SessionAuthenticator sessionAuthenticator,
+                          MeService meService) {
         this.csrfTokenService = csrfTokenService;
         this.loginService = loginService;
         this.sessionProperties = sessionProperties;
+        this.sessionAuthenticator = sessionAuthenticator;
+        this.meService = meService;
     }
 
     /**
@@ -123,7 +126,7 @@ public class AuthController {
     public ResponseEntity<ApiResponses> login(@Valid @RequestBody LoginRequest body,
                                               HttpServletRequest request,
                                               HttpServletResponse response) {
-        String csrfCookieValue = cookieValue(request, csrfTokenService.properties().getCookieName());
+        String csrfCookieValue = RequestCookies.value(request, csrfTokenService.properties().getCookieName());
         String csrfToken = request.getHeader(HEADER_NAME);
         CsrfTokenService.CsrfBinding binding = csrfTokenService.resolve(csrfCookieValue, csrfToken)
                 .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
@@ -131,7 +134,7 @@ public class AuthController {
         LoginService.LoginResult result = loginService.login(
                 body.loginName(),
                 body.password(),
-                cookieValue(request, SessionService.COOKIE_NAME),
+                RequestCookies.value(request, SessionService.COOKIE_NAME),
                 binding.csrfId(),
                 clientIp(request),
                 LoginService.clientLabel(request.getHeader(HttpHeaders.USER_AGENT)),
@@ -142,10 +145,30 @@ public class AuthController {
 
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("userId", result.userId().toString());
-        data.put("idleExpiresAt", isoInstant(session.idleExpiresAt()));
-        data.put("absoluteExpiresAt", isoInstant(session.absoluteExpiresAt()));
+        data.put("idleExpiresAt", Instants.iso(session.idleExpiresAt()));
+        data.put("absoluteExpiresAt", Instants.iso(session.absoluteExpiresAt()));
 
         return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
+     * {@code GET /me}：返回当前登录用户的身份、权限、菜单与数据范围。
+     *
+     * <p>契约 {@code x-permission: AUTHENTICATED}，只要求有效会话，不再叠加权限码——
+     * 任何登录用户都必须能读到自己是谁，否则前端无法决定首屏渲染什么。
+     *
+     * <p><b>为什么没有 {@code X-CSRF-Token} 参数</b>：本操作是 {@code GET}，契约
+     * 未给它声明 {@code CsrfToken} 参数。读操作不改状态，跨站读也读不到响应
+     * （浏览器同源策略拦住），因此不需要同步器 token。
+     *
+     * <p>响应 200 只有 {@code X-Trace-Id} 一个头，**没有 ETag**：契约没声明条件请求，
+     * 而 {@code /me} 的内容（权限、范围）会随管理员改角色而变化，缓存收益不稳定。
+     */
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponses> getMe(HttpServletRequest request) {
+        AuthenticatedSession session = sessionAuthenticator.require(request);
+        return ResponseEntity.ok(ApiResponses.success(
+                meService.load(session), RequestIdFilter.currentTraceIdOrFallback()));
     }
 
     /**
@@ -162,9 +185,7 @@ public class AuthController {
      * </ul>
      */
     private ResponseCookie sidCookie(SessionService.IssuedSession session) {
-        Duration remaining = Duration.between(
-                OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS),
-                session.absoluteExpiresAt());
+        Duration remaining = Duration.between(Instants.nowUtc(), session.absoluteExpiresAt());
         return ResponseCookie.from(SessionService.COOKIE_NAME, session.sidValue())
                 .httpOnly(true)
                 .secure(sessionProperties.isSecureCookie())
@@ -172,20 +193,6 @@ public class AuthController {
                 .path(sessionProperties.getCookiePath())
                 .maxAge(remaining.isNegative() ? Duration.ZERO : remaining)
                 .build();
-    }
-
-    /** 取指定名字的 Cookie 值；不存在返回 null。 */
-    private static String cookieValue(HttpServletRequest request, String name) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if (name.equals(cookie.getName())) {
-                return cookie.getValue();
-            }
-        }
-        return null;
     }
 
     /**
@@ -199,11 +206,6 @@ public class AuthController {
      */
     private static String clientIp(HttpServletRequest request) {
         return request.getRemoteAddr();
-    }
-
-    /** 契约：date-time 是带偏移的 ISO8601，UTC 统一以 {@code Z} 结尾。 */
-    private static String isoInstant(OffsetDateTime value) {
-        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value);
     }
 
     /**

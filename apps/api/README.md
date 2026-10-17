@@ -203,7 +203,8 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 登录会话 | `auth/AuthController#login`、`auth/LoginService`、`auth/SessionService` | `POST /auth/login`：校验 CSRF → 口令 → **轮换 SID**（旧会话 `revoked_at`）→ 写 `auth.user_session`（只存 SID 的 SHA-256）→ 回填 `csrf_session.session_id` |
 | 口令哈希 | `auth/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
 | 登录频控 | `auth/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
-| 开发种子账号 | `auth/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`，口令只从环境变量读 |
+| 开发种子账号 | `auth/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
+| 当前用户 | `auth/AuthController#getMe`、`auth/MeService`、`auth/SessionAuthenticator`、`auth/RbacRepository`、`auth/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
 | dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
@@ -407,7 +408,39 @@ $env:XX_AUTH_DEVSEED_ENABLED  = 'true'      # xx.auth.dev-seed.enabled
 $env:XX_AUTH_DEVSEED_PASSWORD = '<口令>'    # 只从环境变量读，yml 里没有口令
 ```
 
-`enabled=true` 但口令为空或短于 8 位 → **启动直接失败**（不留一个弱口令账号在库里）。账号已存在则跳过、**不重置口令**。
+`enabled=true` 但口令为空或短于 8 位 → **启动直接失败**（不留一个弱口令账号在库里）。
+
+它建**三个账号 + 三个角色**，因为只有一种权限的账号测不出权限分支：
+
+| 账号 | 角色 | 权限 | `ownOnly` | `dataTypes` |
+| --- | --- | --- | --- | --- |
+| `demo.admin` | `SUPER_ADMIN` | 库内**全部 58 个**权限码 | `false` | FENCE/MAC/PLATE/FACE |
+| `demo.operator` | `OPERATOR` | 13 个只读子集，**无** `capture:decrypt` | `true` | FENCE/PLATE |
+| `demo.classified` | `CLASSIFIED` | 15 个 = operator + `capture:decrypt` + `audit:read` | `false` | FENCE/MAC/PLATE/FACE |
+
+管理员的 58 个码用 `INSERT ... SELECT code FROM auth.permission` 灌入，**不在代码里复述权限清单**——
+权限表加了新码，种子账号自动跟上，不会出现"库里有权、种子漏配"。三个角色都 `data_all_sites=true`
+（否则得先造 `core.site` 行），`management_all_sites=false`。
+
+**刻意不种菜单**（`auth.menu`/`role_menu`）：仓库里没有真实导航目录，`apps/web` 只把
+`menus` 的 label 平铺成一个列表。塞假菜单等于把未签认的导航结构固化成"事实"，
+而空菜单是合法结果（前端已按空数组处理）。同理不种 `auth.user_scope`：没有行 = 不收窄，
+才是"管理员看全部"的正确表达。
+
+##### `reset-password`：口令漂移的出口
+
+账号已存在时**默认跳过**（不重置口令，避免每次重启冲掉手工改过的口令）。但这会导致一个真实事故：
+任务 5 用旧口令建了 `demo.admin`，任务 6 换了新口令只影响新建的两个账号，于是 admin 一直登不上——
+验收脚本报 `28 failed`，而 22 条失败全是"拿不到 SID"的级联，看起来像 `/me` 坏了。
+
+换口令时显式打开一次：
+
+```bash
+$env:XX_AUTH_DEVSEED_RESETPASSWORD = 'true'   # xx.auth.dev-seed.reset-password
+```
+
+它会**重算口令哈希并撤销该用户全部未撤销会话**（对齐 `api-conventions.md` §4
+"管理员重置口令须撤销该用户会话"——改了口令还留着旧会话，等于改了锁不换钥匙）。
 
 #### 验收记录
 
@@ -422,6 +455,86 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-login.p
 时间戳格式与 30m/12h 偏移、数据库 8 条（`sid_hash = sha256(SID)`、原文不入库、traceId 落库、
 `csrf_session.session_id` 已绑定、`last_login_at` 已写）、登录轮换 SID 且旧会话被撤销、
 频控 10 次 401 后 429 且 `Retry-After >= 1`、以及未知字段/超长/缺字段/405/跨源。
+
+---
+
+### `GET /me`（任务 6，2026-10-17 实现）
+
+```http
+GET /api/v1/me
+Cookie: SID=<登录拿到的会话 cookie>
+# 无参数表 → 不需要 X-CSRF-Token（只读，不改状态）
+```
+
+```json
+{"code":"0","message":"success","traceId":"...","data":{
+  "user":{"userId":"...","loginName":"demo.admin","displayName":"演示管理员","status":"ACTIVE"},
+  "roleIds":["..."],
+  "permissionCodes":["analysis:create","..."],
+  "menus":[],
+  "dataScope":{"siteIds":[],"allSites":true,"dataTypes":["FENCE","MAC","PLATE","FACE"],
+               "ownOnly":false,"scopeVersion":0},
+  "siteScope":{"siteIds":[],"allSites":true},
+  "session":{"userId":"...","idleExpiresAt":"2026-10-17T14:28:11Z","absoluteExpiresAt":"2026-10-18T01:58:11Z"}
+}}
+```
+
+七个块**全部必现**（契约 `CurrentUserData` 七个 required）。`menus` 可以为空数组。
+200 只有 `X-Trace-Id`，**没有 ETag**——契约未声明条件请求，而权限/范围会随管理员改角色随时变化。
+
+`x-permission` 是 `AUTHENTICATED` 而不是某个权限码：`/me` 要告诉前端"你是谁、你能看什么"，
+如果它自己还要一个权限码，前端就没有任何可靠依据决定首屏。
+
+#### 认证失败的三种分法（对应三种前端动作）
+
+| 情况 | 码 | 前端该做什么 |
+| --- | --- | --- |
+| 没带 SID / SID 查不到 | `AUTH_REQUIRED` 401 | 回登录页 |
+| 会话已撤销、空闲/绝对超时 | `AUTH_SESSION_EXPIRED` 401 | 清身份回登录，**不自动重放写请求** |
+| 账号被停用或不存在 | `AUTH_SESSION_EXPIRED` 401 | 同上 |
+
+"查不到"用 `AUTH_REQUIRED` 而不是 `AUTH_SESSION_EXPIRED`：后者会诱导前端去调 renew，
+而一个根本不存在的 SID 续不活，只会多一次必然失败的请求。真实原因（账号被停用 / 已软删）只进服务端日志。
+
+#### 为什么数据范围只能收窄，不能放宽
+
+`dataScope`/`siteScope` 都是 `x-design-status: pending`（P-002：角色默认授权与范围组合规则待签认），
+形状照契约给，但组合规则必须选一个**只可能更严**的方向。实现在 `auth/ScopeCalculator`，七条规则写在类注释里：
+
+1. 多个角色之间取**并集**（角色是叠加授权）；
+2. `allSites` = 角色允许 **且** 用户未被收窄 —— 逻辑与。用户范围是"限制"，不是"追加"；
+3. 场所列表 = 角色并集 **∩** 用户列表；
+4. `ownOnly` 取**或** —— 任一角色说"只看自己的"，就是只看自己的。取与等于取消限制，即扩权；
+5. `allSites=true` 时 `siteIds` 必须 `[]`（契约明文）；
+6. 用户范围行存在但子表没有条目 = **该方面无权限**，不是"不受限"。这是最小权限，也正对齐
+   契约对 `allSites=false` 且 `siteIds` 为空的定义；
+7. 没有用户范围行 = 未收窄，直接取角色并集。
+
+第 6 条是唯一容易写反的地方：把"空子集"当成"没有限制"，会让一个被收窄到零个场所的账号看到全部数据——
+是提权级的错误，且在生产里几乎不可能被偶然发现。`ScopeCalculatorTests` 有一条专门钉它。
+
+#### 菜单为什么要按权限过滤
+
+`auth.menu.required_permission_code` 存在时，若当前用户没有该权限，**这条菜单不返回**。
+理由：角色被收回权限后 `role_menu` 关联往往还留着，返回它等于给前端一个"点了必然 403"的入口。
+过滤只减少可见项、不增加任何权限。
+
+`requiredPermission` 是契约里的 `$ref: PermissionCode`（**非 nullable**），所以无该字段时必须
+**省略整个属性**（`@JsonInclude(NON_NULL)`）而不是输出 `null` —— 输出 `null` 会让严格校验的前端类型报错。
+
+#### 验收记录
+
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-me.ps1 `
+  -DB_PASSWORD '<db口令>' -SeedPassword '<种子口令>'
+# => passed: 80   failed: 0
+```
+
+覆盖 6 组 80 条：匿名/伪造 SID 401 且 `data:null`+`details` 为数组、admin 全量形状（七键恰好 7 个、
+58 个权限码、四类型有序、`allSites` 时 `siteIds=[]`、无 ETag）、operator 收窄（13 码、两类型、`ownOnly=true`）、
+classified（15 码含 `capture:decrypt`）、数据库侧会话生命周期（时间与库内 `epoch` 无漂移、
+改过去→`AUTH_SESSION_EXPIRED`、撤销→401、停用→401）、菜单投影（三条临时菜单只有两条可见、
+被过滤那条不出现、无权限码时省略 `requiredPermission`）、以及 405 与未知查询参数。
 
 ---
 
@@ -470,8 +583,9 @@ $ mvn -B -Pgenerate-api compile
 **基础设施（平台侧先做，另一侧只调用）**
 
 - [x] CSRF 令牌签发：`GET /auth/csrf`、`CSRFID` Cookie 属性、同步器 token 落库（任务 4，2026-10-17）
-- [ ] 会话与登录：`POST /auth/login` **已做**（任务 5，2026-10-17：SID Cookie、轮换、频控、种子账号）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 login/csrf 两个端点各自校验），以及 `getMe`/`logout`/`renewSession`
-- [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面，列表/详情/导出/文件每次重校
+- [x] 会话与登录：`POST /auth/login`（任务 5，2026-10-17：SID Cookie、轮换、频控、种子账号）
+- [x] 当前用户：`GET /me`（任务 6，2026-10-17：会话校验、角色/权限/菜单/数据范围/场所范围）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 login/csrf 两个端点各自校验），以及 `logout`/`renewSession`/`changeMyPassword`
+- [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面（`/me` 已有 `ScopeCalculator`，但只覆盖"读自己"），列表/详情/导出/文件每次重校
 - [ ] 幂等：`Idempotency-Key`（16–160 字符），同键同 payload 返原响应，异 payload 409
 - [ ] 乐观锁：`If-Match` ↔ `version`，冲突 409 `RESOURCE_VERSION_CONFLICT`
 - [ ] 签名游标：绑定账号/范围版本/查询快照/排序/页大小，只校验不解析，失败 400 `DATA_CURSOR_INVALID`
@@ -635,9 +749,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
 | `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
 | `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
-| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 19 例全绿 |
+| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 27 例全绿 |
 | 启动报 `Failed to instantiate [LoginThrottle]: No default constructor found` | 类里有**多个构造器**时 Spring 不会"选参数最多的那个"，而是报这个错——用 `@Autowired` 显式标出生产构造器 |
 | `@SpringBootTest` 报 `Failed to determine a suitable driver class` | 加了数据源依赖后，全上下文启动就需要 `DataSource` bean。不连库的测试要给占位 url + `spring.datasource.hikari.initialization-fail-timeout=-1` + `spring.flyway.enabled=false`（见 `ApiApplicationTests` 注释） |
+| 单测报端口 8080 被占用 | `SpringApplicationBuilder.properties(...)` 设的是 **default properties，优先级低于 `application.yml`**，`server.port=0` 会被 yml 的 `8080` 覆盖。改用 `.run("--server.port=0", ...)`（命令行参数优先级最高）。这个坑的失败信息看起来像环境问题，其实是测试写错——只在"本机没起服务"时才碰巧通过 |
+| 种子账号改了口令却登不上 | `DevUserSeeder` 幂等且默认**不重置**已存在账号的口令，于是新口令只对新建账号生效。用 `XX_AUTH_DEVSEED_RESETPASSWORD=true` 重置一次（它会同时撤销该用户的旧会话） |
 | CORS 拒绝返回纯文本 `Invalid CORS request` | `DefaultCorsProcessor` 默认行为，且 Spring 6.2 的 `rejectRequest` 是**单参数**——签名写错不编译失败、只是静默不生效。见 §4 `ContractCorsProcessor` |
 | PS 5.1 校验脚本报 `The term 'if' is not recognized` | `(if (...) {...})` 这种"表达式化的 if"在 Windows PowerShell 5.1 里不是合法表达式（PS7 可以），要先赋值再放进 `@{...}` |
 | PS 5.1 里 `(... | Where-Object {...}).Count` 拿到空值 | 管道只输出**一个**对象时它返回标量，而标量没有 `Count` 成员，`-eq 1` 就永远为假。用 `@(... \| Where-Object ...).Count` 包一层 |
@@ -650,8 +766,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 1. **先跑 `mvn -o -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1` 与 `scripts/verify-login.ps1` 确认库、迁移、登录都正常。
-   前端联调用 `demo.admin`：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1` 与 `scripts/verify-me.ps1` 确认库、迁移、登录、`/me` 都正常。
+   前端联调用 `demo.admin` / `demo.operator` / `demo.classified`（三种权限档）：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
 6. 需要新增分层或改包结构，先在这里更新 §2，别让下一个人对着过时文档写代码。

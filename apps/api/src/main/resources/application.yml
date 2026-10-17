@@ -94,9 +94,20 @@ xx:
       lockout: 15m
     # 开发种子账号：三重闸门（profile=db + enabled + 外部提供口令）。
     # 口令**不写在这里**（本文件要提交），用环境变量 XX_AUTH_DEVSEED_PASSWORD 提供。
+    #
+    # 三个账号共用同一口令、各自绑一个角色，用来验证 GET /me 的范围与权限差异：
+    #   demo.admin    -> SUPER_ADMIN  全 58 码、全场所、ownOnly=false、四种数据类型
+    #   demo.operator -> OPERATOR     13 个只读码、全场所、ownOnly=true、仅 FENCE/PLATE
+    #   demo.classified -> CLASSIFIED 操作员 + capture:decrypt/audit:read、四种数据类型
     dev-seed:
       enabled: false
       login-name: demo.admin
+      operator-login-name: demo.operator
+      classified-login-name: demo.classified
       display-name: 演示管理员
+      # 账号已存在时是否把口令重置为当前 XX_AUTH_DEVSEED_PASSWORD 并撤销其会话。
+      # 默认 false（正常重启不冲掉手工改过的口令）；换口令时显式打开一次再关掉，
+      # 否则会出现"新账号用新口令、老账号还是旧口令"的口令漂移。
+      reset-password: false
 
 

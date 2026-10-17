@@ -38,6 +38,13 @@ import org.springframework.context.ConfigurableApplicationContext;
  *   <li>{@code spring.flyway.enabled=false} 否则 Flyway 启动即连库迁移。</li>
  * </ul>
  * 本测试只做 HTTP 层断言、从不触库。需要真实数据库的验收走 {@code scripts/*.ps1}。
+ *
+ * <p><b>为什么覆盖参数走 {@code run(args...)} 而不是 {@code .properties(...)}</b>：
+ * {@code SpringApplicationBuilder.properties()} 设置的是 <i>default properties</i>，
+ * 优先级**低于** {@code application.yml}。所以 {@code properties("server.port=0")}
+ * 会被 yml 里的 {@code server.port: 8080} 覆盖，测试去绑 8080——只在"没有别的进程占用
+ * 8080"时才会碰巧通过，一旦本地已起着服务就必然失败。命令行参数优先级最高，才能真的拿到
+ * 随机端口。这个坑很隐蔽：失败信息是端口占用，看起来像环境问题而不是测试写错。
  */
 class ApiApplicationTests {
 
@@ -47,16 +54,16 @@ class ApiApplicationTests {
     void unknownRouteReturnsContractErrorEnvelope() throws Exception {
         ConfigurableApplicationContext context = new SpringApplicationBuilder(ApiApplication.class)
                 .web(WebApplicationType.SERVLET)
-                .properties(
-                        "server.port=0",
-                        "spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/xxplatform",
-                        "spring.datasource.username=test-placeholder",
-                        "spring.datasource.password=test-placeholder",
-                        "spring.datasource.hikari.initialization-fail-timeout=-1",
-                        "spring.datasource.hikari.minimum-idle=0",
-                        "spring.datasource.hikari.maximum-pool-size=2",
-                        "spring.flyway.enabled=false")
-                .run();
+                .run(
+                        // 命令行参数优先级高于 application.yml，server.port 才能真正被覆盖
+                        "--server.port=0",
+                        "--spring.datasource.url=jdbc:postgresql://127.0.0.1:5432/xxplatform",
+                        "--spring.datasource.username=test-placeholder",
+                        "--spring.datasource.password=test-placeholder",
+                        "--spring.datasource.hikari.initialization-fail-timeout=-1",
+                        "--spring.datasource.hikari.minimum-idle=0",
+                        "--spring.datasource.hikari.maximum-pool-size=2",
+                        "--spring.flyway.enabled=false");
         try {
             int port = ((WebServerApplicationContext) context).getWebServer().getPort();
             // context-path 是 /api/v1，未知路由也必须落在它下面。

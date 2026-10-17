@@ -28,6 +28,12 @@ public class UserAccountRepository {
                AND deleted = false
             """;
 
+    private static final String SELECT_BY_ID = """
+            SELECT id, user_code, login_name, display_name, password_hash, status
+              FROM auth.app_user
+             WHERE id = ?
+            """;
+
     private final JdbcTemplate jdbc;
 
     public UserAccountRepository(JdbcTemplate jdbc) {
@@ -52,6 +58,30 @@ public class UserAccountRepository {
                 rs.getString("display_name"),
                 rs.getString("password_hash"),
                 rs.getString("status")), loginName);
+        return rows.stream().findFirst();
+    }
+
+    /**
+     * 按主键取账号（任务 6：{@code GET /me} 由会话反查用户）。
+     *
+     * <p>与 {@link #findByLoginName} 的差别只在查询条件：这里**不过滤
+     * {@code deleted}**。会话有效期内账号被人软删，必须能被查到并判为不可用；
+     * 如果查询层直接过滤掉，结果会退化成"账号不存在"，日志里就看不出
+     * "这个人的会话还在但账号没了"这一真实原因。
+     *
+     * <p>软删账号仍会被判为不可用，靠的是表上的
+     * {@code CHECK (NOT deleted OR status = 'DISABLED')}：软删必然伴随
+     * {@code status='DISABLED'}，所以 {@link UserAccountRow#isActive()} 已经覆盖了两种情况，
+     * 这里不需要再单独读 {@code deleted} 列。
+     */
+    public Optional<UserAccountRow> findById(UUID userId) {
+        List<UserAccountRow> rows = jdbc.query(SELECT_BY_ID, (rs, rowNum) -> new UserAccountRow(
+                rs.getObject("id", UUID.class),
+                rs.getString("user_code"),
+                rs.getString("login_name"),
+                rs.getString("display_name"),
+                rs.getString("password_hash"),
+                rs.getString("status")), userId);
         return rows.stream().findFirst();
     }
 
