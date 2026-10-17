@@ -106,6 +106,24 @@
                   <generateModelTests>false</generateModelTests>
                   <generateApiDocumentation>false</generateApiDocumentation>
                   <generateModelDocumentation>false</generateModelDocumentation>
+                  <!--
+                    nameMappings 是**插件 mojo 级参数**（List<String>，映射"属性名"），
+                    不是 configOptions 里的一项。放在 configOptions 里会被**静默忽略**，
+                    生成物完全不改名——契约文档写的就是这个映射，但写法必须在这里。
+
+                    为什么需要它：契约 Schema `SetTaskCreated` 同时有 `setTaskId` 和 `taskId`
+                    两个属性。默认生成会给 `setTaskId` 属性生成 setter `setTaskId(...)`，
+                    与 `taskId` 属性的 setter 同名同参 → 重复方法 → 编译失败
+                    （综合测试报告 2026-10-16 的"生成后编译失败"实际包含这一条，
+                     不只是缺 swagger 依赖）。
+
+                    映射后：`setTaskId` 属性 → `setOperationId(...)` / `setSetOperationId(...)`；
+                    `taskId` 属性 → `setTaskId(...)`。JSON 报文两侧仍是 setTaskId / taskId，
+                    只改 Java 方法名，不动物线上字段名。
+                  -->
+                  <nameMappings>
+                    <param>setTaskId=setOperationId</param>
+                  </nameMappings>
                   <configOptions>
                     <interfaceOnly>true</interfaceOnly>
                     <useSpringBoot3>true</useSpringBoot3>
@@ -115,14 +133,96 @@
                     <openApiNullable>false</openApiNullable>
                     <performBeanValidation>true</performBeanValidation>
                     <!--
-                      契约要求：JSON 字段仍是 taskId，Java 侧 setter 改名，
-                      避开与"执行 taskId"的 setter 重名。这是契约指定的唯一改名，不要额外增删。
+                      让生成物"自包含"，不引入 io.swagger 注解依赖。
+
+                      spring generator 默认会在每个接口方法上生成 @Operation/@ApiResponse，
+                      这些注解来自 io.swagger.core.v3:swagger-annotations-jakarta。
+                      综合测试报告 2026-10-16 报的"生成后编译失败"就是这个原因：
+                      生成出了 Java 文件，但项目没有该依赖。
+
+                      三种解法里选了"关闭注解生成"：
+                        1) 补 swagger-annotations 依赖 → 默认构建（含离线）依赖它，风险高；
+                        2) 只给一个 stub jar → 运行期若有代码反射注解会踩空，且不知注解版本；
+                        3) 关闭注解生成（本方案）→ 生成物只依赖 spring-web + validation，
+                           离线可编译，且不影响 interfaceOnly 的签名/校验契约。
+
+                      代价：接口上没有 OpenAPI 注解。这是可接受的——契约文档的唯一来源是
+                      contracts/api/openapi.yaml 本身，不靠 Java 注解二次维护；
+                      而且下面本来就把 generateApiDocumentation 关掉了。
+                      annotationLibrary=none 只用 spring-web/validation 注解；
+                      documentationProvider=none 去掉 @Operation/@ApiResponse 生成。
                     -->
-                    <nameMappings>setTaskId=setOperationId</nameMappings>
+                    <annotationLibrary>none</annotationLibrary>
+                    <documentationProvider>none</documentationProvider>
                   </configOptions>
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <!--
+      数据库迁移 profile：`mvn -Pdb-migrate flyway:migrate`
+
+      为什么用 profile 而不是默认 build：
+        1. 默认 `mvn compile` 必须能在没有数据库、没有联网的机器上跑通；
+        2. 迁移是**部署动作**，不是编译动作，不应该在 `mvn package` 时顺手改库；
+        3. flyway 插件与 JDBC 驱动需要下载，放进默认 build 会拖累离线构建
+           （和 generate-api 同样的理由）。
+
+      版本：flyway 版本交给 spring-boot-starter-parent 管理（Boot 3.5.16 → 11.7.2），
+            不要在这里写死，否则升级 Boot 时会漂移。
+
+      ⚠ Flyway 10+ 把数据库支持拆成独立模块，PostgreSQL 必须额外加
+        `org.flywaydb:flyway-database-postgresql`，否则报
+        "No database found to handle jdbc:postgresql:..."。这是最常见的踩坑点。
+
+      用法（口令不要写进仓库，用环境变量传）：
+        $env:DB_URL='jdbc:postgresql://127.0.0.1:5432/xxplatform'
+        $env:DB_USER='xxplatform_owner'
+        $env:DB_PASSWORD='...'
+        mvn -Pdb-migrate flyway:migrate
+    -->
+    <profile>
+      <id>db-migrate</id>
+      <properties>
+        <db.url>${env.DB_URL}</db.url>
+        <db.user>${env.DB_USER}</db.user>
+        <db.password>${env.DB_PASSWORD}</db.password>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-maven-plugin</artifactId>
+            <configuration>
+              <url>${db.url}</url>
+              <user>${db.user}</user>
+              <password>${db.password}</password>
+              <!-- 迁移脚本与 schema.sql 基线一起放在 resources 下，随 jar 发布 -->
+              <locations>
+                <location>filesystem:${project.basedir}/src/main/resources/db/migration</location>
+              </locations>
+              <!-- 空库首次迁移：允许在非空库上以基线方式接管（见 README §迁移） -->
+              <baselineOnMigrate>true</baselineOnMigrate>
+              <baselineVersion>0</baselineVersion>
+              <validateOnMigrate>true</validateOnMigrate>
+              <cleanDisabled>true</cleanDisabled>
+            </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
+              </dependency>
+              <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
+                <version>${flyway.version}</version>
+              </dependency>
+            </dependencies>
           </plugin>
         </plugins>
       </build>
