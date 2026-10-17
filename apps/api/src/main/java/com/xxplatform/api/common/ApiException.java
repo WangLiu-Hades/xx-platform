@@ -24,7 +24,7 @@ public class ApiException extends RuntimeException {
     private final ErrorCode code;
     private final List<ApiResponses.FieldErrorDetail> details;
 
-    /** 仅 429 使用：告知客户端多久后可以重试（写入 {@code Retry-After} 响应头）。 */
+    /** 仅供 429/503 使用：告知客户端多久后可以重试（写入 {@code Retry-After} 响应头）。 */
     private final Duration retryAfter;
 
     public ApiException(ErrorCode code, String message) {

@@ -127,9 +127,10 @@ public class ApiExceptionHandler {
     /**
      * 业务异常 → 由其自带的 {@link ErrorCode} 决定状态码与 {@code code}。
      *
-     * <p>{@code Retry-After} 只对 429 写：契约把 {@code Retry-After} 定义为 429/503 的响应头，
-     * 其他状态码带上它会让前端误以为可以退避重试。值是**向上取整的秒数**且至少 1 ——
-     * {@code Retry-After: 0} 等于"立刻重试"，那正是限流要防的行为。
+     * <p>{@code Retry-After} 只对 429 与 503 写：契约（{@code error-codes.md}）把
+     * {@code Retry-After} 定义为 429/503 的响应头，其他状态码带上它会让前端误以为可以退避重试。
+     * 值是**向上取整的秒数**且至少 1 —— {@code Retry-After: 0} 等于"立刻重试"，
+     * 那正是限流与"依赖还没好"要防的行为。
      *
      * <p>日志用 debug：业务失败是控制流（口令错误、限流），不是缺陷。真正的故障仍走
      * {@link #handleUnexpected(Exception)} 的 error 级别。
@@ -140,7 +141,8 @@ public class ApiExceptionHandler {
                 ex.code(), ex.getMessage(), RequestIdFilter.currentTraceIdOrFallback());
         ResponseEntity.BodyBuilder builder = ResponseEntity.status(ex.code().httpStatus());
         Duration retryAfter = ex.retryAfter();
-        if (ex.code() == ErrorCode.RATE_LIMITED && retryAfter != null && !retryAfter.isNegative() && !retryAfter.isZero()) {
+        boolean retryable = ex.code() == ErrorCode.RATE_LIMITED || ex.code() == ErrorCode.SYSTEM_UNAVAILABLE;
+        if (retryable && retryAfter != null && !retryAfter.isNegative() && !retryAfter.isZero()) {
             builder.header(HttpHeaders.RETRY_AFTER, Long.toString(Math.max(1L, retryAfter.toSeconds())));
         }
         return builder.body(ApiResponses.error(

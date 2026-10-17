@@ -38,32 +38,33 @@ Wrapper 的行为：**优先复用本机已装的 Maven**；本机没装时，�
 ```powershell
 cd apps/api
 
-# 1) 编译（离线可用）
+# 1) 编译（离线可用，不需要数据库）
 mvn -o -B compile
 
-# 2) 带自检端点启动（dev profile 才会注册 /smoke）
-mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"
+# 2) 启动（需要数据库；dev 才会注册 /smoke）
+#    口令不要写进仓库；本地真实值放 local-only/apps-api.env.local（已被 .gitignore 排除）
+$env:SPRING_DATASOURCE_URL      = 'jdbc:postgresql://127.0.0.1:5432/xxplatform'
+$env:SPRING_DATASOURCE_USERNAME = 'xxplatform_owner'
+$env:SPRING_DATASOURCE_PASSWORD = '***'
+mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 
 # 3) 另开一个终端验证
 curl.exe http://127.0.0.1:8080/api/v1/smoke
-```
-
-要连数据库（`GET /auth/csrf` 等端点需要），加上 `db` profile 与连接信息：
-
-```powershell
-# 口令不要写进仓库；本地真实值放 apps/api/.env.local（已被 .gitignore 排除）
-$env:SPRING_PROFILES_ACTIVE      = 'dev,db'
-$env:SPRING_DATASOURCE_URL       = 'jdbc:postgresql://127.0.0.1:5432/xxplatform'
-$env:SPRING_DATASOURCE_USERNAME  = 'xxplatform_owner'
-$env:SPRING_DATASOURCE_PASSWORD  = '***'
-mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
+curl.exe http://127.0.0.1:8080/api/v1/health
+curl.exe http://127.0.0.1:8080/api/v1/ready
 ```
 
 启动日志里应能看到 `Successfully validated 1 migration` 与
 `Schema "public" is up to date`——说明 Flyway 已接上，库结构与契约一致。
 
-**不带 `db` profile 时应用完全不连库**：没有 PostgreSQL 的机器照样能
-`mvn compile` / 起服务 / 跑 `/smoke`。这是刻意的（原因见 `application-db.yml` 头部注释）。
+**应用启动需要数据库**（从任务 4 起）：仓储层用 `JdbcTemplate`，没有数据源时 Spring 会在启动阶段直接报
+`Failed to configure a DataSource: 'url' attribute is not specified`。这是刻意的——用 H2 之类的内存库兜底
+只会让"没装 PostgreSQL 也能起"变成"起来之后每条查询都错在别的地方"。
+
+没有 PostgreSQL 的机器仍然可以 `mvn -o -B compile` 与 `mvn -o -B test`：测试用占位 URL +
+`initialization-fail-timeout=-1`，不会真的去连库。
+
+「数据源存在但连不上」的情况由 `GET /ready` 如实报告（503，见下文探针一节）。
 
 端口 **8080**、上下文路径 **`/api/v1`**（在 `application.yml` 里配死），与前端 Vite 开发代理的默认目标一致。
 
@@ -198,7 +199,7 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 27 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 8、`migration.*` 4） |
+| `mvn -o -B test` | 43 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 24、`migration.*` 4） |
 | `verify-skeleton.ps1` | 22 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
@@ -276,7 +277,7 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/未知字段/**方法不支持**/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
 | JSON 口径 | `config/WebConfiguration` | **未知字段拒绝**（`failOnUnknownProperties=true`，对齐 `additionalProperties:false`）；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
 | 开发期 CORS | `config/WebConfiguration`、`config/ContractCorsProcessor` | 自定义 `CorsFilter`（映射必须写 `/**`，见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；**拒绝时返回契约错误壳**而不是纯文本；生产必须换真实 Origin 白名单 |
-| 数据库接入 | `application-db.yml` | 数据源**只在 `db` profile 下启用**；默认启动不连库，没装 PostgreSQL 的机器也能编译/起服务 |
+| 数据库接入 | `application-db.yml` | 数据源配置**只在 `db` profile 下**；但仓储层从任务 4 起就依赖 `JdbcTemplate`，所以**启动必须带数据库**（`mvn compile`/`mvn test` 仍可离线无库运行，见 §1） |
 | Flyway 启动迁移 | `application-db.yml`（`spring.flyway`） | `db` profile 启动时先 `validate` 再 `migrate`；校验和漂移会让进程**启动失败**而不是带病服务 |
 | CSRF 令牌 | `api/AuthController`、`service/CsrfTokenService`、`infra/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
 | 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService` | `POST /auth/login`：校验 CSRF → 口令 → **轮换 SID**（旧会话 `revoked_at`）→ 写 `auth.user_session`（只存 SID 的 SHA-256）→ 回填 `csrf_session.session_id` |
@@ -285,6 +286,7 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
 | 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
 | 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
+| 运维探针 | `api/SystemController`、`service/HealthService`、`service/HealthView` | `GET /health`（存活）永远 200 + `UP`，不查依赖；`GET /ready`（就绪）查 `database`/`schema`/`deployment-config` 三项，任一不就绪 → **503 + `Retry-After: 5`**、`details` 指出是哪个依赖（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
 | dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
@@ -718,6 +720,112 @@ admin 与 operator 拿到逐字节相同的 `data`、数据库侧六个标量与
 
 ---
 
+### `GET /health` 与 `GET /ready`（任务 8，2026-10-17 实现）
+
+两个端点都是 **PUBLIC**（`x-permission: PUBLIC`、`security: []`），不校验会话、不需要 CSRF 头，也不查权限码。
+它们是给运维系统用的，不是给前端用的。
+
+| 端点 | 语义 | 契约 `operationId` | 正常返回 |
+| --- | --- | --- | --- |
+| `GET /health` | 存活：进程还能不能回包 | `getHealth` | `200 {status:"UP", checkedAt}` |
+| `GET /ready` | 就绪：能不能对外提供正确结果 | `getReadiness` | `200 {status:"READY", checkedAt, dependencies:[…]}` |
+
+#### 为什么 `/health` 永远返回 `UP`
+
+契约的枚举里有 `DOWN`，但**我们永不产出这个值**。存活探针（k8s liveness、Docker `HEALTHCHECK`、
+云平台健康检查）只在进程活着时才能收到回包——进程死了回包自然失败，不需要我们写代码表达。
+反过来，如果把"数据库连不上"映射成 liveness 失败，编排工具会不停重启容器：**重启修不好数据库**，
+只是把仅剩的可用实例反复踢下线，故障被放大。所以数据库故障由 `/ready` 表达，那才是它的职责。
+
+`checkedAt` 是服务端当前时间（RFC 3339 带偏移，复用 `common/Instants#iso`），不是"上次检查时间"。
+
+#### `/ready` 查哪三个依赖
+
+顺序固定，每项**独立**判定（一项炸了不影响其他项的结论，诊断信息才准确）：
+
+| `name` | 查什么 | 不就绪时的 `reason` | 为什么这算"没就绪" |
+| --- | --- | --- | --- |
+| `database` | `SELECT 1` | 数据库连接异常 | 最小连通性。连不上时后面两项根本无意义 |
+| `schema` | `flyway_schema_history` 里没有 `success=false`，且总行数 > 0 | 存在失败的迁移 / 数据库结构未迁移 | 结构没迁移到位时，所有写库端点都会 500，对外报"就绪"是撒谎 |
+| `deployment-config` | `core.config_item` 中 `client-config` 行存在且 `enabled` 且 `public_readable` | 缺少 client-config 配置行 | 任务 7 之后 `/client-config` 就读这一行，缺行必然 500；而前端拿不到配置会白屏，等于没就绪 |
+
+三项都直接跑 SQL，不依赖 Flyway 的 Java bean（测试里 `spring.flyway.enabled=false` 时没有 bean，
+但探针仍然要能报"结构未迁移"）。每个查询都是常数级，探针每几秒一次也无压力。
+
+#### 为什么不全就绪时返回 503，而不是 200 + `NOT_READY`
+
+探针只看**HTTP 状态码**，不看 body。返回 `200 {status:"NOT_READY"}` 会让负载均衡/网关把这个实例当健康，
+继续把用户请求打进来，前端于是拿到一片 500——比明确告诉它"这个实例现在不能服务，5 秒后再试"差得多。
+契约本身也给了 503（`Http503` 组件声明了 `X-Trace-Id` 与 `Retry-After` 两个头），
+`contracts/api/error-codes.md:3` 还明确要求「429/503 带 `Retry-After` 秒数」。
+
+所以未就绪时的响应是：
+
+```json
+{
+  "code": "SYSTEM_UNAVAILABLE",
+  "message": "服务尚未就绪",
+  "data": null,
+  "traceId": "…",
+  "details": [{ "field": "deployment-config", "reason": "缺少 client-config 配置行" }]
+}
+```
+
+响应头带 `Retry-After: 5`。这条头靠 `common/ApiExceptionHandler` 的 `retryable` 判定顺延——
+原来只给 `RATE_LIMITED` 加，任务 8 把 `SYSTEM_UNAVAILABLE` 一并纳入，否则 503 不带 `Retry-After`。
+
+错误壳的 `data` 按契约必须是 `null`，于是"哪个依赖坏了"就只剩 `details` 能承载：
+`field` = 依赖名，`reason` = 固定文案。这是 `details` 的合理用法（它对前端是诊断信息，对运维是定位线索）。
+
+#### 为什么 `reason` 里绝不能出现异常信息
+
+`/ready` 是 **PUBLIC** 的——任何人匿名就能请求。把 `SQLException`、JDBC URL、账号名塞进 `details`，
+等于给匿名访问者一张内网拓扑图。所以每项失败时只产出**写死的文案**，真实异常只进服务端日志。
+`HealthServiceTests` 里有一条专门断言：数据库异常时响应里不含 `password`、`xxplatform_owner`、`FATAL`。
+
+#### 没有数据源时会怎样
+
+`HealthService` 用 `ObjectProvider<JdbcTemplate>` 注入，缺数据源时不阻止上下文启动，
+`database` 项报"未配置数据源"、`/ready` 返回 503。这是**防御性**分支：当前装配下应用没有数据源
+根本起不来（见 §1），所以它在生产不可达，只由单元测试覆盖；留着的意义是——将来若把数据源做成可选，
+`/ready` 会如实报未就绪，而不是抛 NPE 或给出错误的"READY"。
+
+#### 还差一项：文件卷
+
+任务单里这条的完成判定写的是"不得只返回静态 UP，要反映 DB / **文件卷**"。DB 侧做了两项，文件卷**故意没做**：
+文件底座（上传、`PROCESSING→ACTIVE`、受权下载）还没开工，落盘目录、挂载点、剩余空间口径都还没定，
+现在写一个"检查某目录可写"只会检查一个将来会被换掉的路径，反而制造假信号。
+等文件底座落地时，在 `/ready` 加第四项 `storage`——契约里 `dependencies[].name` 是自由字符串，加项不破坏契约。
+
+#### `x-owner: DEV-04` 与分工方案不一致
+
+契约把 M15 标成 `x-owner: DEV-04`，而 `docs/project-governance/BACKEND_TWO_DEV_SPLIT.md` 把 M15 划给甲。
+按"契约优先"实现即可（两个端点都是 PUBLIC、没有权限模型可分歧），但**归属冲突要人工裁决**，
+不要据此去改契约的 `x-owner`。
+
+#### 验收记录
+
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-health.ps1 `
+  -DB_PASSWORD '<db口令>'
+# => passed: 47   failed: 0
+```
+
+覆盖 6 组 47 条：匿名可访问（不带 Cookie/CSRF 头也 200）、`/health` 只回 `{status,checkedAt}` 且
+`checkedAt` 带时区偏移、`/ready` 的 `dependencies` 恰好三项且顺序固定、三项全 `READY` 时 200、
+`Retry-After` 只在未就绪时出现、无 ETag。其中两条是**破坏性负例**（都放 `finally` 里还原并复验回 200）：
+
+1. `UPDATE core.config_item SET public_readable=false` → 503 且 `details` **只含** `deployment-config`
+   （证明失败隔离：`database`/`schema` 没有被牵连）；
+2. `ALTER TABLE flyway_schema_history RENAME TO flyway_schema_history_probe` → 503 且 `details` **只含** `schema`，
+   而 `database` 仍是 `READY`。
+
+| 日期 | 结论 |
+| --- | --- |
+| 2026-10-17 | 47 条全绿；`mvn -o -B clean test` 43 例全绿（含 `HealthServiceTests` 7 例） |
+
+---
+
 ### CORS 拒绝响应为什么要自定义（2026-10-17）
 
 Spring 默认在 Origin 不在白名单时返回 **纯文本** `Invalid CORS request`。这违反
@@ -766,6 +874,7 @@ $ mvn -B -Pgenerate-api compile
 - [x] 会话与登录：`POST /auth/login`（任务 5，2026-10-17：SID Cookie、轮换、频控、种子账号）
 - [x] 当前用户：`GET /me`（任务 6，2026-10-17：会话校验、角色/权限/菜单/数据范围/场所范围）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 login/csrf 两个端点各自校验），以及 `logout`/`renewSession`/`changeMyPassword`
 - [x] 前端配置：`GET /client-config`（任务 7，2026-10-17：12 个 required 字段、部署值读 `core.config_item`、12 个能力开关带 `pendingReason`）；**还差**：`uploadPolicies` 与 `catalogBindings` 的真数据（分别卡在 P-007 上传安全口径、P-006 字典目录签认，现在返回空数组）
+- [x] 运维探针：`GET /health`（存活，永远 200 `UP`）与 `GET /ready`（就绪，三项依赖；不就绪 → 503 + `Retry-After: 5` + `details` 指出坏掉的依赖）（任务 8，2026-10-17）
 - [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面（`/me` 已有 `ScopeCalculator`，但只覆盖"读自己"），列表/详情/导出/文件每次重校
 - [ ] 幂等：`Idempotency-Key`（16–160 字符），同键同 payload 返原响应，异 payload 409
 - [ ] 乐观锁：`If-Match` ↔ `version`，冲突 409 `RESOURCE_VERSION_CONFLICT`
@@ -934,7 +1043,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
 | `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
 | `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
-| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 27 例全绿 |
+| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 43 例全绿 |
 | 启动报 `Failed to instantiate [LoginThrottle]: No default constructor found` | 类里有**多个构造器**时 Spring 不会"选参数最多的那个"，而是报这个错——用 `@Autowired` 显式标出生产构造器 |
 | `@SpringBootTest` 报 `Failed to determine a suitable driver class` | 加了数据源依赖后，全上下文启动就需要 `DataSource` bean。不连库的测试要给占位 url + `spring.datasource.hikari.initialization-fail-timeout=-1` + `spring.flyway.enabled=false`（见 `ApiApplicationTests` 注释） |
 | 单测报端口 8080 被占用 | `SpringApplicationBuilder.properties(...)` 设的是 **default properties，优先级低于 `application.yml`**，`server.port=0` 会被 yml 的 `8080` 覆盖。改用 `.run("--server.port=0", ...)`（命令行参数优先级最高）。这个坑的失败信息看起来像环境问题，其实是测试写错——只在"本机没起服务"时才碰巧通过 |
@@ -949,15 +1058,18 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | 命令行临时文件写到 `/tmp/xxx.json` 后 `curl --data-binary @/tmp/xxx.json` 报读不到 | Windows 上 `/tmp` 被解析成 `C:\tmp`（通常不存在）。用 `$env:TEMP` 或 workspace 内路径 |
 | 运维在 `core.config_item.value` 里多留一个备注键，接口就 500 | 别用**全局** `ObjectMapper.treeToValue` 反序列化下发配置：它配了 `failOnUnknownProperties(true)`（那是给请求体用的）。下发配置要 `readTree` + 逐键显式读取，未知键忽略。见 `ClientConfigScalars` |
 | 契约只有 12 个能力码、9 个上传分类、4 个绑定字段，但数据库表上**没有 CHECK** | `core.feature_config.feature_code`、`core.upload_policy.category`、`core.dictionary_binding.field_key` 都是自由文本列。出参前必须按契约枚举校验，否则会把契约表达不了的值发出去（D7/D8/D9，见 §4 `GET /client-config`） |
+| 不带 `db` profile 启动 → `Failed to configure a DataSource: 'url' attribute is not specified` | 不是配置写错：仓储层从任务 4 起依赖 `JdbcTemplate`，**启动就必须有数据源**（见 §1）。`mvn compile`/`mvn test` 不需要库 |
+| `mvn clean` 报 `Failed to delete ...\target` | `spring-boot:run` 起的 JVM 还占着 `target/classes`（Windows 文件锁）。先停掉服务再 `clean`——尤其改完类要重启时，顺序必须是「停 → clean → 起」 |
+| `mvn test` 报 `TestEngine with ID 'junit-jupiter' failed to discover tests` 且 `Tests run: 0` | 增量编译留下的 `target/test-classes` 与源码不一致（改过测试、加过类之后常见）。`mvn -o -B clean test` 即恢复，**不是代码写错**；同理加类/改包后一律 `clean` 一次 |
 
 ---
 
 ## 10. 接下来各自的第一件事
 
 
-1. **先跑 `mvn -o -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
+1. **先跑 `mvn -o -B compile`，再带着数据库启动 `mvn spring-boot:run "-Dspring-boot.run.profiles=dev,db"`**（见 §1），用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1` 与 `scripts/verify-client-config.ps1` 确认库、迁移、登录、`/me`、前端配置都正常。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1`、`scripts/verify-client-config.ps1` 与 `scripts/verify-health.ps1` 确认库、迁移、登录、`/me`、前端配置、探针都正常。
    前端联调用 `demo.admin` / `demo.operator` / `demo.classified`（三种权限档）：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
