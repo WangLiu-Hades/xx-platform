@@ -278,12 +278,13 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 开发期 CORS | `config/WebConfiguration`、`config/ContractCorsProcessor` | 自定义 `CorsFilter`（映射必须写 `/**`，见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；**拒绝时返回契约错误壳**而不是纯文本；生产必须换真实 Origin 白名单 |
 | 数据库接入 | `application-db.yml` | 数据源**只在 `db` profile 下启用**；默认启动不连库，没装 PostgreSQL 的机器也能编译/起服务 |
 | Flyway 启动迁移 | `application-db.yml`（`spring.flyway`） | `db` profile 启动时先 `validate` 再 `migrate`；校验和漂移会让进程**启动失败**而不是带病服务 |
-| CSRF 令牌 | `auth/AuthController`、`auth/CsrfTokenService`、`auth/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
-| 登录会话 | `auth/AuthController#login`、`auth/LoginService`、`auth/SessionService` | `POST /auth/login`：校验 CSRF → 口令 → **轮换 SID**（旧会话 `revoked_at`）→ 写 `auth.user_session`（只存 SID 的 SHA-256）→ 回填 `csrf_session.session_id` |
-| 口令哈希 | `auth/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
-| 登录频控 | `auth/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
-| 开发种子账号 | `auth/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
-| 当前用户 | `auth/AuthController#getMe`、`auth/MeService`、`auth/SessionAuthenticator`、`auth/RbacRepository`、`auth/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
+| CSRF 令牌 | `api/AuthController`、`service/CsrfTokenService`、`infra/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
+| 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService` | `POST /auth/login`：校验 CSRF → 口令 → **轮换 SID**（旧会话 `revoked_at`）→ 写 `auth.user_session`（只存 SID 的 SHA-256）→ 回填 `csrf_session.session_id` |
+| 口令哈希 | `infra/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
+| 登录频控 | `infra/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
+| 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
+| 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
+| 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
 | dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
@@ -617,6 +618,106 @@ classified（15 码含 `capture:decrypt`）、数据库侧会话生命周期（�
 
 ---
 
+### `GET /client-config`（任务 7，2026-10-17 实现）
+
+前端引导接口：登录后读一次，拿到"这个部署允许什么、上限多少、能力开没开"。
+
+```
+GET /api/v1/client-config
+Cookie: SID=<opaque>
+```
+
+12 个字段**全部 required**（契约 `ClientConfig`），一个都不能少：
+
+| 字段 | 来源 | 说明 |
+| --- | --- | --- |
+| `version` | `core.config_item.value.version` | 配置版本，前端据此判断本地缓存要不要刷 |
+| `mapCoordinateSystem` | `…value.mapCoordinateSystem` | 契约枚举只有 `EPSG:4326`，写别的值**启动即报错**（见下"部署故障"） |
+| `institutionTimeZone` | `…value.institutionTimeZone` | 契约枚举只有 `Asia/Shanghai` |
+| `taskPollIntervalSeconds` | `…value.taskPollIntervalSeconds` | 异步任务轮询间隔（秒），≥1 |
+| `maxUploadBytes` | `…value.maxUploadBytes` | **deprecated**：旧全局上传上限，实际单类上限 = `min(本值, uploadPolicies[].maxBytes)` |
+| `contextTtlSeconds` | `…value.contextTtlSeconds` | Context 存活时间（秒），≥1 |
+| `maxOnlineQuerySeconds` | `…value.maxOnlineQuerySeconds` | 在线查询服务端时间预算（秒），≥1 |
+| `maxOnlineWindowDays` | `…value.maxOnlineWindowDays` | 在线查询允许回溯的最大天数，≥1 |
+| `features` | `core.feature_config` | 12 个能力开关，含 disabled 的与 `pendingReason` |
+| `featureAvailability` | 由 `features` 投影 | **deprecated**：`{code,enabled}`，同序同长，**不做任何独立计算** |
+| `uploadPolicies` | `core.upload_policy` | 分类上传限制；**空数组是合法结果** |
+| `catalogBindings` | `core.dictionary_binding` join `core.dictionary` | 字段→字典绑定；**空数组是合法结果** |
+
+#### 为什么这些数字放数据库，不放代码/yml
+
+契约 `ClientConfig` 的注释原文是"**数值由部署配置提供，不在契约中捏造默认值**"。这些数字
+（轮询间隔、上传上限、Context TTL、查询预算）随部署规模和安全口径变化，写进常量或
+`application.yml` 就是"改一个阈值要重新发版"。所以落到 `core.config_item` 的
+`config_key='client-config'` 一行，运维改法：
+
+```sql
+UPDATE core.config_item
+   SET value = '{"version":"2", …}'::jsonb,
+       config_version = config_version + 1
+ WHERE config_key = 'client-config';
+```
+
+不需要改代码、不需要重启，下一次请求就按新值返回。
+
+种子值在 [`db/migration/V2__seed_deployment_client_config.sql`](src/main/resources/db/migration/V2__seed_deployment_client_config.sql)，
+用 `INSERT … ON CONFLICT (config_key) DO NOTHING` 保证**不覆盖运维已经改过的值**。
+其中 `contextTtlSeconds`/`maxOnlineQuerySeconds`/`maxOnlineWindowDays` 属 **P-009**（查询取消、
+限流、Context TTL 与导出限值，仍未签认）范围，`mapCoordinateSystem`/`institutionTimeZone` 属
+**P-010**。种子里的数字是**可运行的部署默认值，不是已签认的业务口径**，不得据此对外承诺配额。
+
+#### 部署故障优先于可用性
+
+`core.config_item` 里那行缺失、被停用、`public_readable=false`、JSON 不合法、缺键、枚举不符
+→ 全部 **500 `SYSTEM_INTERNAL`**，而不是编一套默认值继续跑。理由：前端拿到"看起来正常但
+阈值是假的"配置，会用它去放行上传、去截断查询窗口，后果比一个明确的 500 严重得多。
+
+反过来，**单行数据**不符合契约枚举时采取"跳过 + warn"而不是整体 500：上传分类不在 9 值内、
+字典绑定字段不在 4 值内，这些行在界面上没有落点，丢掉不隐藏任何可见能力；若因此让整个接口
+挂掉，前端连首页都打不开。
+
+唯一的例外是 `core.feature_config.feature_code` 不在契约 12 值内 → **直接 500**。
+`features` 是契约规定的唯一能力目录，多出一个无法表达的 code 说明有人写入了契约之外的数据；
+静默丢弃会让一个可能已签认的能力凭空消失，而这种错误上线后极难发现（前端只是"少了个按钮"）。
+
+#### 两个 deprecated 字段怎么处理
+
+契约把 `maxUploadBytes` 与 `featureAvailability` 标了 deprecated，但**仍然 required**，所以必须返回：
+
+- `featureAvailability` 只做 `features` 的投影（同序、同长、只取 `{code,enabled}`）。契约原文禁止
+  "单独计算或覆写"——一旦它和 `features` 出现分歧，前端两个开关会互相矛盾。
+- `maxUploadBytes` 是**全局**上限，不能拿它当某个分类的限制。分类限制只看
+  `uploadPolicies[].maxBytes`，实际可用值取两者较小者。
+
+#### 为什么 admin 和 operator 拿到的是同一份
+
+契约把它定义为"仅前端需要读取的非机密配置"。同一部署里所有登录用户必须拿到同一份，
+否则前端按角色分支读不同的值，行为差异会变得不可复现。真正的权限判断在各接口的权限码里做，
+不在这里。验收脚本专门有一条断言把这点钉住（admin 与 operator 的 `data` 逐字节相等）。
+
+#### 两处契约-DDL 不一致（已按契约保守实现）
+
+| 编号 | 不一致 | 处理 |
+| --- | --- | --- |
+| D7 | `core.upload_policy.max_bytes` 的 CHECK 允许 `0`，且后面还有一条更宽的 `>= 0`；但契约 `maxBytes` 是 `minimum: 1` | 出参前丢弃 `max_bytes<1` 的行并 warn——发出去前端会当成"该分类不能上传"的合法策略 |
+| D8 | `core.dictionary_binding.field_key` **没有 CHECK**，可存契约 4 值之外的字段名 | 出参前按 4 值枚举过滤并 warn |
+
+#### 验收记录
+
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-client-config.ps1 `
+  -DB_PASSWORD '<db口令>' -SeedPassword '<种子口令>'
+# => passed: 53   failed: 0
+```
+
+覆盖 7 组 53 条：匿名/伪造 SID 401 且 `data:null`+`details` 为数组、12 个 required 键**恰好 12 个**、
+两个单值枚举钉死、五个 `>=1` 数值、`features` 12 条且顺序稳定、每个 disabled 能力都带
+`pendingReason`（属性必须存在，可为 null）、投影与 `features` 逐项相等、上传/绑定都落在契约枚举内、
+admin 与 operator 拿到逐字节相同的 `data`、数据库侧六个标量与 `core.config_item.value` 逐一相等、
+能力码集合与启用计数与库内一致、`config_version` 起始为 1、无 ETag、`POST` 405、未知查询参数被忽略。
+
+---
+
 ### CORS 拒绝响应为什么要自定义（2026-10-17）
 
 Spring 默认在 Origin 不在白名单时返回 **纯文本** `Invalid CORS request`。这违反
@@ -664,13 +765,14 @@ $ mvn -B -Pgenerate-api compile
 - [x] CSRF 令牌签发：`GET /auth/csrf`、`CSRFID` Cookie 属性、同步器 token 落库（任务 4，2026-10-17）
 - [x] 会话与登录：`POST /auth/login`（任务 5，2026-10-17：SID Cookie、轮换、频控、种子账号）
 - [x] 当前用户：`GET /me`（任务 6，2026-10-17：会话校验、角色/权限/菜单/数据范围/场所范围）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 login/csrf 两个端点各自校验），以及 `logout`/`renewSession`/`changeMyPassword`
+- [x] 前端配置：`GET /client-config`（任务 7，2026-10-17：12 个 required 字段、部署值读 `core.config_item`、12 个能力开关带 `pendingReason`）；**还差**：`uploadPolicies` 与 `catalogBindings` 的真数据（分别卡在 P-007 上传安全口径、P-006 字典目录签认，现在返回空数组）
 - [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面（`/me` 已有 `ScopeCalculator`，但只覆盖"读自己"），列表/详情/导出/文件每次重校
 - [ ] 幂等：`Idempotency-Key`（16–160 字符），同键同 payload 返原响应，异 payload 409
 - [ ] 乐观锁：`If-Match` ↔ `version`，冲突 409 `RESOURCE_VERSION_CONFLICT`
 - [ ] 签名游标：绑定账号/范围版本/查询快照/排序/页大小，只校验不解析，失败 400 `DATA_CURSOR_INVALID`
 - [ ] 任务底座：`async_task` 表 + 状态机 + 领取/续租/取消/重试/发布协议（H04 交接物）
 - [ ] 文件底座：multipart 分类策略、`PROCESSING→ACTIVE`、受权下载（不返回永久裸 URL）
-- [ ] 审计埋点、`client-config.features` 能力开关（未签认能力返回 422 `REQUIREMENT_PENDING`）
+- [ ] 审计埋点；未签认的业务端点返回 422 `REQUIREMENT_PENDING`（能力开关本身已随 `GET /client-config` 下发，见任务 7）
 - [x] 数据库迁移框架（DDL 版本化，只有平台侧统一合并）+ 启动时自动迁移（任务 3，2026-10-17）
 
 **业务接口**：193 个操作全部未实现，按分工方案的模块归属与阶段推进。
@@ -728,14 +830,18 @@ $ mvn -B -Pgenerate-api compile
 
 ```
 apps/api/src/main/resources/db/migration/
-└── V1__baseline_design_2.sql      ← 契约 schema.sql 的逐字节副本（空库基线）
+├── V1__baseline_design_2.sql            ← 契约 schema.sql 的逐字节副本（空库基线）
+└── V2__seed_deployment_client_config.sql ← client-config 的部署默认值（任务 7）
 ```
 
 - 命名必须 `V<序号>__<描述>.sql`（**双下划线**），否则 Flyway 会静默忽略。
 - **V1 是 `contracts/database/schema.sql` 的逐字节副本**，SHA256 `7d3534b5…`（163 表 / 6 schema）。
   采取复制而非重写，是为了让"契约与实现漂移"变成一条红测试，而不是靠人记得同步。
 - **禁止编辑已发布的 V1**：Flyway 用 checksum 校验，改了会拒绝启动（这就是我们要的保护）。
-- 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V2__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 的基线哈希。
+- **V2 是数据种子，不是结构变更**：只往 `core.config_item` 插一行部署配置，用
+  `ON CONFLICT DO NOTHING` 保证不覆盖运维改过的值。业务上它是"部署参数"，改它不需要新迁移
+  （直接 `UPDATE` 那行），只有**新增键或改结构**才需要下一个迁移。
+- 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V3__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 的基线哈希。
 
 ### 8.2 一次性 provisioning（超级用户）
 
@@ -841,6 +947,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | `mvn -q compile` 的 `$LASTEXITCODE` 看着是 0，实际编译失败 | 用 `-q` + `*>` 重定向时退出码不可靠。判断编译结果要看日志里的 `BUILD SUCCESS` / `ERROR`，或去掉 `-q` |
 | PowerShell 里 `[System.IO.File]::ReadAllBytes('.\target\...')` 报找不到文件，但同路径 `Get-Item` 正常 | .NET 的静态方法用的是**进程工作目录**，不是 PowerShell 的当前位置（`cd` 只改后者）。脚本里给 .NET 方法传**绝对路径** |
 | 命令行临时文件写到 `/tmp/xxx.json` 后 `curl --data-binary @/tmp/xxx.json` 报读不到 | Windows 上 `/tmp` 被解析成 `C:\tmp`（通常不存在）。用 `$env:TEMP` 或 workspace 内路径 |
+| 运维在 `core.config_item.value` 里多留一个备注键，接口就 500 | 别用**全局** `ObjectMapper.treeToValue` 反序列化下发配置：它配了 `failOnUnknownProperties(true)`（那是给请求体用的）。下发配置要 `readTree` + 逐键显式读取，未知键忽略。见 `ClientConfigScalars` |
+| 契约只有 12 个能力码、9 个上传分类、4 个绑定字段，但数据库表上**没有 CHECK** | `core.feature_config.feature_code`、`core.upload_policy.category`、`core.dictionary_binding.field_key` 都是自由文本列。出参前必须按契约枚举校验，否则会把契约表达不了的值发出去（D7/D8/D9，见 §4 `GET /client-config`） |
 
 ---
 
@@ -849,7 +957,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 1. **先跑 `mvn -o -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1` 与 `scripts/verify-me.ps1` 确认库、迁移、登录、`/me` 都正常。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1` 与 `scripts/verify-client-config.ps1` 确认库、迁移、登录、`/me`、前端配置都正常。
    前端联调用 `demo.admin` / `demo.operator` / `demo.classified`（三种权限档）：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
