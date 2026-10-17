@@ -6,9 +6,13 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -98,10 +102,29 @@ public class ApiExceptionHandler {
      * <p>必须单独处理：否则会落到下面的 {@code Exception} 兜底变成 500，
      * 把客户端错误误报成服务故障（综合测试报告 2026-10-16 实测确认过这个现象）。
      * 契约当前未声明 405，已提报补充；在此之前按 HTTP 标准语义返回。
+     *
+     * <p>同时补 {@code Allow} 头：RFC 9110 要求 405 说明该资源支持哪些方法，
+     * 不补这一处会让"方法不被支持"变成客户端无法自助纠正的死胡同。
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
-        return error(ErrorCode.METHOD_NOT_ALLOWED, "请求方法不被支持", List.of());
+        ResponseEntity<ErrorResponse> error =
+                error(ErrorCode.METHOD_NOT_ALLOWED, "请求方法不被支持", List.of());
+        Set<HttpMethod> supported = ex.getSupportedHttpMethods();
+        if (supported == null || supported.isEmpty()) {
+            return error;
+        }
+        String allow = supported.stream()
+                .filter(Objects::nonNull)
+                .map(HttpMethod::name)
+                .sorted()
+                .collect(Collectors.joining(", "));
+        return ResponseEntity.status(error.getStatusCode())
+                .headers(headers -> {
+                    headers.addAll(error.getHeaders());
+                    headers.set(HttpHeaders.ALLOW, allow);
+                })
+                .body(error.getBody());
     }
 
     /** 缺少必填查询参数 → 400。 */

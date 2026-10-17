@@ -1,20 +1,24 @@
-# apps/api skeleton regression check (CORS / 405 / traceId / unknown field)
+# apps/api shared-layer regression check (CORS / 405 / traceId / envelope)
 #
-# Usage (service must already be running under the dev profile):
+# Usage (the service must already be running; it needs the DB profile to boot):
 #   cd apps/api
-#   mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"
+#   mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 #   # in another terminal, from repo root:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/verify-skeleton.ps1
-#   # pwsh works too where PowerShell 7+ is installed: pwsh -File apps/api/scripts/verify-skeleton.ps1
+#   # pwsh works too where PowerShell 7+ is installed
 #
-# Why this script exists: the 2026-10-16 integration test report found four skeleton defects
-# that unit tests did not cover (and that Mockito blocks from running inside the sandbox):
+# Why this script exists: the 2026-10-16 integration test report found four shared-layer
+# defects that unit tests did not cover (and that Mockito blocks from running inside the
+# sandbox):
 #   1. CORS preflight returned 403 for an allowed Origin
 #   2. POST to a GET-only route returned 500 instead of 405
 #   3. traceId was taken from the client header
 #   4. unknown JSON fields were silently ignored
-# Each check below asserts the fixed behaviour AND its negative counterpart, so a future
-# refactor that re-breaks any of them fails here instead of in the next integration round.
+# Defects 1-3 are asserted below against the real contract endpoints (GET /health for the
+# probes, POST /health for the 405 case). Defect 4 no longer has a probe endpoint: it is
+# covered in verify-login.ps1, which posts a real LoginRequest and asserts that an extra
+# field comes back as 400 VALIDATION_ERROR. The dev-only /smoke probe was deleted once
+# GET /health and GET /ready existed, so there is no second probe to keep in sync.
 #
 # Exit code: 0 = all checks passed, 1 = at least one check failed.
 #
@@ -64,19 +68,20 @@ function Get-HeaderValue($headers, [string]$name) {
 
 # ---------------------------------------------------------------- reachability
 Show-Step 'Service reachability'
-$probe = Invoke-Curl @("--max-time", "5", "$BaseUrl/smoke")
+$probe = Invoke-Curl @("--max-time", "5", "$BaseUrl/health")
 if ($probe.Code -ne 200) {
-    Write-Host "  [FAIL] $BaseUrl/smoke did not return 200 (got $($probe.Code))." -ForegroundColor Red
-    Write-Host '         Start it first: mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"' -ForegroundColor Yellow
-    Write-Host '         (the /smoke routes only exist under the dev profile)' -ForegroundColor Yellow
+    Write-Host "  [FAIL] $BaseUrl/health did not return 200 (got $($probe.Code))." -ForegroundColor Red
+    Write-Host '         Start it first: mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"' -ForegroundColor Yellow
     exit 1
 }
 Write-Host "  [OK]   service reachable at $BaseUrl" -ForegroundColor Green
 
 # ---------------------------------------------------------------- 1) CORS
+# Preflight is answered by the CorsFilter, so the target route only needs to exist;
+# GET /health is used because it is public and stable (no session, no DB round trip).
 Show-Step '1) CORS preflight'
 $cors = Invoke-Curl @(
-    '-X', 'OPTIONS', "$BaseUrl/smoke",
+    '-X', 'OPTIONS', "$BaseUrl/health",
     '-H', "Origin: $AllowedOrigin",
     '-H', 'Access-Control-Request-Method: POST'
 )
@@ -87,23 +92,27 @@ Report ($acao -eq $AllowedOrigin) 'Access-Control-Allow-Origin echoes the Origin
 Report ($acac -eq 'true') 'Access-Control-Allow-Credentials is true' "got: $acac"
 
 $corsEvil = Invoke-Curl @(
-    '-X', 'OPTIONS', "$BaseUrl/smoke",
+    '-X', 'OPTIONS', "$BaseUrl/health",
     '-H', 'Origin: http://evil.example.com',
     '-H', 'Access-Control-Request-Method: POST'
 )
 Report ($corsEvil.Code -eq 403) 'non-whitelisted Origin is still rejected' "HTTP $($corsEvil.Code)"
 
 # ---------------------------------------------------------------- 2) 405
+# GET /health is a GET-only mapping; a POST must be 405 METHOD_NOT_ALLOWED, never the
+# generic 500 that the catch-all handler used to produce.
 Show-Step '2) method not allowed'
-$wrongMethod = Invoke-Curl @('-X', 'POST', "$BaseUrl/smoke")
+$wrongMethod = Invoke-Curl @('-X', 'POST', "$BaseUrl/health")
 Report ($wrongMethod.Code -eq 405) 'POST to a GET-only route returns 405' "HTTP $($wrongMethod.Code)"
 Report ($wrongMethod.Body -match '"code"\s*:\s*"METHOD_NOT_ALLOWED"') 'error code is METHOD_NOT_ALLOWED' "body: $($wrongMethod.Body.Trim())"
 Report ($wrongMethod.Body -notmatch 'SYSTEM_INTERNAL') 'not misreported as SYSTEM_INTERNAL' ''
+$allow = Get-HeaderValue $wrongMethod.Headers 'Allow'
+Report ($allow -and $allow -match 'GET') 'hop-by-hop Allow header still lists GET' "Allow: $allow"
 
 # ---------------------------------------------------------------- 3) traceId
 Show-Step '3) traceId is server generated'
 $clientTrace = 'audit-client-controlled-123'
-$trace = Invoke-Curl @("$BaseUrl/smoke", '-H', "X-Trace-Id: $clientTrace")
+$trace = Invoke-Curl @("$BaseUrl/health", '-H', "X-Trace-Id: $clientTrace")
 $headerTrace = Get-HeaderValue $trace.Headers 'X-Trace-Id'
 $bodyTrace = $null
 if ($trace.Body -match '"traceId"\s*:\s*"([^"]+)"') { $bodyTrace = $Matches[1] }
@@ -111,76 +120,39 @@ Report ($headerTrace -ne $clientTrace) 'client-supplied traceId is ignored' "hea
 Report ($headerTrace -eq $bodyTrace) 'header traceId equals body traceId' "header: $headerTrace / body: $bodyTrace"
 Report ($headerTrace -match '^[0-9a-fA-F-]{36}$') 'traceId looks like a generated UUID' "got: $headerTrace"
 
-# ---------------------------------------------------------------- 4) unknown field
-Show-Step '4) unknown field rejection'
-# NOTE: JSON bodies are passed to curl as @file, not as an inline argument.
-# Windows PowerShell 5.1's native-argument parser strips/re-wraps the quotes inside a JSON
-# argument, so curl receives broken JSON and every assertion here would pass or fail for
-# the wrong reason (it still "returned 400", just not because of an unknown field).
-$bodyDir = Join-Path ([System.IO.Path]::GetTempPath()) ("xx-skel-" + [guid]::NewGuid().ToString('N'))
-New-Item -ItemType Directory -Path $bodyDir -Force | Out-Null
+# ---------------------------------------------------------------- 4) envelope
+Show-Step '4) contract envelope'
+Report ($probe.Body -match '"code"\s*:\s*"0"') 'success envelope uses string code "0"' ''
+Report ($probe.Body -match '"status"\s*:\s*"UP"') 'GET /health reports status UP' "body: $($probe.Body.Trim())"
+# checkedAt must be RFC3339 with an offset, not a millisecond number (contract section 3).
+Report ($probe.Body -match '"checkedAt"\s*:\s*"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}') 'checkedAt is an ISO-8601 timestamp' ''
+Report ($probe.Body -match '"checkedAt"\s*:\s*"[^"]*(Z|[+-]\d{2}:\d{2})"') 'checkedAt carries a UTC offset' ''
 
-function Write-BodyFile([string]$content) {
-    $path = Join-Path $bodyDir ([guid]::NewGuid().ToString('N') + '.json')
-    [System.IO.File]::WriteAllText($path, $content, (New-Object System.Text.UTF8Encoding($false)))
-    return $path
-}
-
-try {
-    $validFile = Write-BodyFile '{"name":"abc","count":3}'
-    $valid = Invoke-Curl @(
-        '-X', 'POST', "$BaseUrl/smoke/echo",
-        '-H', 'Content-Type: application/json',
-        '-d', "@$validFile"
-    )
-    Report ($valid.Code -eq 200) 'declared fields are accepted' "HTTP $($valid.Code) body: $($valid.Body.Trim())"
-
-    $unknownFile = Write-BodyFile '{"name":"abc","count":3,"typoField":true}'
-    $unknown = Invoke-Curl @(
-        '-X', 'POST', "$BaseUrl/smoke/echo",
-        '-H', 'Content-Type: application/json',
-        '-d', "@$unknownFile"
-    )
-    Report ($unknown.Code -eq 400) 'unknown field returns 400' "HTTP $($unknown.Code)"
-    Report ($unknown.Body -match '"code"\s*:\s*"VALIDATION_ERROR"') 'error code is VALIDATION_ERROR' "body: $($unknown.Body.Trim())"
-    # Assert on `details.field` rather than on the Chinese message: this script is ASCII-only
-    # (Windows PowerShell 5.1 reads .ps1 as ANSI without a BOM), so a Chinese literal here
-    # would not match the UTF-8 response body.
-    Report ($unknown.Body -match '"field"\s*:\s*"typoField"') 'details.field names the offending field' "body: $($unknown.Body.Trim())"
-    Report ($unknown.Body -match '"data"\s*:\s*null') 'unknown-field error carries data:null' ''
-
-    $malformedFile = Write-BodyFile '{bad json'
-    $malformed = Invoke-Curl @(
-        '-X', 'POST', "$BaseUrl/smoke/echo",
-        '-H', 'Content-Type: application/json',
-        '-d', "@$malformedFile"
-    )
-    Report ($malformed.Code -eq 400) 'malformed JSON returns 400' "HTTP $($malformed.Code)"
-    # A malformed body must NOT be reported as an unknown field (it has no field name to report).
-    Report ($malformed.Body -notmatch '"field"') 'malformed JSON does not fabricate a field name' "body: $($malformed.Body.Trim())"
-} finally {
-    Remove-Item -Path $bodyDir -Recurse -Force -ErrorAction SilentlyContinue
-}
+$ready = Invoke-Curl @("$BaseUrl/ready")
+Report ($ready.Code -eq 200) 'GET /ready returns 200 when every dependency is up' "HTTP $($ready.Code)"
+Report ($ready.Body -match '"status"\s*:\s*"READY"') 'readiness status is READY' "body: $($ready.Body.Trim())"
+Report ($ready.Body -match '"name"\s*:\s*"database"') 'readiness lists the database dependency' ''
+Report ($ready.Body -match '"name"\s*:\s*"schema"') 'readiness lists the schema dependency' ''
+Report ($ready.Body -match '"name"\s*:\s*"deployment-config"') 'readiness lists the deployment-config dependency' ''
 
 # ---------------------------------------------------------------- 5) regression
-Show-Step '5) contract envelope regression'
+Show-Step '5) unknown route regression'
 $notFound = Invoke-Curl @("$BaseUrl/no-such-route")
 Report ($notFound.Code -eq 404) 'unknown route returns 404' "HTTP $($notFound.Code)"
 Report ($notFound.Body -match '"code"\s*:\s*"DATA_NOT_FOUND"') 'error code is DATA_NOT_FOUND' ''
 Report ($notFound.Body -match '"data"\s*:\s*null') 'error body carries data:null' ''
+Report ($notFound.Body -match '"details"\s*:\s*\[\s*\]') 'error body carries an empty details array' ''
 $nfHeader = Get-HeaderValue $notFound.Headers 'X-Trace-Id'
 $nfBody = $null
 if ($notFound.Body -match '"traceId"\s*:\s*"([^"]+)"') { $nfBody = $Matches[1] }
 Report ($nfHeader -and $nfHeader -eq $nfBody) '404 header traceId equals body traceId' "header: $nfHeader / body: $nfBody"
 
-Report ($probe.Body -match '"code"\s*:\s*"0"') 'success envelope uses string code "0"' ''
-
 # ---------------------------------------------------------------- summary
 Write-Host "`n== Summary" -ForegroundColor Cyan
 Write-Host "  passed: $script:passed   failed: $script:failed" -ForegroundColor $(if ($script:failed -eq 0) { 'Green' } else { 'Red' })
 if ($script:failed -gt 0) {
-    Write-Host '  Skeleton regression detected. Fix before reporting progress.' -ForegroundColor Red
+    Write-Host '  Shared-layer regression detected. Fix before reporting progress.' -ForegroundColor Red
     exit 1
 }
-Write-Host '  All skeleton checks passed.' -ForegroundColor Green
+Write-Host '  All shared-layer checks passed.' -ForegroundColor Green
 exit 0

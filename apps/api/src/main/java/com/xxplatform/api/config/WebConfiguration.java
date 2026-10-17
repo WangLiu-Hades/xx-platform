@@ -46,7 +46,7 @@ public class WebConfiguration {
      *
      * <p><b>路径必须写 {@code /**}，不能写 {@code /api/v1/**}</b>：
      * CORS 匹配的是 <b>servlet 内路径</b>，而本服务
-     * {@code server.servlet.context-path=/api/v1}，实际进入过滤链的路径是 {@code /smoke}、
+     * {@code server.servlet.context-path=/api/v1}，实际进入过滤链的路径是 {@code /health}、
      * {@code /auth/csrf} 这种，永远不会以 {@code /api/v1/} 开头。
      * 写成 {@code /api/v1/**} 会导致 CORS 配置一条都匹配不上 → 预检被
      * {@code DefaultCorsProcessor} 直接 403（现象：允许的 Origin 也 403，且响应没有任何

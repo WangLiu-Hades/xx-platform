@@ -41,7 +41,7 @@ cd apps/api
 # 1) 编译（离线可用，不需要数据库）
 mvn -o -B compile
 
-# 2) 启动（需要数据库；dev 才会注册 /smoke）
+# 2) 启动（需要数据库；带 dev 时会按下面的配置补种开发账号）
 #    口令不要写进仓库；本地真实值放 local-only/apps-api.env.local（已被 .gitignore 排除）
 $env:SPRING_DATASOURCE_URL      = 'jdbc:postgresql://127.0.0.1:5432/xxplatform'
 $env:SPRING_DATASOURCE_USERNAME = 'xxplatform_owner'
@@ -49,7 +49,6 @@ $env:SPRING_DATASOURCE_PASSWORD = '***'
 mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 
 # 3) 另开一个终端验证
-curl.exe http://127.0.0.1:8080/api/v1/smoke
 curl.exe http://127.0.0.1:8080/api/v1/health
 curl.exe http://127.0.0.1:8080/api/v1/ready
 ```
@@ -104,18 +103,20 @@ apps/api/
 │   ├── dev-check.ps1          编译自检
 │   ├── db-provision.ps1       建角色/建库/装 PostGIS（幂等，从不 DROP，见 §8.2）
 │   ├── db-migrate.ps1         跑 Flyway 迁移（见 §8.3）
-│   ├── verify-skeleton.ps1    骨架验收 22 条
+│   ├── verify-skeleton.ps1    共享层验收 25 条
 │   ├── verify-csrf.ps1        CSRF 验收 34 条
 │   ├── verify-login.ps1       登录验收 65 条
-│   └── verify-me.ps1          /me 验收 80 条
+│   ├── verify-me.ps1          /me 验收 80 条
+│   ├── verify-client-config.ps1  前端配置验收 53 条
+│   └── verify-health.ps1      探针验收 47 条
 └── src/
     ├── main/
     │   ├── java/com/xxplatform/api/
     │   │   ├── ApiApplication.java        启动类（@SpringBootApplication）
     │   │   ├── api/                       ① 接口层：Controller + 请求 DTO
     │   │   │   ├── AuthController.java      GET /auth/csrf、POST /auth/login、GET /me
-    │   │   │   ├── LoginRequest.java        登录请求体（只做 HTTP 绑定）
-    │   │   │   └── SmokeController.java     dev profile 下的自检端点
+    │   │   │   ├── ClientConfigController.java  GET /client-config
+    │   │   │   └── SystemController.java    GET /health、GET /ready
     │   │   ├── service/                   ② 业务层：领域规则、状态机、事务边界
     │   │   │   ├── CsrfTokenService.java
     │   │   │   ├── LoginService.java
@@ -124,7 +125,9 @@ apps/api/
     │   │   │   ├── MeService.java
     │   │   │   ├── MeView.java
     │   │   │   ├── AuthenticatedSession.java
-    │   │   │   └── ScopeCalculator.java
+    │   │   │   ├── ScopeCalculator.java
+│   │   │   ├── ClientConfigService.java / ClientConfigScalars.java / ClientConfigView.java
+│   │   │   └── HealthService.java / HealthView.java
     │   │   ├── infra/                     ③ 基础设施：持久化、口令哈希、频控、种子数据
     │   │   │   ├── UserAccountRepository.java
     │   │   │   ├── UserSessionRepository.java
@@ -132,7 +135,8 @@ apps/api/
     │   │   │   ├── RbacRepository.java
     │   │   │   ├── PasswordHasher.java
     │   │   │   ├── LoginThrottle.java
-    │   │   │   └── DevUserSeeder.java
+    │   │   │   ├── DevUserSeeder.java
+│   │   │   └── ClientConfigRepository.java
     │   │   ├── client/                    ④ 外部依赖：DEV-03 查询计算、通知通道、设备协议（空）
     │   │   ├── common/                    ⑤ 跨层共享：响应壳、错误码、异常兜底、traceId、时间与摘要
     │   │   │   ├── ApiResponses.java / ErrorResponse.java / ErrorCode.java / ApiException.java
@@ -145,9 +149,9 @@ apps/api/
     │   │   │   └── LoginThrottleProperties.java / DevSeedProperties.java
     │   │   └── generated/                 ⑦ 契约生成物（构建时生成，不入库）
     │   └── resources/
-    │       ├── application.yml            默认配置（不连数据库）
+    │       ├── application.yml            默认配置（不含数据源；启动须带 db profile）
     │       ├── application-db.yml          db profile：数据源 + 启动时 Flyway 迁移
-    │       └── db/migration/V1__baseline_design_2.sql   基线 DDL（逐字节副本，见 §8）
+    │       └── db/migration/          V1 基线 DDL（逐字节副本）+ V2 部署默认值种子（见 §8）
     └── test/java/com/xxplatform/api/
         ├── ApiApplicationTests.java        骨架冒烟（手工起应用，不用 @SpringBootTest）
         ├── infra/LoginThrottleTests.java
@@ -200,10 +204,12 @@ apps/api/
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
 | `mvn -o -B test` | 43 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 24、`migration.*` 4） |
-| `verify-skeleton.ps1` | 22 passed, 0 failed |
+| `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
 | `verify-me.ps1` | 80 passed, 0 failed |
+| `verify-client-config.ps1` | 53 passed, 0 failed |
+| `verify-health.ps1` | 47 passed, 0 failed |
 
 注意第三段是必须的：**重构只过编译和单测不够**。这次就踩到过一次——`MeService` 少一行 `import ...infra.UserAccountRepository`，`mvn compile` 报了 `BUILD SUCCESS`（增量编译下 `javac` 把一个 `Unresolved compilation problem` 的桩类写进了 `target/classes`），单测也照样全绿，但真实请求 `/me` 直接 500。只有 `verify-me.ps1` 能抓到它。**改包结构后一定要重跑 HTTP 验收脚本，并且先 `mvn clean`。**
 
@@ -288,21 +294,22 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
 | 运维探针 | `api/SystemController`、`service/HealthService`、`service/HealthView` | `GET /health`（存活）永远 200 + `UP`，不查依赖；`GET /ready`（就绪）查 `database`/`schema`/`deployment-config` 三项，任一不就绪 → **503 + `Retry-After: 5`**、`details` 指出是哪个依赖（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
-| dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
 ### 骨架修复记录（综合测试报告 2026-10-16，已实测复现并修复）
 
 | 问题 | 修复前实测 | 修复 |
 | --- | --- | --- |
 | CORS 预检 403 | 允许的 Origin 预检 → 403，无任何 `Access-Control-*` 头 | **根因是路径映射**：`addCorsMappings` 的模式相对 servlet context，而 `context-path=/api/v1`，所以 `/api/v1/**` 永远匹配不上。改为 `/**` |
-| 方法不支持 → 500 | `POST /smoke`（GET-only）→ 500 `SYSTEM_INTERNAL` | 加 `@ExceptionHandler(HttpRequestMethodNotSupportedException.class)` → 405 `METHOD_NOT_ALLOWED` |
+| 方法不支持 → 500 | `POST /health`（GET-only）→ 500 `SYSTEM_INTERNAL` | 加 `@ExceptionHandler(HttpRequestMethodNotSupportedException.class)` → 405 `METHOD_NOT_ALLOWED`，并从 `ex.getSupportedHttpMethods()` 补 `Allow` 头 |
 | traceId 客户端可决定 | 传 `X-Trace-Id: audit-client-controlled-123` 原样回显 | 改为服务端生成；保留透传能力但**默认关闭**，只在 `xx.trace.accept-client-trace-id=true` 且值符合形状时采用 |
 | 未知字段被静默吞掉 | `failOnUnknownProperties=false` | 改为 `true`；`HttpMessageNotReadableException` 里还原字段名到 `details.field` |
 | 生成后编译失败 | 生成出了 Java，但编译报两类错：① `io.swagger.v3.oas.annotations` 不存在；② `SetTaskCreated` 里 `setTaskId` 重复定义 | ① 加 `annotationLibrary=none`/`documentationProvider=none`，生成物自包含；② 把 `nameMappings` 从 `configOptions` 移到 **mojo 级参数**（原先被静默忽略） |
 
 **关于 `METHOD_NOT_ALLOWED`(405)**：契约当前每个操作只声明了 400/401/403/500，**没有 405**。但把客户端错误报成 500 会污染服务故障日志与告警，因此骨架按 HTTP 标准语义返回 405，并已提报在契约通用响应中补 405 声明。在契约补声明前，这是"实现比契约多一个状态码"的唯一例外，**不要据此再扩展其他码**。
 
-**关于 CORS 的 `/**`**：这是最容易改回去的坑。写成 `/api/v1/**` 时配置一条都不匹配，现象是"允许的 Origin 也被 403 且没有 `Access-Control-*` 响应头"。排查时可把 URL 改成 `/api/v1/api/v1/smoke` 自证——如果那样反而 200，就是路径映射写错了。
+405 **必须带 `Allow` 头**（RFC 9110）：否则客户端只知道"方法不对"，不知道怎么改。`@ExceptionHandler` 自己写响应体就绕过了 Spring 默认补 `Allow` 的逻辑，所以要在 handler 里显式从 `HttpRequestMethodNotSupportedException#getSupportedHttpMethods()` 取回来写进响应——这条在 2026-10-17 的 `verify-skeleton.ps1` 里是硬断言（`POST /health` → `Allow: GET`）。
+
+**关于 CORS 的 `/**`**：这是最容易改回去的坑。写成 `/api/v1/**` 时配置一条都不匹配，现象是"允许的 Origin 也被 403 且没有 `Access-Control-*` 响应头"。排查时可把 URL 改成 `/api/v1/api/v1/health` 自证——如果那样反而 200，就是路径映射写错了。
 
 ### 实跑验证记录（本机，2026-10-17 复核）
 
@@ -310,38 +317,45 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 $ mvn -o -B compile
 [INFO] BUILD SUCCESS
 
-$ GET http://127.0.0.1:8080/api/v1/smoke          （dev profile）
-{"code":"0","message":"success","data":{"status":"UP","profile":"dev",
- "checkedAt":"2026-10-17T11:28:46.379887+08:00","note":"骨架自检：统一成功壳 / traceId / UTF-8"},
+$ GET http://127.0.0.1:8080/api/v1/health
+{"code":"0","message":"success","data":{"status":"UP",
+ "checkedAt":"2026-10-17T11:28:46.379887+08:00"},
  "traceId":"61ca8601-..."}
+
+$ GET http://127.0.0.1:8080/api/v1/ready
+{"code":"0","message":"success","data":{"status":"READY","checkedAt":"2026-10-17T11:28:46.4+08:00",
+ "dependencies":[{"name":"database","status":"READY"},{"name":"schema","status":"READY"},
+                 {"name":"deployment-config","status":"READY"}]},"traceId":"..."}
 
 $ GET http://127.0.0.1:8080/api/v1/no-such-route
 HTTP 404   X-Trace-Id: d7039b3b-...
 {"code":"DATA_NOT_FOUND","message":"资源不存在","data":null,
  "traceId":"d7039b3b-...","details":[]}
 
-$ GET /api/v1/smoke 带 X-Trace-Id: audit-client-controlled-123
+$ GET /api/v1/health 带 X-Trace-Id: audit-client-controlled-123
 X-Trace-Id: 61ca8601-...          ← 服务端重新生成，不再回显客户端值
 
-$ OPTIONS /api/v1/smoke  Origin: http://127.0.0.1:5180, ACRM: POST
+$ OPTIONS /api/v1/health  Origin: http://127.0.0.1:5180, ACRM: POST
 HTTP 200   Access-Control-Allow-Origin: http://127.0.0.1:5180
            Access-Control-Allow-Credentials: true
 
-$ OPTIONS /api/v1/smoke  Origin: http://evil.example.com
+$ OPTIONS /api/v1/health  Origin: http://evil.example.com
 HTTP 403                          ← 非白名单 Origin 仍然拒绝
 
-$ POST /api/v1/smoke               ← GET-only 路由
+$ POST /api/v1/health              ← GET-only 路由
 HTTP 405   {"code":"METHOD_NOT_ALLOWED","message":"请求方法不被支持",...}
 
-$ POST /api/v1/smoke/echo  {"name":"abc","count":3,"typoField":true}
+$ POST /api/v1/auth/login  {"loginName":"demo.admin","password":"x","extraField":1}
 HTTP 400   {"code":"VALIDATION_ERROR","message":"请求包含未知字段",
-            "details":[{"field":"typoField","reason":"该字段不在请求 Schema 中（additionalProperties:false）"}],...}
+            "details":[{"field":"extraField","reason":"该字段不在请求 Schema 中（additionalProperties:false）"}],...}
 
-$ POST /api/v1/smoke/echo  {"name":"abc","count":3}
-HTTP 200   {"code":"0",...,"data":{"name":"abc","count":3}}
+$ POST /api/v1/auth/login  {"loginName":"","password":"x"}
+HTTP 400   {"code":"VALIDATION_ERROR",...}   ← 已声明字段照常校验，不是静默忽略
 ```
 
-回归脚本：[`scripts/verify-skeleton.ps1`](scripts/verify-skeleton.ps1)（需服务已在 dev profile 启动）。
+回归脚本：[`scripts/verify-skeleton.ps1`](scripts/verify-skeleton.ps1)（需服务已带 `dev,db` 启动）。
+"未知字段"那条断言现在由 [`scripts/verify-login.ps1`](scripts/verify-login.ps1) 用真实 `LoginRequest` 覆盖：
+dev-only 的 `/smoke` 探针已在任务 8 之后删除，避免与 `/health` 长期并存两套探针。
 
 ### `GET /auth/csrf`（任务 4，2026-10-17 实现）
 

@@ -41,7 +41,7 @@ import org.springframework.stereotype.Service;
  *
  * <h2>为什么用 ObjectProvider 而不是直接注入 JdbcTemplate</h2>
  * 默认 profile 不配数据源（见 {@code application-db.yml}）：没有 PostgreSQL 的机器也要能
- * 启动应用、跑 {@code /smoke}、跑探针。若强制依赖 {@code JdbcTemplate}，那些机器会在启动时
+ * 启动应用、跑探针 {@code /health}、{@code /ready}。若强制依赖 {@code JdbcTemplate}，那些机器会在启动时
  * 直接报"缺 bean"。这里按需取，取不到就如实报告 NOT_READY —— 一个没有数据库的实例
  * **本来就不该被认为就绪**，这不是缺陷，是如实反映。
  *
