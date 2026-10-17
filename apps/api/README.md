@@ -13,7 +13,10 @@
 
 ---
 
+---
+
 ## 1. 五分钟跑起来
+
 
 环境要求：**JDK 17** + Maven（本机实测：Java 17.0.12 + Maven 3.9.16，装在 `C:\Tools\apache-maven-3.9.16`）。
 
@@ -71,6 +74,7 @@ npm run dev -- --port 5180 --strictPort
 
 ## 2. 目录结构与分层
 
+
 ```
 apps/api/
 ├── pom.xml                    Java 17 / Spring Boot 3.5.16；契约生成器在 generate-api profile 里
@@ -110,6 +114,7 @@ apps/api/
 
 ## 3. 契约生成器（重要，别配错）
 
+
 契约不靠人手抄成 Java，用 OpenAPI Generator 生成 **接口 + DTO + 枚举**，保证 Java 签名和契约一字不差。
 
 ```powershell
@@ -131,54 +136,128 @@ generatorName          = spring
 interfaceOnly          = true     ← 只生成接口，业务写在 service，契约更新不会覆盖你的代码
 useSpringBoot3         = true     ← 否则生成 javax.*，Boot 3 编译不过
 useOneOfInterfaces     = true     ← 契约有 21 个 discriminator / 22 个 oneOf（如 GeoJSON）
-nameMappings           = setTaskId=setOperationId
+annotationLibrary      = none     ← 见下，让生成物不依赖 io.swagger 注解
+documentationProvider  = none     ← 同上，不生成 @Operation/@ApiResponse
+nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 参数，不是 configOptions
 ```
 
-**关于 `setTaskId=setOperationId`**：契约里 `Task` 的 JSON 字段是 `taskId`，Java 侧 setter 改名以避免与"执行 taskId"重名。**JSON 报文不变**。这是契约指定的唯一改名，不要自己加映射，更不要为了让编译通过去改契约字段名。
+**关于 `annotationLibrary=none` + `documentationProvider=none`（重要）**：`spring` generator 默认会在每个接口方法上生成 `@Operation`/`@ApiResponse`，这些注解来自 `io.swagger.core.v3:swagger-annotations-jakarta`。**项目默认不引入该依赖**，所以不关掉这两项就会"生成成功、编译失败"。
 
-**为什么放在 profile 里**：生成器插件需要联网下载，放进默认 `build` 会让离线环境连 `mvn compile` 都跑不了。所以默认构建不碰它，需要时显式加 `-Pgenerate-api`。
+**关于 `nameMappings` 的位置（这是个坑，已实测）**：它必须写成**插件 mojo 级参数**：
+
+```xml
+<nameMappings>
+  <param>setTaskId=setOperationId</param>
+</nameMappings>
+```
+
+**放进 `<configOptions>` 会被静默忽略**——不报错、不告警，生成物完全不改名。实测对比：放 configOptions 里时 `SetTaskCreated` 仍生成重复的 `setTaskId(...)` 方法导致编译失败；移到 mojo 级后正确生成 `setOperationId(...)` / `setSetOperationId(...)`。
+
+为什么必须改名：契约 `SetTaskCreated` 同时含 `setTaskId` 和 `taskId` 两个属性，默认生成会给 `setTaskId` 属性造出 setter `setTaskId(...)`，与 `taskId` 的 setter **同名同参 → 重复方法 → 编译失败**。这是综合测试报告 2026-10-16 "生成后编译失败"的另一半原因（不只是缺 swagger 依赖）。改名只动 Java 方法名，**JSON 报文两侧仍是 `setTaskId` / `taskId`**。
+
+| 方案 | 问题 |
+| --- | --- |
+| 补 `swagger-annotations` 依赖 | 默认构建（含离线环境）从此依赖它；一旦版本/仓库不可用，`mvn compile` 连骨架都编不了 |
+| 提供一个 stub jar | 运行期若有代码反射注解会踩空，且不知注解版本，属于隐藏地雷 |
+| **关闭注解生成（本方案）** | 生成物只依赖 `spring-web` + `validation`，离线可编译；签名与校验注解不受影响 |
+
+代价是接口上没有 OpenAPI 注解。这可以接受：**契约文档的唯一来源是 `contracts/api/openapi.yaml` 本身**，不靠 Java 注解二次维护（`generateApiDocumentation` 本来也关着）。如果将来确实需要注解（例如接 springdoc 自动生成文档），再补那条依赖并去掉这两项即可——那是一次独立决策，不要顺手改。
+
+**为什么放在 profile 里**：生成器插件需要联网下载，放进默认 `build` 会让离线环境连 `mvn compile` 都跑不了。所以默认构建不碰它，需要时显式加 `-Pgenerate-api`。**注意**：生成器本身（以及首次的插件依赖）必须联网拉取一次；之后走本地缓存。
 
 ---
 
 ## 4. 骨架已经做完并验证过的部分
+
 
 | 能力 | 位置 | 说明 |
 | --- | --- | --- |
 | 启动与配置 | `ApiApplication`、`application.yml` | 8080 端口、`/api/v1` 上下文路径、UTF-8、关闭 RFC 7807（避免两套错误格式）、日志含 traceId |
 | 统一成功壳 | `common/ApiResponses#success` | `{code:"0",message:"success",data,traceId}`，**不含 details** |
 | 统一失败壳 | `common/ErrorResponse` | `{code,message,data:null,traceId,details:[]}`，**data 必须出现且为 null** |
-| 错误码全集 | `common/ErrorCode` | 契约 34 个错误码 + 每个的 HTTP 状态映射，字面量已与契约对齐 |
-| traceId 链路 | `common/RequestIdFilter` | 写 MDC、回写 `X-Trace-Id` 响应头；客户端传了就透传，保证**头与体内一致** |
-| 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
-| JSON 口径 | `config/WebConfiguration` | 放宽未知字段；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
-| 开发期 CORS | `config/WebConfiguration` | 仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；生产必须换真实 Origin 白名单 |
-| 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体 |
-| dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式 |
+| 错误码全集 | `common/ErrorCode` | 契约 34 个错误码 + 每个的 HTTP 状态映射；**另加 `METHOD_NOT_ALLOWED`(405)**，见下 |
+| traceId 链路 | `common/RequestIdFilter` | 写 MDC、回写 `X-Trace-Id` 响应头；**默认由服务端生成**，保证头与体内一致 |
+| 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/未知字段/**方法不支持**/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
+| JSON 口径 | `config/WebConfiguration` | **未知字段拒绝**（`failOnUnknownProperties=true`，对齐 `additionalProperties:false`）；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
+| 开发期 CORS | `config/WebConfiguration` | 映射必须写 `/**`（见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；生产必须换真实 Origin 白名单 |
+| 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**沙箱内因 Mockito 自附加受限跑不了，见 §9**） |
+| dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式；`POST /api/v1/smoke/echo` 验证未知字段拒绝 |
 
-### 实跑验证记录（本机）
+### 骨架修复记录（综合测试报告 2026-10-16，已实测复现并修复）
+
+| 问题 | 修复前实测 | 修复 |
+| --- | --- | --- |
+| CORS 预检 403 | 允许的 Origin 预检 → 403，无任何 `Access-Control-*` 头 | **根因是路径映射**：`addCorsMappings` 的模式相对 servlet context，而 `context-path=/api/v1`，所以 `/api/v1/**` 永远匹配不上。改为 `/**` |
+| 方法不支持 → 500 | `POST /smoke`（GET-only）→ 500 `SYSTEM_INTERNAL` | 加 `@ExceptionHandler(HttpRequestMethodNotSupportedException.class)` → 405 `METHOD_NOT_ALLOWED` |
+| traceId 客户端可决定 | 传 `X-Trace-Id: audit-client-controlled-123` 原样回显 | 改为服务端生成；保留透传能力但**默认关闭**，只在 `xx.trace.accept-client-trace-id=true` 且值符合形状时采用 |
+| 未知字段被静默吞掉 | `failOnUnknownProperties=false` | 改为 `true`；`HttpMessageNotReadableException` 里还原字段名到 `details.field` |
+| 生成后编译失败 | 生成出了 Java，但编译报两类错：① `io.swagger.v3.oas.annotations` 不存在；② `SetTaskCreated` 里 `setTaskId` 重复定义 | ① 加 `annotationLibrary=none`/`documentationProvider=none`，生成物自包含；② 把 `nameMappings` 从 `configOptions` 移到 **mojo 级参数**（原先被静默忽略） |
+
+**关于 `METHOD_NOT_ALLOWED`(405)**：契约当前每个操作只声明了 400/401/403/500，**没有 405**。但把客户端错误报成 500 会污染服务故障日志与告警，因此骨架按 HTTP 标准语义返回 405，并已提报在契约通用响应中补 405 声明。在契约补声明前，这是"实现比契约多一个状态码"的唯一例外，**不要据此再扩展其他码**。
+
+**关于 CORS 的 `/**`**：这是最容易改回去的坑。写成 `/api/v1/**` 时配置一条都不匹配，现象是"允许的 Origin 也被 403 且没有 `Access-Control-*` 响应头"。排查时可把 URL 改成 `/api/v1/api/v1/smoke` 自证——如果那样反而 200，就是路径映射写错了。
+
+### 实跑验证记录（本机，2026-10-17 复核）
 
 ```
 $ mvn -o -B compile
-[INFO] Compiling 12 source files with javac [debug parameters release 17]
 [INFO] BUILD SUCCESS
 
 $ GET http://127.0.0.1:8080/api/v1/smoke          （dev profile）
 {"code":"0","message":"success","data":{"status":"UP","profile":"dev",
- "checkedAt":"2026-10-15T11:26:24.9473498+08:00","note":"骨架自检：统一成功壳 / traceId / UTF-8"},
- "traceId":"b931091e-..."}
+ "checkedAt":"2026-10-17T11:28:46.379887+08:00","note":"骨架自检：统一成功壳 / traceId / UTF-8"},
+ "traceId":"61ca8601-..."}
 
 $ GET http://127.0.0.1:8080/api/v1/no-such-route
 HTTP 404   X-Trace-Id: d7039b3b-...
 {"code":"DATA_NOT_FOUND","message":"资源不存在","data":null,
  "traceId":"d7039b3b-...","details":[]}
 
-$ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
-响应头与 body 的 traceId 都等于 front-end-abc-123   ← 透传成立
+$ GET /api/v1/smoke 带 X-Trace-Id: audit-client-controlled-123
+X-Trace-Id: 61ca8601-...          ← 服务端重新生成，不再回显客户端值
+
+$ OPTIONS /api/v1/smoke  Origin: http://127.0.0.1:5180, ACRM: POST
+HTTP 200   Access-Control-Allow-Origin: http://127.0.0.1:5180
+           Access-Control-Allow-Credentials: true
+
+$ OPTIONS /api/v1/smoke  Origin: http://evil.example.com
+HTTP 403                          ← 非白名单 Origin 仍然拒绝
+
+$ POST /api/v1/smoke               ← GET-only 路由
+HTTP 405   {"code":"METHOD_NOT_ALLOWED","message":"请求方法不被支持",...}
+
+$ POST /api/v1/smoke/echo  {"name":"abc","count":3,"typoField":true}
+HTTP 400   {"code":"VALIDATION_ERROR","message":"请求包含未知字段",
+            "details":[{"field":"typoField","reason":"该字段不在请求 Schema 中（additionalProperties:false）"}],...}
+
+$ POST /api/v1/smoke/echo  {"name":"abc","count":3}
+HTTP 200   {"code":"0",...,"data":{"name":"abc","count":3}}
 ```
+
+回归脚本：[`scripts/verify-skeleton.ps1`](scripts/verify-skeleton.ps1)（需服务已在 dev profile 启动）。
+
+### 契约生成器验证记录（2026-10-17，实测）
+
+```
+$ mvn -B -Pgenerate-api compile
+[INFO] Generator 'spring' is considered stable.
+[INFO] writing file .../generated/model/SetTaskCreated.java
+[INFO] Compiling 612 source files with javac [debug parameters release 17]
+[INFO] BUILD SUCCESS
+```
+
+- 生成 **600 个 Java 文件**（193 个 Api 接口 + 模型/枚举），编译通过。
+- 生成物 **0 处** `io.swagger` 引用 —— 全局离线可用。
+- `SetTaskCreated` 正确生成 `setOperationId(...)`（JSON 仍是 `setTaskId`）+ `setTaskId(...)`，不再重复。
+- **默认构建（无 profile）仍可完全离线**：`mvn -o -B compile` 通过。
+
+> 若构建机没有可写的 `~/.m2`（例如受限沙箱），可临时把本地仓库指到工作区内：
+> `mvn -Dmaven.repo.local=<path> -Pgenerate-api compile`。这只影响缓存位置，不改任何构建语义。
 
 ---
 
 ## 5. 还没做（按阶段，见分工方案 §4）
+
 
 **基础设施（平台侧先做，另一侧只调用）**
 
@@ -200,6 +279,7 @@ $ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
 
 ## 6. 归属与协作规则（两人并行，别改到对方的东西）
 
+
 模块级不重叠，完整清单见 [BACKEND_TWO_DEV_SPLIT.md](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)：
 
 | | 平台与运维侧 | 数据与研判侧 |
@@ -220,6 +300,7 @@ $ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
 
 ## 7. 契约红线（写完接口自检用）
 
+
 1. 成功 `code` 是字符串 `"0"`，不是数字 200；失败 `data` 必须出现且为 `null`，`details` 是数组。
 2. **按 `code` 判断，不按中文 message 判断**；每个响应都要有 `X-Trace-Id`，且与体内 `traceId` 相同。
 3. 权限在后端：**单对象不可见返回 404 `DATA_NOT_FOUND`**（隐藏存在性），403 只用于"操作整体无权/范围收缩"。前端隐藏按钮不算授权。
@@ -230,10 +311,110 @@ $ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
 8. 未签认能力在 `features` 里禁用并返回 `REQUIREMENT_PENDING`，**不得用 Mock 阈值上线**。
 9. 文件上传要校验真实内容（不是扩展名），只有 `ACTIVE` 才可引用；下载返回二进制流、不套 JSON 壳。
 10. `interfaceOnly=true` 不生成 Controller，**同一个生成的 Api 接口只允许一个实现类**，否则 Spring 启动报 `NoUniqueBeanDefinitionException`（建议后续加个"一接口一实现"的上下文测试）。
+11. **未知字段必须拒绝**（`additionalProperties:false`）：多传/拼错字段要 400 并在 `details.field` 指出，不能静默忽略。
+12. 框架异常要**逐个显式处理**，否则会掉进 `Exception` 兜底变成 500，把客户端错误伪装成服务故障。
 
 ---
 
-## 8. 环境注意（踩过的坑）
+## 8. 数据库迁移（Flyway）
+
+
+**技术选型**：Flyway 11.7.2（版本由 `spring-boot-starter-parent` 管理，不在 pom 里写死）。
+理由：迁移是**有序递增的 SQL 文件**，与项目"DDL 版本化、只有平台侧统一合并"的约定最贴合；Liquibase 的 XML/YAML changelog 对本项目是多余抽象。
+
+### 8.1 目录与命名
+
+```
+apps/api/src/main/resources/db/migration/
+└── V1__baseline_design_2.sql      ← 契约 schema.sql 的逐字节副本（空库基线）
+```
+
+- 命名必须 `V<序号>__<描述>.sql`（**双下划线**），否则 Flyway 会静默忽略。
+- **V1 是 `contracts/database/schema.sql` 的逐字节副本**，SHA256 `7d3534b5…`（163 表 / 6 schema）。
+  采取复制而非重写，是为了让"契约与实现漂移"变成一条红测试，而不是靠人记得同步。
+- **禁止编辑已发布的 V1**：Flyway 用 checksum 校验，改了会拒绝启动（这就是我们要的保护）。
+- 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V2__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 的基线哈希。
+
+### 8.2 一次性 provisioning（超级用户）
+
+Flyway 用**迁移 owner** 账号跑，但 `CREATE EXTENSION postgis` 需要**超级用户**，且它不能干净地放在 Flyway 的事务里（会报 `25001: cannot run inside a transaction block`）。所以把扩展的创建**前置**成一次性动作：
+
+```powershell
+# 超级用户口令只在 provisioning 时用，别写进仓库
+$env:PGSUPERUSER_PASSWORD = '...'
+
+powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-provision.ps1 `
+    -Database xxplatform `
+    -Owner xxplatform_owner `
+    -OwnerPassword '<owner 口令>'
+```
+
+脚本幂等，做四件事：建 owner 角色（`NOSUPERUSER NOCREATEDB NOCREATEROLE`）→ 建 UTF8 库并指定 owner → 以超级用户建 PostGIS → 建六个项目 schema 并授权给 owner。**它从不 DROP 任何东西**；若目标库已存在项目表会直接拒绝退出（除非显式 `-Force`）。
+
+### 8.3 执行迁移
+
+`db-migrate` 是**独立 profile**，不进默认构建——迁移是部署动作，不该在 `mvn package` 时顺手改库，也要保证没数据库的机器能 `mvn compile`。
+
+```powershell
+# 口令走环境变量，不写进仓库
+$env:DB_URL      = 'jdbc:postgresql://127.0.0.1:5432/xxplatform'
+$env:DB_USER     = 'xxplatform_owner'      # 迁移专用账号，与 app/Worker 账号隔离
+$env:DB_PASSWORD = '...'
+
+cd apps/api
+mvn -Pdb-migrate flyway:migrate      # 空库 → 建 163 张表
+mvn -Pdb-migrate flyway:info         # 看已应用版本
+mvn -Pdb-migrate flyway:validate     # 校验 checksum 未漂移
+```
+
+或用封装脚本（会先检查环境变量是否齐全）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.ps1 -Command info
+```
+
+`.env.example` 给了完整变量清单；复制成 `.env.local` 填真实值即可（`.env*` 已被 gitignore，只有 `.example` 进仓库）。
+
+### 8.4 环境前置
+
+| 项 | 要求 | 说明 |
+| --- | --- | --- |
+| PostgreSQL | **14+** | `V1` 内有 `server_version_num<140000` 的 RAISE 守卫，低于 14 直接失败 |
+| PostGIS | **≥3.1.4，且不能是 3.0.x** | `V1` 显式拒绝 `^3[.]0[.]`；PG14 不兼容 PostGIS 3.0 |
+| 账号 | **迁移 owner 与 app/Worker 账号隔离** | owner 建表/改 schema；运行账号只增删改数据，不能被授予 TRUNCATE/schema 变更 |
+| 扩展权限 | **PostGIS 必须由超级用户预装** | 见 §8.2；普通 owner 无 `CREATE EXTENSION` 权限（`42501`） |
+
+> `V1` 里仍保留 `CREATE EXTENSION IF NOT EXISTS postgis;`（因为它是 `schema.sql` 的逐字节副本，被守卫测试保护）。扩展预装后该语句退化为**警告**而非错误，迁移照常成功——本机实测就是这条路径。
+
+缺少扩展时需先以超级用户执行 `CREATE EXTENSION postgis;`，否则 `V1` 会在第一步失败。
+
+### 8.5 空库 vs 升级库
+
+- **空库**：直接 `flyway:migrate`，一条 `V1` 建出全部 163 表。
+- **升级旧库**：`schema.sql` **不是旧库升级脚本**（它假设空库）。旧库迁移必须按
+  [migration-plan.md](../../contracts/database/migration-plan.md) 的 5 步生成**增量**迁移，
+  其中大索引要 `CREATE INDEX CONCURRENTLY` 且在事务块外单独执行。
+- `baselineOnMigrate=true` + `baselineVersion=0`：允许在已有内容的库上以基线方式接管，
+  但**不代表旧库已迁移成功**——那是增量迁移的责任。
+
+### 8.6 守卫测试
+
+`src/test/java/.../migration/MigrationBaselineTests.java`（4 个用例，不连数据库、不启动 Spring）：
+
+| 用例 | 拦住什么 |
+| --- | --- |
+| V1 与 `schema.sql` 逐字节一致 | 有人改了契约但没同步迁移 |
+| `schema.sql` 的 SHA256 未变 | 契约被静默改动 |
+| 六个 schema + PG/PostGIS 守卫 + 事务包裹齐全 | 基线被"优化"掉关键部分 |
+| 迁移命名符合 `V<n>__<desc>.sql` | 文件命名错导致 Flyway 忽略 |
+
+> 该测试**只跑自身**可绕开沙箱限制：
+> `mvn -Dtest=MigrationBaselineTests test`（`ApiApplicationTests` 需要 Mockito 自附加，受限环境会失败，见 §9）。
+
+---
+
+## 9. 环境注意（踩过的坑）
+
 
 | 现象 | 原因与做法 |
 | --- | --- |
@@ -246,7 +427,8 @@ $ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
 
 ---
 
-## 9. 接下来各自的第一件事
+## 10. 接下来各自的第一件事
+
 
 1. **先跑 `mvn -o -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
