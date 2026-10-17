@@ -1,7 +1,8 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
-import com.xxplatform.api.common.CsrfProperties;
 import com.xxplatform.api.common.Sha256;
+import com.xxplatform.api.config.CsrfProperties;
+import com.xxplatform.api.infra.CsrfSessionRepository;
 import java.security.SecureRandom;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;

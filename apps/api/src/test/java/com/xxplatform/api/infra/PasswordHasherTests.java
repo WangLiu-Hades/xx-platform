@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.infra;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

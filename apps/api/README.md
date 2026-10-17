@@ -99,20 +99,60 @@ apps/api/
 ├── .mvn/wrapper/              固定 Maven 发行版与版本
 ├── README.md                  本文件
 ├── .gitignore                 target/ 与 IDE、本机配置
-├── scripts/dev-check.ps1      编译自检
+├── scripts/
+│   ├── dev-check.ps1          编译自检
+│   ├── db-provision.ps1       建角色/建库/装 PostGIS（幂等，从不 DROP，见 §8.2）
+│   ├── db-migrate.ps1         跑 Flyway 迁移（见 §8.3）
+│   ├── verify-skeleton.ps1    骨架验收 22 条
+│   ├── verify-csrf.ps1        CSRF 验收 34 条
+│   ├── verify-login.ps1       登录验收 65 条
+│   └── verify-me.ps1          /me 验收 80 条
 └── src/
     ├── main/
     │   ├── java/com/xxplatform/api/
     │   │   ├── ApiApplication.java        启动类（@SpringBootApplication）
-    │   │   ├── api/                       ① 接口层：Controller（当前只有 dev 自检端点）
-    │   │   ├── service/                   ② 业务层：领域规则、状态机、事务边界（空）
-    │   │   ├── infra/                     ③ 基础设施：持久化/幂等/游标/文件/任务表/迁移（空）
+    │   │   ├── api/                       ① 接口层：Controller + 请求 DTO
+    │   │   │   ├── AuthController.java      GET /auth/csrf、POST /auth/login、GET /me
+    │   │   │   ├── LoginRequest.java        登录请求体（只做 HTTP 绑定）
+    │   │   │   └── SmokeController.java     dev profile 下的自检端点
+    │   │   ├── service/                   ② 业务层：领域规则、状态机、事务边界
+    │   │   │   ├── CsrfTokenService.java
+    │   │   │   ├── LoginService.java
+    │   │   │   ├── SessionService.java
+    │   │   │   ├── SessionAuthenticator.java
+    │   │   │   ├── MeService.java
+    │   │   │   ├── MeView.java
+    │   │   │   ├── AuthenticatedSession.java
+    │   │   │   └── ScopeCalculator.java
+    │   │   ├── infra/                     ③ 基础设施：持久化、口令哈希、频控、种子数据
+    │   │   │   ├── UserAccountRepository.java
+    │   │   │   ├── UserSessionRepository.java
+    │   │   │   ├── CsrfSessionRepository.java
+    │   │   │   ├── RbacRepository.java
+    │   │   │   ├── PasswordHasher.java
+    │   │   │   ├── LoginThrottle.java
+    │   │   │   └── DevUserSeeder.java
     │   │   ├── client/                    ④ 外部依赖：DEV-03 查询计算、通知通道、设备协议（空）
-    │   │   ├── common/                    ⑤ 跨层共享：响应壳、错误码、异常兜底、traceId
-    │   │   ├── config/                    ⑥ 配置：JSON 口径、开发期 CORS
-    │   │   └── generated/                 ⑦ 契约生成物（构建时生成，不入库，目前尚未生成）
-    │   └── resources/application.yml
-    └── test/java/com/xxplatform/api/ApiApplicationTests.java   骨架冒烟测试（2 个用例）
+    │   │   ├── common/                    ⑤ 跨层共享：响应壳、错误码、异常兜底、traceId、时间与摘要
+    │   │   │   ├── ApiResponses.java / ErrorResponse.java / ErrorCode.java / ApiException.java
+    │   │   │   ├── ApiExceptionHandler.java / RequestIdFilter.java
+    │   │   │   ├── Instants.java（UTC 秒级时间与 ISO 输出）/ RequestCookies.java
+    │   │   │   └── Sha256.java（摘要与常量时间比较，**不用于口令**）
+    │   │   ├── config/                    ⑥ 配置：JSON 口径、开发期 CORS、各层可调参数
+    │   │   │   ├── WebConfiguration.java / ContractCorsProcessor.java
+    │   │   │   ├── CsrfProperties.java / SessionProperties.java
+    │   │   │   └── LoginThrottleProperties.java / DevSeedProperties.java
+    │   │   └── generated/                 ⑦ 契约生成物（构建时生成，不入库）
+    │   └── resources/
+    │       ├── application.yml            默认配置（不连数据库）
+    │       ├── application-db.yml          db profile：数据源 + 启动时 Flyway 迁移
+    │       └── db/migration/V1__baseline_design_2.sql   基线 DDL（逐字节副本，见 §8）
+    └── test/java/com/xxplatform/api/
+        ├── ApiApplicationTests.java        骨架冒烟（手工起应用，不用 @SpringBootTest）
+        ├── infra/LoginThrottleTests.java
+        ├── infra/PasswordHasherTests.java
+        ├── service/ScopeCalculatorTests.java
+        └── migration/MigrationBaselineTests.java
 ```
 
 ### 分层规则（写代码前请先看 `package-info.java`，每个包都写了边界）
@@ -121,11 +161,50 @@ apps/api/
 | --- | --- | --- |
 | `api` | 参数绑定与校验、调 service、返回响应壳 | 业务规则、直接访问数据库、自己拼错误壳 |
 | `service` | 领域规则、状态机、`@Transactional` | 重写 DEV-03 的查询/算法 |
-| `infra` | 持久化、幂等键、游标签名、文件存储、迁移 | 业务判断 |
+| `infra` | 持久化、幂等键、游标签名、文件存储、迁移、口令哈希、频控 | 业务判断 |
 | `client` | 调 DEV-03、通知通道、设备协议；超时/重试/错误翻译 | 把厂商协议暴露到 `/api/v1` |
-| `common` | 响应壳、错误码、异常兜底、traceId | ——（**只有平台侧能改**，见 §6） |
+| `common` | 响应壳、错误码、异常兜底、traceId、时间/摘要工具 | 业务规则（**只有平台侧能改**，见 §6） |
+| `config` | 配置类、`@ConfigurationProperties`、开发期 CORS | 业务规则 |
 
 `generated/` 里的东西**永远不要手改**：契约变了重新生成，编译器会告诉你哪个签名变了。
+
+### 为什么按"层"分目录，而不是按"模块"分
+
+任务 4–6 的 auth 相关代码**没有**挤在一个 `auth/` 子包里，而是按职责散到 `api`/`service`/`infra`/`config` 四层。原因是这两条约束：
+
+1. **团队约定优先**。`api/package-info.java` 里写的命名约定是「领域 + Controller」（`SiteController implements SitesApi`），一个生成的 Api 接口只允许一个实现类；`service`/`infra` 的边界也是这样划的。再按模块套一层 `auth/`，就变成 `com.xxplatform.api.auth.AuthController` 和 `com.xxplatform.api.api.SiteController` 两套写法并存，后来的人不知道该跟哪套。
+2. **按模块分包会让层级边界变模糊**。一个 `auth/` 包既放 Controller 又放 SQL 和事务，半年后没人能保证"Controller 里不写 SQL"这条规则。按层分包，`import` 一眼就能看出跨层调用。
+
+代价是**层内的类会变多**，用**类名前缀**区分：`AuthController`、`LoginService`、`MeService`、`UserAccountRepository`、`RbacRepository`、`SessionProperties`、`DevSeedProperties`。看类名前缀就知道属于哪个领域，看包名就知道在哪一层。**新增领域（如 `sites`、`devices`）时沿用同一套前缀，不要再新建 `sites/` 这样的子包。**
+
+### 新加一个接口时，怎么判断该放哪一层
+
+| 你要写的代码 | 落位 | 判断标准 |
+| --- | --- | --- |
+| `@GetMapping`/`@PostMapping`、`@Valid @RequestBody` | `api` | 只在"HTTP 长什么样"这一层 |
+| 请求/响应体的手写 record | `api` | 契约生成物取代它之前，它只服务 HTTP 绑定 |
+| 状态机、范围合成、认证判定、事务编排 | `service` | 答"业务上该怎么算/该不该允许" |
+| SQL、`JdbcTemplate`、`FOR UPDATE SKIP LOCKED` | `infra` | 答"怎么存怎么取"，不判断对错 |
+| 加密/摘要/滑动窗口/游标编码 | `infra` | 纯技术机制，不含策略 |
+| 响应壳、错误码、traceId | `common` | 跨层都要用，且不属于任何领域 |
+| `@ConfigurationProperties`、过滤器、CORS | `config` | 影响"整个应用怎么跑" |
+
+一条硬规则：**依赖只能向下**（`api → service → infra → common/config`）。`service` 里出现 `import ...api.` 就是放错了——`MeView` 之所以在 `service` 而不是 `api`，正是因为它被 `MeService` 返回，放 `api` 会形成反向依赖。
+
+### 这一层划分是怎么验证的
+
+重构后按"编译 → 单测 → 真实 HTTP"三段验过：
+
+| 验证 | 结果 |
+| --- | --- |
+| `mvn -o -B clean compile` | BUILD SUCCESS |
+| `mvn -o -B test` | 27 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 8、`migration.*` 4） |
+| `verify-skeleton.ps1` | 22 passed, 0 failed |
+| `verify-csrf.ps1` | 34 passed, 0 failed |
+| `verify-login.ps1` | 65 passed, 0 failed |
+| `verify-me.ps1` | 80 passed, 0 failed |
+
+注意第三段是必须的：**重构只过编译和单测不够**。这次就踩到过一次——`MeService` 少一行 `import ...infra.UserAccountRepository`，`mvn compile` 报了 `BUILD SUCCESS`（增量编译下 `javac` 把一个 `Unresolved compilation problem` 的桩类写进了 `target/classes`），单测也照样全绿，但真实请求 `/me` 直接 500。只有 `verify-me.ps1` 能抓到它。**改包结构后一定要重跑 HTTP 验收脚本，并且先 `mvn clean`。**
 
 ---
 
@@ -758,6 +837,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | PS 5.1 校验脚本报 `The term 'if' is not recognized` | `(if (...) {...})` 这种"表达式化的 if"在 Windows PowerShell 5.1 里不是合法表达式（PS7 可以），要先赋值再放进 `@{...}` |
 | PS 5.1 里 `(... | Where-Object {...}).Count` 拿到空值 | 管道只输出**一个**对象时它返回标量，而标量没有 `Count` 成员，`-eq 1` 就永远为假。用 `@(... \| Where-Object ...).Count` 包一层 |
 | 频控类单测断言"键数归零"失败 | `pruneExpired` 清空桶后没把空桶从 map 摘掉 → 每个失败过的键永久占一条（内存泄漏）。清空后要 `map.remove(key, bucket)` |
+| 改了包结构后 `mvn compile` 报 `BUILD SUCCESS`，但请求 500、日志是 `java.lang.Error: Unresolved compilation problem: XxxRepository cannot be resolved to a type` | 搬类时漏了一行 `import`。增量编译下 `javac` 会把**带 `Unresolved compilation problem` 的桩类**写进 `target/classes`，装进 Spring 上下文后第一次调用才炸，编译和单测都发现不了。做法：改包结构后先 `mvn -o -B clean compile`，**并重跑 HTTP 验收脚本**（见 §2 最后一节） |
+| `mvn -q compile` 的 `$LASTEXITCODE` 看着是 0，实际编译失败 | 用 `-q` + `*>` 重定向时退出码不可靠。判断编译结果要看日志里的 `BUILD SUCCESS` / `ERROR`，或去掉 `-q` |
+| PowerShell 里 `[System.IO.File]::ReadAllBytes('.\target\...')` 报找不到文件，但同路径 `Get-Item` 正常 | .NET 的静态方法用的是**进程工作目录**，不是 PowerShell 的当前位置（`cd` 只改后者）。脚本里给 .NET 方法传**绝对路径** |
+| 命令行临时文件写到 `/tmp/xxx.json` 后 `curl --data-binary @/tmp/xxx.json` 报读不到 | Windows 上 `/tmp` 被解析成 `C:\tmp`（通常不存在）。用 `$env:TEMP` 或 workspace 内路径 |
 
 ---
 

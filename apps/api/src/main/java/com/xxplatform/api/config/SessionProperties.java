@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.config;
 
 import java.time.Duration;
 import org.springframework.boot.context.properties.ConfigurationProperties;

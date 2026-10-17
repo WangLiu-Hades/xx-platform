@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.infra;
 
 import java.time.OffsetDateTime;
 import java.util.List;

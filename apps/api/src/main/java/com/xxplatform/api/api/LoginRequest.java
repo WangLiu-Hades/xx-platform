@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.api;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

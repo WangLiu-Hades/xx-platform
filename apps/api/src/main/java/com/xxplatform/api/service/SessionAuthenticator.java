@@ -1,10 +1,12 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
 import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
 import com.xxplatform.api.common.RequestCookies;
 import com.xxplatform.api.common.Sha256;
+import com.xxplatform.api.infra.UserAccountRepository;
+import com.xxplatform.api.infra.UserSessionRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.OffsetDateTime;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.infra;
 
 import java.util.List;
 import java.util.Optional;

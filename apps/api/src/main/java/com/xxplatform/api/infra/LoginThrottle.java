@@ -1,15 +1,16 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.infra;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Optional;
+import com.xxplatform.api.config.LoginThrottleProperties;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayDeque;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Deque;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

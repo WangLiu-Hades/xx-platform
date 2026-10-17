@@ -1,5 +1,6 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
+import com.xxplatform.api.infra.RbacRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;

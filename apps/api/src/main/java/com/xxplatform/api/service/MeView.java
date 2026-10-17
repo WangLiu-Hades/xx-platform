@@ -1,4 +1,4 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;

@@ -1,5 +1,6 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
+import com.xxplatform.api.infra.UserAccountRepository;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 

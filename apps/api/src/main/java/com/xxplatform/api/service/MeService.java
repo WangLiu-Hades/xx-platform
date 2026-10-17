@@ -1,6 +1,8 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
 import com.xxplatform.api.common.Instants;
+import com.xxplatform.api.infra.RbacRepository;
+import com.xxplatform.api.infra.UserAccountRepository;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;

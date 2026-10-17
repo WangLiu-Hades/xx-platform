@@ -1,10 +1,13 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.service;
 
 import com.xxplatform.api.common.Sha256;
+import com.xxplatform.api.config.SessionProperties;
+import com.xxplatform.api.infra.CsrfSessionRepository;
+import com.xxplatform.api.infra.UserSessionRepository;
 import java.security.SecureRandom;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.time.ZoneOffset;
 import java.util.Base64;
 import java.util.UUID;
 import org.slf4j.Logger;

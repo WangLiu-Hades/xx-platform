@@ -1,7 +1,6 @@
-package com.xxplatform.api.auth;
+package com.xxplatform.api.infra;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import com.xxplatform.api.config.LoginThrottleProperties;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
@@ -10,6 +9,7 @@ import java.time.ZoneOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * {@link LoginThrottle} 的滑动窗口语义。
