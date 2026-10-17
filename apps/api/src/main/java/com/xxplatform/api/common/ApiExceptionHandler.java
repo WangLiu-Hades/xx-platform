@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import com.xxplatform.api.common.ApiResponses.FieldErrorDetail;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import java.time.Duration;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -24,9 +26,9 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
  * <p>契约要求：每个操作都声明了 400/401/403/500，所以异常兜底不是可选项；
  * HTTP 状态与 {@code code} 必须由同一处决定，禁止在业务代码里各写各的。
  *
- * <p>当前覆盖"框架层异常"：参数校验、报文解析（含未知字段）、方法不支持、路径不存在、未捕获异常。
- * 业务异常在阶段 2 加入：先定义 {@code ApiException(ErrorCode, message, details)}，
- * 再在下面加一个 handler，不要在 Controller 里手动拼错误壳。
+ * <p>当前覆盖两类：<b>框架层异常</b>（参数校验、报文解析含未知字段、方法不支持、路径不存在、
+ * 未捕获异常）与<b>业务异常</b> {@link ApiException}。后者让 Service/Controller 只需
+ * "抛一个带 {@link ErrorCode} 的异常"，错误壳与 HTTP 状态仍由本类唯一决定。
  *
  * <p><b>顺序不能乱</b>：Spring 会选最具体的 {@code @ExceptionHandler}；但任何新加的框架异常
  * （如 {@code HttpRequestMethodNotSupportedException}、{@code MissingServletRequestPartException}）
@@ -120,6 +122,29 @@ public class ApiExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoResource(NoResourceFoundException ex) {
         return error(ErrorCode.DATA_NOT_FOUND, "资源不存在", List.of());
+    }
+
+    /**
+     * 业务异常 → 由其自带的 {@link ErrorCode} 决定状态码与 {@code code}。
+     *
+     * <p>{@code Retry-After} 只对 429 写：契约把 {@code Retry-After} 定义为 429/503 的响应头，
+     * 其他状态码带上它会让前端误以为可以退避重试。值是**向上取整的秒数**且至少 1 ——
+     * {@code Retry-After: 0} 等于"立刻重试"，那正是限流要防的行为。
+     *
+     * <p>日志用 debug：业务失败是控制流（口令错误、限流），不是缺陷。真正的故障仍走
+     * {@link #handleUnexpected(Exception)} 的 error 级别。
+     */
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<ErrorResponse> handleApiException(ApiException ex) {
+        log.debug("业务异常 code={} message={} traceId={}",
+                ex.code(), ex.getMessage(), RequestIdFilter.currentTraceIdOrFallback());
+        ResponseEntity.BodyBuilder builder = ResponseEntity.status(ex.code().httpStatus());
+        Duration retryAfter = ex.retryAfter();
+        if (ex.code() == ErrorCode.RATE_LIMITED && retryAfter != null && !retryAfter.isNegative() && !retryAfter.isZero()) {
+            builder.header(HttpHeaders.RETRY_AFTER, Long.toString(Math.max(1L, retryAfter.toSeconds())));
+        }
+        return builder.body(ApiResponses.error(
+                ex.code(), ex.getMessage(), RequestIdFilter.currentTraceIdOrFallback(), ex.details()));
     }
 
     /** 其他未捕获异常 → 500 SYSTEM_INTERNAL，只记日志、不外泄堆栈。 */

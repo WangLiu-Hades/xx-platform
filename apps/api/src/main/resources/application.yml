@@ -70,4 +70,33 @@ xx:
     cookie-name: CSRFID
     cookie-path: /api/v1
 
+  # 会话策略（见 auth/SessionProperties 与 OPENAPI_PENDING P-001）
+  #
+  # ⚠ 与 csrf 一节同理：SessionData 在契约里标着 x-design-status=pending，
+  #   字段形状已定、**超时取值未签认**。签认后只改本文件。
+  session:
+    # 空闲超时：每次请求刷新（renew 只延长它）
+    idle-ttl: 30m
+    # 绝对超时：从登录时刻起算，任何活动都不延长
+    absolute-ttl: 12h
+    cookie-path: /api/v1
+    # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试为 false，
+    # 否则浏览器不回传 Secure Cookie，登录后下一个请求就是未认证。
+    secure-cookie: false
+
+  # 认证策略（任务 5：POST /auth/login）
+  auth:
+    # 登录失败频控。计数在进程内，多实例部署时实际阈值 = 实例数 × max-failures，
+    # 上多实例前必须换成共享存储（见 auth/LoginThrottleProperties 的类注释）。
+    throttle:
+      max-failures: 10
+      window: 15m
+      lockout: 15m
+    # 开发种子账号：三重闸门（profile=db + enabled + 外部提供口令）。
+    # 口令**不写在这里**（本文件要提交），用环境变量 XX_AUTH_DEVSEED_PASSWORD 提供。
+    dev-seed:
+      enabled: false
+      login-name: demo.admin
+      display-name: 演示管理员
+
 

@@ -1,9 +1,7 @@
 package com.xxplatform.api.auth;
 
 import com.xxplatform.api.common.CsrfProperties;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.xxplatform.api.common.Sha256;
 import java.security.SecureRandom;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -86,35 +84,49 @@ public class CsrfTokenService {
 
         repository.insert(
                 UUID.randomUUID(),
-                null, // 登录成功后由会话服务绑定；当前阶段还没有会话
-                sha256(cookieValue),
-                sha256(token),
+                null, // 登录成功后由 SessionService 绑定；当前阶段还没有会话
+                Sha256.of(cookieValue),
+                Sha256.of(token),
                 expiresAt);
 
         return new IssuedCsrf(cookieValue, token, expiresAt);
     }
 
     /**
-     * 校验写请求携带的 Cookie + token 是否匹配。
+     * 校验并把请求关联到具体的 CSRF 会话行。
      *
-     * <p>任一步失败都返回 {@code false}，由调用方统一转成
+     * <p>为什么返回 {@link CsrfBinding} 而不只是 boolean：{@code POST /auth/login} 通过后
+     * 要把 {@code auth.csrf_session.session_id} 绑到新签发的 SID 上
+     * （契约"登录后轮换、重新获取 csrf"的前提是这行能被追踪），所以调用方需要拿到行 id。
+     *
+     * <p>任一步失败都返回 {@code Optional.empty()}，由调用方统一转成
      * {@code 403 AUTH_CSRF_INVALID}——**不要**区分"没 Cookie"和"token 不匹配"，
      * 那会给攻击者提供探测信息。
      *
-     * <p>比较用 {@link MessageDigest#isEqual}（常量时间），避免通过响应时间侧信道
+     * <p>比较用常量时间（{@link Sha256#constantTimeEquals}），避免通过响应时间侧信道
      * 逐字节猜 token。
      *
      * @param cookieValue 请求携带的 {@code CSRFID} 原文
      * @param token       请求头 {@code X-CSRF-Token} 原文
      */
     @Transactional(readOnly = true)
-    public boolean validate(String cookieValue, String token) {
+    public Optional<CsrfBinding> resolve(String cookieValue, String token) {
         if (cookieValue == null || cookieValue.isBlank() || token == null || token.isBlank()) {
-            return false;
+            return Optional.empty();
         }
-        Optional<CsrfSessionRepository.CsrfSessionRow> row =
-                repository.findActiveByCookieHash(sha256(cookieValue));
-        return row.map(r -> MessageDigest.isEqual(r.tokenHash(), sha256(token))).orElse(false);
+        return repository.findActiveByCookieHash(Sha256.of(cookieValue))
+                .filter(row -> Sha256.constantTimeEquals(row.tokenHash(), Sha256.of(token)))
+                .map(row -> new CsrfBinding(row.id()));
+    }
+
+    /**
+     * 只需要"通过/不通过"的判断。
+     *
+     * @see #resolve(String, String)
+     */
+    @Transactional(readOnly = true)
+    public boolean validate(String cookieValue, String token) {
+        return resolve(cookieValue, token).isPresent();
     }
 
     /** 契约固定：Cookie 名、Path、SameSite 由属性给出，头名由常量给出。 */
@@ -140,22 +152,6 @@ public class CsrfTokenService {
     }
 
     /**
-     * SHA-256。
-     *
-     * <p>注意这里是**无盐哈希**，但它不是"用哈希做脱敏"：入参本身就是 256 位随机值，
-     * 不存在字典攻击面；哈希的目的是让库内不出现可用的原始凭据。
-     * （对比 SD06 对敏感标识的要求是"密文 + HMAC 指纹"，那是针对低熵业务数据。）
-     */
-    private static byte[] sha256(String value) {
-        try {
-            return MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            // SHA-256 是 JDK 必须提供的算法，走到这里说明 JRE 被裁剪过
-            throw new IllegalStateException("JRE 缺少 SHA-256", e);
-        }
-    }
-
-    /**
      * 签发结果。
      *
      * @param cookieValue 写回 {@code CSRFID} Cookie 的值（前端 JS 读不到，HttpOnly）
@@ -163,5 +159,13 @@ public class CsrfTokenService {
      * @param expiresAt    该 CSRF 会话的过期时间
      */
     public record IssuedCsrf(String cookieValue, String token, OffsetDateTime expiresAt) {
+    }
+
+    /**
+     * 校验通过后拿到的关联信息。
+     *
+     * @param csrfId {@code auth.csrf_session.id}，登录成功时用于绑定新会话
+     */
+    public record CsrfBinding(UUID csrfId) {
     }
 }

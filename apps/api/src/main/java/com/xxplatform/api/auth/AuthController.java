@@ -1,12 +1,19 @@
 package com.xxplatform.api.auth;
 
+import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ApiResponses;
 import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.RequestIdFilter;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +21,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 认证相关端点（M01）。当前只实现 {@code GET /auth/csrf}。
+ * 认证相关端点（M01）。已实现 {@code GET /auth/csrf}（任务 4）与
+ * {@code POST /auth/login}（任务 5）。
  *
  * <p>契约要点（{@code openapi.yaml} → {@code /auth/csrf}）：
  * {@code x-permission: PUBLIC}、{@code security: []}（匿名也能取）、同源且校验
@@ -38,9 +48,15 @@ public class AuthController {
     private static final String HEADER_NAME = CsrfTokenService.HEADER_NAME;
 
     private final CsrfTokenService csrfTokenService;
+    private final LoginService loginService;
+    private final SessionProperties sessionProperties;
 
-    public AuthController(CsrfTokenService csrfTokenService) {
+    public AuthController(CsrfTokenService csrfTokenService,
+                          LoginService loginService,
+                          SessionProperties sessionProperties) {
         this.csrfTokenService = csrfTokenService;
+        this.loginService = loginService;
+        this.sessionProperties = sessionProperties;
     }
 
     /**
@@ -53,12 +69,7 @@ public class AuthController {
     public ResponseEntity<ApiResponses> getCsrfToken(HttpServletRequest request, HttpServletResponse response) {
         if (!isSameOrigin(request)) {
             // 契约把 CSRF/Origin 失败固定映射为 403 AUTH_CSRF_INVALID（不是 PERMISSION_DENIED）
-            return ResponseEntity.status(ErrorCode.AUTH_CSRF_INVALID.httpStatus())
-                    .body(ApiResponses.error(
-                            ErrorCode.AUTH_CSRF_INVALID,
-                            "请求来源不可信",
-                            RequestIdFilter.currentTraceIdOrFallback(),
-                            List.of()));
+            throw new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信");
         }
 
         CsrfTokenService.IssuedCsrf issued = csrfTokenService.issue();
@@ -86,6 +97,113 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
+     * {@code POST /auth/login}：口令登录，签发 SID 会话 Cookie。
+     *
+     * <p>执行顺序（顺序本身就是安全要求）：
+     * <ol>
+     *   <li><b>先校验 CSRF</b>。契约把这个操作声明为 {@code security: []}（匿名可访问），
+     *       但它仍然 {@code $ref: CsrfToken}，因为登录本身是"改变状态"的写请求：
+     *       没有 CSRF 防线，攻击者可以拿受害者的浏览器去撞口令（login CSRF），
+     *       把受害者登进攻击者的账号，后续操作全落在攻击者账号里。</li>
+     *   <li>再走 {@link LoginService#login}（频控 → 口令校验 → 签发会话）。失败统一 401。</li>
+     *   <li>最后写 SID Cookie。</li>
+     * </ol>
+     *
+     * <p>Origin 校验不在这里重复：{@code developmentCorsFilter}（{@code WebConfiguration}）
+     * 在过滤器阶段就按 {@code Origin} 拒绝跨源请求，且拒绝体已是契约错误壳。
+     * 在控制器再写一遍只会得到两套可能不一致的规则。
+     *
+     * <p>响应体只返回 {@code userId/idleExpiresAt/absoluteExpiresAt}——契约 {@code SessionData}
+     * 就这三个字段（{@code additionalProperties:false}）。显示名、权限等留给 {@code GET /me}。
+     */
+    @PostMapping("/auth/login")
+    public ResponseEntity<ApiResponses> login(@Valid @RequestBody LoginRequest body,
+                                              HttpServletRequest request,
+                                              HttpServletResponse response) {
+        String csrfCookieValue = cookieValue(request, csrfTokenService.properties().getCookieName());
+        String csrfToken = request.getHeader(HEADER_NAME);
+        CsrfTokenService.CsrfBinding binding = csrfTokenService.resolve(csrfCookieValue, csrfToken)
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
+
+        LoginService.LoginResult result = loginService.login(
+                body.loginName(),
+                body.password(),
+                cookieValue(request, SessionService.COOKIE_NAME),
+                binding.csrfId(),
+                clientIp(request),
+                LoginService.clientLabel(request.getHeader(HttpHeaders.USER_AGENT)),
+                RequestIdFilter.currentTraceIdOrFallback());
+
+        SessionService.IssuedSession session = result.session();
+        response.addHeader(HttpHeaders.SET_COOKIE, sidCookie(session).toString());
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("userId", result.userId().toString());
+        data.put("idleExpiresAt", isoInstant(session.idleExpiresAt()));
+        data.put("absoluteExpiresAt", isoInstant(session.absoluteExpiresAt()));
+
+        return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
+     * 构造 SID Cookie。
+     *
+     * <p>四个属性各有依据：
+     * <ul>
+     *   <li>{@code HttpOnly}：JS 读不到 SID，XSS 无法直接把会话带走；</li>
+     *   <li>{@code SameSite=Lax}：跨站 POST 不带 Cookie（契约明文要求）；</li>
+     *   <li>{@code Path=/api/v1}：不泄露给同域的其他应用（{@code api-conventions.md} L45）；</li>
+     *   <li>{@code Max-Age}=到 {@code absoluteExpiresAt} 的剩余秒数。**为什么不用会话 Cookie**
+     *       （不设 Max-Age）：那样"关浏览器即失效"，与契约声明的绝对超时语义矛盾——
+     *       用户会以为会话还在、实际已被浏览器丢掉。用 Max-Age 让浏览器与服务端对齐。</li>
+     * </ul>
+     */
+    private ResponseCookie sidCookie(SessionService.IssuedSession session) {
+        Duration remaining = Duration.between(
+                OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS),
+                session.absoluteExpiresAt());
+        return ResponseCookie.from(SessionService.COOKIE_NAME, session.sidValue())
+                .httpOnly(true)
+                .secure(sessionProperties.isSecureCookie())
+                .sameSite("Lax")
+                .path(sessionProperties.getCookiePath())
+                .maxAge(remaining.isNegative() ? Duration.ZERO : remaining)
+                .build();
+    }
+
+    /** 取指定名字的 Cookie 值；不存在返回 null。 */
+    private static String cookieValue(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            return null;
+        }
+        for (Cookie cookie : cookies) {
+            if (name.equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 来源 IP。
+     *
+     * <p>直接用 {@code getRemoteAddr()}，**不解析** {@code X-Forwarded-For}：那个头默认由客户端
+     * 随意伪造，信任它等于让攻击者随意绕过频控（每次换一个 IP 就是一个新桶）。
+     * 部署到反向代理之后，应通过容器级配置（如 Tomcat 的 {@code RemoteIpValve} /
+     * {@code server.forward-headers-strategy}）让容器自己把可信头解析进 {@code getRemoteAddr()}，
+     * 而不是在业务代码里猜。
+     */
+    private static String clientIp(HttpServletRequest request) {
+        return request.getRemoteAddr();
+    }
+
+    /** 契约：date-time 是带偏移的 ISO8601，UTC 统一以 {@code Z} 结尾。 */
+    private static String isoInstant(OffsetDateTime value) {
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value);
     }
 
     /**
