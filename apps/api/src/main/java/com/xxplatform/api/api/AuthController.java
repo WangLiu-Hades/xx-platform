@@ -6,6 +6,7 @@ import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
 import com.xxplatform.api.common.RequestCookies;
 import com.xxplatform.api.common.RequestIdFilter;
+import com.xxplatform.api.config.CsrfProperties;
 import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.service.AuthenticatedSession;
 import com.xxplatform.api.service.CsrfTokenService;
@@ -31,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 认证相关端点（M01）。已实现 {@code GET /auth/csrf}（任务 4）、
- * {@code POST /auth/login}（任务 5）与 {@code GET /me}（任务 6）。
+ * {@code POST /auth/login}（任务 5）、{@code GET /me}（任务 6）与
+ * {@code POST /auth/logout}（任务 11，让"登录 → 进入 → 退出"在真实接口下闭环）。
  *
  * <p>契约要点（{@code openapi.yaml} → {@code /auth/csrf}）：
  * {@code x-permission: PUBLIC}、{@code security: []}（匿名也能取）、同源且校验
@@ -56,17 +58,20 @@ public class AuthController {
     private final SessionProperties sessionProperties;
     private final SessionAuthenticator sessionAuthenticator;
     private final MeService meService;
+    private final SessionService sessionService;
 
     public AuthController(CsrfTokenService csrfTokenService,
                           LoginService loginService,
                           SessionProperties sessionProperties,
                           SessionAuthenticator sessionAuthenticator,
-                          MeService meService) {
+                          MeService meService,
+                          SessionService sessionService) {
         this.csrfTokenService = csrfTokenService;
         this.loginService = loginService;
         this.sessionProperties = sessionProperties;
         this.sessionAuthenticator = sessionAuthenticator;
         this.meService = meService;
+        this.sessionService = sessionService;
     }
 
     /**
@@ -159,6 +164,54 @@ public class AuthController {
     }
 
     /**
+     * {@code POST /auth/logout}：撤销当前会话并清掉身份 Cookie（任务 11）。
+     *
+     * <p>契约要点（{@code openapi.yaml} → {@code /auth/logout}）：{@code x-permission: AUTHENTICATED}、
+     * {@code security: [{sessionCookie: []}]}、参数 {@code $ref CsrfToken}（必须带
+     * {@code X-CSRF-Token}）、响应 200/400/401/403/500、200 体 {@code ActionResult}
+     * 只有 {@code accepted}（{@code additionalProperties:false}）。
+     *
+     * <p><b>为什么先认证、再校验 CSRF</b>：两个检查都必须发生在"撤销会话"之前（否则就成了
+     * 跨站强制下线），但失败时给哪个码有区别。没登录就该看到 401（前端据此清本地身份），
+     * 而不是 403（会让人以为 Origin 配错了）。CSRF 校验只对"已认证的写请求"有意义，
+     * 所以在认证之后做。
+     *
+     * <p><b>为什么响应里还要清 Cookie</b>：SID 是 HttpOnly，前端 JS 删不掉；服务端不清，
+     * 浏览器会一直带着一个已撤销的 SID，下一个请求得到 401 而不是重新取 CSRF 后的干净状态。
+     * {@code Max-Age=0} 才是"让浏览器立刻丢弃"的唯一手段。CSRFID 一并清掉：
+     * 它绑定的会话已经终止，留着只会让人误以为还能用。
+     *
+     * <p><b>幂等性</b>：重复退出返回 401 而不是 200——第二次请求带来的 SID 已经撤销，
+     * 认证层判定 {@code AUTH_SESSION_EXPIRED}。这是契约允许的（401 在响应列表里），
+     * 且前端 {@code logout()} 对失败只提示不清状态，不影响"已经退出"的事实。
+     */
+    @PostMapping("/auth/logout")
+    public ResponseEntity<ApiResponses> logout(HttpServletRequest request, HttpServletResponse response) {
+        AuthenticatedSession session = sessionAuthenticator.require(request);
+
+        String csrfCookieValue = RequestCookies.value(request, csrfTokenService.properties().getCookieName());
+        csrfTokenService.resolve(csrfCookieValue, request.getHeader(HEADER_NAME))
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
+
+        sessionService.end(session.sessionId(), RequestIdFilter.currentTraceIdOrFallback());
+
+        CsrfProperties csrfProperties = csrfTokenService.properties();
+        response.addHeader(HttpHeaders.SET_COOKIE, clearedCookie(
+                SessionService.COOKIE_NAME,
+                sessionProperties.getCookiePath(),
+                sessionProperties.isSecureCookie()).toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, clearedCookie(
+                csrfProperties.getCookieName(),
+                csrfProperties.getCookiePath(),
+                csrfProperties.isSecureCookie()).toString());
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("accepted", true);
+
+        return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
      * {@code GET /me}：返回当前登录用户的身份、权限、菜单与数据范围。
      *
      * <p>契约 {@code x-permission: AUTHENTICATED}，只要求有效会话，不再叠加权限码——
@@ -199,6 +252,23 @@ public class AuthController {
                 .sameSite("Lax")
                 .path(sessionProperties.getCookiePath())
                 .maxAge(remaining.isNegative() ? Duration.ZERO : remaining)
+                .build();
+    }
+
+    /**
+     * 构造"立刻作废"的 Cookie（{@code Max-Age=0}）。
+     *
+     * <p>属性必须与签发时**逐项一致**（同名、同 Path、同 SameSite、同 Secure），否则浏览器
+     * 认为是另一个 Cookie，原 Cookie 会继续存在——这是清 Cookie 最常见的坑。
+     * 值用空串：内容不再重要，重要的是让浏览器把它删掉。
+     */
+    private static ResponseCookie clearedCookie(String name, String path, boolean secure) {
+        return ResponseCookie.from(name, "")
+                .httpOnly(true)
+                .secure(secure)
+                .sameSite("Lax")
+                .path(path)
+                .maxAge(Duration.ZERO)
                 .build();
     }
 

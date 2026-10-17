@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * 会话签发与轮换（契约 {@code api-conventions.md} L47："login 轮换 SID"）。
+ * 会话签发、轮换与终结（契约 {@code api-conventions.md} L47："login 轮换 SID"；
+ * {@code POST /auth/logout} 撤销当前会话）。
  *
  * <h2>为什么轮换</h2>
  * 登录前客户端可能已经带着一个旧 SID（换账号、或会话被劫持后重新登录）。
@@ -116,6 +117,38 @@ public class SessionService {
         }
 
         return new IssuedSession(sidValue, sessionId, idleExpiresAt, absoluteExpiresAt);
+    }
+
+    /**
+     * 结束（撤销）一个会话（任务 11：{@code POST /auth/logout}）。
+     *
+     * <p><b>为什么只写 {@code revoked_at}、不删行</b>：{@code auth.user_session} 同时承担
+     * 审计职责（谁在什么时间从哪个 UA 登录过）。物理删除会让"退出"变成不可追溯的事件，
+     * 而撤销只加一列时间戳，既不破坏历史也不影响认证判定——{@code SessionAuthenticator}
+     * 看到 {@code revoked_at} 非空即判 {@code AUTH_SESSION_EXPIRED}。
+     *
+     * <p><b>为什么不在这里删 CSRF 会话行</b>：CSRF 行单独不构成身份（必须同时持有 SID），
+     * 到期由 {@code CsrfTokenService.issue} 顺带清理。如果在退出时删掉，客户端一旦重试
+     * 退出（双击、网络重试）就会从"401 会话已终止"变成"403 来源不可信"，把一次正常退出
+     * 变成让人怀疑被攻击的报错。
+     *
+     * <p><b>为什么按 {@code sessionId} 而不是重新解析 SID</b>：本次请求已经通过
+     * {@link SessionAuthenticator#require} 认证，那个 {@link AuthenticatedSession} 里带着
+     * 会话行 id；再拿 SID 算一次摘要既多余又引入"两次查询之间会话被换掉"的窗口。
+     *
+     * @param sessionId 已认证会话的行 id
+     * @param traceId   本次请求的 traceId（只用于日志串联）
+     * @return {@code true} 本次调用真的撤销了一行；{@code false} 表示已经被撤销过（并发/重试）
+     */
+    @Transactional
+    public boolean end(UUID sessionId, String traceId) {
+        int revoked = sessionRepository.revokeById(sessionId);
+        if (revoked == 0) {
+            log.debug("退出来自已撤销的会话，忽略 sessionId={} traceId={}", sessionId, traceId);
+            return false;
+        }
+        log.info("会话已撤销 sessionId={} traceId={}", sessionId, traceId);
+        return true;
     }
 
     /**

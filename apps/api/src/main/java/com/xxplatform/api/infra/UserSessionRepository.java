@@ -40,6 +40,16 @@ public class UserSessionRepository {
              WHERE sid_hash = ?
             """;
 
+    /**
+     * 按会话行 id 撤销（任务 11：{@code POST /auth/logout}）。
+     *
+     * <p>为什么按 {@code id} 而不是像登录轮换那样按 {@code sid_hash} 撤销：退出时
+     * 认证层已经把 {@code sid_hash} 换成了 {@link SessionRow}，再算一次摘要属于多余动作，
+     * 而且"按已认证的会话行 id 撤销"语义更直接——撤销的正是本次请求通过认证的那一行。
+     */
+    private static final String REVOKE_BY_ID =
+            "UPDATE auth.user_session SET revoked_at = now() WHERE id = ? AND revoked_at IS NULL";
+
     private final JdbcTemplate jdbc;
 
     public UserSessionRepository(JdbcTemplate jdbc) {
@@ -76,6 +86,19 @@ public class UserSessionRepository {
         return jdbc.update(
                 "UPDATE auth.user_session SET revoked_at = now() WHERE sid_hash = ? AND revoked_at IS NULL",
                 (Object) sidHash);
+    }
+
+    /**
+     * 按会话行 id 撤销会话（{@code POST /auth/logout}）。
+     *
+     * <p>返回 0 行不是错误：并发下同一个会话被两次退出（双击、重试）时，第二次看到的
+     * 已经是 {@code revoked_at IS NOT NULL}。调用方据此只记 debug 日志，不向用户报错。
+     */
+    public int revokeById(UUID sessionId) {
+        if (sessionId == null) {
+            throw new IllegalArgumentException("sessionId 不能为空");
+        }
+        return jdbc.update(REVOKE_BY_ID, sessionId);
     }
 
     /** 按 SID 摘要取会话（含已撤销/已过期的，好让调用方区分失败原因）。 */

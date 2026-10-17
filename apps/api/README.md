@@ -108,13 +108,14 @@ apps/api/
 │   ├── verify-login.ps1       登录验收 65 条
 │   ├── verify-me.ps1          /me 验收 80 条
 │   ├── verify-client-config.ps1  前端配置验收 53 条
-│   └── verify-health.ps1      探针验收 47 条
+│   ├── verify-health.ps1      探针验收 47 条
+│   └── verify-logout.ps1      退出登录验收 41 条
 └── src/
     ├── main/
     │   ├── java/com/xxplatform/api/
     │   │   ├── ApiApplication.java        启动类（@SpringBootApplication）
     │   │   ├── api/                       ① 接口层：Controller + 请求 DTO
-    │   │   │   ├── AuthController.java      GET /auth/csrf、POST /auth/login、GET /me
+    │   │   │   ├── AuthController.java      GET /auth/csrf、POST /auth/login、POST /auth/logout、GET /me
     │   │   │   ├── ClientConfigController.java  GET /client-config
     │   │   │   └── SystemController.java    GET /health、GET /ready
     │   │   ├── service/                   ② 业务层：领域规则、状态机、事务边界
@@ -203,13 +204,14 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 43 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 24、`migration.*` 4） |
+| `mvn -o -B test` | 47 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 28、`migration.*` 4） |
 | `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
 | `verify-me.ps1` | 80 passed, 0 failed |
 | `verify-client-config.ps1` | 53 passed, 0 failed |
 | `verify-health.ps1` | 47 passed, 0 failed |
+| `verify-logout.ps1` | 41 passed, 0 failed |
 
 注意第三段是必须的：**重构只过编译和单测不够**。这次就踩到过一次——`MeService` 少一行 `import ...infra.UserAccountRepository`，`mvn compile` 报了 `BUILD SUCCESS`（增量编译下 `javac` 把一个 `Unresolved compilation problem` 的桩类写进了 `target/classes`），单测也照样全绿，但真实请求 `/me` 直接 500。只有 `verify-me.ps1` 能抓到它。**改包结构后一定要重跑 HTTP 验收脚本，并且先 `mvn clean`。**
 
@@ -291,6 +293,7 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 登录频控 | `infra/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
 | 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
 | 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
+| 退出登录 | `api/AuthController#logout`、`service/SessionService#end`、`infra/UserSessionRepository#revokeById` | `POST /auth/logout`：先认证（401）→ 校验 CSRF（403）→ 撤销当前会话行（**只写 `revoked_at`，不删行**）→ 用 `Max-Age=0` 清掉 `SID` 与 `CSRFID` → 200 `{accepted:true}`（见下） |
 | 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
 | 运维探针 | `api/SystemController`、`service/HealthService`、`service/HealthView` | `GET /health`（存活）永远 200 + `UP`，不查依赖；`GET /ready`（就绪）查 `database`/`schema`/`deployment-config` 三项，任一不就绪 → **503 + `Retry-After: 5`**、`details` 指出是哪个依赖（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
@@ -634,6 +637,55 @@ classified（15 码含 `capture:decrypt`）、数据库侧会话生命周期（�
 
 ---
 
+### `POST /auth/logout`（任务 11，2026-10-17 实现）
+
+让"登录 → 进入 → 退出"在**真实接口**下闭环的最后一块。契约 `x-module: M01`、`x-owner: DEV-01`、
+`x-permission: AUTHENTICATED`、参数 `$ref CsrfToken`、响应 200/400/401/403/500，200 体
+`ActionResult` 只有 `accepted`（`additionalProperties:false`）。
+
+**执行顺序：先认证，再校验 CSRF，最后才撤销**
+
+| 步骤 | 失败时 | 为什么是这个顺序 |
+| --- | --- | --- |
+| `SessionAuthenticator#require` | 401 `AUTH_REQUIRED` / `AUTH_SESSION_EXPIRED` | 没登录就该看到 401（前端据此清本地身份）。报 403 会让人以为 Origin 配错了 |
+| `CsrfTokenService#resolve`（`CSRFID` Cookie + `X-CSRF-Token`） | 403 `AUTH_CSRF_INVALID` | 退出是写操作，缺 CSRF 就成"跨站强制下线"；CSRF 只对已认证的写请求有意义，所以放在认证之后 |
+| `revokeById(sessionId)` | —— | 两个检查都必须在撤销之前完成，否则等于没有防线 |
+
+**只写 `revoked_at`，不删行**：`auth.user_session` 兼作审计（谁、何时、从哪个 UA 登录过）。
+撤销只加一列时间戳，`SessionAuthenticator` 看到即判 `AUTH_SESSION_EXPIRED`。
+
+**为什么响应里还要清 Cookie**：SID 是 `HttpOnly`，前端 JS 删不掉。不清浏览器就会一直带着一个
+已撤销的 SID，下一个请求得到 401 而不是"干净状态"。清 Cookie 的属性必须与签发时**逐项一致**
+（同名、同 `Path=/api/v1`、同 `SameSite=Lax`、同 `Secure`），否则浏览器把它当另一个 Cookie，
+原 Cookie 继续存在——这是清 Cookie 最常见的坑。CSRFID 一并清掉（它绑定的会话已终止）。
+
+**不删 `auth.csrf_session` 行**：CSRF 行单独不构成身份（必须同时有 SID），到期由
+`CsrfTokenService#issue` 顺带清理。若在退出时删掉，客户端重试退出（双击、网络重试）会从
+"401 会话已终止"变成"403 来源不可信"——把一次正常退出变成让人怀疑被攻击的报错。
+
+**重复退出的语义**：第二次请求带的 SID 已撤销 → 401 `AUTH_SESSION_EXPIRED`（不是 200）。
+契约允许（401 在响应列表里），前端 `logout()` 对失败只提示不清状态，不影响"已经退出"的事实。
+
+**已知未做**：契约没给这个操作声明 `Idempotency-Key` 参数，前端却会带一个（`client.ts` 对写请求
+统一加）。后端目前直接忽略该头，幂等层整体还没实现（见 §5）。
+
+#### 验收记录
+
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-logout.ps1 `
+  -DB_PASSWORD '<db口令>' -SeedPassword '<种子口令>'
+# => RESULT: 41 passed, 0 failed
+```
+
+覆盖 8 组 41 条：登录建立活会话、CSRF 双要素（无头 403 / 伪造 Cookie 403 / 被拒的退出**不会**
+撤销会话）、无会话 401 且不写 Cookie、正常退出（`code:"0"`、`data` 恰好一个键 `accepted:true`、
+响应体不含 SID、`traceId` 与 `X-Trace-Id` 一致、两个 `Set-Cookie` 都是 `Max-Age=0` 且保留
+`HttpOnly`/`SameSite=Lax`/`Path`）、退出后 `/me` 401 且 code 为 `AUTH_SESSION_EXPIRED`、
+重复退出 401、数据库侧（`revoked_at` 已写、行仍在、账号仍 ACTIVE）、退出后可立刻重新登录并拿到
+新 SID、以及 405 `Allow: POST` 与跨源退出 403（且未撤销会话）。
+
+---
+
 ### `GET /client-config`（任务 7，2026-10-17 实现）
 
 前端引导接口：登录后读一次，拿到"这个部署允许什么、上限多少、能力开没开"。
@@ -836,7 +888,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-health.
 
 | 日期 | 结论 |
 | --- | --- |
-| 2026-10-17 | 47 条全绿；`mvn -o -B clean test` 43 例全绿（含 `HealthServiceTests` 7 例） |
+| 2026-10-17 | 47 条全绿；`mvn -o -B clean test` 47 例全绿（含 `HealthServiceTests` 7 例、`SessionServiceLogoutTests` 4 例） |
 
 ---
 
@@ -886,7 +938,8 @@ $ mvn -B -Pgenerate-api compile
 
 - [x] CSRF 令牌签发：`GET /auth/csrf`、`CSRFID` Cookie 属性、同步器 token 落库（任务 4，2026-10-17）
 - [x] 会话与登录：`POST /auth/login`（任务 5，2026-10-17：SID Cookie、轮换、频控、种子账号）
-- [x] 当前用户：`GET /me`（任务 6，2026-10-17：会话校验、角色/权限/菜单/数据范围/场所范围）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 login/csrf 两个端点各自校验），以及 `logout`/`renewSession`/`changeMyPassword`
+- [x] 当前用户：`GET /me`（任务 6，2026-10-17：会话校验、角色/权限/菜单/数据范围/场所范围）；**还差**：写请求统一校验 `X-CSRF-Token`+可信 Origin 的**拦截器**（现在只在 csrf/login/logout 三个端点各自校验），以及 `renewSession`/`changeMyPassword`
+- [x] 退出登录：`POST /auth/logout`（任务 11，2026-10-17：认证 → CSRF → 撤销会话行 → 清 `SID`/`CSRFID` Cookie → `{accepted:true}`）
 - [x] 前端配置：`GET /client-config`（任务 7，2026-10-17：12 个 required 字段、部署值读 `core.config_item`、12 个能力开关带 `pendingReason`）；**还差**：`uploadPolicies` 与 `catalogBindings` 的真数据（分别卡在 P-007 上传安全口径、P-006 字典目录签认，现在返回空数组）
 - [x] 运维探针：`GET /health`（存活，永远 200 `UP`）与 `GET /ready`（就绪，三项依赖；不就绪 → 503 + `Retry-After: 5` + `details` 指出坏掉的依赖）（任务 8，2026-10-17）
 - [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面（`/me` 已有 `ScopeCalculator`，但只覆盖"读自己"），列表/详情/导出/文件每次重校
@@ -1057,7 +1110,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
 | `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
 | `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
-| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 43 例全绿 |
+| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 47 例全绿 |
 | 启动报 `Failed to instantiate [LoginThrottle]: No default constructor found` | 类里有**多个构造器**时 Spring 不会"选参数最多的那个"，而是报这个错——用 `@Autowired` 显式标出生产构造器 |
 | `@SpringBootTest` 报 `Failed to determine a suitable driver class` | 加了数据源依赖后，全上下文启动就需要 `DataSource` bean。不连库的测试要给占位 url + `spring.datasource.hikari.initialization-fail-timeout=-1` + `spring.flyway.enabled=false`（见 `ApiApplicationTests` 注释） |
 | 单测报端口 8080 被占用 | `SpringApplicationBuilder.properties(...)` 设的是 **default properties，优先级低于 `application.yml`**，`server.port=0` 会被 yml 的 `8080` 覆盖。改用 `.run("--server.port=0", ...)`（命令行参数优先级最高）。这个坑的失败信息看起来像环境问题，其实是测试写错——只在"本机没起服务"时才碰巧通过 |
@@ -1075,6 +1128,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | 不带 `db` profile 启动 → `Failed to configure a DataSource: 'url' attribute is not specified` | 不是配置写错：仓储层从任务 4 起依赖 `JdbcTemplate`，**启动就必须有数据源**（见 §1）。`mvn compile`/`mvn test` 不需要库 |
 | `mvn clean` 报 `Failed to delete ...\target` | `spring-boot:run` 起的 JVM 还占着 `target/classes`（Windows 文件锁）。先停掉服务再 `clean`——尤其改完类要重启时，顺序必须是「停 → clean → 起」 |
 | `mvn test` 报 `TestEngine with ID 'junit-jupiter' failed to discover tests` 且 `Tests run: 0` | 增量编译留下的 `target/test-classes` 与源码不一致（改过测试、加过类之后常见）。`mvn -o -B clean test` 即恢复，**不是代码写错**；同理加类/改包后一律 `clean` 一次 |
+| 退出登录后浏览器仍带着旧 `SID`，下一个请求 401 而不是"干净状态" | 清 Cookie 的 `Set-Cookie` 必须与签发时**逐项一致**（同名、同 `Path=/api/v1`、同 `SameSite=Lax`、同 `Secure`），只改 `Max-Age=0` 不够——属性不同的 `Set-Cookie` 会被浏览器当成**另一个** Cookie，原 Cookie 继续存在。见 §4 `POST /auth/logout` |
+| 前端点退出后弹「退出失败」但仍认为已退出 | 退出两次的第二次必然 401（SID 已撤销），这是契约内的正常结果；前端 `logout()` 对失败只 `ElMessage.warning`，`finally` 清本地状态。**不要**为了"看起来成功"把重复退出改成 200 |
 
 ---
 
@@ -1083,7 +1138,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 1. **先跑 `mvn -o -B compile`，再带着数据库启动 `mvn spring-boot:run "-Dspring-boot.run.profiles=dev,db"`**（见 §1），用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1`、`scripts/verify-client-config.ps1` 与 `scripts/verify-health.ps1` 确认库、迁移、登录、`/me`、前端配置、探针都正常。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1`、`scripts/verify-client-config.ps1`、`scripts/verify-health.ps1` 与 `scripts/verify-logout.ps1` 确认库、迁移、登录、`/me`、前端配置、探针、退出都正常。
    前端联调用 `demo.admin` / `demo.operator` / `demo.classified`（三种权限档）：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
