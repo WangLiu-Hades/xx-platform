@@ -46,3 +46,12 @@ logging:
 
 # 契约自带 GET /health 与 GET /ready（M15，PUBLIC），
 # 因此不启用 actuator，避免出现第二套健康端点造成语义重复。如需运维端点再单独评估。
+
+# traceId 策略（见 common/RequestIdFilter）
+# 默认 false：traceId 一律由服务端生成，客户端传入的 X-Trace-Id 被忽略。
+# 只有当前面确实部署了可信网关/链路追踪代理、需要跨系统串联时，才改成 true；
+# 即使为 true，也只有符合 xx.trace 形状约束的值会被采用。
+xx:
+  trace:
+    accept-client-trace-id: false
+

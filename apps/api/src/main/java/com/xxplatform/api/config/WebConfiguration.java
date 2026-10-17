@@ -22,12 +22,14 @@ public class WebConfiguration {
      * {@code "data": null}，全局排除 null 会让它整个消失，违反契约。
      * 响应壳自身已用 {@code @JsonInclude(ALWAYS)} 固定该行为（见 {@code ApiResponses}）。
      *
-     * <p>这里只放宽"未知字段"：DTO 由契约生成且 {@code additionalProperties:false}，
-     * 前端多传字段时按忽略处理，避免直接 400 掩盖真实问题；严格性由生成 DTO 上的校验注解保证。
+     * <p><b>必须开启</b> {@code failOnUnknownProperties}：契约里所有业务 DTO 都是
+     * {@code additionalProperties: false}，未知字段应被拒绝（400 {@code VALIDATION_ERROR}，
+     * 由 {@code ApiExceptionHandler} 还原字段名）。之前这里设成 {@code false} 会静默吞掉拼错/
+     * 多传的字段，让前端以为请求成功而业务字段从未生效——这是最难排查的一类联调问题。
      */
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer contractJsonCustomizer() {
-        return builder -> builder.failOnUnknownProperties(false);
+        return builder -> builder.failOnUnknownProperties(true);
     }
 
     /**
@@ -37,13 +39,21 @@ public class WebConfiguration {
      * 不需要 CORS；这里只服务于"前端直连后端端口"的调试场景。
      * 生产必须替换为真实 Origin 白名单，且禁止
      * {@code allowedOriginPatterns("*") + allowCredentials(true)} 组合（契约禁止通配凭据 CORS）。
+     *
+     * <p><b>路径必须写 {@code /**}，不能写 {@code /api/v1/**}</b>：
+     * {@code addCorsMappings} 的模式是相对 <b>servlet context</b> 的，而本服务
+     * {@code server.servlet.context-path=/api/v1}，实际进入 MVC 的路径是 {@code /smoke}、
+     * {@code /auth/login} 这种，永远不会以 {@code /api/v1/} 开头。
+     * 写成 {@code /api/v1/**} 会导致 CORS 配置一条都匹配不上 → 预检被
+     * {@code DefaultCorsProcessor} 直接 403（现象：允许的 Origin 也 403，且响应没有任何
+     * {@code Access-Control-*} 头）。综合测试报告 2026-10-16 报的 CORS 403 就是这个原因。
      */
     @Bean
     public WebMvcConfigurer developmentCorsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**")
+                registry.addMapping("/**")
                         .allowedOrigins("http://127.0.0.1:5180", "http://localhost:5180")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("Content-Type", "X-CSRF-Token", "Idempotency-Key", "If-Match", "X-Trace-Id")
