@@ -1,0 +1,199 @@
+{"operations":198,"schemas":623}
+getHealth GET /health 
+getReadiness GET /ready 
+getCsrfToken GET /auth/csrf 
+login POST /auth/login LoginRequest
+logout POST /auth/logout 
+renewSession POST /auth/session/renew 
+getMe GET /me 
+getDictionary GET /dictionaries/{dictionaryCode} 
+getClientConfig GET /client-config 
+uploadFile POST /files/uploads 
+getFileAsset GET /files/{fileAssetId} 
+downloadFile GET /files/{fileAssetId}/download 
+createExport POST /exports ExportRequest
+listTasks GET /tasks 
+getTask GET /tasks/{taskId} 
+cancelTask POST /tasks/{taskId}/cancel 
+retryTask POST /tasks/{taskId}/retry 
+listTaskAttempts GET /tasks/{taskId}/attempts 
+listTaskRowErrors GET /tasks/{taskId}/errors 
+listIngestionBatches GET /ingestion-batches 
+createIngestionBatch POST /ingestion-batches IngestionBatchInput
+getIngestionBatch GET /ingestion-batches/{batchId} 
+listIngestionErrors GET /ingestion-batches/{batchId}/errors 
+getIngestionQualitySummary GET /ingestion/quality-summary 
+replayIngestionBatch POST /ingestion-batches/{batchId}/replay ReplayInput
+createIngestionBackfill POST /ingestion/backfills BackfillInput
+getDashboardSummary GET /dashboard/summary 
+getOperationSummary GET /operations/summary 
+searchCaptures POST /captures/search CaptureSearchRequest
+getCapture GET /captures/{captureId} 
+getCaptureStatistics POST /captures/statistics CaptureStatisticsRequest
+createFaceSearchTask POST /faces/search-tasks FaceSearchInput
+listFaceSearchResults GET /faces/search-tasks/{taskId}/results 
+requestDecryption POST /decrypt-requests DecryptionInput
+getDecryptionRequest GET /decrypt-requests/{requestId} 
+createContext POST /contexts AnalysisContextInput
+getContext GET /contexts/{contextId} 
+getMapFeatures GET /map/features 
+getDeviceMapFeatures GET /map/devices 
+getMapHeatmap GET /map/heatmap 
+getMapAreaSummary POST /map/area-summary AreaSummaryRequest
+queryTrajectory POST /trajectories/query TrajectoryRequest
+listAnalysisTasks GET /analysis-tasks 
+createAnalysisTask POST /analysis-tasks AnalysisTaskInput
+getAnalysisTask GET /analysis-tasks/{analysisTaskId} 
+deleteAnalysisTask DELETE /analysis-tasks/{analysisTaskId} 
+reviseAnalysisTask POST /analysis-tasks/{analysisTaskId}/revisions AnalysisTaskRevisionInput
+listAnalysisResults GET /analysis-tasks/{analysisTaskId}/results 
+getAnalysisResult GET /analysis-tasks/{analysisTaskId}/results/{resultId} 
+exportAnalysisResults POST /analysis-tasks/{analysisTaskId}/results/export ResultExportInput
+listDatasets GET /datasets 
+createDataset POST /datasets DatasetInput
+getDataset GET /datasets/{datasetId} 
+updateDataset PATCH /datasets/{datasetId} DatasetUpdate
+deleteDataset DELETE /datasets/{datasetId} 
+listDatasetItems GET /datasets/{datasetId}/items 
+addDatasetItems POST /datasets/{datasetId}/items DatasetItemsInput
+importDatasetItems POST /datasets/{datasetId}/imports DatasetImportInput
+listDatasetVersions GET /datasets/{datasetId}/versions 
+exportDataset POST /datasets/{datasetId}/export ResultExportInput
+previewSetTask POST /set-tasks/preview SetTaskInput
+listSetTasks GET /set-tasks 
+createSetTask POST /set-tasks SetTaskInput
+getSetTask GET /set-tasks/{setTaskId} 
+listSetTaskResults GET /set-tasks/{setTaskId}/results 
+listWatchRules GET /watch-rules 
+createWatchRule POST /watch-rules WatchRuleInput
+getWatchRule GET /watch-rules/{ruleId} 
+updateWatchRule PATCH /watch-rules/{ruleId} WatchRuleUpdate
+deleteWatchRule DELETE /watch-rules/{ruleId} 
+activateWatchRule POST /watch-rules/{ruleId}/activate WatchActivateInput
+revokeWatchRule POST /watch-rules/{ruleId}/revoke 
+getWatchStatistics GET /watch-rules/{ruleId}/statistics 
+listAlerts GET /alerts 
+getAlert GET /alerts/{alertId} 
+listNotificationTasks GET /notification-tasks 
+createNotificationTask POST /notification-tasks NotificationTaskInput
+getNotificationTask GET /notification-tasks/{notificationTaskId} 
+deleteNotificationTask DELETE /notification-tasks/{notificationTaskId} 
+updateNotificationTask PUT /notification-tasks/{notificationTaskId} NotificationTaskInput
+cancelNotificationTask POST /notification-tasks/{notificationTaskId}/cancel 
+retryNotificationTask POST /notification-tasks/{notificationTaskId}/retry 
+listDeliveries GET /deliveries 
+getDelivery GET /deliveries/{deliveryId} 
+listPersonLibraries GET /person-libraries 
+createPersonLibrary POST /person-libraries PersonLibraryInput
+getPersonLibrary GET /person-libraries/{libraryId} 
+updatePersonLibrary PUT /person-libraries/{libraryId} PersonLibraryInput
+deletePersonLibrary DELETE /person-libraries/{libraryId} 
+listPersonLibraryMembers GET /person-libraries/{libraryId}/members 
+addPersonLibraryMembers POST /person-libraries/{libraryId}/members PersonLibraryMembersInput
+removePersonLibraryMember DELETE /person-libraries/{libraryId}/members/{memberId} 
+importPersonLibraryMembers POST /person-libraries/{libraryId}/imports PersonLibraryImportInput
+exportPersonLibrary POST /person-libraries/{libraryId}/exports PersonLibraryExportInput
+searchProfiles POST /profiles/search ProfileSearchRequest
+getProfile GET /profiles/{profileId} 
+listProfileTargets GET /profiles/{profileId}/targets 
+listProfileEvidence GET /profiles/{profileId}/evidence 
+listProfileHistory GET /profiles/{profileId}/history 
+listProfileTrajectories GET /profiles/{profileId}/trajectories 
+createProfileCorrection POST /profiles/{profileId}/corrections ProfileCorrectionInput
+mergeProfiles POST /profiles/merge ProfileMergeInput
+splitProfile POST /profiles/{profileId}/split ProfileSplitInput
+resolveProfileConflict POST /profiles/{profileId}/conflicts/{conflictId}/resolve ProfileConflictResolutionInput
+exportProfile POST /profiles/{profileId}/exports ProfileExportInput
+listTrendModels GET /trend-models 
+createTrendModel POST /trend-models TrendModelInput
+getTrendModel GET /trend-models/{modelId} 
+updateTrendModel PUT /trend-models/{modelId} TrendModelInput
+listModelParameterVersions GET /trend-models/{modelId}/parameter-versions 
+createModelParameterVersion POST /trend-models/{modelId}/parameter-versions ModelParameterVersionInput
+getModelParameterVersion GET /trend-models/{modelId}/parameter-versions/{parameterVersionId} 
+listModelTags GET /model-tags 
+runTrendModel POST /trend-models/{modelId}/runs ModelRunInput
+listTrendModelResults GET /trend-models/{modelId}/results 
+getTrendModelResult GET /trend-models/{modelId}/results/{resultId} 
+listSites GET /sites 
+createSite POST /sites SiteInput
+getSite GET /sites/{siteId} 
+updateSite PUT /sites/{siteId} SiteInput
+deleteSite DELETE /sites/{siteId} 
+listDevices GET /devices 
+createDevice POST /devices DeviceInput
+getDevice GET /devices/{deviceId} 
+updateDevice PUT /devices/{deviceId} DeviceInput
+deleteDevice DELETE /devices/{deviceId} 
+getDeviceStatus GET /devices/{deviceId}/status 
+getDeviceParameters GET /devices/{deviceId}/parameters 
+updateDeviceParameters POST /devices/{deviceId}/parameter-updates DeviceParameterUpdateInput
+listDeviceStatusHistory GET /devices/{deviceId}/status-history 
+getDeviceCaptureStatistics GET /devices/{deviceId}/capture-statistics 
+importDevices POST /devices/imports DeviceImportInput
+exportDevices POST /devices/exports DeviceExportInput
+listDeviceGroups GET /device-groups 
+createDeviceGroup POST /device-groups DeviceGroupInput
+getDeviceGroup GET /device-groups/{groupId} 
+updateDeviceGroup PUT /device-groups/{groupId} DeviceGroupInput
+deleteDeviceGroup DELETE /device-groups/{groupId} 
+listDeviceGroupMembers GET /device-groups/{groupId}/members 
+addDeviceGroupMembers POST /device-groups/{groupId}/members DeviceGroupMembersInput
+removeDeviceGroupMember DELETE /device-groups/{groupId}/members/{deviceId} 
+listDeviceCommands GET /device-commands 
+createDeviceCommand POST /device-commands DeviceCommandInput
+getDeviceCommand GET /device-commands/{taskId} 
+deleteDeviceCommand DELETE /device-commands/{taskId} 
+listDeviceCommandResults GET /device-commands/{taskId}/results 
+retryDeviceCommand POST /device-commands/{taskId}/retry DeviceCommandRetryInput
+listReports GET /reports 
+createReport POST /reports ReportCreateInput
+getReport GET /reports/{reportId} 
+deleteReport DELETE /reports/{reportId} 
+getReportPreview GET /reports/{reportId}/preview 
+retryReport POST /reports/{reportId}/retry 
+downloadReport GET /reports/{reportId}/download 
+listUsers GET /users 
+createUser POST /users UserCreateInput
+getUser GET /users/{userId} 
+updateUser PUT /users/{userId} UserUpdateInput
+deleteUser DELETE /users/{userId} 
+disableUser POST /users/{userId}/disable UserStateInput
+enableUser POST /users/{userId}/enable UserStateInput
+changeUserPassword POST /users/{userId}/password PasswordChangeInput
+listRoles GET /roles 
+createRole POST /roles RoleInput
+getRole GET /roles/{roleId} 
+updateRole PUT /roles/{roleId} RoleInput
+deleteRole DELETE /roles/{roleId} 
+setRolePermissions PUT /roles/{roleId}/permissions RolePermissionsInput
+setRoleScopes PUT /roles/{roleId}/scopes RoleScopesInput
+searchAuditEvents POST /audit-events/search AuditSearchRequest
+getAuditEvent GET /audit-events/{eventId} 
+exportAuditEvents POST /audit-events/export AuditExportInput
+searchSmsLogs POST /deliveries/search SmsLogSearchRequest
+exportSmsLogs POST /deliveries/export DeliveryExportInput
+listPermissionCatalog GET /permissions 
+listMenuCatalog GET /menus 
+listRegions GET /regions 
+resolveTargets POST /targets/resolve TargetResolutionInput
+exportMetrics POST /metrics/exports MetricExportInput
+removeDatasetItem DELETE /datasets/{datasetId}/items/{itemId} 
+listNotificationTemplates GET /notification-templates 
+listPlatformMessages GET /messages 
+createLibraryPerson POST /person-libraries/{libraryId}/persons PersonLibraryPersonInput
+listProfileConflicts GET /profiles/{profileId}/conflicts 
+getImportTemplate GET /import-templates/{templateCode} 
+importPersonLibraries POST /person-libraries/imports PersonLibrariesImportInput
+exportPersonLibraries POST /person-libraries/exports PersonLibrariesExportInput
+reviseDeviceCommand POST /device-commands/{taskId}/revisions DeviceCommandInput
+changeMyPassword POST /me/password PasswordChangeInput
+deleteResourcesBatch POST /batch-deletions BatchDeletionInput
+exportAnalysisTasks POST /analysis-tasks/exports AnalysisTasksExportInput
+getImportTaskResult GET /tasks/{taskId}/import-result 
+revokeResourcesBatch POST /batch-revocations BatchRevocationInput
+listActionApprovals GET /action-approvals 
+createActionApproval POST /action-approvals ActionApprovalInput
+getActionApproval GET /action-approvals/{approvalId} 
+decideActionApproval POST /action-approvals/{approvalId}/decisions ActionApprovalDecisionInput
+readDecryptionResult POST /decrypt-requests/{requestId}/result 

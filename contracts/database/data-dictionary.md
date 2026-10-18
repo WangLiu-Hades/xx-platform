@@ -1,3 +1,5 @@
+> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-18.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
+
 # 数据字典（DB-DESIGN-2）
 
 与 schema.sql、关系图由同一表目录生成。字段类型、可空性、默认值、主键、外键和检查条件以下列明细为准。
@@ -3376,3 +3378,9 @@ UUID由应用生成；时间戳使用 timestamptz，连接与持久化按 UTC，
 | `collision_event_id` | uuid | 否 | 无 | collision_event_id；PK；FK analysis.collision_event(id) |
 | `capture_id` | uuid | 否 | 无 | capture_id；PK；FK capture.capture_event(id) |
 | `created_at` | timestamptz | 否 | now() | UTC 时刻；API 输出 RFC3339 带偏移 |
+
+## PD-2026-10-18.v1增量
+
+当前快照新增operation.action_approval、audit.action_approval_decision两表；字段/类型/约束以schema.sql末尾PD块为准。分别保存加密提案/摘要/状态/许可与独立复核事实，详细映射见SENSITIVE_ACTION_PROTOCOL。
+
+operation.decryption_request新增approval_id UUID nullable/UNIQUE；operation.decryption_result_grant新增approval_id UUID nullable、consumed_at timestamptz nullable，result_file_id由非空改可空。新受控模式approval_id非空、result_file_id为空，不生成持久明文文件；旧记录迁移需人工审查。不是已经在服务器创建的表。

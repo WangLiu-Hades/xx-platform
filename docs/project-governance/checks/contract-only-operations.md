@@ -1,0 +1,77 @@
+# 仅有契约、未发现当前前端运行时引用的接口
+
+静态检查结果，不能推定这些接口可删除；健康检查、自动清理、接入及运维能力也可能被其他调用方使用。
+
+| operationId | 方法与路径 | 模块 |
+| --- | --- | --- |
+| getHealth | GET /health | M01/M15 |
+| getReadiness | GET /ready | M01/M15 |
+| renewSession | POST /auth/session/renew | M01/M06 |
+| listTaskAttempts | GET /tasks/{taskId}/attempts | M01/M06 |
+| listIngestionBatches | GET /ingestion-batches | M03 |
+| createIngestionBatch | POST /ingestion-batches | M03 |
+| getIngestionBatch | GET /ingestion-batches/{batchId} | M03 |
+| listIngestionErrors | GET /ingestion-batches/{batchId}/errors | M03 |
+| getIngestionQualitySummary | GET /ingestion/quality-summary | M03 |
+| replayIngestionBatch | POST /ingestion-batches/{batchId}/replay | M03 |
+| createIngestionBackfill | POST /ingestion/backfills | M03 |
+| getDecryptionRequest | GET /decrypt-requests/{requestId} | M01/M06 |
+| getContext | GET /contexts/{contextId} | M01/M06 |
+| getMapFeatures | GET /map/features | M07/M13 |
+| deleteAnalysisTask | DELETE /analysis-tasks/{analysisTaskId} | M08 |
+| getAnalysisResult | GET /analysis-tasks/{analysisTaskId}/results/{resultId} | M08 |
+| getDataset | GET /datasets/{datasetId} | M09 |
+| updateDataset | PATCH /datasets/{datasetId} | M09 |
+| deleteDataset | DELETE /datasets/{datasetId} | M09 |
+| addDatasetItems | POST /datasets/{datasetId}/items | M09 |
+| listDatasetVersions | GET /datasets/{datasetId}/versions | M09 |
+| listSetTasks | GET /set-tasks | M09 |
+| listSetTaskResults | GET /set-tasks/{setTaskId}/results | M09 |
+| deleteWatchRule | DELETE /watch-rules/{ruleId} | M10/M14 |
+| revokeWatchRule | POST /watch-rules/{ruleId}/revoke | M10/M14 |
+| getAlert | GET /alerts/{alertId} | M10/M14 |
+| deleteNotificationTask | DELETE /notification-tasks/{notificationTaskId} | M10/M14 |
+| cancelNotificationTask | POST /notification-tasks/{notificationTaskId}/cancel | M10/M14 |
+| retryNotificationTask | POST /notification-tasks/{notificationTaskId}/retry | M10/M14 |
+| listDeliveries | GET /deliveries | M10/M14 |
+| getDelivery | GET /deliveries/{deliveryId} | M10/M14 |
+| deletePersonLibrary | DELETE /person-libraries/{libraryId} | M11 |
+| addPersonLibraryMembers | POST /person-libraries/{libraryId}/members | M11 |
+| exportPersonLibrary | POST /person-libraries/{libraryId}/exports | M11 |
+| listProfileHistory | GET /profiles/{profileId}/history | M11 |
+| mergeProfiles | POST /profiles/merge | M11 |
+| splitProfile | POST /profiles/{profileId}/split | M11 |
+| resolveProfileConflict | POST /profiles/{profileId}/conflicts/{conflictId}/resolve | M11 |
+| exportProfile | POST /profiles/{profileId}/exports | M11 |
+| listModelParameterVersions | GET /trend-models/{modelId}/parameter-versions | M11 |
+| listModelTags | GET /model-tags | M11 |
+| runTrendModel | POST /trend-models/{modelId}/runs | M11 |
+| getTrendModelResult | GET /trend-models/{modelId}/results/{resultId} | M11 |
+| deleteSite | DELETE /sites/{siteId} | M12 |
+| deleteDevice | DELETE /devices/{deviceId} | M12 |
+| getDeviceStatus | GET /devices/{deviceId}/status | M12 |
+| createDeviceGroup | POST /device-groups | M12 |
+| getDeviceGroup | GET /device-groups/{groupId} | M12 |
+| updateDeviceGroup | PUT /device-groups/{groupId} | M12 |
+| deleteDeviceGroup | DELETE /device-groups/{groupId} | M12 |
+| addDeviceGroupMembers | POST /device-groups/{groupId}/members | M12 |
+| removeDeviceGroupMember | DELETE /device-groups/{groupId}/members/{deviceId} | M12 |
+| deleteDeviceCommand | DELETE /device-commands/{taskId} | M12 |
+| listDeviceCommandResults | GET /device-commands/{taskId}/results | M12 |
+| retryDeviceCommand | POST /device-commands/{taskId}/retry | M12 |
+| deleteReport | DELETE /reports/{reportId} | M12 |
+| retryReport | POST /reports/{reportId}/retry | M12 |
+| deleteUser | DELETE /users/{userId} | M14 |
+| deleteRole | DELETE /roles/{roleId} | M14 |
+| setRolePermissions | PUT /roles/{roleId}/permissions | M14 |
+| setRoleScopes | PUT /roles/{roleId}/scopes | M14 |
+| getAuditEvent | GET /audit-events/{eventId} | M14 |
+| listRegions | GET /regions | M01/M06 |
+| exportMetrics | POST /metrics/exports | M01/M06 |
+| removeDatasetItem | DELETE /datasets/{datasetId}/items/{itemId} | M09 |
+| listProfileConflicts | GET /profiles/{profileId}/conflicts | M11 |
+| listActionApprovals | GET /action-approvals | M01/M06 |
+| createActionApproval | POST /action-approvals | M01/M06 |
+| getActionApproval | GET /action-approvals/{approvalId} | M01/M06 |
+| decideActionApproval | POST /action-approvals/{approvalId}/decisions | M01/M06 |
+| readDecryptionResult | POST /decrypt-requests/{requestId}/result | M01/M06 |

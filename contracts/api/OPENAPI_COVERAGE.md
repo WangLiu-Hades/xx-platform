@@ -1,3 +1,5 @@
+> 2026-10-18当前版本：[PD-2026-10-18.v1](../../docs/project-governance/暂定方案与修改记录.md)。当前分工01/02后端、03前端、04数据、05测试；下文旧数量/编号/NO及签认门禁保留作历史追踪，不覆盖本轮暂定设计，也不证明当前实现。旧治理生成脚本不得覆盖本轮policy/暂定文档。
+
 # M01–M15覆盖索引
 
 逐页面/动作使用[api-coverage-matrix.md](<api-coverage-matrix.md>)。最新要求优先分析原始PDF，工程版保留模块边界，不沿用旧优先级和“接口存在即全部覆盖”结论。PENDING_REQUIREMENT表示边界有但规则未签认，整体独立开发NO。
@@ -26,3 +28,7 @@
 - 原型每日通知用ONCE/DAILY明确表达；补发/供应商规则P-015。
 - 模拟状态、命中、结束、发送不暴露生产API。
 - 数据库仅TARGET与原型采集集合差异：API明确CAPTURE/TARGET，不跨型运算。数据库迁移属于实现，不在本次修改范围。
+
+## 2026-10-18新增契约
+
+198操作/623 Schema；原65操作+37处字段已有暂定规则，甲方待确认。新增listActionApprovals/createActionApproval/getActionApproval/decideActionApproval/readDecryptionResult。可达性/后端实现不由本数量证明，完整检查见docs/project-governance/checks。

@@ -1,30 +1,30 @@
 {
-  "status": "role-based; individual accounts not supplied",
+  "status": "confirmed_team_provisional_release_owners",
+  "policyVersion": "PD-2026-10-18.v1",
   "repository": "https://github.com/WangLiu-Hades/xx-platform",
   "owners": {
-    "DEV-01": [
+    "DEV-01/DEV-02": [
       "apps/api/",
       "workers/delivery/",
       "contracts/api/",
-      "contracts/database/ (migration merge)"
-    ],
-    "DEV-02": [
-      "apps/web/"
+      "contracts/database/ (后端整体，内部自行领取)"
     ],
     "DEV-03": [
-      "workers/data/",
-      "contracts/database/ (data fields, query, projection proposals)"
+      "apps/web/"
     ],
     "DEV-04": [
-      "infra/",
+      "workers/data/",
+      "contracts/database/ (数据映射、查询、投影提案)"
+    ],
+    "DEV-05": [
       "tests/",
-      "tools/layout/",
-      ".github/workflows/"
+      "质量验证与发布验收"
     ]
   },
   "shared": [
     "docs/",
     "contracts/"
   ],
+  "operations": "对应开发者指定实际执行人并填发布记录；不自动归属测试",
   "details": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md"
 }

@@ -294,3 +294,6 @@ YAML语义、官方验证、1,837示例、182静态链路/负例、TS strict编�
 - `POST /watch-rules` — `createWatchRule`
 - `POST /watch-rules/{ruleId}/revoke` — `revokeWatchRule`
 
+## 2026-10-18 / 1.0.0-dev.3-provisional
+
+PD-2026-10-18.v1开发暂定，甲方待确认。65操作/37字段从pending转provisional；新增5个审批/受控解密结果接口、42 Schema。收紧候选/解密/新密码约束，补recipient及审批关联。批量删除敏感单项携带approvalId；批量报表/角色删除文案分别统一report:delete/role:grant。生成器修复权限字段并保留暂定元数据。现198操作/623 Schema。详见暂定方案与修改记录，未声称真实后端实现或验收通过。
