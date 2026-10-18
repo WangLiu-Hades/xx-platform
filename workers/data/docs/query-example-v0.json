@@ -1,0 +1,31 @@
+{
+  "executionStatus": "NOT_EXECUTED_EXAMPLE",
+  "trustedScope": {
+    "principal_id": "091fdce8-d372-59f5-9305-8b1b46e779c7",
+    "version": "synthetic-scope-v1",
+    "site_ids": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "data_types": [
+      "PLATE"
+    ]
+  },
+  "request": {
+    "dataType": "PLATE",
+    "timeRange": {
+      "from": "2026-10-16T00:00:00Z",
+      "to": "2026-10-16T01:00:00Z"
+    },
+    "pageSize": 3
+  },
+  "sql": "SELECT \ne.id AS capture_id, e.data_type, e.primary_target_id, e.target_type,\ne.device_id, e.site_id, e.capture_time, e.ingested_at,\nST_X(e.location) AS longitude, ST_Y(e.location) AS latitude,\ns.source_code, e.status, p.plate_color,\nCASE WHEN image.status='ACTIVE' THEN p.vehicle_image_asset_id END AS vehicle_image_asset_id,\ns.id AS source_event_id, s.source_record_key, s.payload_digest, e.batch_id\n\nFROM capture.capture_event e\nJOIN capture.source_event s ON s.id=e.source_event_id\nJOIN capture.plate_record p ON p.capture_id=e.id\nLEFT JOIN core.file_asset image ON image.id=p.vehicle_image_asset_id\n WHERE e.status='VALID' AND e.data_type='PLATE' AND e.site_id=ANY(%(sites)s::uuid[]) AND e.capture_time >= %(from)s::timestamptz AND e.capture_time < %(to)s::timestamptz ORDER BY e.capture_time DESC,e.id DESC LIMIT %(limit)s",
+  "parameters": {
+    "sites": [
+      "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    ],
+    "from": "2026-10-16T00:00:00Z",
+    "to": "2026-10-16T01:00:00Z",
+    "limit": 4
+  },
+  "projection": "data_worker.pg.projection.to_dto"
+}

@@ -1,0 +1,119 @@
+{
+  "items": [
+    {
+      "rowNumber": 16,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "recordId"
+    },
+    {
+      "rowNumber": 17,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "recordId"
+    },
+    {
+      "rowNumber": 18,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "captureTime"
+    },
+    {
+      "rowNumber": 19,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "captureTime"
+    },
+    {
+      "rowNumber": 20,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "captureTime"
+    },
+    {
+      "rowNumber": 21,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "captureTime"
+    },
+    {
+      "rowNumber": 22,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "latitude"
+    },
+    {
+      "rowNumber": 23,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "latitude"
+    },
+    {
+      "rowNumber": 24,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "longitude"
+    },
+    {
+      "rowNumber": 25,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "longitude"
+    },
+    {
+      "rowNumber": 26,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "longitude"
+    },
+    {
+      "rowNumber": 27,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "crs"
+    },
+    {
+      "rowNumber": 28,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "plateText"
+    },
+    {
+      "rowNumber": 29,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "plateText"
+    },
+    {
+      "rowNumber": 30,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule."
+    },
+    {
+      "rowNumber": 31,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "dataType"
+    },
+    {
+      "rowNumber": 32,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "deviceKey"
+    },
+    {
+      "rowNumber": 33,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "vehicleImageRef"
+    },
+    {
+      "rowNumber": 34,
+      "code": "VALIDATION_ERROR",
+      "reason": "Input row failed the selected mapping or validation rule.",
+      "field": "plateColor"
+    }
+  ],
+  "currentAttemptOnly": true,
+  "rawRecordKeysExposed": false
+}

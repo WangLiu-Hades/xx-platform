@@ -1,0 +1,105 @@
+{
+  "races": [
+    [
+      {
+        "batchId": "7e750ad7-a826-4fa5-b30a-f6dce7a713cb",
+        "name": "CONCURRENT-0-A",
+        "inputRows": 1,
+        "acceptedCount": 0,
+        "duplicateCount": 1,
+        "rejectedCount": 0,
+        "factCountAfter": 19
+      },
+      {
+        "batchId": "40917ed8-0cd4-4950-89dd-d01020c7ddc3",
+        "name": "CONCURRENT-0-B",
+        "inputRows": 1,
+        "acceptedCount": 1,
+        "duplicateCount": 0,
+        "rejectedCount": 0,
+        "factCountAfter": 19
+      }
+    ],
+    [
+      {
+        "batchId": "d78be85e-f97e-4d0f-a539-843b64ad7d87",
+        "name": "CONCURRENT-1-A",
+        "inputRows": 1,
+        "acceptedCount": 0,
+        "duplicateCount": 1,
+        "rejectedCount": 0,
+        "factCountAfter": 20
+      },
+      {
+        "batchId": "4521778c-d4ba-41b9-a8a0-d49b90f94ff1",
+        "name": "CONCURRENT-1-B",
+        "inputRows": 1,
+        "acceptedCount": 1,
+        "duplicateCount": 0,
+        "rejectedCount": 0,
+        "factCountAfter": 20
+      }
+    ],
+    [
+      {
+        "batchId": "afec99bf-06a4-4903-a0af-8f6adf0ca2d6",
+        "name": "CONCURRENT-2-A",
+        "inputRows": 1,
+        "acceptedCount": 0,
+        "duplicateCount": 1,
+        "rejectedCount": 0,
+        "factCountAfter": 21
+      },
+      {
+        "batchId": "8e3e1c17-b7ca-4a98-8a43-eee9c3145ee4",
+        "name": "CONCURRENT-2-B",
+        "inputRows": 1,
+        "acceptedCount": 1,
+        "duplicateCount": 0,
+        "rejectedCount": 0,
+        "factCountAfter": 21
+      }
+    ],
+    [
+      {
+        "batchId": "22b5c710-8af3-406a-860e-8c9e9397cbc9",
+        "name": "CONCURRENT-3-A",
+        "inputRows": 1,
+        "acceptedCount": 0,
+        "duplicateCount": 1,
+        "rejectedCount": 0,
+        "factCountAfter": 22
+      },
+      {
+        "batchId": "b15f1d56-a27d-4eed-83a0-bc611288a810",
+        "name": "CONCURRENT-3-B",
+        "inputRows": 1,
+        "acceptedCount": 1,
+        "duplicateCount": 0,
+        "rejectedCount": 0,
+        "factCountAfter": 22
+      }
+    ],
+    [
+      {
+        "batchId": "3192d026-6e5b-421b-80df-f3bcbdac60e2",
+        "name": "CONCURRENT-4-A",
+        "inputRows": 1,
+        "acceptedCount": 0,
+        "duplicateCount": 1,
+        "rejectedCount": 0,
+        "factCountAfter": 23
+      },
+      {
+        "batchId": "58efe5e0-f087-4685-97f2-8dfeed65a64a",
+        "name": "CONCURRENT-4-B",
+        "inputRows": 1,
+        "acceptedCount": 1,
+        "duplicateCount": 0,
+        "rejectedCount": 0,
+        "factCountAfter": 23
+      }
+    ]
+  ],
+  "factsAdded": 5
+}

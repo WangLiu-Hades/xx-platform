@@ -1,0 +1,404 @@
+{
+  "schemaVersion": "d3-metric-catalog-v0",
+  "approvalStatus": "DEV3_DRAFT",
+  "asOf": "2026-10-16",
+  "scope": "工程计数可离线复验；业务指标及八类报表尚未签认",
+  "metrics": [
+    {
+      "code": "D3_PROCESSING_ROWS",
+      "name": "处理行数",
+      "unit": "row",
+      "formula": "每个已提交 batchId + 物理 rowNumber 计一次",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.ingestion_item",
+          "columns": [
+            "processing_status"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_ACCEPTED_ROWS",
+      "name": "首次接纳行数",
+      "unit": "row",
+      "formula": "processing_status=ACCEPTED 的逐行结果数",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.ingestion_item",
+          "columns": [
+            "processing_status"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_DUPLICATE_ROWS",
+      "name": "重复行数",
+      "unit": "row",
+      "formula": "processing_status=DUPLICATE 的逐行结果数",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.ingestion_item",
+          "columns": [
+            "processing_status"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_REJECTED_ROWS",
+      "name": "拒绝行数",
+      "unit": "row",
+      "formula": "processing_status=REJECTED 的逐行结果数",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.ingestion_item",
+          "columns": [
+            "processing_status"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_FACT_INVENTORY",
+      "name": "当前事实库存",
+      "unit": "fact",
+      "formula": "同一完整快照中唯一 captureId 数，不累加多次快照",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": false,
+      "aggregationNote": "不可直接对快照或比例求和",
+      "references": [
+        {
+          "table": "capture.capture_event",
+          "columns": [
+            "id"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_QUALITY_ERRORS",
+      "name": "错误问题数",
+      "unit": "issue",
+      "formula": "本合成协议中每条拒绝行对应一个 ERROR 问题",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.quality_issue",
+          "columns": [
+            "issue_code"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_QUALITY_WARNINGS",
+      "name": "告警问题数",
+      "unit": "issue",
+      "formula": "每条处理结果的每个 WARNING 问题计一次；回放有独立行结果",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": true,
+      "aggregationNote": "仅不重叠批次可求和；相同批次重试不追加",
+      "references": [
+        {
+          "table": "capture.quality_issue",
+          "columns": [
+            "issue_code"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "D3_REJECTION_RATIO",
+      "name": "拒绝比例",
+      "unit": "ratio",
+      "formula": "拒绝行数 / 处理行数；保留分子分母，分母为0返回不可用",
+      "status": "LOCAL_ENGINEERING_ONLY",
+      "definitionVersion": "d3-engineering-metrics-v0",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": true,
+      "additiveAcrossDisjointBatchSets": false,
+      "aggregationNote": "不可直接对快照或比例求和",
+      "references": [
+        {
+          "table": "capture.ingestion_item",
+          "columns": [
+            "processing_status"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "SOURCE_CAPTURE_COUNT",
+      "name": "源端采集量",
+      "unit": "event",
+      "status": "PENDING_RULE_AND_SOURCE",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": false,
+      "formula": null,
+      "pending": [
+        "P-005",
+        "P-006"
+      ],
+      "questions": [
+        "区间计数与累计计数的选择",
+        "counter_epoch 重置、重叠窗口、迟到和缺口处理",
+        "来源上报计数的去重与完整性"
+      ],
+      "references": [
+        {
+          "table": "capture.source_counter_sample",
+          "columns": [
+            "source_code",
+            "source_device_key",
+            "sample_key",
+            "period_from",
+            "period_to",
+            "reported_count",
+            "reported_cumulative_count",
+            "counter_epoch",
+            "as_of"
+          ]
+        }
+      ]
+    },
+    {
+      "code": "DEVICE_ONLINE_RATIO",
+      "name": "设备在线率",
+      "unit": "ratio",
+      "status": "PENDING_RULE_AND_SOURCE",
+      "enabledInPlatform": false,
+      "implementedInOfflineAudit": false,
+      "formula": null,
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "questions": [
+        "瞬时在线设备比例还是区间在线时长比例",
+        "UNKNOWN/FAULT 和停用设备如何计入分母",
+        "心跳阈值、状态策略和缺测处理"
+      ],
+      "references": [
+        {
+          "table": "core.device_status_event",
+          "columns": [
+            "device_id",
+            "status",
+            "occurred_at",
+            "policy_version"
+          ]
+        }
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "reportType": "DEVICE_REALTIME_ONLINE_RATE",
+      "name": "设备实时在线率",
+      "requiredInputs": "状态样本、统计时刻、纳入设备分母、在线判定策略",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "DEVICE_REALTIME_STATUS",
+      "name": "设备实时状态",
+      "requiredInputs": "状态快照、UNKNOWN/FAULT、异常识别及策略版本",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "FENCE_OPERATOR_STATISTICS",
+      "name": "围栏运营商统计",
+      "requiredInputs": "围栏事实/源端计数、运营商字典、归属与去重",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "FENCE_AREA_CAPTURE",
+      "name": "围栏区域采集",
+      "requiredInputs": "授权区域/场所、历史归属、事件时间与计数来源",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "FENCE_DEVICE_CAPTURE",
+      "name": "围栏设备采集",
+      "requiredInputs": "设备范围、源端计数与入库量分别统计",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "MAC_CAPTURE",
+      "name": "MAC采集",
+      "requiredInputs": "MAC来源、事件去重、采集与入库口径",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "PLATE_CAPTURE",
+      "name": "车牌采集",
+      "requiredInputs": "车牌事实、源端计数、时间口径、设备范围；现有16条样本不代表报表完成",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    },
+    {
+      "reportType": "SYSTEM_COMPONENT_STATUS",
+      "name": "系统组件状态",
+      "requiredInputs": "组件遥测、检查时刻、故障/缺测定义",
+      "status": "PENDING_APPROVAL",
+      "pending": [
+        "P-006",
+        "P-020"
+      ],
+      "implemented": false
+    }
+  ],
+  "apiSchemas": [
+    "MetricMeta",
+    "MetricStatus",
+    "MetricPoint",
+    "DeviceCapturePoint",
+    "DeviceCaptureStatistics",
+    "CaptureStatistics",
+    "ReportDefinition",
+    "ReportMetricRow",
+    "TaskParameterSnapshot",
+    "TaskResultReference"
+  ],
+  "ddlReferences": [
+    {
+      "table": "core.metric_definition",
+      "columns": [
+        "metric_code",
+        "definition_version",
+        "calculation_code",
+        "unit",
+        "time_zone",
+        "refresh_policy",
+        "source_kind",
+        "additive",
+        "enabled"
+      ]
+    },
+    {
+      "table": "core.metric_scope",
+      "columns": [
+        "id",
+        "scope_kind",
+        "site_id",
+        "device_id",
+        "data_type",
+        "canonical_key"
+      ]
+    },
+    {
+      "table": "core.metric_snapshot",
+      "columns": [
+        "metric_code",
+        "definition_version",
+        "scope_id",
+        "granularity",
+        "bucket_start",
+        "bucket_end",
+        "value",
+        "numerator",
+        "denominator",
+        "as_of",
+        "status"
+      ]
+    },
+    {
+      "table": "operation.report_definition",
+      "columns": [
+        "report_type",
+        "period_start",
+        "period_end",
+        "scope_snapshot",
+        "metric_definition_versions",
+        "as_of"
+      ]
+    }
+  ],
+  "openContractIssues": [
+    {
+      "id": "D3-C01",
+      "owner": "DEV-01",
+      "description": "ReportDefinition periodEnd 含自然周期；DDL period_start<period_end 不接受显式同日起止。需确认存储转排他上界还是迁移，当前不改权威契约。"
+    },
+    {
+      "id": "D3-C02",
+      "owner": "DEV-01/业务",
+      "description": "DeviceCapturePoint/Statistics 的采集计数为必填非空整数，缺少源端计数时不能返回0或null冒充；P-006未签认时保留能力不可用/REQUIREMENT_PENDING。"
+    },
+    {
+      "id": "D3-C03",
+      "owner": "DEV-01/DEV-03",
+      "description": "合成 ingestedAt/processed_at 使用批次 receivedAt，不是实测提交时间；不能用于生产入库时延和日入库趋势。"
+    }
+  ]
+}
