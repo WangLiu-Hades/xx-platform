@@ -8,9 +8,9 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  * 多维数据分析平台 · 正式 HTTP API 启动类（DEV-01）。
  *
  * <p>契约唯一来源 {@code contracts/api/openapi.yaml}，Base URL {@code /api/v1}。
- * 当前已实现 6 个操作：{@code GET /auth/csrf}、{@code POST /auth/login}、{@code GET /me}、
- * {@code GET /client-config}、{@code GET /health}、{@code GET /ready}；
- * 其余 187 个按 {@code docs/project-governance/BACKEND_TWO_DEV_SPLIT.md} 的阶段计划补齐
+ * 当前已实现 7 个操作：{@code GET /auth/csrf}、{@code POST /auth/login}、{@code POST /auth/logout}、
+ * {@code GET /me}、{@code GET /client-config}、{@code GET /health}、{@code GET /ready}；
+ * 其余 186 个按 {@code docs/project-governance/BACKEND_TWO_DEV_SPLIT.md} 的阶段计划补齐
  * （甲 113 个、乙 80 个）。
  *
  * <p>本地默认端口 8080，与前端 Vite 开发代理默认目标一致
