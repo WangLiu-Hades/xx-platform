@@ -1,0 +1,165 @@
+{
+  "checkedAtUtc": "2026-10-19T07:11:57.583683+00:00",
+  "mainCommit": "2e72d846d8b9448674c97f71f74ed29611e30f36",
+  "trackedFiles": 666,
+  "totalBytes": 93186599,
+  "textFiles": 551,
+  "binaryFiles": 115,
+  "extensionCounts": {
+    "text": 551,
+    "(no suffix)": 9,
+    ".example": 2,
+    ".md": 149,
+    ".yml": 2,
+    ".properties": 1,
+    ".cmd": 1,
+    ".xml": 1,
+    ".ps1": 1,
+    ".java": 13,
+    ".json": 112,
+    "binary": 115,
+    ".png": 80,
+    ".txt": 7,
+    ".html": 3,
+    ".mjs": 9,
+    ".vue": 25,
+    ".ts": 37,
+    ".css": 4,
+    ".cjs": 15,
+    ".xlsx": 21,
+    ".svg": 7,
+    ".zip": 1,
+    ".js": 2,
+    ".tsx": 63,
+    ".sh": 4,
+    ".yaml": 1,
+    ".sql": 3,
+    ".csv": 6,
+    ".pdf": 8,
+    ".jsonl": 12,
+    ".log": 9,
+    ".py": 43,
+    ".docx": 4,
+    ".xmind": 1,
+    ".mmd": 10
+  },
+  "parsedYamlFiles": 3,
+  "extractedDocuments": [
+    {
+      "file": "docs/project-governance/audit/assignment-review-final.pdf",
+      "type": "PDF",
+      "pages": 20,
+      "extractedCharacters": 19815,
+      "textSha256": "003f7d97f230b4ea1bc4a20119a8bd8d2e894180b7bb72ffdc6a16bbe717d5f3",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/audit/assignment-review-v2.pdf",
+      "type": "PDF",
+      "pages": 19,
+      "extractedCharacters": 19477,
+      "textSha256": "0d5059c110613b0b566e6bfd67bcf5aea330d8d67cc4621ca8dfa5739ee11e05",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/audit/assignment-review-v3.pdf",
+      "type": "PDF",
+      "pages": 19,
+      "extractedCharacters": 19431,
+      "textSha256": "e934217de6c9051335b778d8202ca9133b0e27244103acbada62a84c4dc50f1b",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/audit/assignment-review-v4.pdf",
+      "type": "PDF",
+      "pages": 19,
+      "extractedCharacters": 19431,
+      "textSha256": "cdefc8264ef66b85035f0e4576ad9dd98b32444a7b5f4ccf02e984aebaced2f9",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/audit/assignment-review.pdf",
+      "type": "PDF",
+      "pages": 19,
+      "extractedCharacters": 19444,
+      "textSha256": "24aa72e61384b97e00642d847d1ab96f743bc6a5d21a6f3c9b58f9bdd90e4514",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/audit/assignment-reviewed.pdf",
+      "type": "PDF",
+      "pages": 19,
+      "extractedCharacters": 19786,
+      "textSha256": "44ad34a35fc7ac9acde1c78baa3025660d2cbbcb71cf9831d448ae0fb8d25951",
+      "historicalEvidence": true
+    },
+    {
+      "file": "docs/project-governance/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "type": "DOCX",
+      "extractedCharacters": 18046,
+      "textSha256": "d287d582c73d2da907aaa510430933bc6ad52b603d56c765ea2e5b3428187b05",
+      "historicalEvidence": false
+    },
+    {
+      "file": "docs/requirements/source/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "type": "DOCX",
+      "extractedCharacters": 18046,
+      "textSha256": "d287d582c73d2da907aaa510430933bc6ad52b603d56c765ea2e5b3428187b05",
+      "historicalEvidence": false
+    },
+    {
+      "file": "docs/requirements/source/平台功能设计（原始）.docx",
+      "type": "DOCX",
+      "extractedCharacters": 18428,
+      "textSha256": "d9c7e748a83b36dd4b5c641c8077be0a55f144a18d1183efa15b6453d5d54333",
+      "historicalEvidence": false
+    },
+    {
+      "file": "docs/requirements/source/平台功能设计（原始）.pdf",
+      "type": "PDF",
+      "pages": 26,
+      "extractedCharacters": 20104,
+      "textSha256": "3ccf640eed776f524bb7fd72324f4ff235ba2e071fa6222e13fd1ca86ffa1420",
+      "historicalEvidence": false
+    },
+    {
+      "file": "多维数据分析平台开发模块与人员分工.docx",
+      "type": "DOCX",
+      "extractedCharacters": 12491,
+      "textSha256": "b9bd9c1f42309f9cb57023957ee40c7e0951c62adcc8e65c71773b636b8dca85",
+      "historicalEvidence": false
+    },
+    {
+      "file": "平台功能设计（原始）.pdf",
+      "type": "PDF",
+      "pages": 26,
+      "extractedCharacters": 20104,
+      "textSha256": "3ccf640eed776f524bb7fd72324f4ff235ba2e071fa6222e13fd1ca86ffa1420",
+      "historicalEvidence": false
+    }
+  ],
+  "structuralErrors": [],
+  "preservedCoreInputs": [
+    {
+      "file": "contracts/api/openapi.yaml",
+      "commitBytesUnchanged": true,
+      "sha256": "232ac4cf683d30d15ed6791f6afb4e28e8ef5d089c9fc7e7b0619c320874731e"
+    },
+    {
+      "file": "contracts/database/schema.sql",
+      "commitBytesUnchanged": true,
+      "sha256": "05a894a761ef61dc4bd5ad8075af27dbcb195caf036dd8b0ee64ff85afc84664"
+    },
+    {
+      "file": "contracts/database/migrations/PD_20261018_approval.sql",
+      "commitBytesUnchanged": true,
+      "sha256": "399d7db602a3039bbd034375f4ba95681eced79f504316f02cdef654d80f88b4"
+    },
+    {
+      "file": "docs/requirements/source/平台功能设计（原始）.pdf",
+      "commitBytesUnchanged": true,
+      "sha256": "b702a1122d5a23f2fab21e6ba645619f6cf7b7c2c9f65e53919d528cb2e0c9dd"
+    }
+  ],
+  "scope": "Every committed file inventoried; text parsed/scanned where applicable; current core contracts, architecture, governance, ownership, backend and worker handoffs reviewed. Binary images/spreadsheets inventoried; no claim of exhaustive visual/business acceptance."
+}
