@@ -1,6 +1,6 @@
 # API 开发约定
 
-版本1.0.0-dev.3-provisional，2026-10-18。唯一机器契约`openapi.yaml`；原始PDF文字优先分析业务，原型定位页面，system-design确定工程边界。Mock值不是签认规则。
+版本1.0.0-dev.4-provisional，2026-10-19。唯一机器契约`openapi.yaml`；原始PDF文字优先分析业务，原型定位页面，system-design确定工程边界。Mock值不是签认规则。
 
 ## 1. HTTP、字段与响应
 
@@ -120,6 +120,6 @@
 
 ## 2026-10-18暂定开发规则
 
-以[暂定方案](../../docs/project-governance/暂定方案与修改记录.md)及policy为本轮未决值的唯一基线；x-design-status=provisional与x-client-confirmation=pending分离。旧文中“仅书面签认后可校验”的统一门禁由开发负责人本轮授权覆盖；真实密钥/厂商/模型/许可/生产启用门禁仍适用。敏感审批使用X-Approval-Id，精确闭环与幂等/一次性明文消费见审批协议。数据保留一个自然月，访问TTL不代表物理保留期。
+以[暂定方案](../../docs/project-governance/暂定方案与修改记录.md)及policy为本轮未决值的唯一基线；x-design-status=provisional与x-client-confirmation=pending分离。旧文中“仅书面签认后可校验”的统一门禁由开发负责人本轮授权覆盖；真实密钥/厂商/模型/许可/生产启用门禁仍适用。敏感审批使用X-Approval-Id，精确闭环与幂等/一次性明文消费见审批协议。数据保留一年（12个自然月），访问TTL不代表物理保留期。
 
 并发登录必须锁定账号行后，在同事务撤销旧会话并签发新会话，防止并发成功后留下两个有效SID。常规业务主动请求才滑动空闲期；探针/轮询/资源预加载不续期。

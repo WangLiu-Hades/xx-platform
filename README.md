@@ -1,4 +1,4 @@
-> 2026-10-18当前版本：[PD-2026-10-18.v1](docs/project-governance/暂定方案与修改记录.md)。当前分工01/02后端、03前端、04数据、05测试；下文旧数量/编号/NO及签认门禁保留作历史追踪，不覆盖本轮暂定设计，也不证明当前实现。旧治理生成脚本不得覆盖本轮policy/暂定文档。
+> 2026-10-18当前版本：[PD-2026-10-19.v1](docs/project-governance/暂定方案与修改记录.md)。当前分工01/02后端、03前端、04数据、05测试；下文旧数量/编号/NO及签认门禁保留作历史追踪，不覆盖本轮暂定设计，也不证明当前实现。旧治理生成脚本不得覆盖本轮policy/暂定文档。
 
 # 多维数据分析平台
 
@@ -32,7 +32,7 @@ npm --prefix apps/web ci
 npm --prefix apps/web run dev -- --port 5180 --strictPort
 ```
 
-按终端地址访问。默认 Mock 模式，演示账号与后端接入方式见 [前端说明](apps/web/README.md)。原始业务需求最高优先级；按PD-2026-10-18.v1暂定规则开发，甲方确认与真实资源就绪分别校验。后端个人模块按[双人分工](docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。
+按终端地址访问。默认 Mock 模式，演示账号与后端接入方式见 [前端说明](apps/web/README.md)。原始业务需求最高优先级；按PD-2026-10-19.v1暂定规则开发，甲方确认与真实资源就绪分别校验。后端个人模块按[双人分工](docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。
 
 ```powershell
 npm --prefix apps/web run generate:api

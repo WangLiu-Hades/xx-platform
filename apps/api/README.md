@@ -1,10 +1,10 @@
-> 当前基线：PD-2026-10-18.v1；后端个人模块按[当前分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。前端DEV-03、数据DEV-04、测试DEV-05。
+> 当前基线：PD-2026-10-19.v1；后端个人模块按[当前分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。前端DEV-03、数据DEV-04、测试DEV-05。
 
 # xx-platform 后端服务（`apps/api`）
 
 多维数据分析平台的**正式 HTTP API**。前端（Vue 原型）已经按契约写好，这里要把 198 个操作真正实现出来。
 
-- 契约唯一来源：[openapi.yaml](../../contracts/api/openapi.yaml)（OpenAPI 3.0.3，版本 `1.0.0-dev.3-provisional`，198 操作 / 623 Schema，Base URL `/api/v1`）
+- 契约唯一来源：[openapi.yaml](../../contracts/api/openapi.yaml)（OpenAPI 3.0.3，版本 `1.0.0-dev.4-provisional`，198 操作 / 623 Schema，Base URL `/api/v1`）
 - 接口约定：[api-conventions.md](../../contracts/api/api-conventions.md) ｜ 错误码：[error-codes.md](../../contracts/api/error-codes.md)
 - 前端对接：[FRONTEND_INTEGRATION.md](../../contracts/api/FRONTEND_INTEGRATION.md)
 - 契约速读（新人先看这个）：[API速读指南.md](../../docs/API速读指南.md)

@@ -1,4 +1,4 @@
-> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-18.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
+> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-19.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
 
 # 数据字典（DB-DESIGN-2）
 
@@ -3379,7 +3379,7 @@ UUID由应用生成；时间戳使用 timestamptz，连接与持久化按 UTC，
 | `capture_id` | uuid | 否 | 无 | capture_id；PK；FK capture.capture_event(id) |
 | `created_at` | timestamptz | 否 | now() | UTC 时刻；API 输出 RFC3339 带偏移 |
 
-## PD-2026-10-18.v1增量
+## PD-2026-10-19.v1增量
 
 当前快照新增operation.action_approval、audit.action_approval_decision两表；字段/类型/约束以schema.sql末尾PD块为准。分别保存加密提案/摘要/状态/许可与独立复核事实，详细映射见SENSITIVE_ACTION_PROTOCOL。
 

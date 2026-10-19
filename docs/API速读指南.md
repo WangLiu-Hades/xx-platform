@@ -1,6 +1,6 @@
 # API速读指南
 
-契约：contracts/api/openapi.yaml，1.0.0-dev.3-provisional，PD-2026-10-18.v1。开发按暂定方案，甲方确认状态仍pending。此目录未验证阿里云服务器实际实现。
+契约：contracts/api/openapi.yaml，1.0.0-dev.4-provisional，PD-2026-10-19.v1。开发按暂定方案，甲方确认状态仍pending。此目录未验证阿里云服务器实际实现。
 
 1. `/api/v1`同源HTTPS，SID Cookie；写操作CSRF/Origin；不使用浏览器localStorage Token。
 2. 先读[约定](../contracts/api/api-conventions.md)，按operationId调用；UUID代理标识、敏感条件POST JSON。

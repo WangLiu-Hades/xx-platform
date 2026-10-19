@@ -1,6 +1,6 @@
 # 内部任务与四源交接协议
 
-版本PD-2026-10-18.v1，暂定、待甲方确认。内部接口不添加到公共Web API。DEV-01主维护公共TaskStore、租约与发布底座，DEV-02负责其领域事务/API编排并调用共享接口；DEV-04负责数据Worker，DEV-03前端，DEV-05验证。内部操作语义保持不变，个人模块见[双人分工](BACKEND_TWO_DEV_SPLIT.md)。
+版本PD-2026-10-19.v1，暂定、待甲方确认。内部接口不添加到公共Web API。DEV-01主维护公共TaskStore、租约与发布底座，DEV-02负责其领域事务/API编排并调用共享接口；DEV-04负责数据Worker，DEV-03前端，DEV-05验证。内部操作语义保持不变，个人模块见[双人分工](BACKEND_TWO_DEV_SPLIT.md)。
 
 ## 四源交接
 

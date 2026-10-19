@@ -8,13 +8,13 @@ export type paths = {
         };
         /**
          * 查询本人申请或待本人复核的审批
-         * @description 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+         * @description 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
          */
         get: operations["listActionApprovals"];
         put?: never;
         /**
          * 创建冻结的敏感动作审批申请
-         * @description 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+         * @description 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
          */
         post: operations["createActionApproval"];
         delete?: never;
@@ -32,7 +32,7 @@ export type paths = {
         };
         /**
          * 查询受控审批详情
-         * @description 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+         * @description 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
          */
         get: operations["getActionApproval"];
         put?: never;
@@ -54,7 +54,7 @@ export type paths = {
         put?: never;
         /**
          * 提交独立复核决定
-         * @description 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+         * @description 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
          */
         post: operations["decideActionApproval"];
         delete?: never;
@@ -282,7 +282,7 @@ export type paths = {
         put?: never;
         /**
          * 导出操作日志
-         * @description 导出操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 导出操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportAuditEvents"];
         delete?: never;
@@ -302,7 +302,7 @@ export type paths = {
         put?: never;
         /**
          * 查询操作日志
-         * @description 查询操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查询操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["searchAuditEvents"];
         delete?: never;
@@ -382,7 +382,7 @@ export type paths = {
         put?: never;
         /**
          * 续期当前 Cookie 会话
-         * @description 续期当前 Cookie 会话；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；返回会话idleExpiresAt/absoluteExpiresAt，登录轮换SID；前端withCredentials并刷新csrf。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 续期当前 Cookie 会话；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；返回会话idleExpiresAt/absoluteExpiresAt，登录轮换SID；前端withCredentials并刷新csrf。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["renewSession"];
         delete?: never;
@@ -756,7 +756,7 @@ export type paths = {
         };
         /**
          * 查询解密申请状态
-         * @description 查询解密申请状态；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查询解密申请状态；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getDecryptionRequest"];
         put?: never;
@@ -838,7 +838,7 @@ export type paths = {
         put?: never;
         /**
          * 导出短信送达日志
-         * @description 导出短信送达日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 导出短信送达日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportSmsLogs"];
         delete?: never;
@@ -858,7 +858,7 @@ export type paths = {
         put?: never;
         /**
          * 查询短信送达日志
-         * @description 只返回 channel=SMS 的送达记录；按任务名称、收件人和发送时间筛选，收件人条件只在请求体。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 只返回 channel=SMS 的送达记录；按任务名称、收件人和发送时间筛选，收件人条件只在请求体。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["searchSmsLogs"];
         delete?: never;
@@ -882,7 +882,7 @@ export type paths = {
         put?: never;
         /**
          * 下发远程设备命令
-         * @description 冻结设备清单；每台设备有独立结果和幂等键。RESET 还需 device:reset 权限。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 冻结设备清单；每台设备有独立结果和幂等键。RESET 还需 device:reset 权限。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createDeviceCommand"];
         delete?: never;
@@ -946,7 +946,7 @@ export type paths = {
         put?: never;
         /**
          * 重试失败的设备命令
-         * @description 重试失败的设备命令；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 重试失败的设备命令；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["retryDeviceCommand"];
         delete?: never;
@@ -966,7 +966,7 @@ export type paths = {
         put?: never;
         /**
          * 重建参数配置任务
-         * @description 仅APPLY_PARAMETERS且原任务终态允许；返回新taskId，新参数执行新任务，历史回执不覆盖。RESET不可编辑返回409 TASK_CONFLICT。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；只允许原任务终态SUCCESS/FAILED/CANCELLED，版本不匹配409 RESOURCE_VERSION_CONFLICT。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 仅APPLY_PARAMETERS且原任务终态允许；返回新taskId，新参数执行新任务，历史回执不覆盖。RESET不可编辑返回409 TASK_CONFLICT。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；只允许原任务终态SUCCESS/FAILED/CANCELLED，版本不匹配409 RESOURCE_VERSION_CONFLICT。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["reviseDeviceCommand"];
         delete?: never;
@@ -1086,7 +1086,7 @@ export type paths = {
         put?: never;
         /**
          * 新增设备
-         * @description 新增设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 新增设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createDevice"];
         delete?: never;
@@ -1109,7 +1109,7 @@ export type paths = {
         get: operations["getDevice"];
         /**
          * 编辑设备信息
-         * @description 编辑设备信息；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 编辑设备信息；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["updateDevice"];
         post?: never;
@@ -1132,7 +1132,7 @@ export type paths = {
         };
         /**
          * 查看设备采集历史
-         * @description 查看设备采集历史；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看设备采集历史；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getDeviceCaptureStatistics"];
         put?: never;
@@ -1154,7 +1154,7 @@ export type paths = {
         put?: never;
         /**
          * 提交设备参数更新
-         * @description 提交设备参数更新；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 提交设备参数更新；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["updateDeviceParameters"];
         delete?: never;
@@ -1172,7 +1172,7 @@ export type paths = {
         };
         /**
          * 读取设备参数
-         * @description 读取设备参数；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 读取设备参数；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getDeviceParameters"];
         put?: never;
@@ -1234,7 +1234,7 @@ export type paths = {
         put?: never;
         /**
          * 导出设备清单
-         * @description 导出设备清单；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 导出设备清单；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportDevices"];
         delete?: never;
@@ -1254,7 +1254,7 @@ export type paths = {
         put?: never;
         /**
          * 批量导入设备
-         * @description 批量导入设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 批量导入设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["importDevices"];
         delete?: never;
@@ -1314,7 +1314,7 @@ export type paths = {
         put?: never;
         /**
          * 创建人像相似检索任务
-         * @description 创建人像相似检索任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 创建人像相似检索任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createFaceSearchTask"];
         delete?: never;
@@ -1332,7 +1332,7 @@ export type paths = {
         };
         /**
          * 分页读取人像候选
-         * @description 分页读取人像候选；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 分页读取人像候选；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listFaceSearchResults"];
         put?: never;
@@ -1458,7 +1458,7 @@ export type paths = {
         put?: never;
         /**
          * 提交文件接入批次
-         * @description 提交文件接入批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 提交文件接入批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createIngestionBatch"];
         delete?: never;
@@ -1518,7 +1518,7 @@ export type paths = {
         put?: never;
         /**
          * 按版本回放批次
-         * @description 按版本回放批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 按版本回放批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["replayIngestionBatch"];
         delete?: never;
@@ -1538,7 +1538,7 @@ export type paths = {
         put?: never;
         /**
          * 创建补数任务
-         * @description 创建补数任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 创建补数任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createIngestionBackfill"];
         delete?: never;
@@ -1678,7 +1678,7 @@ export type paths = {
         put?: never;
         /**
          * 修改本人密码
-         * @description currentPassword和newPassword必填；凭据错误401 AUTH_INVALID_CREDENTIALS，成功撤销本人其它会话。密码复杂度取已签认部署策略。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description currentPassword和newPassword必填；凭据错误401 AUTH_INVALID_CREDENTIALS，成功撤销本人其它会话。密码复杂度取已签认部署策略。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["changeMyPassword"];
         delete?: never;
@@ -1738,7 +1738,7 @@ export type paths = {
         put?: never;
         /**
          * 导出首页或运维指标图表
-         * @description 返回导出任务，成功经文件二次授权下载。指标来源与汇总响应完全相同，不能以采集明细替代图表。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；DASHBOARD需要dashboard:read；OPERATIONS同读权限，另需capture:export；该源/指标组合不匹配422 VALIDATION_ERROR。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 返回导出任务，成功经文件二次授权下载。指标来源与汇总响应完全相同，不能以采集明细替代图表。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；DASHBOARD需要dashboard:read；OPERATIONS同读权限，另需capture:export；该源/指标组合不匹配422 VALIDATION_ERROR。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportMetrics"];
         delete?: never;
@@ -1756,7 +1756,7 @@ export type paths = {
         };
         /**
          * 查询模型标签目录
-         * @description 查询模型标签目录；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查询模型标签目录；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listModelTags"];
         put?: never;
@@ -1782,7 +1782,7 @@ export type paths = {
         put?: never;
         /**
          * 创建定时通知任务
-         * @description 同步创建持久通知计划返回201和notificationTaskId；到期每次执行创建独立taskId，lastExecutionTaskId可轮询。平台消息收件用户与SMS/EMAIL收件地址均显式提供。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；创建禁止RETAINED；地址转换成服务端recipientId，详情返回脱敏摘要。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 同步创建持久通知计划返回201和notificationTaskId；到期每次执行创建独立taskId，lastExecutionTaskId可轮询。平台消息收件用户与SMS/EMAIL收件地址均显式提供。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；创建禁止RETAINED；地址转换成服务端recipientId，详情返回脱敏摘要。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createNotificationTask"];
         delete?: never;
@@ -1805,7 +1805,7 @@ export type paths = {
         get: operations["getNotificationTask"];
         /**
          * 更新未终结通知计划
-         * @description 仅ACTIVE可编辑，原已发送Delivery不改变，新版从下一次计划执行生效；相同日期不得重复发送。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；targets可用RETAINED保留既有地址；新地址只在请求体，不能用recipientMasked回填。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 仅ACTIVE可编辑，原已发送Delivery不改变，新版从下一次计划执行生效；相同日期不得重复发送。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；targets可用RETAINED保留既有地址；新地址只在请求体，不能用recipientMasked回填。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["updateNotificationTask"];
         post?: never;
@@ -1868,7 +1868,7 @@ export type paths = {
         };
         /**
          * 查询已批准通知模板
-         * @description 根据purpose和channels选择模板，无可用模板时不能发送；正文由后台模板维护，不开放供应商管理。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 根据purpose和channels选择模板，无可用模板时不能发送；正文由后台模板维护，不开放供应商管理。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listNotificationTemplates"];
         put?: never;
@@ -1982,7 +1982,7 @@ export type paths = {
         put?: never;
         /**
          * 导出人员库
-         * @description 导出人员库；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 导出人员库；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportPersonLibrary"];
         delete?: never;
@@ -2002,7 +2002,7 @@ export type paths = {
         put?: never;
         /**
          * 从文件导入人员库成员
-         * @description 从文件导入人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 从文件导入人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["importPersonLibraryMembers"];
         delete?: never;
@@ -2026,7 +2026,7 @@ export type paths = {
         put?: never;
         /**
          * 添加人员库成员
-         * @description 添加人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 添加人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["addPersonLibraryMembers"];
         delete?: never;
@@ -2066,7 +2066,7 @@ export type paths = {
         put?: never;
         /**
          * 新增库内人员及手工档案
-         * @description 在同一事务登记目标、创建PERSON档案和库成员。明确重复已有关联标识时409 RESOURCE_CONFLICT，不能静默把不同人合并。编辑后续走档案corrections；删除成员不删除全局档案。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 在同一事务登记目标、创建PERSON档案和库成员。明确重复已有关联标识时409 RESOURCE_CONFLICT，不能静默把不同人合并。编辑后续走档案corrections；删除成员不删除全局档案。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createLibraryPerson"];
         delete?: never;
@@ -2106,7 +2106,7 @@ export type paths = {
         put?: never;
         /**
          * 批量导入库列表和库内人员
-         * @description 支持库名/分类与人员资料。导入同时登记手工档案/成员；全部行预检，任一错误回滚。错误走/tasks/{taskId}/errors，成功TaskResultReference指向PERSON_LIBRARY_IMPORT结果。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 支持库名/分类与人员资料。导入同时登记手工档案/成员；全部行预检，任一错误回滚。错误走/tasks/{taskId}/errors，成功TaskResultReference指向PERSON_LIBRARY_IMPORT结果。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["importPersonLibraries"];
         delete?: never;
@@ -2124,7 +2124,7 @@ export type paths = {
         };
         /**
          * 查看档案详情
-         * @description 查看档案详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看档案详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getProfile"];
         put?: never;
@@ -2144,7 +2144,7 @@ export type paths = {
         };
         /**
          * 读取可复核档案冲突
-         * @description 读取可复核档案冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 读取可复核档案冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listProfileConflicts"];
         put?: never;
@@ -2166,7 +2166,7 @@ export type paths = {
         put?: never;
         /**
          * 处理档案证据冲突
-         * @description 处理档案证据冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 处理档案证据冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["resolveProfileConflict"];
         delete?: never;
@@ -2186,7 +2186,7 @@ export type paths = {
         put?: never;
         /**
          * 人工修订档案
-         * @description 人工修订档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 人工修订档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createProfileCorrection"];
         delete?: never;
@@ -2226,7 +2226,7 @@ export type paths = {
         put?: never;
         /**
          * 导出档案
-         * @description 导出档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 导出档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["exportProfile"];
         delete?: never;
@@ -2266,7 +2266,7 @@ export type paths = {
         put?: never;
         /**
          * 拆分档案
-         * @description 拆分档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 拆分档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["splitProfile"];
         delete?: never;
@@ -2284,7 +2284,7 @@ export type paths = {
         };
         /**
          * 查看档案关联目标
-         * @description 查看档案关联目标；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看档案关联目标；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listProfileTargets"];
         put?: never;
@@ -2304,7 +2304,7 @@ export type paths = {
         };
         /**
          * 查看档案轨迹
-         * @description 查看档案轨迹；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；固定captureTime ASC/captureId ASC；各点target用于分组，不跨目标连线。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看档案轨迹；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；固定captureTime ASC/captureId ASC；各点target用于分组，不跨目标连线。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listProfileTrajectories"];
         put?: never;
@@ -2326,7 +2326,7 @@ export type paths = {
         put?: never;
         /**
          * 合并档案
-         * @description 合并档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 合并档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["mergeProfiles"];
         delete?: never;
@@ -2346,7 +2346,7 @@ export type paths = {
         put?: never;
         /**
          * 检索人车档案
-         * @description 检索人车档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 检索人车档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["searchProfiles"];
         delete?: never;
@@ -2410,7 +2410,7 @@ export type paths = {
         put?: never;
         /**
          * 创建报表任务
-         * @description 创建报表任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 创建报表任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createReport"];
         delete?: never;
@@ -2472,7 +2472,7 @@ export type paths = {
         };
         /**
          * 预览单报表
-         * @description 仅成功的 SINGLE 报表可预览；BUNDLE 返回 422。；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 仅成功的 SINGLE 报表可预览；BUNDLE 返回 422。；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getReportPreview"];
         put?: never;
@@ -2518,7 +2518,7 @@ export type paths = {
         put?: never;
         /**
          * 新增角色
-         * @description 新增角色；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 新增角色；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createRole"];
         delete?: never;
@@ -2565,7 +2565,7 @@ export type paths = {
         get?: never;
         /**
          * 设置角色菜单和按钮权限
-         * @description 设置角色菜单和按钮权限；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 设置角色菜单和按钮权限；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["setRolePermissions"];
         post?: never;
@@ -2585,7 +2585,7 @@ export type paths = {
         get?: never;
         /**
          * 设置角色场所和数据范围
-         * @description 设置角色场所和数据范围；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 设置角色场所和数据范围；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["setRoleScopes"];
         post?: never;
@@ -2742,7 +2742,7 @@ export type paths = {
         put?: never;
         /**
          * 批量解析或登记目标代理ID
-         * @description 批量最多100。查找需capture:read；登记需watch:write或person-library:write，并校验类型/场所范围。登记不是身份关联，无采集也可布控。每项独立状态，目标唯一键为类型+规范化指纹，重复返回同ID。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 批量最多100。查找需capture:read；登记需watch:write或person-library:write，并校验类型/场所范围。登记不是身份关联，无采集也可布控。每项独立状态，目标唯一键为类型+规范化指纹，重复返回同ID。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["resolveTargets"];
         delete?: never;
@@ -2920,13 +2920,13 @@ export type paths = {
         };
         /**
          * 查询趋势模型
-         * @description 查询趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查询趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listTrendModels"];
         put?: never;
         /**
          * 新建趋势模型
-         * @description 新建趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 新建趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createTrendModel"];
         delete?: never;
@@ -2944,12 +2944,12 @@ export type paths = {
         };
         /**
          * 查看趋势模型详情
-         * @description 查看趋势模型详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看趋势模型详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getTrendModel"];
         /**
          * 编辑趋势模型
-         * @description 编辑趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 编辑趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["updateTrendModel"];
         post?: never;
@@ -2974,7 +2974,7 @@ export type paths = {
         put?: never;
         /**
          * 新增模型参数版本
-         * @description 新增模型参数版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 新增模型参数版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createModelParameterVersion"];
         delete?: never;
@@ -3012,7 +3012,7 @@ export type paths = {
         };
         /**
          * 查看模型执行结果
-         * @description 查看模型执行结果；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看模型执行结果；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["listTrendModelResults"];
         put?: never;
@@ -3032,7 +3032,7 @@ export type paths = {
         };
         /**
          * 查看模型结果详情
-         * @description 查看模型结果详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 查看模型结果详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         get: operations["getTrendModelResult"];
         put?: never;
@@ -3054,7 +3054,7 @@ export type paths = {
         put?: never;
         /**
          * 执行趋势模型
-         * @description 执行趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 执行趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["runTrendModel"];
         delete?: never;
@@ -3078,7 +3078,7 @@ export type paths = {
         put?: never;
         /**
          * 新增用户
-         * @description 新增用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 新增用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createUser"];
         delete?: never;
@@ -3101,7 +3101,7 @@ export type paths = {
         get: operations["getUser"];
         /**
          * 编辑用户
-         * @description 编辑用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 编辑用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         put: operations["updateUser"];
         post?: never;
@@ -3126,7 +3126,7 @@ export type paths = {
         put?: never;
         /**
          * 禁用用户
-         * @description 禁用用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 禁用用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["disableUser"];
         delete?: never;
@@ -3166,7 +3166,7 @@ export type paths = {
         put?: never;
         /**
          * 修改用户密码
-         * @description 管理员重置密码，不接收currentPassword；本人改密使用/me/password。审计用途必填reason，成功撤销该用户所有会话。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 管理员重置密码，不接收currentPassword；本人改密使用/me/password。审计用途必填reason，成功撤销该用户所有会话。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["changeUserPassword"];
         delete?: never;
@@ -3190,7 +3190,7 @@ export type paths = {
         put?: never;
         /**
          * 创建布控草稿
-         * @description 创建布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 创建布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["createWatchRule"];
         delete?: never;
@@ -3222,7 +3222,7 @@ export type paths = {
         head?: never;
         /**
          * 修改规则并生成新版本
-         * @description 修改规则并生成新版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 修改规则并生成新版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         patch: operations["updateWatchRule"];
         trace?: never;
@@ -3238,7 +3238,7 @@ export type paths = {
         put?: never;
         /**
          * 激活布控草稿
-         * @description 激活布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
+         * @description 激活布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。
          */
         post: operations["activateWatchRule"];
         delete?: never;
@@ -3430,7 +3430,7 @@ export type components = {
             traceId: string;
         };
         /**
-         * @description 沿用LOW/MEDIUM/HIGH和OPEN/ACKNOWLEDGED/CLOSED；默认LOW，等级由规则配置，不表示犯罪概率。watch:write确认/关闭，reason必填；确认后不自动隐藏，保存自然月。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 沿用LOW/MEDIUM/HIGH和OPEN/ACKNOWLEDGED/CLOSED；默认LOW，等级由规则配置，不表示犯罪概率。watch:write确认/关闭，reason必填；确认后不自动隐藏，保存一年（12个自然月）。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "alertId": "00000000-0000-4000-8000-000000000001",
          *       "ruleId": "00000000-0000-4000-8000-000000000001",
@@ -3611,7 +3611,7 @@ export type components = {
             pageSize: number;
         };
         /**
-         * @description 访问有效期固定创建后30分钟，不因复用续期，到期410 CONTEXT_EXPIRED；物理元数据保存自然月。每次消费重校权限，缩权403；targets最多100个预览，不代表完整输入。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 访问有效期固定创建后30分钟，不因复用续期，到期410 CONTEXT_EXPIRED；物理元数据保存一年（12个自然月）。每次消费重校权限，缩权403；targets最多100个预览，不代表完整输入。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "contextId": "00000000-0000-4000-8000-000000000001",
          *       "ownerUserId": "00000000-0000-4000-8000-000000000001",
@@ -4905,7 +4905,7 @@ export type components = {
          */
         CaptureSearchFilter: components["schemas"]["FenceCaptureSearchFilter"] | components["schemas"]["MacCaptureSearchFilter"] | components["schemas"]["PlateCaptureSearchFilter"] | components["schemas"]["FaceCaptureSearchFilter"];
         /**
-         * @description 普通查询最多31天，分页20默认/100最大，不透明游标签名15分钟并绑定条件/水位/权限版本。SQL硬超时5秒、锁等待1秒；取消向DB传播，不能以部分结果冒充完整成功。查询验收目标仍<=2秒。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 普通查询最多31天，分页20默认/100最大，不透明游标签名15分钟并绑定条件/水位/权限版本。SQL硬超时5秒、锁等待1秒；取消向DB传播，不能以部分结果冒充完整成功。查询验收目标仍<=2秒。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "dataType": "FENCE",
          *       "timeRange": {
@@ -5133,7 +5133,7 @@ export type components = {
             traceId: string;
         };
         /**
-         * @description 前端可读取的非机密有效配置；暂定值按PD-2026-10-18.v1返回，后续版本显式变更；features只表示实际实现与资源可用性，不以甲方未定稿统一禁用。
+         * @description 前端可读取的非机密有效配置；暂定值按PD-2026-10-19.v1返回，后续版本显式变更；features只表示实际实现与资源可用性，不以甲方未定稿统一禁用。
          * @example {
          *       "version": "mock-example",
          *       "mapCoordinateSystem": "EPSG:4326",
@@ -5284,7 +5284,7 @@ export type components = {
             /** @description 字段字典绑定列表，不提供内部配置或供应商私密字段。 */
             catalogBindings: components["schemas"]["CatalogBinding"][];
             /**
-             * @description PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
+             * @description PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
              * @default 1800
              */
             contextTtlSeconds: number;
@@ -5305,12 +5305,12 @@ export type components = {
              */
             mapCoordinateSystem: "EPSG:4326";
             /**
-             * @description PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
+             * @description PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
              * @default 5
              */
             maxOnlineQuerySeconds: number;
             /**
-             * @description PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
+             * @description PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
              * @default 31
              */
             maxOnlineWindowDays: number;
@@ -5320,7 +5320,7 @@ export type components = {
              */
             maxUploadBytes: number;
             /**
-             * @description PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
+             * @description PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。
              * @default 2
              */
             taskPollIntervalSeconds: number;
@@ -5340,7 +5340,7 @@ export type components = {
             enabled: boolean;
         };
         /**
-         * @description ruleCode=COLLISION_V1，默认120秒/100米配对，最多7天；保存逐条采集证据，matchRate是匹配主目标桶数/主目标有效桶数，不自动跨标识认人。 [PD-2026-10-18.v1，待甲方确认]
+         * @description ruleCode=COLLISION_V1，默认120秒/100米配对，最多7天；保存逐条采集证据，matchRate是匹配主目标桶数/主目标有效桶数，不自动跨标识认人。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "targets": [
          *         {
@@ -5542,7 +5542,7 @@ export type components = {
             occurredAt: string;
         };
         /**
-         * @description 返回实际碰撞采集与时间/场所证据，matchRate=匹配主目标桶/主目标有效桶；缺证据不返回推断结论，不把关联分解释为同一人或风险概率。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 返回实际碰撞采集与时间/场所证据，matchRate=匹配主目标桶/主目标有效桶；缺证据不返回推断结论，不把关联分解释为同一人或风险概率。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "resultId": "00000000-0000-4000-8000-000000000001",
          *       "target": {
@@ -5684,7 +5684,7 @@ export type components = {
             targetType: components["schemas"]["TargetType"];
         };
         /**
-         * @description COMPANION_V1默认120秒/100米，最多3600秒/5000米、7天；至少3个共现桶。geography米制距离、不重复配对及稳定排序；associationScore为桶Jaccard，不是身份/嫌疑概率。 [PD-2026-10-18.v1，待甲方确认]
+         * @description COMPANION_V1默认120秒/100米，最多3600秒/5000米、7天；至少3个共现桶。geography米制距离、不重复配对及稳定排序；associationScore为桶Jaccard，不是身份/嫌疑概率。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "target": {
          *         "targetId": "00000000-0000-4000-8000-000000000001",
@@ -6604,7 +6604,7 @@ export type components = {
             siteCount: number | null;
         };
         /**
-         * @description 12类首页区域（11类数据+应用入口）按METRIC_V1计算，共用meta/asOf/status/unit。源counter采集量与capture事实入库量分开，去重按typed target；提交水位至发布<=3秒/UI刷新<=2秒，未知/失败用既有状态与null。公式见policy。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 12类首页区域（11类数据+应用入口）按METRIC_V1计算，共用meta/asOf/status/unit。源counter采集量与capture事实入库量分开，去重按typed target；提交水位至发布<=3秒/UI刷新<=2秒，未知/失败用既有状态与null。公式见policy。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "onlineDevices": {
          *         "meta": {
@@ -6884,7 +6884,7 @@ export type components = {
             topSitesByDataType: components["schemas"]["TypedRankMetric"][];
         };
         /**
-         * @description 按(dataType,siteId,ownershipPredicate)授权元组取角色并集及账号附加授权，不分别合并维度后扩大授权。allSites=true时siteIds必须[]，false且[]无场所；SUPER_ADMIN默认全部采集可见，其他对象和操作权限仍独立检查。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 按(dataType,siteId,ownershipPredicate)授权元组取角色并集及账号附加授权，不分别合并维度后扩大授权。allSites=true时siteIds必须[]，false且[]无场所；SUPER_ADMIN默认全部采集可见，其他对象和操作权限仍独立检查。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "siteIds": [],
          *       "allSites": true,
@@ -6914,7 +6914,7 @@ export type components = {
             siteIds: string[];
         };
         /**
-         * @description 共享不能放宽源数据；固定datasetId+version。ARCHIVED只读可查、可显式恢复但不能新引用；活跃引用删除409，历史清理按自然月及引用保护。管理导入仍ALL_OR_NOTHING。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 共享不能放宽源数据；固定datasetId+version。ARCHIVED只读可查、可显式恢复但不能新引用；活跃引用删除409，历史清理按自然月及引用保护。管理导入仍ALL_OR_NOTHING。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "datasetId": "00000000-0000-4000-8000-000000000001",
          *       "name": "mock-example",
@@ -7317,7 +7317,7 @@ export type components = {
             value: string;
         };
         /**
-         * @description capture:read可提交转交，recipient需capture:decrypt及对应范围；普通账号必须指定recipient。purpose10至1000字符，最多200采集；两名不同非申请人审批。只申请，不直接返回明文。 [PD-2026-10-18.v1，待甲方确认]
+         * @description capture:read可提交转交，recipient需capture:decrypt及对应范围；普通账号必须指定recipient。purpose10至1000字符，最多200采集；两名不同非申请人审批。只申请，不直接返回明文。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "contextId": "00000000-0000-4000-8000-000000000001",
          *       "purpose": "mock-example",
@@ -7343,7 +7343,7 @@ export type components = {
             recipientUserId?: string;
         };
         /**
-         * @description 不含明文或grantUrl。申请24小时过期，批准后指定recipient使用readDecryptionResult受控POST查看一次，展示许可5分钟；resultAvailable须审批/密钥/身份/当前权限/许可均有效。元数据自然月，明文不形成持久文件。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 不含明文或grantUrl。申请24小时过期，批准后指定recipient使用readDecryptionResult受控POST查看一次，展示许可5分钟；resultAvailable须审批/密钥/身份/当前权限/许可均有效。元数据自然月，明文不形成持久文件。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "requestId": "00000000-0000-4000-8000-000000000001",
          *       "contextId": "00000000-0000-4000-8000-000000000001",
@@ -7630,7 +7630,7 @@ export type components = {
             traceId: string;
         };
         /**
-         * @description 沿用PENDING/SENT/ACKNOWLEDGED/FAILED/UNKNOWN；SMS成功仅送达成功回执。SMTP250仅SENT，DSN成功才ACKNOWLEDGED；平台收件箱持久化可ACKNOWLEDGED。UNKNOWN先对账不盲重发；明确可重试失败3次30/120/600秒+20%抖动，回执窗口24小时。验收连续7天/至少1000逻辑投递，重试合并一次，成功率>=99%。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 沿用PENDING/SENT/ACKNOWLEDGED/FAILED/UNKNOWN；SMS成功仅送达成功回执。SMTP250仅SENT，DSN成功才ACKNOWLEDGED；平台收件箱持久化可ACKNOWLEDGED。UNKNOWN先对账不盲重发；明确可重试失败3次30/120/600秒+20%抖动，回执窗口24小时。验收连续7天/至少1000逻辑投递，重试合并一次，成功率>=99%。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "deliveryId": "00000000-0000-4000-8000-000000000001",
          *       "channel": "SMS",
@@ -8597,7 +8597,7 @@ export type components = {
             total: number;
         };
         /**
-         * @description 仅版本化厂商DeviceProfile登记的参数，保留TEXT/INTEGER/NUMBER/BOOLEAN类型；敏感值不回原文。未绑定真实profile不得假造参数，实际读写不可用返回503。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 仅版本化厂商DeviceProfile登记的参数，保留TEXT/INTEGER/NUMBER/BOOLEAN类型；敏感值不回原文。未绑定真实profile不得假造参数，实际读写不可用返回503。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "parameterCode": "mock-example",
          *       "label": "mock-example",
@@ -8609,7 +8609,7 @@ export type components = {
          */
         DeviceParameter: components["schemas"]["TextDeviceParameter"] | components["schemas"]["IntegerDeviceParameter"] | components["schemas"]["NumberDeviceParameter"] | components["schemas"]["BooleanDeviceParameter"];
         /**
-         * @description 变更写desired，真实回执/回读后才改reported。未知键400、越界422，敏感键/批量>=10台按审批，冻结逐设备集合与版本。RESET不自动映射恢复出厂。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 变更写desired，真实回执/回读后才改reported。未知键400、越界422，敏感键/批量>=10台按审批，冻结逐设备集合与版本。RESET不自动映射恢复出厂。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "parameterCode": "mock-example",
          *       "valueType": "TEXT",
@@ -9248,7 +9248,7 @@ export type components = {
             traceId: string;
         };
         /**
-         * @description 保持异步XLSX/CSV/ZIP；最多100万行/1GiB、每5万行分片，超限422 DATA_QUERY_TOO_BROAD。文件保存一个自然月、下载授权5分钟且每次校验当前权限，不新增同步导出。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 保持异步XLSX/CSV/ZIP；最多100万行/1GiB、每5万行分片，超限422 DATA_QUERY_TOO_BROAD。文件保存一年（12个自然月）、下载授权5分钟且每次校验当前权限，不新增同步导出。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "contextId": "00000000-0000-4000-8000-000000000001",
          *       "format": "XLSX"
@@ -9433,7 +9433,7 @@ export type components = {
             timeRange: components["schemas"]["TimeRange"];
         };
         /**
-         * @description imageAssetId必须可用且受控；modelVersion记录实际合法模型，未知质量标尺qualityScore=null，不用统一阈值0.8或伪质量分。原图/缩略图访问5分钟、物理保存自然月。 [PD-2026-10-18.v1，待甲方确认]
+         * @description imageAssetId必须可用且受控；modelVersion记录实际合法模型，未知质量标尺qualityScore=null，不用统一阈值0.8或伪质量分。原图/缩略图访问5分钟、物理保存一年（12个自然月）。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "imageAssetId": "00000000-0000-4000-8000-000000000001",
          *       "modelVersion": null,
@@ -9490,7 +9490,7 @@ export type components = {
             similarity: number;
         };
         /**
-         * @description PD-2026-10-18.v1暂定：minSimilarity默认0，score>minSimilarity筛选仅作候选排序；默认20最多100、人工复核。授权内网模型未就绪503，无通用可信同人阈值；10万底库端到端2秒目标含队列/实际检索/结果可用，需实测，不以普通30分钟任务时限替代。
+         * @description PD-2026-10-19.v1暂定：minSimilarity默认0，score>minSimilarity筛选仅作候选排序；默认20最多100、人工复核。授权内网模型未就绪503，无通用可信同人阈值；10万底库端到端2秒目标含队列/实际检索/结果可用，需实测，不以普通30分钟任务时限替代。
          * @example {
          *       "imageAssetId": "00000000-0000-4000-8000-000000000001",
          *       "timeRange": {
@@ -9848,7 +9848,7 @@ export type components = {
             type: "Feature";
         };
         /**
-         * @description WGS84 GeoJSON [lon,lat]；缺坐标用null，不造(0,0)。单次2000点、面2000顶点/1万平方千米、zoom3至20，超量聚合/瓦片，非法几何422。高德离线PC Web产品/授权未绑定不声称底图可用。 [PD-2026-10-18.v1，待甲方确认]
+         * @description WGS84 GeoJSON [lon,lat]；缺坐标用null，不造(0,0)。单次2000点、面2000顶点/1万平方千米、zoom3至20，超量聚合/瓦片，非法几何422。高德离线PC Web产品/授权未绑定不声称底图可用。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "type": "FeatureCollection",
          *       "features": [
@@ -12218,7 +12218,7 @@ export type components = {
             valueType: "TEXT" | "INTEGER" | "NUMBER" | "BOOLEAN" | "DURATION_SECONDS" | "DISTANCE_METERS";
         };
         /**
-         * @description 强类型/单位与参数目录校验，引用后不可变。暂定RESIDENCE参数见policy；变更产生新版本，不复用任务已引用版本。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 强类型/单位与参数目录校验，引用后不可变。暂定RESIDENCE参数见policy；变更产生新版本，不复用任务已引用版本。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "parameterCode": "mock-example",
          *       "valueType": "TEXT",
@@ -12481,7 +12481,7 @@ export type components = {
             pageSize: number;
         };
         /**
-         * @description 仅RESIDENCE_SITE_NIGHTS_V1元数据，指向受控实现而非自由DSL。一个自然月输入、22至06时、>=10记录/>=5夜/夜晚比例>=0.6，标签仅疑似场所候选；同分按夜数/最近时刻/siteId稳定排序。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 仅RESIDENCE_SITE_NIGHTS_V1元数据，指向受控实现而非自由DSL。一个自然月输入、22至06时、>=10记录/>=5夜/夜晚比例>=0.6，标签仅疑似场所候选；同分按夜数/最近时刻/siteId稳定排序。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "ruleCode": "mock-example",
          *       "label": "mock-example",
@@ -12711,7 +12711,7 @@ export type components = {
             version: number;
         };
         /**
-         * @description 模板code+version与变量白名单冻结；单任务最多100收件人。DAILY错过<=1小时补一次，超过记MISSED并告警；编辑/撤销只影响未启动外部动作。三类通知均属本期，外部资源未绑定不返回假成功。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 模板code+version与变量白名单冻结；单任务最多100收件人。DAILY错过<=1小时补一次，超过记MISSED并告警；编辑/撤销只影响未启动外部动作。三类通知均属本期，外部资源未绑定不返回假成功。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "name": "设备状态日通知",
          *       "targets": [
@@ -12953,7 +12953,7 @@ export type components = {
             scheduleType: "ONCE";
         };
         /**
-         * @description 四类区域共用METRIC_V1和5秒新数据可见预算；WEEK/MONTH/QUARTER/YEAR按Asia/Shanghai自然周期，内部[start,end)。短信猫字段来自真实适配器，未知为null，不编造信号/余额。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 四类区域共用METRIC_V1和5秒新数据可见预算；WEEK/MONTH/QUARTER/YEAR按Asia/Shanghai自然周期，内部[start,end)。短信猫字段来自真实适配器，未知为null，不编造信号/余额。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "deviceOnline": {
          *         "meta": {
@@ -13159,7 +13159,7 @@ export type components = {
             timeRange: components["schemas"]["TimeRange"];
         };
         /**
-         * @description 本人需currentPassword；管理员重置reason必填、撤销用户全部会话。新密码15至128字符/NFC/离线弱密码表，不强制字符组合或90天轮换；首次登录强改。响应/日志不含密码。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 本人需currentPassword；管理员重置reason必填、撤销用户全部会话。新密码15至128字符/NFC/离线弱密码表，不强制字符组合或90天轮换；首次登录强改。响应/日志不含密码。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "newPassword": "Example-password-2026!"
          *     }
@@ -13199,7 +13199,7 @@ export type components = {
             version: string;
         };
         /**
-         * @description 58项既有权限码不重复扩充。角色矩阵和28菜单见policy；操作权限暂按角色并集，数据范围采用已确认多角色并集/账号附加授权/超级管理员全采集可见；额外授权不超授予者范围。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 58项既有权限码不重复扩充。角色矩阵和28菜单见policy；操作权限暂按角色并集，数据范围采用已确认多角色并集/账号附加授权/超级管理员全采集可见；额外授权不超授予者范围。 [PD-2026-10-19.v1，待甲方确认]
          * @example dashboard:read
          * @enum {string}
          */
@@ -13353,7 +13353,7 @@ export type components = {
             reason: string;
         };
         /**
-         * @description 沿用PERSON_LIBRARIES_V1、CSV/XLSX/JSON和ALL_OR_NOTHING；仅显式允许重复行可SKIP，错误标识不得upsert吞错。保留逐行错误与资源ID，不从同型标识自动认定跨源同人。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 沿用PERSON_LIBRARIES_V1、CSV/XLSX/JSON和ALL_OR_NOTHING；仅显式允许重复行可SKIP，错误标识不得upsert吞错。保留逐行错误与资源ID，不从同型标识自动认定跨源同人。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "fileAssetId": "00000000-0000-4000-8000-000000000001",
          *       "duplicatePolicy": "SKIP",
@@ -13758,7 +13758,7 @@ export type components = {
             suspectedSiteId?: string;
         };
         /**
-         * @description 仅现有白名单资料字段，reason/evidence必填；profile:correct和当前范围校验，不修改设备原始事实。合并拆分另需profile:merge及独立复核，形成新revision。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 仅现有白名单资料字段，reason/evidence必填；profile:correct和当前范围校验，不修改设备原始事实。合并拆分另需profile:merge及独立复核，形成新revision。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "profileType": "PERSON",
          *       "person": {},
@@ -14291,7 +14291,7 @@ export type components = {
          */
         ProfileCorrectionInput: components["schemas"]["PersonProfileCorrectionInput"] | components["schemas"]["VehicleProfileCorrectionInput"];
         /**
-         * @description PERSON/VEHICLE分型；跨源只产候选+证据，未经校准/人工确认confidence=null；保留旧ID/修订谱系，合并遵守retainedProfileId，不自动404或重写历史任务。 [PD-2026-10-18.v1，待甲方确认]
+         * @description PERSON/VEHICLE分型；跨源只产候选+证据，未经校准/人工确认confidence=null；保留旧ID/修订谱系，合并遵守retainedProfileId，不自动404或重写历史任务。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "profileId": "00000000-0000-4000-8000-000000000001",
          *       "profileType": "PERSON",
@@ -15390,7 +15390,7 @@ export type components = {
             reason: string;
         };
         /**
-         * @description 保留8报表类型/自然DAY-MONTH-YEAR/SINGLE XLSX-BUNDLE ZIP；METRIC_V1同源公式及冻结快照。原始明细最多31天，年度只能显示当前留存覆盖区间，缺历史不补0；regionCode=ALL仍受当前授权范围限制。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 保留8报表类型/自然DAY-MONTH-YEAR/SINGLE XLSX-BUNDLE ZIP；METRIC_V1同源公式及冻结快照。原始明细最多31天，年度只能显示当前留存覆盖区间，缺历史不补0；regionCode=ALL仍受当前授权范围限制。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "reportType": "DEVICE_REALTIME_ONLINE_RATE",
          *       "granularity": "DAY",
@@ -15554,7 +15554,7 @@ export type components = {
             total: number;
         };
         /**
-         * @description SINGLE在线冻结预览、BUNDLE下载ZIP，预览与正式文件使用同一已发布结果/游标；分页20默认100最大，不重新扫实时源。文件/预览保留自然月，下载许可5分钟。 [PD-2026-10-18.v1，待甲方确认]
+         * @description SINGLE在线冻结预览、BUNDLE下载ZIP，预览与正式文件使用同一已发布结果/游标；分页20默认100最大，不重新扫实时源。文件/预览保留自然月，下载许可5分钟。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "reportType": "DEVICE_REALTIME_ONLINE_RATE",
          *       "regionCode": "mock-example",
@@ -16195,7 +16195,7 @@ export type components = {
             points: components["schemas"]["MetricPoint"][];
         };
         /**
-         * @description SID只经Set-Cookie；空闲15分钟/绝对8小时，主动操作或显式renew可更新空闲，后台轮询不续命；常规续期不换SID/CSRF，登录/改密/权限提升轮换。单账号1会话，新登录撤销旧会话。 [PD-2026-10-18.v1，待甲方确认]
+         * @description SID只经Set-Cookie；空闲15分钟/绝对8小时，主动操作或显式renew可更新空闲，后台轮询不续命；常规续期不换SID/CSRF，登录/改密/权限提升轮换。单账号1会话，新登录撤销旧会话。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "userId": "00000000-0000-4000-8000-000000000001",
          *       "idleExpiresAt": "2026-10-07T02:00:00Z",
@@ -16599,7 +16599,7 @@ export type components = {
             total: number;
         };
         /**
-         * @description allSites=true时siteIds必须[]，false时[]无范围；管理场所操作使用当前授权范围，新增场所不自动加入显式场所grant。区域到siteId为显式版本映射。 [PD-2026-10-18.v1，待甲方确认]
+         * @description allSites=true时siteIds必须[]，false时[]无范围；管理场所操作使用当前授权范围，新增场所不自动加入显式场所grant。区域到siteId为显式版本映射。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "siteIds": [],
          *       "allSites": true
@@ -16676,7 +16676,7 @@ export type components = {
             timeRange: components["schemas"]["TimeRange"];
         };
         /**
-         * @description 状态、信号单位、SIM与余额来自版本化厂商profile；标尺/查询能力未提供时为null，不能通用假定0至31。发送/送达计数分开，公开错误码归一化，原始供应商字段不直接透出。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 状态、信号单位、SIM与余额来自版本化厂商profile；标尺/查询能力未提供时为null，不能通用假定0至31。发送/送达计数分开，公开错误码归一化，原始供应商字段不直接透出。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "meta": {
          *         "asOf": null,
@@ -16955,7 +16955,7 @@ export type components = {
          */
         TargetType: "IMSI" | "IMEI" | "MAC" | "PLATE" | "FACE";
         /**
-         * @description 六态PENDING/QUEUED/RUNNING/SUCCESS/FAILED/CANCELLED。普通执行30分钟、复杂2小时从实际RUNNING开始，排队预算分别5/15分钟；类型分类见policy。SUCCESS仅说明本任务工作流，不代表外部短信已送达；保存自然月且保护引用。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 六态PENDING/QUEUED/RUNNING/SUCCESS/FAILED/CANCELLED。普通执行30分钟、复杂2小时从实际RUNNING开始，排队预算分别5/15分钟；类型分类见policy。SUCCESS仅说明本任务工作流，不代表外部短信已送达；保存一年（12个自然月）且保护引用。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "taskId": "00000000-0000-4000-8000-000000000001",
          *       "taskType": "INGESTION",
@@ -18160,7 +18160,7 @@ export type components = {
             vehicleType?: string;
         };
         /**
-         * @description 仅现有白名单字段，reason/evidence必填；车牌修正不自动合档，不改写设备原始采集，权限与修订谱系按P-016。 [PD-2026-10-18.v1，待甲方确认]
+         * @description 仅现有白名单字段，reason/evidence必填；车牌修正不自动合档，不改写设备原始采集，权限与修订谱系按P-016。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "profileType": "VEHICLE",
          *       "vehicle": {},
@@ -18356,7 +18356,7 @@ export type components = {
             templateCode: string;
         };
         /**
-         * @description EXACT_TARGET_V1匹配同型targetId；跨源只用已人工确认profile_link。同规则/修订/目标5分钟去重外发，全部命中事实保留；编辑新revision，撤销阻止未来未发送动作。 [PD-2026-10-18.v1，待甲方确认]
+         * @description EXACT_TARGET_V1匹配同型targetId；跨源只用已人工确认profile_link。同规则/修订/目标5分钟去重外发，全部命中事实保留；编辑新revision，撤销阻止未来未发送动作。 [PD-2026-10-19.v1，待甲方确认]
          * @example {
          *       "targets": [
          *         {
@@ -18963,7 +18963,7 @@ export type components = {
         };
     };
     parameters: {
-        /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+        /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
         ApprovalId: string;
         /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
         CsrfToken: string;
@@ -19470,7 +19470,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19556,7 +19556,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19627,7 +19627,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20324,7 +20324,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20629,7 +20629,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20749,7 +20749,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20876,7 +20876,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21025,7 +21025,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21070,7 +21070,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21669,7 +21669,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21924,7 +21924,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22347,7 +22347,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22390,7 +22390,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22501,7 +22501,7 @@ export interface operations {
                 deviceIds?: string[];
                 /** @description 同名多值OR，不同条件AND；仅当前授权范围。 */
                 keyword?: string;
-                /** @description PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
+                /** @description PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
                 limit?: number;
                 /** @description 授权范围内筛选，取值和界限见schema；改变条件需重置cursor。 */
                 regionCode?: string;
@@ -22555,7 +22555,7 @@ export interface operations {
                 from?: string;
                 /** @description 同名多值OR，不同条件AND；仅当前授权范围。 */
                 layer?: "CAPTURE" | "SITE";
-                /** @description PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
+                /** @description PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
                 limit?: number;
                 /** @description 授权范围内筛选，取值和界限见schema；改变条件需重置cursor。 */
                 regionCode?: string;
@@ -22603,7 +22603,7 @@ export interface operations {
                 deviceIds?: string[];
                 /** @description 同名多值OR，不同条件AND；仅当前授权范围。 */
                 from: string;
-                /** @description PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
+                /** @description PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。 */
                 limit?: number;
                 /** @description 授权范围内筛选，取值和界限见schema；改变条件需重置cursor。 */
                 regionCode?: string;
@@ -22777,7 +22777,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23398,7 +23398,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23645,7 +23645,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23921,7 +23921,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24005,7 +24005,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24136,7 +24136,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24569,7 +24569,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24643,7 +24643,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24690,7 +24690,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24731,7 +24731,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24778,7 +24778,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25956,7 +25956,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26030,7 +26030,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26077,7 +26077,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26118,7 +26118,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26163,7 +26163,7 @@ export interface operations {
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26206,7 +26206,7 @@ export interface operations {
             header: {
                 /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
-                /** @description 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
+                /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];

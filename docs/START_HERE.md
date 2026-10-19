@@ -1,6 +1,6 @@
 # 从这里开始开发
 
-当前开发基线为[PD-2026-10-18.v1](project-governance/暂定方案与修改记录.md)。后端个人分工按2026-10-19的[双人分工](project-governance/BACKEND_TWO_DEV_SPLIT.md)，其余规则延续主分支。
+当前开发基线为[PD-2026-10-19.v1](project-governance/暂定方案与修改记录.md)。后端个人分工按2026-10-19的[双人分工](project-governance/BACKEND_TWO_DEV_SPLIT.md)，其余规则延续主分支。
 
 1. 读[原始功能PDF](requirements/source/平台功能设计（原始）.pdf)及[需求追踪](system-design/00_需求追踪与设计说明.md)。原始业务要求优先，Mock不作为业务依据。
 2. 从[角色入口](team/README.md)领取：DEV-01平台后端、DEV-02研判后端、DEV-03前端、DEV-04数据、DEV-05测试。

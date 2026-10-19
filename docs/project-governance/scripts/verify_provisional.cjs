@@ -57,6 +57,9 @@ record('coverage and counts',()=>{
 });
 record('confirmed constraints and settings',()=>{
  assert.equal(policy.confirmedConstraints.maxSessions,1);assert.equal(policy.confirmedConstraints.productionInternet,false);assert.equal(policy.confirmedConstraints.roleDataScope,'union_same_type');assert.equal(policy.confirmedConstraints.retention.unit,'calendar_month');
+ assert.equal(policy.confirmedConstraints.retention.value,12);assert.equal(policy.settings.retention.unit,'calendar_month');assert.equal(policy.settings.retention.value,12);assert.equal(policy.settings.backup.retentionMonths,12);
+ assert.equal(policy.retentionDecision.status,'user_confirmed');assert.equal(policy.settings.retention.annualReportProtection.freezeBeforeSourceExpiry,true);assert.equal(policy.settings.retention.annualReportProtection.protectInProgressInputs,true);assert.equal(policy.settings.retention.annualReportProtection.frozenReportRetentionMonths,12);
+ assert.equal(policy.settings.residence.windowCalendarMonths,1);assert.equal(policy.settings.resources.ordinaryQueryMaxDays,31);assert.equal(policy.settings.resources.downloadGrantSeconds,300);assert.equal(policy.settings.resources.cursorSeconds,900);
  assert.equal(policy.settings.auth.idleSeconds,900);assert.equal(policy.settings.auth.absoluteSeconds,28800);assert.equal(policy.settings.resources.contextAccessSeconds,1800);assert.equal(policy.settings.resources.pageMax,100);
  assert.deepEqual(Object.keys(policy.settings.taskClasses).sort(),api.components.schemas.Task.properties.taskType.enum.slice().sort());
  assert.deepEqual(Object.keys(policy.permissionMatrix).sort(),api.components.schemas.PermissionCode.enum.slice().sort());assert.equal(Object.keys(policy.permissionMatrix).length,58);

@@ -1,6 +1,6 @@
 {
   "status": "confirmed_team_with_backend_module_allocation_20261019",
-  "policyVersion": "PD-2026-10-18.v1",
+  "policyVersion": "PD-2026-10-19.v1",
   "repository": "https://github.com/WangLiu-Hades/xx-platform",
   "owners": {
     "DEV-01/DEV-02": [

@@ -1,7 +1,7 @@
 {
   "source": "contracts/api/openapi.yaml",
-  "openapiVersion": "1.0.0-dev.3-provisional",
-  "openapiSha256": "232ac4cf683d30d15ed6791f6afb4e28e8ef5d089c9fc7e7b0619c320874731e",
+  "openapiVersion": "1.0.0-dev.4-provisional",
+  "openapiSha256": "340e95f1c58d6215a6434ca3f822856648a12a862c501048fc5e1d37a8ec601f",
   "allocationSource": "docs/project-governance/BACKEND_TWO_DEV_SPLIT.md",
   "allocationVersion": "PR1-MODULES-2026-10-19",
   "operations": 198,

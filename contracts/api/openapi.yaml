@@ -1,10 +1,10 @@
 openapi: "3.0.3"
 info:
   title: "多维数据分析平台开发级 API"
-  version: "1.0.0-dev.3-provisional"
-  description: "多维数据分析平台开发级 API 契约。所有 ID 均为 UUID 字符串；时间按 RFC 3339 带偏移传输、UTC 存储；GeoJSON 为 WGS84/EPSG:4326 [lon,lat]。请求和响应只包含当前权限范围内的数据。异步创建统一返回 202+taskId；任务 PENDING→QUEUED→RUNNING→SUCCESS|FAILED|CANCELLED，取消请求接受不等于外部副作用已撤回。所有错误使用稳定 code 与 traceId。暂定设计使用x-design-status: provisional、x-client-confirmation: pending和x-decision-ids追踪。 本版本以原始PDF文字需求优先核对当前28页原型。默认省略可选字段表示未提供；仅 nullable=true 允许显式null。错误体统一包含data=null及强类型details。平台前端HTTP边界不包含厂商协议。暂定设计按PD-2026-10-18.v1开发；实现或实际资源未就绪时features禁用并说明原因，执行返回503 SYSTEM_UNAVAILABLE，不返回伪成功。
+  version: "1.0.0-dev.4-provisional"
+  description: "多维数据分析平台开发级 API 契约。所有 ID 均为 UUID 字符串；时间按 RFC 3339 带偏移传输、UTC 存储；GeoJSON 为 WGS84/EPSG:4326 [lon,lat]。请求和响应只包含当前权限范围内的数据。异步创建统一返回 202+taskId；任务 PENDING→QUEUED→RUNNING→SUCCESS|FAILED|CANCELLED，取消请求接受不等于外部副作用已撤回。所有错误使用稳定 code 与 traceId。暂定设计使用x-design-status: provisional、x-client-confirmation: pending和x-decision-ids追踪。 本版本以原始PDF文字需求优先核对当前28页原型。默认省略可选字段表示未提供；仅 nullable=true 允许显式null。错误体统一包含data=null及强类型details。平台前端HTTP边界不包含厂商协议。暂定设计按PD-2026-10-19.v1开发；实现或实际资源未就绪时features禁用并说明原因，执行返回503 SYSTEM_UNAVAILABLE，不返回伪成功。
 
-    2026-10-18：按开发负责人授权，全部未决设计采用PD-2026-10-18.v1暂定规则用于开发/联调，甲方尚未确认；真实资源和生产启用分别检查。"
+    2026-10-18：按开发负责人授权，全部未决设计给出暂定规则用于开发/联调。2026-10-19：用户将统一保存期限调整为一年（12个自然月），策略升级PD-2026-10-19.v1；其他甲方确认、真实资源和生产启用分别检查。"
   x-permission-semantics: "x-permission=PUBLIC 表示免登录；AUTHENTICATED 表示有效会话且仍强制所有权/数据范围；其他值来自 PermissionCode，文件/任务接口还按所属领域复核权限。"
   x-codegen:
     typescript: "typescript-axios; withInterfaces=true,useSingleRequestParameter=true"
@@ -326,7 +326,7 @@ paths:
       tags:
         - "Auth"
       summary: "续期当前 Cookie 会话"
-      description: "续期当前 Cookie 会话；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；返回会话idleExpiresAt/absoluteExpiresAt，登录轮换SID；前端withCredentials并刷新csrf。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "续期当前 Cookie 会话；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；返回会话idleExpiresAt/absoluteExpiresAt，登录轮换SID；前端withCredentials并刷新csrf。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "renewSession"
       x-module: "M01"
       x-owner: "DEV-01/DEV-02"
@@ -371,7 +371,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "SD04/SD06/SD08；原型应用壳/公共任务"
-      x-provisional-reason: PD-2026-10-18.v1：P-001已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-001已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-001
       x-client-confirmation: pending
@@ -908,7 +908,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/tasks":
@@ -1447,7 +1447,7 @@ paths:
       tags:
         - "Ingestion"
       summary: "提交文件接入批次"
-      description: "提交文件接入批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "提交文件接入批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createIngestionBatch"
       x-module: "M03"
       x-owner: "DEV-01/DEV-02"
@@ -1510,7 +1510,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "SD03/SD10 T19；工程M03"
-      x-provisional-reason: PD-2026-10-18.v1：P-004已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-004已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-004
       x-client-confirmation: pending
@@ -1727,7 +1727,7 @@ paths:
       tags:
         - "Ingestion"
       summary: "按版本回放批次"
-      description: "按版本回放批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "按版本回放批次；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "replayIngestionBatch"
       x-module: "M03"
       x-owner: "DEV-01/DEV-02"
@@ -1796,7 +1796,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "SD03/SD10 T19；工程M03"
-      x-provisional-reason: PD-2026-10-18.v1：P-004/P-005已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-004/P-005已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-004
         - P-005
@@ -1806,7 +1806,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/ingestion/backfills":
@@ -1814,7 +1814,7 @@ paths:
       tags:
         - "Ingestion"
       summary: "创建补数任务"
-      description: "创建补数任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "创建补数任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createIngestionBackfill"
       x-module: "M03"
       x-owner: "DEV-01/DEV-02"
@@ -1878,7 +1878,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "SD03/SD10 T19；工程M03"
-      x-provisional-reason: PD-2026-10-18.v1：P-004/P-005已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-004/P-005已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-004
         - P-005
@@ -1888,7 +1888,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/dashboard/summary":
@@ -2552,7 +2552,7 @@ paths:
       tags:
         - "Capture"
       summary: "创建人像相似检索任务"
-      description: "创建人像相似检索任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "创建人像相似检索任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createFaceSearchTask"
       x-module: "M05"
       x-owner: "DEV-01/DEV-02"
@@ -2617,7 +2617,7 @@ paths:
           "$ref": "#/components/responses/Http429"
       x-design-status: "provisional"
       x-requirement-source: "PDF p2-8；searchPage/facePage"
-      x-provisional-reason: PD-2026-10-18.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-007
       x-client-confirmation: pending
@@ -2630,7 +2630,7 @@ paths:
       tags:
         - "Capture"
       summary: "分页读取人像候选"
-      description: "分页读取人像候选；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "分页读取人像候选；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listFaceSearchResults"
       x-module: "M05"
       x-owner: "DEV-01/DEV-02"
@@ -2720,7 +2720,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p2-8；searchPage/facePage"
-      x-provisional-reason: PD-2026-10-18.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-007
       x-client-confirmation: pending
@@ -2798,7 +2798,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p2-7；通用动作/dataAction"
-      x-provisional-reason: PD-2026-10-18.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-008
       x-client-confirmation: pending
@@ -2811,7 +2811,7 @@ paths:
       tags:
         - "Capture"
       summary: "查询解密申请状态"
-      description: "查询解密申请状态；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查询解密申请状态；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getDecryptionRequest"
       x-module: "M06"
       x-owner: "DEV-01/DEV-02"
@@ -2867,7 +2867,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p2-7；通用动作/dataAction"
-      x-provisional-reason: PD-2026-10-18.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-008
       x-client-confirmation: pending
@@ -3090,7 +3090,7 @@ paths:
             minimum: 1
             maximum: 2000
             default: 2000
-          description: "PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
+          description: "PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
         - name: "contextId"
           in: "query"
           required: false
@@ -3265,7 +3265,7 @@ paths:
             minimum: 1
             maximum: 2000
             default: 2000
-          description: "PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
+          description: "PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
         - name: "status"
           in: "query"
           required: false
@@ -3415,7 +3415,7 @@ paths:
             minimum: 1
             maximum: 2000
             default: 2000
-          description: "PD-2026-10-18.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
+          description: "PD-2026-10-19.v1暂定最大2000个点/聚合要素，超量聚合或瓦片；超上限不静默截断。"
         - name: "from"
           in: "query"
           required: true
@@ -4429,7 +4429,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/datasets":
@@ -5203,7 +5203,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/set-tasks/preview":
@@ -5741,7 +5741,7 @@ paths:
       tags:
         - "Watch"
       summary: "创建布控草稿"
-      description: "创建布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "创建布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createWatchRule"
       x-module: "M10"
       x-owner: "DEV-01/DEV-02"
@@ -5825,7 +5825,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
         - P-015
@@ -5917,7 +5917,7 @@ paths:
       tags:
         - "Watch"
       summary: "修改规则并生成新版本"
-      description: "修改规则并生成新版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "修改规则并生成新版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "updateWatchRule"
       x-module: "M10"
       x-owner: "DEV-01/DEV-02"
@@ -6004,7 +6004,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-014已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
       x-client-confirmation: pending
@@ -6077,7 +6077,7 @@ paths:
       tags:
         - "Watch"
       summary: "激活布控草稿"
-      description: "激活布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "激活布控草稿；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "activateWatchRule"
       x-module: "M10"
       x-owner: "DEV-01/DEV-02"
@@ -6161,7 +6161,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
         - P-015
@@ -6655,7 +6655,7 @@ paths:
       tags:
         - "Notification"
       summary: "创建定时通知任务"
-      description: "同步创建持久通知计划返回201和notificationTaskId；到期每次执行创建独立taskId，lastExecutionTaskId可轮询。平台消息收件用户与SMS/EMAIL收件地址均显式提供。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；创建禁止RETAINED；地址转换成服务端recipientId，详情返回脱敏摘要。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "同步创建持久通知计划返回201和notificationTaskId；到期每次执行创建独立taskId，lastExecutionTaskId可轮询。平台消息收件用户与SMS/EMAIL收件地址均显式提供。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；创建禁止RETAINED；地址转换成服务端recipientId，详情返回脱敏摘要。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createNotificationTask"
       x-module: "M10"
       x-owner: "DEV-01/DEV-02"
@@ -6728,7 +6728,7 @@ paths:
                     traceId: "mock-trace-createNotificationTask"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
         - P-015
@@ -6881,7 +6881,7 @@ paths:
         - "Notification"
       operationId: "updateNotificationTask"
       summary: "更新未终结通知计划"
-      description: "仅ACTIVE可编辑，原已发送Delivery不改变，新版从下一次计划执行生效；相同日期不得重复发送。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；targets可用RETAINED保留既有地址；新地址只在请求体，不能用recipientMasked回填。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "仅ACTIVE可编辑，原已发送Delivery不改变，新版从下一次计划执行生效；相同日期不得重复发送。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；targets可用RETAINED保留既有地址；新地址只在请求体，不能用recipientMasked回填。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "notification:send"
@@ -6979,7 +6979,7 @@ paths:
                     - "00000000-0000-4000-8000-000000000001"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
       x-client-confirmation: pending
@@ -7127,7 +7127,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
       x-client-confirmation: pending
@@ -7850,7 +7850,7 @@ paths:
       tags:
         - "Profile"
       summary: "添加人员库成员"
-      description: "添加人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "添加人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "addPersonLibraryMembers"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -7937,7 +7937,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-002/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
         - P-016
@@ -8021,7 +8021,7 @@ paths:
       tags:
         - "Profile"
       summary: "从文件导入人员库成员"
-      description: "从文件导入人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "从文件导入人员库成员；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "importPersonLibraryMembers"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8092,7 +8092,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8105,7 +8105,7 @@ paths:
       tags:
         - "Profile"
       summary: "导出人员库"
-      description: "导出人员库；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "导出人员库；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "exportPersonLibrary"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8175,7 +8175,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-002/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
         - P-016
@@ -8185,7 +8185,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/profiles/search":
@@ -8193,7 +8193,7 @@ paths:
       tags:
         - "Profile"
       summary: "检索人车档案"
-      description: "检索人车档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "检索人车档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "searchProfiles"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8258,7 +8258,7 @@ paths:
           "$ref": "#/components/responses/Http429"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8271,7 +8271,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看档案详情"
-      description: "查看档案详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看档案详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getProfile"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8349,7 +8349,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8362,7 +8362,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看档案关联目标"
-      description: "查看档案关联目标；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看档案关联目标；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listProfileTargets"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8444,7 +8444,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8621,7 +8621,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看档案轨迹"
-      description: "查看档案轨迹；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；固定captureTime ASC/captureId ASC；各点target用于分组，不跨目标连线。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看档案轨迹；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；固定captureTime ASC/captureId ASC；各点target用于分组，不跨目标连线。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listProfileTrajectories"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8730,7 +8730,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8743,7 +8743,7 @@ paths:
       tags:
         - "Profile"
       summary: "人工修订档案"
-      description: "人工修订档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "人工修订档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createProfileCorrection"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8825,7 +8825,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8838,7 +8838,7 @@ paths:
       tags:
         - "Profile"
       summary: "合并档案"
-      description: "合并档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "合并档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "mergeProfiles"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8906,7 +8906,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -8915,7 +8915,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/profiles/{profileId}/split":
@@ -8923,7 +8923,7 @@ paths:
       tags:
         - "Profile"
       summary: "拆分档案"
-      description: "拆分档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "拆分档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "splitProfile"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -8998,7 +8998,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -9007,7 +9007,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/profiles/{profileId}/conflicts/{conflictId}/resolve":
@@ -9015,7 +9015,7 @@ paths:
       tags:
         - "Profile"
       summary: "处理档案证据冲突"
-      description: "处理档案证据冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "处理档案证据冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "resolveProfileConflict"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9103,7 +9103,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -9116,7 +9116,7 @@ paths:
       tags:
         - "Profile"
       summary: "导出档案"
-      description: "导出档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "导出档案；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "exportProfile"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9186,7 +9186,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
         - P-021
@@ -9196,7 +9196,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/trend-models":
@@ -9204,7 +9204,7 @@ paths:
       tags:
         - "Profile"
       summary: "查询趋势模型"
-      description: "查询趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查询趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listTrendModels"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9309,7 +9309,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -9321,7 +9321,7 @@ paths:
       tags:
         - "Profile"
       summary: "新建趋势模型"
-      description: "新建趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "新建趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createTrendModel"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9416,7 +9416,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -9429,7 +9429,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看趋势模型详情"
-      description: "查看趋势模型详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看趋势模型详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getTrendModel"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9512,7 +9512,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -9524,7 +9524,7 @@ paths:
       tags:
         - "Profile"
       summary: "编辑趋势模型"
-      description: "编辑趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "编辑趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "updateTrendModel"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9632,7 +9632,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -9734,7 +9734,7 @@ paths:
       tags:
         - "Profile"
       summary: "新增模型参数版本"
-      description: "新增模型参数版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "新增模型参数版本；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createModelParameterVersion"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9828,7 +9828,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -9926,7 +9926,7 @@ paths:
       tags:
         - "Profile"
       summary: "查询模型标签目录"
-      description: "查询模型标签目录；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查询模型标签目录；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listModelTags"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -9972,7 +9972,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -9985,7 +9985,7 @@ paths:
       tags:
         - "Profile"
       summary: "执行趋势模型"
-      description: "执行趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "执行趋势模型；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "runTrendModel"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -10055,7 +10055,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -10068,7 +10068,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看模型执行结果"
-      description: "查看模型执行结果；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看模型执行结果；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "listTrendModelResults"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -10173,7 +10173,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -10186,7 +10186,7 @@ paths:
       tags:
         - "Profile"
       summary: "查看模型结果详情"
-      description: "查看模型结果详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看模型结果详情；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getTrendModelResult"
       x-module: "M11"
       x-owner: "DEV-01/DEV-02"
@@ -10261,7 +10261,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -10791,7 +10791,7 @@ paths:
       tags:
         - "Operation"
       summary: "新增设备"
-      description: "新增设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "新增设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createDevice"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -10869,7 +10869,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
       x-client-confirmation: pending
@@ -10959,7 +10959,7 @@ paths:
       tags:
         - "Operation"
       summary: "编辑设备信息"
-      description: "编辑设备信息；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "编辑设备信息；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "updateDevice"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11050,7 +11050,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
       x-client-confirmation: pending
@@ -11185,7 +11185,7 @@ paths:
       tags:
         - "Operation"
       summary: "读取设备参数"
-      description: "读取设备参数；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "读取设备参数；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getDeviceParameters"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11245,7 +11245,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -11259,7 +11259,7 @@ paths:
       tags:
         - "Operation"
       summary: "提交设备参数更新"
-      description: "提交设备参数更新；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "提交设备参数更新；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "updateDeviceParameters"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11333,7 +11333,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -11343,7 +11343,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/devices/{deviceId}/status-history":
@@ -11445,7 +11445,7 @@ paths:
       tags:
         - "Operation"
       summary: "查看设备采集历史"
-      description: "查看设备采集历史；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查看设备采集历史；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getDeviceCaptureStatistics"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11533,7 +11533,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
       x-client-confirmation: pending
@@ -11546,7 +11546,7 @@ paths:
       tags:
         - "Operation"
       summary: "批量导入设备"
-      description: "批量导入设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "批量导入设备；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "importDevices"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11610,7 +11610,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
       x-client-confirmation: pending
@@ -11623,7 +11623,7 @@ paths:
       tags:
         - "Operation"
       summary: "导出设备清单"
-      description: "导出设备清单；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "导出设备清单；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "exportDevices"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -11685,7 +11685,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -12466,7 +12466,7 @@ paths:
       tags:
         - "Operation"
       summary: "下发远程设备命令"
-      description: "冻结设备清单；每台设备有独立结果和幂等键。RESET 还需 device:reset 权限。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "冻结设备清单；每台设备有独立结果和幂等键。RESET 还需 device:reset 权限。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createDeviceCommand"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -12542,7 +12542,7 @@ paths:
           equals: "RESET"
           permission: "device:reset"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -12552,7 +12552,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/device-commands/{taskId}":
@@ -12778,7 +12778,7 @@ paths:
       tags:
         - "Operation"
       summary: "重试失败的设备命令"
-      description: "重试失败的设备命令；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "重试失败的设备命令；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "retryDeviceCommand"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -12849,7 +12849,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -12859,7 +12859,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/reports":
@@ -12968,7 +12968,7 @@ paths:
       tags:
         - "Report"
       summary: "创建报表任务"
-      description: "创建报表任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "创建报表任务；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createReport"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -13037,7 +13037,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
         - P-020
@@ -13189,7 +13189,7 @@ paths:
       tags:
         - "Report"
       summary: "预览单报表"
-      description: "仅成功的 SINGLE 报表可预览；BUNDLE 返回 422。；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "仅成功的 SINGLE 报表可预览；BUNDLE 返回 422。；未SUCCESS返回409 TASK_RESULT_NOT_READY，结果已清理返回410 FILE_EXPIRED；成功空结果为items=[]（适用分页响应）。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "getReportPreview"
       x-module: "M12"
       x-owner: "DEV-01/DEV-02"
@@ -13258,7 +13258,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
         - P-020
@@ -13490,7 +13490,7 @@ paths:
       tags:
         - "Auth"
       summary: "新增用户"
-      description: "新增用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "新增用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createUser"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -13584,7 +13584,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -13593,7 +13593,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/users/{userId}":
@@ -13681,7 +13681,7 @@ paths:
       tags:
         - "Auth"
       summary: "编辑用户"
-      description: "编辑用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "编辑用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "updateUser"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -13785,7 +13785,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-002/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
         - P-021
@@ -13795,7 +13795,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
     delete:
@@ -13863,7 +13863,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/users/{userId}/disable":
@@ -13871,7 +13871,7 @@ paths:
       tags:
         - "Auth"
       summary: "禁用用户"
-      description: "禁用用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "禁用用户；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "disableUser"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -13958,7 +13958,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-001/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-001/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-001
         - P-021
@@ -13968,7 +13968,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/users/{userId}/enable":
@@ -14067,7 +14067,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/users/{userId}/password":
@@ -14075,7 +14075,7 @@ paths:
       tags:
         - "Auth"
       summary: "修改用户密码"
-      description: "管理员重置密码，不接收currentPassword；本人改密使用/me/password。审计用途必填reason，成功撤销该用户所有会话。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "管理员重置密码，不接收currentPassword；本人改密使用/me/password。审计用途必填reason，成功撤销该用户所有会话。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "changeUserPassword"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -14142,7 +14142,7 @@ paths:
                     traceId: "mock-trace-changeUserPassword"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -14151,7 +14151,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/roles":
@@ -14244,7 +14244,7 @@ paths:
       tags:
         - "Auth"
       summary: "新增角色"
-      description: "新增角色；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "新增角色；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "createRole"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -14339,7 +14339,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -14348,7 +14348,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/roles/{roleId}":
@@ -14549,7 +14549,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
     delete:
@@ -14617,7 +14617,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/roles/{roleId}/permissions":
@@ -14625,7 +14625,7 @@ paths:
       tags:
         - "Auth"
       summary: "设置角色菜单和按钮权限"
-      description: "设置角色菜单和按钮权限；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "设置角色菜单和按钮权限；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "setRolePermissions"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -14722,7 +14722,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -14731,7 +14731,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/roles/{roleId}/scopes":
@@ -14739,7 +14739,7 @@ paths:
       tags:
         - "Auth"
       summary: "设置角色场所和数据范围"
-      description: "设置角色场所和数据范围；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "设置角色场所和数据范围；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "setRoleScopes"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -14842,7 +14842,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -14851,7 +14851,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/audit-events/search":
@@ -14859,7 +14859,7 @@ paths:
       tags:
         - "Audit"
       summary: "查询操作日志"
-      description: "查询操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "查询操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "searchAuditEvents"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -14929,7 +14929,7 @@ paths:
           "$ref": "#/components/responses/Http429"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -15008,7 +15008,7 @@ paths:
       tags:
         - "Audit"
       summary: "导出操作日志"
-      description: "导出操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "导出操作日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "exportAuditEvents"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -15072,7 +15072,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -15081,7 +15081,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/deliveries/search":
@@ -15089,7 +15089,7 @@ paths:
       tags:
         - "Audit"
       summary: "查询短信送达日志"
-      description: "只返回 channel=SMS 的送达记录；按任务名称、收件人和发送时间筛选，收件人条件只在请求体。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "只返回 channel=SMS 的送达记录；按任务名称、收件人和发送时间筛选，收件人条件只在请求体。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "searchSmsLogs"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -15158,7 +15158,7 @@ paths:
           "$ref": "#/components/responses/Http429"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-015/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
         - P-021
@@ -15172,7 +15172,7 @@ paths:
       tags:
         - "Audit"
       summary: "导出短信送达日志"
-      description: "导出短信送达日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "导出短信送达日志；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       operationId: "exportSmsLogs"
       x-module: "M14"
       x-owner: "DEV-01/DEV-02"
@@ -15240,7 +15240,7 @@ paths:
           "$ref": "#/components/responses/Http422"
       x-design-status: "provisional"
       x-requirement-source: "PDF p24-26；adminPage/logPage；SD06"
-      x-provisional-reason: PD-2026-10-18.v1：P-015/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015/P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
         - P-021
@@ -15250,7 +15250,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/permissions":
@@ -15449,7 +15449,7 @@ paths:
         - "Context"
       operationId: "resolveTargets"
       summary: "批量解析或登记目标代理ID"
-      description: "批量最多100。查找需capture:read；登记需watch:write或person-library:write，并校验类型/场所范围。登记不是身份关联，无采集也可布控。每项独立状态，目标唯一键为类型+规范化指纹，重复返回同ID。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "批量最多100。查找需capture:read；登记需watch:write或person-library:write，并校验类型/场所范围。登记不是身份关联，无采集也可布控。每项独立状态，目标唯一键为类型+规范化指纹，重复返回同ID。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "AUTHENTICATED"
@@ -15518,7 +15518,7 @@ paths:
                   registerMissing: false
       x-design-status: "provisional"
       x-requirement-source: "PDF p2-7；通用动作/dataAction"
-      x-provisional-reason: PD-2026-10-18.v1：P-004/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-004/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-004
         - P-016
@@ -15533,7 +15533,7 @@ paths:
         - "Dashboard"
       operationId: "exportMetrics"
       summary: "导出首页或运维指标图表"
-      description: "返回导出任务，成功经文件二次授权下载。指标来源与汇总响应完全相同，不能以采集明细替代图表。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；DASHBOARD需要dashboard:read；OPERATIONS同读权限，另需capture:export；该源/指标组合不匹配422 VALIDATION_ERROR。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "返回导出任务，成功经文件二次授权下载。指标来源与汇总响应完全相同，不能以采集明细替代图表。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；DASHBOARD需要dashboard:read；OPERATIONS同读权限，另需capture:export；该源/指标组合不匹配422 VALIDATION_ERROR。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "dashboard:read"
@@ -15599,7 +15599,7 @@ paths:
                   format: "XLSX"
       x-design-status: "provisional"
       x-requirement-source: "PDF p1-2/17-18；dashboard/opsPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
       x-client-confirmation: pending
@@ -15608,7 +15608,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/datasets/{datasetId}/items/{itemId}":
@@ -15692,7 +15692,7 @@ paths:
         - "Notification"
       operationId: "listNotificationTemplates"
       summary: "查询已批准通知模板"
-      description: "根据purpose和channels选择模板，无可用模板时不能发送；正文由后台模板维护，不开放供应商管理。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "根据purpose和channels选择模板，无可用模板时不能发送；正文由后台模板维护，不开放供应商管理。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "notification:read"
@@ -15750,7 +15750,7 @@ paths:
           "$ref": "#/components/responses/Http500"
       x-design-status: "provisional"
       x-requirement-source: "PDF p15/23-24/26；watchPage/notificationPage"
-      x-provisional-reason: PD-2026-10-18.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
       x-client-confirmation: pending
@@ -15831,7 +15831,7 @@ paths:
         - "Profile"
       operationId: "createLibraryPerson"
       summary: "新增库内人员及手工档案"
-      description: "在同一事务登记目标、创建PERSON档案和库成员。明确重复已有关联标识时409 RESOURCE_CONFLICT，不能静默把不同人合并。编辑后续走档案corrections；删除成员不删除全局档案。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "在同一事务登记目标、创建PERSON档案和库成员。明确重复已有关联标识时409 RESOURCE_CONFLICT，不能静默把不同人合并。编辑后续走档案corrections；删除成员不删除全局档案。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "person-library:write"
@@ -15950,7 +15950,7 @@ paths:
                   reason: "人工录入，未进行算法归档"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -15964,7 +15964,7 @@ paths:
         - "Profile"
       operationId: "listProfileConflicts"
       summary: "读取可复核档案冲突"
-      description: "读取可复核档案冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "读取可复核档案冲突；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "profile:read"
@@ -16029,7 +16029,7 @@ paths:
           "$ref": "#/components/responses/Http500"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -16126,7 +16126,7 @@ paths:
         - "Profile"
       operationId: "importPersonLibraries"
       summary: "批量导入库列表和库内人员"
-      description: "支持库名/分类与人员资料。导入同时登记手工档案/成员；全部行预检，任一错误回滚。错误走/tasks/{taskId}/errors，成功TaskResultReference指向PERSON_LIBRARY_IMPORT结果。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "支持库名/分类与人员资料。导入同时登记手工档案/成员；全部行预检，任一错误回滚。错误走/tasks/{taskId}/errors，成功TaskResultReference指向PERSON_LIBRARY_IMPORT结果。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "person-library:write"
@@ -16191,7 +16191,7 @@ paths:
                   reason: "mock-example"
       x-design-status: "provisional"
       x-requirement-source: "PDF p9/16-17；libraryPage/profilePage/modelPage；工程M11"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -16275,7 +16275,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/device-commands/{taskId}/revisions":
@@ -16284,7 +16284,7 @@ paths:
         - "Operation"
       operationId: "reviseDeviceCommand"
       summary: "重建参数配置任务"
-      description: "仅APPLY_PARAMETERS且原任务终态允许；返回新taskId，新参数执行新任务，历史回执不覆盖。RESET不可编辑返回409 TASK_CONFLICT。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；只允许原任务终态SUCCESS/FAILED/CANCELLED，版本不匹配409 RESOURCE_VERSION_CONFLICT。 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "仅APPLY_PARAMETERS且原任务终态允许；返回新taskId，新参数执行新任务，历史回执不覆盖。RESET不可编辑返回409 TASK_CONFLICT。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。；；只允许原任务终态SUCCESS/FAILED/CANCELLED，版本不匹配409 RESOURCE_VERSION_CONFLICT。 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "device:command"
@@ -16359,7 +16359,7 @@ paths:
                   name: "mock-example"
       x-design-status: "provisional"
       x-requirement-source: "PDF p18-23；adminPage/configPage/reportPage；工程M12"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -16369,7 +16369,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/me/password":
@@ -16378,7 +16378,7 @@ paths:
         - "Auth"
       operationId: "changeMyPassword"
       summary: "修改本人密码"
-      description: "currentPassword和newPassword必填；凭据错误401 AUTH_INVALID_CREDENTIALS，成功撤销本人其它会话。密码复杂度取已签认部署策略。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-18.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
+      description: "currentPassword和newPassword必填；凭据错误401 AUTH_INVALID_CREDENTIALS，成功撤销本人其它会话。密码复杂度取已签认部署策略。；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。； 暂定开发规则见PD-2026-10-19.v1；真实资源缺失返回503 SYSTEM_UNAVAILABLE或按已公布能力原因禁用，不返回伪成功。"
       security:
         - sessionCookie: []
       x-permission: "AUTHENTICATED"
@@ -16438,7 +16438,7 @@ paths:
                   newPassword: Example-password-2026!
       x-design-status: "provisional"
       x-requirement-source: "SD04/SD06/SD08；原型应用壳/公共任务"
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -16612,7 +16612,7 @@ paths:
       x-frontend-owner: DEV-03
       x-test-owner: DEV-05
       x-approval-policy:
-        policyVersion: PD-2026-10-18.v1
+        policyVersion: PD-2026-10-19.v1
         requiredWhen: matching_risk_rule
         selfApprove: false
   "/tasks/{taskId}/import-result":
@@ -16770,7 +16770,7 @@ paths:
       tags:
         - Approvals
       summary: 查询本人申请或待本人复核的审批
-      description: 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+      description: 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
       operationId: listActionApprovals
       x-module: M01/M06
       x-owner: DEV-01/DEV-02
@@ -16866,7 +16866,7 @@ paths:
       tags:
         - Approvals
       summary: 创建冻结的敏感动作审批申请
-      description: 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+      description: 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
       operationId: createActionApproval
       x-module: M01/M06
       x-owner: DEV-01/DEV-02
@@ -16963,7 +16963,7 @@ paths:
       tags:
         - Approvals
       summary: 查询受控审批详情
-      description: 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+      description: 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
       operationId: getActionApproval
       x-module: M01/M06
       x-owner: DEV-01/DEV-02
@@ -17052,7 +17052,7 @@ paths:
       tags:
         - Approvals
       summary: 提交独立复核决定
-      description: 按PD-2026-10-18.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
+      description: 按PD-2026-10-19.v1暂定开发；只返回申请人/被指定审批人当前有权对象。审批人必须具备对应动作权限和范围，不能自批；当前密码仅即时校验、不存储或回显。真实凭据/密钥未就绪不得伪造通过。
       operationId: decideActionApproval
       x-module: M01/M06
       x-owner: DEV-01/DEV-02
@@ -17324,7 +17324,7 @@ components:
       schema:
         type: string
         format: uuid
-      description: 命中PD-2026-10-18.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。
+      description: 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。
   responses:
     Http400:
       description: "VALIDATION_ERROR；完整错误码映射见error-codes.md，客户端按code判断。"
@@ -17631,10 +17631,10 @@ components:
         - "device-group:write"
         - "report:delete"
       x-design-status: "provisional"
-      description: "58项既有权限码不重复扩充。角色矩阵和28菜单见policy；操作权限暂按角色并集，数据范围采用已确认多角色并集/账号附加授权/超级管理员全采集可见；额外授权不超授予者范围。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "58项既有权限码不重复扩充。角色矩阵和28菜单见policy；操作权限暂按角色并集，数据范围采用已确认多角色并集/账号附加授权/超级管理员全采集可见；额外授权不超授予者范围。 [PD-2026-10-19.v1，待甲方确认]"
       x-contract-version: "1"
       example: "dashboard:read"
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -18256,13 +18256,13 @@ components:
         - "userId"
         - "idleExpiresAt"
         - "absoluteExpiresAt"
-      description: "SID只经Set-Cookie；空闲15分钟/绝对8小时，主动操作或显式renew可更新空闲，后台轮询不续命；常规续期不换SID/CSRF，登录/改密/权限提升轮换。单账号1会话，新登录撤销旧会话。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "SID只经Set-Cookie；空闲15分钟/绝对8小时，主动操作或显式renew可更新空闲，后台轮询不续命；常规续期不换SID/CSRF，登录/改密/权限提升轮换。单账号1会话，新登录撤销旧会话。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         userId: "00000000-0000-4000-8000-000000000001"
         idleExpiresAt: "2026-10-07T02:00:00Z"
         absoluteExpiresAt: "2026-10-07T02:00:00Z"
-      x-provisional-reason: PD-2026-10-18.v1：P-001已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-001已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-001
       x-client-confirmation: pending
@@ -18315,7 +18315,7 @@ components:
         - "dataTypes"
         - "ownOnly"
         - "scopeVersion"
-      description: "按(dataType,siteId,ownershipPredicate)授权元组取角色并集及账号附加授权，不分别合并维度后扩大授权。allSites=true时siteIds必须[]，false且[]无场所；SUPER_ADMIN默认全部采集可见，其他对象和操作权限仍独立检查。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "按(dataType,siteId,ownershipPredicate)授权元组取角色并集及账号附加授权，不分别合并维度后扩大授权。allSites=true时siteIds必须[]，false且[]无场所；SUPER_ADMIN默认全部采集可见，其他对象和操作权限仍独立检查。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         siteIds: []
@@ -18324,7 +18324,7 @@ components:
           - "FENCE"
         ownOnly: true
         scopeVersion: 0
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -18344,12 +18344,12 @@ components:
       required:
         - "siteIds"
         - "allSites"
-      description: "allSites=true时siteIds必须[]，false时[]无范围；管理场所操作使用当前授权范围，新增场所不自动加入显式场所grant。区域到siteId为显式版本映射。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "allSites=true时siteIds必须[]，false时[]无范围；管理场所操作使用当前授权范围，新增场所不自动加入显式场所grant。区域到siteId为显式版本映射。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         siteIds: []
         allSites: true
-      x-provisional-reason: PD-2026-10-18.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-002已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-002
       x-client-confirmation: pending
@@ -18556,7 +18556,7 @@ components:
         taskPollIntervalSeconds:
           type: "integer"
           minimum: 1
-          description: "PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
+          description: "PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
           default: 2
         maxUploadBytes:
           type: "integer"
@@ -18582,17 +18582,17 @@ components:
         contextTtlSeconds:
           type: "integer"
           minimum: 1
-          description: "PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
+          description: "PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
           default: 1800
         maxOnlineQuerySeconds:
           type: "integer"
           minimum: 1
-          description: "PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
+          description: "PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
           default: 5
         maxOnlineWindowDays:
           type: "integer"
           minimum: 1
-          description: "PD-2026-10-18.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
+          description: "PD-2026-10-19.v1暂定值；部署实际有效值必须与所记录policyVersion一致。"
           default: 31
         features:
           type: "array"
@@ -18617,7 +18617,7 @@ components:
         - "maxOnlineWindowDays"
         - "features"
         - "catalogBindings"
-      description: "前端可读取的非机密有效配置；暂定值按PD-2026-10-18.v1返回，后续版本显式变更；features只表示实际实现与资源可用性，不以甲方未定稿统一禁用。"
+      description: "前端可读取的非机密有效配置；暂定值按PD-2026-10-19.v1返回，后续版本显式变更；features只表示实际实现与资源可用性，不以甲方未定稿统一禁用。"
       example:
         version: "mock-example"
         mapCoordinateSystem: "EPSG:4326"
@@ -18810,12 +18810,12 @@ components:
       required:
         - "contextId"
         - "format"
-      description: "保持异步XLSX/CSV/ZIP；最多100万行/1GiB、每5万行分片，超限422 DATA_QUERY_TOO_BROAD。文件保存一个自然月、下载授权5分钟且每次校验当前权限，不新增同步导出。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "保持异步XLSX/CSV/ZIP；最多100万行/1GiB、每5万行分片，超限422 DATA_QUERY_TOO_BROAD。文件保存一年（12个自然月）、下载授权5分钟且每次校验当前权限，不新增同步导出。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         contextId: "00000000-0000-4000-8000-000000000001"
         format: "XLSX"
-      x-provisional-reason: PD-2026-10-18.v1：P-003/P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-003/P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-003
         - P-009
@@ -18967,7 +18967,7 @@ components:
         - "parameterSnapshot"
         - "traceId"
         - "name"
-      description: "六态PENDING/QUEUED/RUNNING/SUCCESS/FAILED/CANCELLED。普通执行30分钟、复杂2小时从实际RUNNING开始，排队预算分别5/15分钟；类型分类见policy。SUCCESS仅说明本任务工作流，不代表外部短信已送达；保存自然月且保护引用。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "六态PENDING/QUEUED/RUNNING/SUCCESS/FAILED/CANCELLED。普通执行30分钟、复杂2小时从实际RUNNING开始，排队预算分别5/15分钟；类型分类见policy。SUCCESS仅说明本任务工作流，不代表外部短信已送达；保存一年（12个自然月）且保护引用。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         taskId: "00000000-0000-4000-8000-000000000001"
@@ -18983,7 +18983,7 @@ components:
           parameterHash: "0000000000000000000000000000000000000000000000000000000000000000"
         traceId: "mock-example"
         name: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-003已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-003已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-003
       x-client-confirmation: pending
@@ -19615,7 +19615,7 @@ components:
         - "permissionVersion"
         - "targetCount"
         - "targetsTruncated"
-      description: "访问有效期固定创建后30分钟，不因复用续期，到期410 CONTEXT_EXPIRED；物理元数据保存自然月。每次消费重校权限，缩权403；targets最多100个预览，不代表完整输入。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "访问有效期固定创建后30分钟，不因复用续期，到期410 CONTEXT_EXPIRED；物理元数据保存一年（12个自然月）。每次消费重校权限，缩权403；targets最多100个预览，不代表完整输入。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         contextId: "00000000-0000-4000-8000-000000000001"
@@ -19637,7 +19637,7 @@ components:
         permissionVersion: 0
         targetCount: 0
         targetsTruncated: true
-      x-provisional-reason: PD-2026-10-18.v1：P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-009
       x-client-confirmation: pending
@@ -19783,7 +19783,7 @@ components:
         - "truncated"
         - "maxFeatures"
         - "asOf"
-      description: "WGS84 GeoJSON [lon,lat]；缺坐标用null，不造(0,0)。单次2000点、面2000顶点/1万平方千米、zoom3至20，超量聚合/瓦片，非法几何422。高德离线PC Web产品/授权未绑定不声称底图可用。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "WGS84 GeoJSON [lon,lat]；缺坐标用null，不造(0,0)。单次2000点、面2000顶点/1万平方千米、zoom3至20，超量聚合/瓦片，非法几何422。高德离线PC Web产品/授权未绑定不声称底图可用。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         type: "FeatureCollection"
@@ -19801,7 +19801,7 @@ components:
         truncated: true
         maxFeatures: 1
         asOf: "2026-10-07T02:00:00Z"
-      x-provisional-reason: PD-2026-10-18.v1：P-010已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-010已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-010
       x-client-confirmation: pending
@@ -20287,13 +20287,13 @@ components:
         - "imageAssetId"
         - "modelVersion"
         - "qualityScore"
-      description: "imageAssetId必须可用且受控；modelVersion记录实际合法模型，未知质量标尺qualityScore=null，不用统一阈值0.8或伪质量分。原图/缩略图访问5分钟、物理保存自然月。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "imageAssetId必须可用且受控；modelVersion记录实际合法模型，未知质量标尺qualityScore=null，不用统一阈值0.8或伪质量分。原图/缩略图访问5分钟、物理保存一年（12个自然月）。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         imageAssetId: "00000000-0000-4000-8000-000000000001"
         modelVersion: null
         qualityScore: null
-      x-provisional-reason: PD-2026-10-18.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-007
       x-client-confirmation: pending
@@ -21054,14 +21054,14 @@ components:
           MAC: "#/components/schemas/MacCaptureSearchRequest"
           PLATE: "#/components/schemas/PlateCaptureSearchRequest"
           FACE: "#/components/schemas/FaceCaptureSearchRequest"
-      description: "普通查询最多31天，分页20默认/100最大，不透明游标签名15分钟并绑定条件/水位/权限版本。SQL硬超时5秒、锁等待1秒；取消向DB传播，不能以部分结果冒充完整成功。查询验收目标仍<=2秒。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "普通查询最多31天，分页20默认/100最大，不透明游标签名15分钟并绑定条件/水位/权限版本。SQL硬超时5秒、锁等待1秒；取消向DB传播，不能以部分结果冒充完整成功。查询验收目标仍<=2秒。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         dataType: "FENCE"
         timeRange:
           from: "2026-10-07T02:00:00Z"
           to: "2026-10-07T03:00:00Z"
-      x-provisional-reason: PD-2026-10-18.v1：P-003/P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-003/P-009已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-003
         - P-009
@@ -21426,7 +21426,7 @@ components:
         - "imageAssetId"
         - "timeRange"
         - "candidateLimit"
-      description: "PD-2026-10-18.v1暂定：minSimilarity默认0，score>minSimilarity筛选仅作候选排序；默认20最多100、人工复核。授权内网模型未就绪503，无通用可信同人阈值；10万底库端到端2秒目标含队列/实际检索/结果可用，需实测，不以普通30分钟任务时限替代。"
+      description: "PD-2026-10-19.v1暂定：minSimilarity默认0，score>minSimilarity筛选仅作候选排序；默认20最多100、人工复核。授权内网模型未就绪503，无通用可信同人阈值；10万底库端到端2秒目标含队列/实际检索/结果可用，需实测，不以普通30分钟任务时限替代。"
       x-design-status: "provisional"
       example:
         imageAssetId: "00000000-0000-4000-8000-000000000001"
@@ -21434,7 +21434,7 @@ components:
           from: "2026-10-07T02:00:00Z"
           to: "2026-10-07T03:00:00Z"
         candidateLimit: 1
-      x-provisional-reason: PD-2026-10-18.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-007已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-007
       x-client-confirmation: pending
@@ -22099,7 +22099,7 @@ components:
         - "topSitesByDataType"
         - "deduplicatedSeries"
         - "deviceAlertCounts"
-      description: "12类首页区域（11类数据+应用入口）按METRIC_V1计算，共用meta/asOf/status/unit。源counter采集量与capture事实入库量分开，去重按typed target；提交水位至发布<=3秒/UI刷新<=2秒，未知/失败用既有状态与null。公式见policy。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "12类首页区域（11类数据+应用入口）按METRIC_V1计算，共用meta/asOf/status/unit。源counter采集量与capture事实入库量分开，去重按typed target；提交水位至发布<=3秒/UI刷新<=2秒，未知/失败用既有状态与null。公式见policy。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         onlineDevices:
@@ -22264,7 +22264,7 @@ components:
             - deviceId: "00000000-0000-4000-8000-000000000001"
               deviceName: "mock-example"
               count: 0
-      x-provisional-reason: PD-2026-10-18.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
       x-client-confirmation: pending
@@ -22325,7 +22325,7 @@ components:
         - "networkRegistrationCount"
         - "sentSuccessCount"
         - "sentTotalCount"
-      description: "状态、信号单位、SIM与余额来自版本化厂商profile；标尺/查询能力未提供时为null，不能通用假定0至31。发送/送达计数分开，公开错误码归一化，原始供应商字段不直接透出。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "状态、信号单位、SIM与余额来自版本化厂商profile；标尺/查询能力未提供时为null，不能通用假定0至31。发送/送达计数分开，公开错误码归一化，原始供应商字段不直接透出。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         meta:
@@ -22338,7 +22338,7 @@ components:
         networkRegistrationCount: null
         sentSuccessCount: null
         sentTotalCount: null
-      x-provisional-reason: PD-2026-10-18.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
       x-client-confirmation: pending
@@ -22466,7 +22466,7 @@ components:
         - "byDataType"
         - "timeRange"
         - "bucketGranularity"
-      description: "四类区域共用METRIC_V1和5秒新数据可见预算；WEEK/MONTH/QUARTER/YEAR按Asia/Shanghai自然周期，内部[start,end)。短信猫字段来自真实适配器，未知为null，不编造信号/余额。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "四类区域共用METRIC_V1和5秒新数据可见预算；WEEK/MONTH/QUARTER/YEAR按Asia/Shanghai自然周期，内部[start,end)。短信猫字段来自真实适配器，未知为null，不编造信号/余额。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         deviceOnline:
@@ -22582,7 +22582,7 @@ components:
           from: "2026-10-07T02:00:00Z"
           to: "2026-10-07T03:00:00Z"
         bucketGranularity: "DAY"
-      x-provisional-reason: PD-2026-10-18.v1：P-006/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
         - P-015
@@ -22632,7 +22632,7 @@ components:
         - "timeRange"
         - "timeWindowSeconds"
         - "spatialWindowMeters"
-      description: "COMPANION_V1默认120秒/100米，最多3600秒/5000米、7天；至少3个共现桶。geography米制距离、不重复配对及稳定排序；associationScore为桶Jaccard，不是身份/嫌疑概率。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "COMPANION_V1默认120秒/100米，最多3600秒/5000米、7天；至少3个共现桶。geography米制距离、不重复配对及稳定排序；associationScore为桶Jaccard，不是身份/嫌疑概率。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         target:
@@ -22643,7 +22643,7 @@ components:
           to: "2026-10-07T03:00:00Z"
         timeWindowSeconds: 1
         spatialWindowMeters: 0
-      x-provisional-reason: PD-2026-10-18.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-011
       x-client-confirmation: pending
@@ -22682,7 +22682,7 @@ components:
         - "targets"
         - "timeRange"
         - "ruleCode"
-      description: "ruleCode=COLLISION_V1，默认120秒/100米配对，最多7天；保存逐条采集证据，matchRate是匹配主目标桶数/主目标有效桶数，不自动跨标识认人。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "ruleCode=COLLISION_V1，默认120秒/100米配对，最多7天；保存逐条采集证据，matchRate是匹配主目标桶数/主目标有效桶数，不自动跨标识认人。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         targets:
@@ -22694,7 +22694,7 @@ components:
           from: "2026-10-07T02:00:00Z"
           to: "2026-10-07T03:00:00Z"
         ruleCode: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-011
       x-client-confirmation: pending
@@ -23352,7 +23352,7 @@ components:
         regionCount: 0
         visitedRegionCodes:
           - "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-011
       x-client-confirmation: pending
@@ -23467,7 +23467,7 @@ components:
         - "siteCount"
         - "regionCount"
         - "visitedRegionCodes"
-      description: "返回实际碰撞采集与时间/场所证据，matchRate=匹配主目标桶/主目标有效桶；缺证据不返回推断结论，不把关联分解释为同一人或风险概率。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "返回实际碰撞采集与时间/场所证据，matchRate=匹配主目标桶/主目标有效桶；缺证据不返回推断结论，不把关联分解释为同一人或风险概率。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         resultId: "00000000-0000-4000-8000-000000000001"
@@ -23495,7 +23495,7 @@ components:
         regionCount: 0
         visitedRegionCodes:
           - "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-011已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-011
       x-client-confirmation: pending
@@ -23975,7 +23975,7 @@ components:
         - "itemCount"
         - "createdAt"
         - "elementType"
-      description: "共享不能放宽源数据；固定datasetId+version。ARCHIVED只读可查、可显式恢复但不能新引用；活跃引用删除409，历史清理按自然月及引用保护。管理导入仍ALL_OR_NOTHING。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "共享不能放宽源数据；固定datasetId+version。ARCHIVED只读可查、可显式恢复但不能新引用；活跃引用删除409，历史清理按自然月及引用保护。管理导入仍ALL_OR_NOTHING。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         datasetId: "00000000-0000-4000-8000-000000000001"
@@ -23987,7 +23987,7 @@ components:
         itemCount: 0
         createdAt: "2026-10-07T02:00:00Z"
         elementType: "CAPTURE"
-      x-provisional-reason: PD-2026-10-18.v1：P-013已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-013已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-013
       x-client-confirmation: pending
@@ -24511,7 +24511,7 @@ components:
         - "targets"
         - "siteIds"
         - "dataTypes"
-      description: "EXACT_TARGET_V1匹配同型targetId；跨源只用已人工确认profile_link。同规则/修订/目标5分钟去重外发，全部命中事实保留；编辑新revision，撤销阻止未来未发送动作。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "EXACT_TARGET_V1匹配同型targetId；跨源只用已人工确认profile_link。同规则/修订/目标5分钟去重外发，全部命中事实保留；编辑新revision，撤销阻止未来未发送动作。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         targets:
@@ -24522,7 +24522,7 @@ components:
           - "00000000-0000-4000-8000-000000000001"
         dataTypes:
           - "FENCE"
-      x-provisional-reason: PD-2026-10-18.v1：P-014/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014/P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
         - P-016
@@ -24947,7 +24947,7 @@ components:
         - "status"
         - "deliveryStatus"
         - "traceId"
-      description: "沿用LOW/MEDIUM/HIGH和OPEN/ACKNOWLEDGED/CLOSED；默认LOW，等级由规则配置，不表示犯罪概率。watch:write确认/关闭，reason必填；确认后不自动隐藏，保存自然月。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "沿用LOW/MEDIUM/HIGH和OPEN/ACKNOWLEDGED/CLOSED；默认LOW，等级由规则配置，不表示犯罪概率。watch:write确认/关闭，reason必填；确认后不自动隐藏，保存一年（12个自然月）。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         alertId: "00000000-0000-4000-8000-000000000001"
@@ -24962,7 +24962,7 @@ components:
         status: "OPEN"
         deliveryStatus: "PENDING"
         traceId: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-014已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
       x-client-confirmation: pending
@@ -25134,7 +25134,7 @@ components:
         - "templateCode"
         - "schedule"
         - "platformUserIds"
-      description: "模板code+version与变量白名单冻结；单任务最多100收件人。DAILY错过<=1小时补一次，超过记MISSED并告警；编辑/撤销只影响未启动外部动作。三类通知均属本期，外部资源未绑定不返回假成功。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "模板code+version与变量白名单冻结；单任务最多100收件人。DAILY错过<=1小时补一次，超过记MISSED并告警；编辑/撤销只影响未启动外部动作。三类通知均属本期，外部资源未绑定不返回假成功。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         name: "设备状态日通知"
@@ -25149,7 +25149,7 @@ components:
         templateCode: "DEVICE_STATUS_V1"
         platformUserIds:
           - "00000000-0000-4000-8000-000000000001"
-      x-provisional-reason: PD-2026-10-18.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-014/P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-014
         - P-015
@@ -25383,7 +25383,7 @@ components:
         - "traceId"
         - "taskName"
         - "contentSummary"
-      description: "沿用PENDING/SENT/ACKNOWLEDGED/FAILED/UNKNOWN；SMS成功仅送达成功回执。SMTP250仅SENT，DSN成功才ACKNOWLEDGED；平台收件箱持久化可ACKNOWLEDGED。UNKNOWN先对账不盲重发；明确可重试失败3次30/120/600秒+20%抖动，回执窗口24小时。验收连续7天/至少1000逻辑投递，重试合并一次，成功率>=99%。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "沿用PENDING/SENT/ACKNOWLEDGED/FAILED/UNKNOWN；SMS成功仅送达成功回执。SMTP250仅SENT，DSN成功才ACKNOWLEDGED；平台收件箱持久化可ACKNOWLEDGED。UNKNOWN先对账不盲重发；明确可重试失败3次30/120/600秒+20%抖动，回执窗口24小时。验收连续7天/至少1000逻辑投递，重试合并一次，成功率>=99%。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         deliveryId: "00000000-0000-4000-8000-000000000001"
@@ -25395,7 +25395,7 @@ components:
         traceId: "mock-example"
         taskName: "mock-example"
         contentSummary: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-015已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-015
       x-client-confirmation: pending
@@ -25465,14 +25465,14 @@ components:
         - "contextId"
         - "purpose"
         - "captureIds"
-      description: "capture:read可提交转交，recipient需capture:decrypt及对应范围；普通账号必须指定recipient。purpose10至1000字符，最多200采集；两名不同非申请人审批。只申请，不直接返回明文。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "capture:read可提交转交，recipient需capture:decrypt及对应范围；普通账号必须指定recipient。purpose10至1000字符，最多200采集；两名不同非申请人审批。只申请，不直接返回明文。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         contextId: "00000000-0000-4000-8000-000000000001"
         purpose: "mock-example"
         captureIds:
           - "00000000-0000-4000-8000-000000000001"
-      x-provisional-reason: PD-2026-10-18.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-008
       x-client-confirmation: pending
@@ -25519,7 +25519,7 @@ components:
         - "createdAt"
         - "expiresAt"
         - "resultAvailable"
-      description: "不含明文或grantUrl。申请24小时过期，批准后指定recipient使用readDecryptionResult受控POST查看一次，展示许可5分钟；resultAvailable须审批/密钥/身份/当前权限/许可均有效。元数据自然月，明文不形成持久文件。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "不含明文或grantUrl。申请24小时过期，批准后指定recipient使用readDecryptionResult受控POST查看一次，展示许可5分钟；resultAvailable须审批/密钥/身份/当前权限/许可均有效。元数据自然月，明文不形成持久文件。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         requestId: "00000000-0000-4000-8000-000000000001"
@@ -25528,7 +25528,7 @@ components:
         createdAt: "2026-10-07T02:00:00Z"
         expiresAt: "2026-10-07T02:00:00Z"
         resultAvailable: true
-      x-provisional-reason: PD-2026-10-18.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-008已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-008
       x-client-confirmation: pending
@@ -27834,14 +27834,14 @@ components:
         - "duplicatePolicy"
         - "reason"
         - "templateCode"
-      description: "沿用PERSON_LIBRARIES_V1、CSV/XLSX/JSON和ALL_OR_NOTHING；仅显式允许重复行可SKIP，错误标识不得upsert吞错。保留逐行错误与资源ID，不从同型标识自动认定跨源同人。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "沿用PERSON_LIBRARIES_V1、CSV/XLSX/JSON和ALL_OR_NOTHING；仅显式允许重复行可SKIP，错误标识不得upsert吞错。保留逐行错误与资源ID，不从同型标识自动认定跨源同人。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         fileAssetId: "00000000-0000-4000-8000-000000000001"
         duplicatePolicy: "SKIP"
         reason: "mock-example"
         templateCode: "PERSON_LIBRARIES_V1"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -28300,7 +28300,7 @@ components:
           PERSON: "#/components/schemas/PersonProfileDetail"
           VEHICLE: "#/components/schemas/VehicleProfileDetail"
       x-design-status: "provisional"
-      description: "PERSON/VEHICLE分型；跨源只产候选+证据，未经校准/人工确认confidence=null；保留旧ID/修订谱系，合并遵守retainedProfileId，不自动404或重写历史任务。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "PERSON/VEHICLE分型；跨源只产候选+证据，未经校准/人工确认confidence=null；保留旧ID/修订谱系，合并遵守retainedProfileId，不自动404或重写历史任务。 [PD-2026-10-19.v1，待甲方确认]"
       example:
         profileId: "00000000-0000-4000-8000-000000000001"
         profileType: "PERSON"
@@ -28330,7 +28330,7 @@ components:
         regionCount: 0
         visitedRegionCodes:
           - "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -28715,7 +28715,7 @@ components:
         - "person"
         - "supportingEvidenceIds"
         - "reason"
-      description: "仅现有白名单资料字段，reason/evidence必填；profile:correct和当前范围校验，不修改设备原始事实。合并拆分另需profile:merge及独立复核，形成新revision。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "仅现有白名单资料字段，reason/evidence必填；profile:correct和当前范围校验，不修改设备原始事实。合并拆分另需profile:merge及独立复核，形成新revision。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         profileType: "PERSON"
@@ -28723,7 +28723,7 @@ components:
         supportingEvidenceIds:
           - "00000000-0000-4000-8000-000000000001"
         reason: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -28755,7 +28755,7 @@ components:
         - "vehicle"
         - "supportingEvidenceIds"
         - "reason"
-      description: "仅现有白名单字段，reason/evidence必填；车牌修正不自动合档，不改写设备原始采集，权限与修订谱系按P-016。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "仅现有白名单字段，reason/evidence必填；车牌修正不自动合档，不改写设备原始采集，权限与修订谱系按P-016。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         profileType: "VEHICLE"
@@ -28763,7 +28763,7 @@ components:
         supportingEvidenceIds:
           - "00000000-0000-4000-8000-000000000001"
         reason: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-016已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-016
       x-client-confirmation: pending
@@ -29245,12 +29245,12 @@ components:
           DURATION_SECONDS: "#/components/schemas/DurationSecondsModelParameterValue"
           DISTANCE_METERS: "#/components/schemas/DistanceMetersModelParameterValue"
       x-design-status: "provisional"
-      description: "强类型/单位与参数目录校验，引用后不可变。暂定RESIDENCE参数见policy；变更产生新版本，不复用任务已引用版本。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "强类型/单位与参数目录校验，引用后不可变。暂定RESIDENCE参数见policy；变更产生新版本，不复用任务已引用版本。 [PD-2026-10-19.v1，待甲方确认]"
       example:
         parameterCode: "mock-example"
         valueType: "TEXT"
         textValue: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -29281,7 +29281,7 @@ components:
         - "algorithmVersion"
         - "outputTagCodes"
         - "description"
-      description: "仅RESIDENCE_SITE_NIGHTS_V1元数据，指向受控实现而非自由DSL。一个自然月输入、22至06时、>=10记录/>=5夜/夜晚比例>=0.6，标签仅疑似场所候选；同分按夜数/最近时刻/siteId稳定排序。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "仅RESIDENCE_SITE_NIGHTS_V1元数据，指向受控实现而非自由DSL。一个自然月输入、22至06时、>=10记录/>=5夜/夜晚比例>=0.6，标签仅疑似场所候选；同分按夜数/最近时刻/siteId稳定排序。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         ruleCode: "mock-example"
@@ -29290,7 +29290,7 @@ components:
         outputTagCodes:
           - "mock-example"
         description: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-017
       x-client-confirmation: pending
@@ -30411,7 +30411,7 @@ components:
           NUMBER: "#/components/schemas/NumberDeviceParameter"
           BOOLEAN: "#/components/schemas/BooleanDeviceParameter"
       x-design-status: "provisional"
-      description: "仅版本化厂商DeviceProfile登记的参数，保留TEXT/INTEGER/NUMBER/BOOLEAN类型；敏感值不回原文。未绑定真实profile不得假造参数，实际读写不可用返回503。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "仅版本化厂商DeviceProfile登记的参数，保留TEXT/INTEGER/NUMBER/BOOLEAN类型；敏感值不回原文。未绑定真实profile不得假造参数，实际读写不可用返回503。 [PD-2026-10-19.v1，待甲方确认]"
       example:
         parameterCode: "mock-example"
         label: "mock-example"
@@ -30419,7 +30419,7 @@ components:
         textValue: "mock-example"
         readOnly: true
         updatedAt: "2026-10-07T02:00:00Z"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -30438,12 +30438,12 @@ components:
           NUMBER: "#/components/schemas/NumberDeviceParameterChange"
           BOOLEAN: "#/components/schemas/BooleanDeviceParameterChange"
       x-design-status: "provisional"
-      description: "变更写desired，真实回执/回读后才改reported。未知键400、越界422，敏感键/批量>=10台按审批，冻结逐设备集合与版本。RESET不自动映射恢复出厂。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "变更写desired，真实回执/回读后才改reported。未知键400、越界422，敏感键/批量>=10台按审批，冻结逐设备集合与版本。RESET不自动映射恢复出厂。 [PD-2026-10-19.v1，待甲方确认]"
       example:
         parameterCode: "mock-example"
         valueType: "TEXT"
         textValue: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-018/P-019已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-018
         - P-019
@@ -31594,14 +31594,14 @@ components:
         - "granularity"
         - "periodStart"
         - "regionCode"
-      description: "保留8报表类型/自然DAY-MONTH-YEAR/SINGLE XLSX-BUNDLE ZIP；METRIC_V1同源公式及冻结快照。原始明细最多31天，年度只能显示当前留存覆盖区间，缺历史不补0；regionCode=ALL仍受当前授权范围限制。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "保留8报表类型/自然DAY-MONTH-YEAR/SINGLE XLSX-BUNDLE ZIP；METRIC_V1同源公式及冻结快照。原始明细最多31天，年度只能显示当前留存覆盖区间，缺历史不补0；regionCode=ALL仍受当前授权范围限制。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         reportType: "DEVICE_REALTIME_ONLINE_RATE"
         granularity: "DAY"
         periodStart: "2026-10-07"
         regionCode: "mock-example"
-      x-provisional-reason: PD-2026-10-18.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
         - P-020
@@ -32199,7 +32199,7 @@ components:
         - "$ref": "#/components/schemas/DeviceStatusReportPreview"
         - "$ref": "#/components/schemas/CaptureReportPreview"
         - "$ref": "#/components/schemas/SystemReportPreview"
-      description: "SINGLE在线冻结预览、BUNDLE下载ZIP，预览与正式文件使用同一已发布结果/游标；分页20默认100最大，不重新扫实时源。文件/预览保留自然月，下载许可5分钟。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "SINGLE在线冻结预览、BUNDLE下载ZIP，预览与正式文件使用同一已发布结果/游标；分页20默认100最大，不重新扫实时源。文件/预览保留自然月，下载许可5分钟。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         reportType: "DEVICE_REALTIME_ONLINE_RATE"
@@ -32224,7 +32224,7 @@ components:
           DEVICE_STATUS: "#/components/schemas/DeviceStatusReportPreview"
           CAPTURE: "#/components/schemas/CaptureReportPreview"
           SYSTEM: "#/components/schemas/SystemReportPreview"
-      x-provisional-reason: PD-2026-10-18.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-006/P-020已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-006
         - P-020
@@ -32506,11 +32506,11 @@ components:
       additionalProperties: false
       required:
         - "newPassword"
-      description: "本人需currentPassword；管理员重置reason必填、撤销用户全部会话。新密码15至128字符/NFC/离线弱密码表，不强制字符组合或90天轮换；首次登录强改。响应/日志不含密码。 [PD-2026-10-18.v1，待甲方确认]"
+      description: "本人需currentPassword；管理员重置reason必填、撤销用户全部会话。新密码15至128字符/NFC/离线弱密码表，不强制字符组合或90天轮换；首次登录强改。响应/日志不含密码。 [PD-2026-10-19.v1，待甲方确认]"
       x-design-status: "provisional"
       example:
         newPassword: Example-password-2026!
-      x-provisional-reason: PD-2026-10-18.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+      x-provisional-reason: PD-2026-10-19.v1：P-021已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
       x-decision-ids:
         - P-021
       x-client-confirmation: pending
@@ -36143,7 +36143,7 @@ components:
           nullable: true
           description: "按有效采集频次、最近出现时刻、siteId稳定裁决；仅疑似场所代理，不是真实住址，未知为null；使用RESIDENCE候选时需>=5个夜晚等规则。"
           x-design-status: "provisional"
-          x-provisional-reason: PD-2026-10-18.v1：P-006/P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
+          x-provisional-reason: PD-2026-10-19.v1：P-006/P-017已有暂定开发方案，待甲方确认；真实资源接入条件单独校验。
           x-decision-ids:
             - P-006
             - P-017
@@ -39497,7 +39497,7 @@ components:
         - P-008
         - P-019
 x-provisional-policy:
-  version: PD-2026-10-18.v1
+  version: PD-2026-10-19.v1
   status: provisional
   clientConfirmation: pending
   policyFile: docs/project-governance/provisional-policy.json

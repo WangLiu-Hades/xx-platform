@@ -1,4 +1,4 @@
-> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-18.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
+> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-19.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
 
 # API、需求与存储映射（DB-DESIGN-2）
 
@@ -1966,7 +1966,7 @@ MAPPED表示存储结构已有明确映射；PENDING_RULE表示结构已保留�
 | SiteScope | `siteIds` | 范围关联表site_id；禁止从全库维表自动扩大授权 |
 | SiteScope | `allSites` | 对应范围实体management_all_sites或data_all_sites（由schema确定） |
 
-## PD-2026-10-18.v1新增映射
+## PD-2026-10-19.v1新增映射
 
 | operationId | 存储与语义 |
 | --- | --- |
