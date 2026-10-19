@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  多维数据分析平台 · 正式 HTTP API（DEV-01）
+  契约唯一来源：contracts/api/openapi.yaml（OpenAPI 3.0.3，版本 1.0.0-dev.3-provisional）
+  基线：Java 17 / Spring Boot 3.5.16 / Maven 3.9.x
+  说明见同目录 README.md；分工与边界见 docs/project-governance/BACKEND_TWO_DEV_SPLIT.md
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.5.16</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>com.xxplatform</groupId>
+  <artifactId>xx-platform-api</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <name>xx-platform-api</name>
+  <description>多维数据分析平台正式 HTTP API（DEV-01 后端）</description>
+
+  <properties>
+    <java.version>17</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- 契约生成器：与 contracts/api/api-conventions.md §9 及审计报告一致 -->
+    <openapi-generator.version>7.25.0</openapi-generator.version>
+    <openapi.spec>${project.basedir}/../../contracts/api/openapi.yaml</openapi.spec>
+  </properties>
+
+  <dependencies>
+    <!-- Web 层：REST 接口（统一响应壳、异常兜底、traceId 过滤都在这里落地） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- 契约字段校验：@Valid / @NotNull / @Pattern，对应 Schema 的 required/enum/pattern -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!--
+      以下依赖按分工分阶段加入，当前故意不引入，避免骨架跑不起来：
+      - spring-boot-starter-data-jpa / mybatis：持久化（等 contracts/database/schema.sql 落地迁移后）
+      - spring-session-jdbc：SID Cookie 会话（按P-001暂定方案）
+      - spring-boot-starter-data-redis：幂等键/游标/限流缓存（按需）
+      - spring-boot-starter-actuator：契约已自带 /health、/ready，是否叠加 actuator 待定
+    -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <!--
+      契约生成 profile：`mvn -Pgenerate-api generate-sources`
+
+      为什么单独放 profile，而不是放进默认 build：
+      插件本身需要联网下载（本机与 CI 的离线环境跑默认构建时会直接失败，
+      并连带影响本来能编译的代码）。放在 profile 里之后：
+        - 默认 `mvn compile` / `mvn package` 完全离线可用；
+        - 需要生成或更新契约产物时显式加 -Pgenerate-api，并确保能访问 Maven 仓库。
+
+      配置必须与契约 info.x-codegen.spring 及 contracts/api/api-conventions.md §9 一致。
+      生成物进入 target/generated-sources/openapi（target 下，mvn clean 会清除，不提交）。
+    -->
+    <profile>
+      <id>generate-api</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${openapi-generator.version}</version>
+            <executions>
+              <execution>
+                <id>generate-api-from-contract</id>
+                <goals>
+                  <goal>generate</goal>
+                </goals>
+                <configuration>
+                  <inputSpec>${openapi.spec}</inputSpec>
+                  <generatorName>spring</generatorName>
+                  <output>${project.build.directory}/generated-sources/openapi</output>
+                  <apiPackage>com.xxplatform.api.generated.api</apiPackage>
+                  <modelPackage>com.xxplatform.api.generated.model</modelPackage>
+                  <invokerPackage>com.xxplatform.api.generated.invoker</invokerPackage>
+                  <generateApiTests>false</generateApiTests>
+                  <generateModelTests>false</generateModelTests>
+                  <generateApiDocumentation>false</generateApiDocumentation>
+                  <generateModelDocumentation>false</generateModelDocumentation>
+                  <configOptions>
+                    <interfaceOnly>true</interfaceOnly>
+                    <useSpringBoot3>true</useSpringBoot3>
+                    <useOneOfInterfaces>true</useOneOfInterfaces>
+                    <useTags>true</useTags>
+                    <dateLibrary>java8</dateLibrary>
+                    <openApiNullable>false</openApiNullable>
+                    <performBeanValidation>true</performBeanValidation>
+                    <!--
+                      契约要求：JSON 字段仍是 taskId，Java 侧 setter 改名，
+                      避开与"执行 taskId"的 setter 重名。这是契约指定的唯一改名，不要额外增删。
+                    -->
+                    <nameMappings>setTaskId=setOperationId</nameMappings>
+                  </configOptions>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

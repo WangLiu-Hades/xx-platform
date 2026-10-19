@@ -1,0 +1,44 @@
+#!/bin/sh
+# ---------------------------------------------------------------------------
+# Maven Wrapper（轻量等价实现，说明见 .mvn/wrapper/maven-wrapper.properties）
+#
+# 用法与官方 mvnw 一致：
+#   ./mvnw -o -B compile
+#   ./mvnw -Pgenerate-api generate-sources
+#   ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+#
+# 行为：优先复用本机已装的 Maven；没有时按 maven-wrapper.properties 的
+# distributionUrl 下载发行版（首次需联网）后复用。
+# ---------------------------------------------------------------------------
+set -e
+
+BASE_DIR=$(cd "$(dirname "$0")" && pwd)
+PROPS="$BASE_DIR/.mvn/wrapper/maven-wrapper.properties"
+DIST_DIR="${HOME}/.m2/wrapper/dists"
+MAVEN_VERSION="3.9.16"
+DISTRIBUTION_URL=""
+
+if [ -f "$PROPS" ]; then
+  MAVEN_VERSION=$(sed -n 's/^mavenVersion=//p' "$PROPS" | head -n 1)
+  DISTRIBUTION_URL=$(sed -n 's/^distributionUrl=//p' "$PROPS" | head -n 1)
+  [ -n "$MAVEN_VERSION" ] || MAVEN_VERSION="3.9.16"
+fi
+
+# 1) 优先使用本机已安装的 Maven
+if command -v mvn >/dev/null 2>&1; then
+  exec mvn "$@"
+fi
+
+# 2) 回退到 wrapper 缓存目录中的发行版
+MAVEN_HOME_LOCAL="$DIST_DIR/apache-maven-$MAVEN_VERSION"
+if [ -x "$MAVEN_HOME_LOCAL/bin/mvn" ]; then
+  exec "$MAVEN_HOME_LOCAL/bin/mvn" "$@"
+fi
+
+# 3) 都没有：本环境为离线开发环境，这里只给出明确指引，不做隐式下载
+echo "[mvnw] Maven not found on PATH and no wrapper distribution cached." >&2
+echo "[mvnw] Options:" >&2
+echo "[mvnw]   1) Install Maven and add it to PATH, or set MAVEN_HOME;" >&2
+echo "[mvnw]   2) Download $DISTRIBUTION_URL" >&2
+echo "[mvnw]      and extract it to $MAVEN_HOME_LOCAL" >&2
+exit 1

@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-10-19T07:01:35.881517+00:00",
+  "scope": "portable navigation, critical contracts and mapping",
+  "checks": [
+    {
+      "check": "required_entrypoints",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "single_active_vue_project",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "confirmed_team_owners",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "shared_repository",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "no_invented_github_reviewers",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "future_status:apps/api",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "future_status:workers/data",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "future_status:workers/delivery",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "future_status:infra",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "future_status:tests",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "active_markdown_links",
+      "passed": true,
+      "detail": {
+        "files": 129,
+        "links": 843,
+        "broken": []
+      }
+    },
+    {
+      "check": "api_generator_new_path",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "complete_unique_mapping",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "mapping_matches_snapshot",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": 14,
+  "failed": 0
+}

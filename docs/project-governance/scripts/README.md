@@ -30,3 +30,7 @@ python docs/project-governance/scripts/verify_deliverables.py
 ## 维护与检查
 
 更新Word需重新导出、逐页视觉审查并刷新哈希，脚本通过不能代替人工版面检查。基线盘点、业务回归和联网审计有不同时间/范围，不以当前汇总时间替代历史执行日期。新增源码README不属于Vite构建输入，交付检查据实际运行文件判断构建新旧。返回[治理入口](<../README.md>)。
+
+## 当前后端分工清单
+
+`node docs/project-governance/scripts/generate_backend_ownership.cjs`读取当前OpenAPI及docs/team/ownership.json，生成backend-operation-owners.json/csv；未知路径失败，要求人工明确模块。脚本不修改契约及业务参数。`node docs/project-governance/scripts/verify_provisional.cjs`校验暂定规则与契约，输出checks/contract-policy-check.json，不能代替真实后端验收。

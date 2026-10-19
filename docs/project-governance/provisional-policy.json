@@ -27,7 +27,7 @@
       "DEV-05": "测试"
     },
     "fullTimePeople": 5,
-    "backendAllocation": "DEV01/02自行领取",
+    "backendAllocation": "DEV-01负责M01/M06/M10/M12/M14/M15及共享底座；DEV-02负责M03/M04/M05/M07/M08/M09/M11/M13；逐操作清单见BACKEND_TWO_DEV_SPLIT及backend-operation-owners.json",
     "productionInternet": false,
     "mapDirection": "高德离线/私网PC Web产品",
     "retention": {
@@ -1063,7 +1063,7 @@
       "technicalStatus": "provisional",
       "clientConfirmation": "pending",
       "items": [
-        "DEV-01/02承担后端整体并自行领取；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。"
+        "DEV-01/02按BACKEND_TWO_DEV_SPLIT模块分工，DEV-01主写共享底座及运维，DEV-02主写接入及研判；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。"
       ],
       "sources": []
     },
@@ -1366,7 +1366,7 @@
       "id": "G01-03",
       "group": "G01",
       "previous_open_item": "运维人员由对应开发者指定，具体负责人先暂定；部署、发布、监控、备份/恢复的实际执行人仍未逐一明确。保留跟进记录，本轮不重复要求用户指定，不自动分给后端或DEV-05测试。",
-      "resolution": "DEV-01/02承担后端整体并自行领取；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。",
+      "resolution": "DEV-01/02按BACKEND_TWO_DEV_SPLIT模块分工，DEV-01主写共享底座及运维，DEV-02主写接入及研判；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。",
       "status": "provisional",
       "client_confirmation": "pending",
       "basis": [

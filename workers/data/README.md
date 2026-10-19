@@ -1,10 +1,12 @@
+> 2026-10-19当前分工：DEV-04数据、DEV-03前端、DEV-05独立测试；DEV-01维护共享TaskStore/授权/迁移，DEV-02负责M03等领域公开API与查询编排。下文D3编号和v0协议为交付历史；业务与任务参数以[主分支PD方案](../../docs/project-governance/暂定方案与修改记录.md)及[内部协议](../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)为准，旧pending停做/实验租约数值不覆盖现行规则。
+
 > 2026-10-18当前版本：[PD-2026-10-18.v1](../../docs/project-governance/暂定方案与修改记录.md)。当前分工01/02后端、03前端、04数据、05测试；下文旧数量/编号/NO及签认门禁保留作历史追踪，不覆盖本轮暂定设计，也不证明当前实现。旧治理生成脚本不得覆盖本轮policy/暂定文档。
 
-# DEV-03 数据处理 Worker
+# DEV-04 数据处理 Worker
 
 本包实现合成PLATE数据的校验、标准化、来源内去重、错误定位、回放，以及PostgreSQL/PostGIS写入与查询；同时提供工程指标审计和H02/H03/H04交接材料。源端协议和业务规则仍待签认，正式HTTP API与任务服务由DEV-01提供。
 
-当前包含D3-01～08基线及D3-09～12的数据侧执行、M03读取和故障测试。实现与接入要求见[M03交接](docs/m03-execution-and-reads-v0.md)，实际测试结果见[验证记录](validation/README.md)。正式H04/API及DEV-04独立复验未完成，S1仍为INCOMPLETE。
+当前包含D3-01～08基线及D3-09～12的数据侧执行、M03读取和故障测试。实现与接入要求见[M03交接](docs/m03-execution-and-reads-v0.md)，实际测试结果见[验证记录](validation/README.md)。正式H04/API及DEV-05独立复验未完成，S1仍为INCOMPLETE。
 
 ## 运行
 
@@ -39,7 +41,7 @@ python workers/data/run_pg_lab.py
 | [pg/query.py](data_worker/pg/query.py)、[projection.py](data_worker/pg/projection.py) | 可信授权范围、参数化查询、DTO与签名分页 |
 | [metrics.py](data_worker/metrics.py) | 完整合成导出的计数、摘要、引用与质量对账 |
 | [固定样本](fixtures/plate-v0/README.md)、[字段草案](docs/data-contract-v0.md) | 合成输入、固定预期及字段讨论 |
-| [数据库交接](docs/postgres-handoff-v0.md)、[交付指南](docs/DELIVERY_GUIDE.md) | DEV-01接入、DEV-04复验 |
+| [数据库交接](docs/postgres-handoff-v0.md)、[交付指南](docs/DELIVERY_GUIDE.md) | DEV-01接入、DEV-05复验 |
 | [任务协议](docs/worker-contract-v0.md)、[指标目录](docs/metric-catalog-v0.md) | H04草案、工程指标和业务缺口 |
 | [阶段计划](docs/DEV3_PLAN.md)、[AGENTS.md](AGENTS.md) | 后续任务与跨对话交接 |
 
@@ -52,6 +54,6 @@ python workers/data/run_pg_lab.py
 - M03读取要求DEV-01提供整批可读的TrustedBatchScope及质量/错误策略；混合范围批次和生产统计口径尚待签认。
 - 游标只在同一限时只读数据库会话有效，跨HTTP请求的连接/快照归属待设计。
 - 8项工程指标可对账；2项缺源业务指标为UNAVAILABLE；8类报表和P-004/005/006/020等未决规则未关闭。
-- 小样本和EXPLAIN不代表生产容量或DEV-04独立验收。
+- 小样本和EXPLAIN不代表生产容量或DEV-05独立验收。
 
-正式分工见[DEV-03入口](../../docs/team/DEV-03-data.md)及[工程交接表](../../docs/project-governance/ENGINEERING_ASSIGNMENTS.md)。
+正式分工见[DEV-04入口](../../docs/team/DEV-04-data.md)及[工程交接表](../../docs/project-governance/ENGINEERING_ASSIGNMENTS.md)。

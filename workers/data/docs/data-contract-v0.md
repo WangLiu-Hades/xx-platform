@@ -1,3 +1,5 @@
+> 2026-10-19当前分工：DEV-04数据、DEV-03前端、DEV-05独立测试；DEV-01维护共享TaskStore/授权/迁移，DEV-02负责M03等领域公开API与查询编排。下文D3编号和v0协议为交付历史；业务与任务参数以[主分支PD方案](../../../docs/project-governance/暂定方案与修改记录.md)及[内部协议](../../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)为准，旧pending停做/实验租约数值不覆盖现行规则。
+
 # D3-01 数据字段与接入契约草案
 
 日期：2026-10-16；草案版本：`d3-data-contract-v0`。D3-01 已交付可评审的字段映射，真实厂商映射与业务规则仍待签认。

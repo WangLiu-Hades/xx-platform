@@ -64,7 +64,7 @@ npm run build
 - `src/mock/` 只提供合成演示数据；`src/api/` 从指定 OpenAPI 生成强类型请求/响应并用 AJV 校验。`VITE_API_MODE` 在构建时确定。
 - `src/stores/platform.ts` 管理页面、表单、选择、权限及 Mock/HTTP 分支；`src/pages/` 是 28 个菜单对应的 11 类页面组件。
 - 采集搜索、日志与分析结果使用后端分页/游标；Context 保留完整查询快照。异步写入只提示“已提交”，任务成功后才可下载受控文件。
-- 密文解密只保留申请接口；正式审批与明文展示未签认。地图 HTTP 模式只用服务端 WGS84 坐标，无授权底图时保留点位与列表后备。
+- 当前契约已给出暂定审批及一次性受控结果协议，前端页面和真实服务仍待实现；按PD方案开发，甲方确认仍pending。地图 HTTP 模式只用服务端 WGS84 坐标，无授权底图时保留点位与列表后备。
 - OpenAPI 的 `x-design-status: pending` 与 `../../contracts/api/OPENAPI_PENDING.md` 明确了尚不能上线的算法、文件导入、消息通道、设备厂商参数和地图许可。这里的 Mock 操作不会实际执行外部动作。
 
 ## 验收资料

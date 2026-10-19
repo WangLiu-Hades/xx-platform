@@ -5,6 +5,13 @@
 *.vue text eol=lf
 *.yaml text eol=lf
 *.sql text eol=lf
+# Maven Wrapper：mvnw 是 shell 脚本必须 LF，mvnw.cmd 是批处理必须 CRLF
+# （cmd.exe 逐行解析，LF 会让批处理错乱；放在通配规则之前，顺序不能颠倒）
+apps/api/mvnw text eol=lf
+apps/api/mvnw.cmd text eol=crlf
+# Windows 批处理必须保持 CRLF
+*.cmd text eol=crlf
+*.bat text eol=crlf
 *.docx binary
 *.pdf binary
 *.png binary

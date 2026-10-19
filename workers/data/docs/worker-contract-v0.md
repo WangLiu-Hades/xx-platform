@@ -1,12 +1,14 @@
+> 2026-10-19当前分工：DEV-04数据、DEV-03前端、DEV-05独立测试；DEV-01维护共享TaskStore/授权/迁移，DEV-02负责M03等领域公开API与查询编排。下文D3编号和v0协议为交付历史；业务与任务参数以[主分支PD方案](../../../docs/project-governance/暂定方案与修改记录.md)及[内部协议](../../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)为准，旧pending停做/实验租约数值不覆盖现行规则。
+
 # D3-07：Worker 内部任务协议草案
 
-更新：2026-10-16。状态：DEV-03 草案已交付，等待 DEV-01 确认并实现 H04；尚未运行正式任务服务。当前只覆盖合成 PLATE 接入，不能视为全部 Worker 任务的定稿。
+更新：2026-10-16。状态：DEV-04 草案已交付，等待 DEV-01 确认并实现 H04；尚未运行正式任务服务。当前只覆盖合成 PLATE 接入，不能视为全部 Worker 任务的定稿。
 
 依据：[工程交接 H04](../../../docs/project-governance/ENGINEERING_ASSIGNMENTS.md)、[API 约定第6节](../../../contracts/api/api-conventions.md)、[权威 DDL](../../../contracts/database/schema.sql)、[任务 SQL 示例](../../../contracts/database/query-examples.sql)。现有实现见 [PostgreSQL 交接](postgres-handoff-v0.md)，可核对的输入示例见 [worker-handoff-example-v0.json](worker-handoff-example-v0.json)。示例不是已经发生的任务领取或发布。
 
 ## 职责与输入
 
-DEV-01 拥有唯一公开 API、授权、任务状态、领取/续租/取消/重试/恢复、领域发布和迁移。DEV-03 接收冻结输入与租约，解析、校验、去重和计算，产生可发布结果。下面的名称是内部调用语义，不定义新 HTTP 路由，不部署第二套任务服务。
+DEV-01 拥有唯一公开 API、授权、任务状态、领取/续租/取消/重试/恢复、领域发布和迁移。DEV-04 接收冻结输入与租约，解析、校验、去重和计算，产生可发布结果。下面的名称是内部调用语义，不定义新 HTTP 路由，不部署第二套任务服务。
 
 | 字段 | 来源/约束 | 当前对应位置 |
 | --- | --- | --- |
@@ -56,7 +58,7 @@ DEV-01 拥有唯一公开 API、授权、任务状态、领取/续租/取消/重
 4. 内部FIXTURE_/PG_/STORAGE_/TASK_标签并非全部属于公开ErrorCode；正式映射由DEV-01确认，权威OpenAPI保持不变。
 5. 新增数据侧并发/崩溃/分页用例，当前真实执行结果查[验证记录](../validation/README.md)。历史12项PG/67项本地通过不能当作本轮结果；本轮也不能替代正式H04联调。
 
-## DEV-01 / DEV-04 联调验收表
+## DEV-01 / DEV-05 联调验收表
 
 | 场景 | 必须观察的结果 | 当前状态 |
 | --- | --- | --- |

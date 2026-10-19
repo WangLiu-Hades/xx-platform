@@ -1,10 +1,12 @@
+> 2026-10-19当前分工：DEV-04数据、DEV-03前端、DEV-05独立测试；DEV-01维护共享TaskStore/授权/迁移，DEV-02负责M03等领域公开API与查询编排。下文D3编号和v0协议为交付历史；业务与任务参数以[主分支PD方案](../../../docs/project-governance/暂定方案与修改记录.md)及[内部协议](../../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)为准，旧pending停做/实验租约数值不覆盖现行规则。
+
 # PostgreSQL写入与查询交接
 
 面向H02/H03内部接入；正式H04仍需DEV-01实现。原版本在PG16.15/PostGIS3.4.1的12项实测保留为历史。当前27项套件包含M03控制与读取，实际结果见[验证记录](../validation/README.md)，接口变化见[M03交接](m03-execution-and-reads-v0.md)。
 
 仓库根运行python workers/data/run_pg_lab.py，默认输出到workers/data/.artifacts，可用D3_ARTIFACT_ROOT指定独立目录。原schema从仓库contracts/database/schema.sql读取，冻结摘要位于fixtures/contract-baseline.json。脚本新建本机实例、加载原DDL、测试后停止，既有服务不参与。
 
-DEV-03负责数据与自测，DEV-01负责统一迁移、任务与授权，DEV-04负责共享环境和独立复验；步骤见[交付指南](DELIVERY_GUIDE.md)。
+DEV-04负责数据与自测，DEV-01负责统一迁移、任务与授权，DEV-05负责共享环境和独立复验；步骤见[交付指南](DELIVERY_GUIDE.md)。
 
 ## D3-05 写入模块（H02 候选包）
 

@@ -1,5 +1,5 @@
 {
-  "status": "confirmed_team_provisional_release_owners",
+  "status": "confirmed_team_with_backend_module_allocation_20261019",
   "policyVersion": "PD-2026-10-18.v1",
   "repository": "https://github.com/WangLiu-Hades/xx-platform",
   "owners": {
@@ -7,7 +7,7 @@
       "apps/api/",
       "workers/delivery/",
       "contracts/api/",
-      "contracts/database/ (后端整体，内部自行领取)"
+      "contracts/database/ (DEV-01集成迁移，DEV-02提交领域迁移片段)"
     ],
     "DEV-03": [
       "apps/web/"
@@ -26,5 +26,23 @@
     "contracts/"
   ],
   "operations": "对应开发者指定实际执行人并填发布记录；不自动归属测试",
-  "details": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md"
+  "details": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+  "backendModuleOwners": {
+    "M01": "DEV-01",
+    "M06": "DEV-01",
+    "M10": "DEV-01",
+    "M12": "DEV-01",
+    "M14": "DEV-01",
+    "M15": "DEV-01",
+    "M03": "DEV-02",
+    "M04": "DEV-02",
+    "M05": "DEV-02",
+    "M07": "DEV-02",
+    "M08": "DEV-02",
+    "M09": "DEV-02",
+    "M11": "DEV-02",
+    "M13": "DEV-02"
+  },
+  "backendSharedMaintainer": "DEV-01",
+  "backendAllocationSource": "docs/project-governance/BACKEND_TWO_DEV_SPLIT.md"
 }
