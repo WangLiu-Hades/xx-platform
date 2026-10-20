@@ -1,3 +1,7 @@
+> 2026-10-19后端个人职责更新：[当前模块分工](project-governance/BACKEND_TWO_DEV_SPLIT.md)。DEV-01平台与运维、DEV-02数据与研判；其他开发规则沿用PD基线。
+
+> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-19.v1](project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
+
 # 文档入口
 
 先读 [START_HERE](START_HERE.md)。业务原件在 [requirements/source](requirements/source/README.md)，工程设计在 [system-design](system-design/README.md)，任务与交接在 [project-governance](project-governance/README.md)，按开发角色导航在 [team](team/README.md)，原始图表在 [reference/diagrams](reference/diagrams/README.md)。

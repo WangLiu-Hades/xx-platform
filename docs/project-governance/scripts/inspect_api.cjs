@@ -22,22 +22,22 @@ for(const file of walk(path.join(proto,'src')).filter(p=>/\.(ts|vue)$/.test(p)&&
 function deref(ref){return ref.slice(2).split('/').reduce((o,k)=>o?.[k],api);}
 function pending(obj,seen=new Set()){if(!obj||typeof obj!=='object')return [];let result=[];if(obj['x-design-status']==='pending')result.push(...String(obj['x-pending-reason']||'').match(/P-\d{3}/g)||[]);if(obj.$ref&&!seen.has(obj.$ref)){seen.add(obj.$ref);result.push(...pending(deref(obj.$ref),seen));}for(const [k,v] of Object.entries(obj))if(k!=='example'&&k!=='examples')result.push(...(Array.isArray(v)?v.flatMap(x=>pending(x,seen)):typeof v==='object'?pending(v,seen):[]));return [...new Set(result)].sort();}
 function assign(p){
- if(/^\/(health|ready)$/.test(p))return ['M01/M15','API','DEV-04负责探针部署与监测，DEV-01实现健康响应'];
- if(/^\/(auth|me|menus|permissions|dictionaries|client-config|regions|import-templates|files|tasks|contexts|targets|exports|metrics|decrypt-requests|batch-deletions|batch-revocations)/.test(p))return ['M01/M06','API','按领域分派Worker；数据算法由DEV-03、文件与任务底座由DEV-01'];
- if(/^\/ingestion/.test(p))return ['M03','DATA','DEV-03接入适配/标准化/去重/回放；DEV-01公开API与权限编排'];
- if(/^\/dashboard/.test(p))return ['M04','METRIC','DEV-03指标计算；DEV-02首页展示'];
- if(/^\/operations/.test(p))return ['M13','METRIC','DEV-03共用指标；DEV-02运维展示'];
- if(/^\/(captures|faces)/.test(p))return ['M05','DATA','DEV-03检索查询及人像适配，DEV-01公共API与授权'];
- if(/^\/(map|trajectories|statistics)/.test(p))return ['M07/M13','DATA','DEV-03空间/轨迹/统计查询；DEV-02地图交互'];
- if(/^\/analysis-tasks/.test(p))return ['M08','DATA','DEV-03分析计算与结果；DEV-01任务资源与编排'];
- if(/^\/(datasets|set-tasks)/.test(p))return ['M09','DATA','DEV-03成员投影和集合运算；DEV-01资源/版本/范围'];
- if(/^\/(watch-rules|alerts|notification|deliveries)/.test(p))return ['M10/M14','API','DEV-03命中候选计算；DEV-01规则状态、告警及可靠投递'];
- if(/^\/(person-libraries|profiles|trend-models|model-tags)/.test(p))return ['M11','DATA','DEV-03关联/模型/导入解析；DEV-01档案事务、谱系、公开API'];
- if(/^\/(sites|devices|device-groups|device-commands|reports)/.test(p))return ['M12','API','DEV-03遥测标准化/报表计算；DEV-01设备协议命令适配与回执'];
- if(/^\/(users|roles|audit-events)/.test(p))return ['M14','API','DEV-01用户、角色、审计；DEV-04安全反例验证'];
+ if(/^\/(health|ready)$/.test(p))return ['M01/M15','API','DEV-05负责探针部署与监测，DEV-01/DEV-02实现健康响应'];
+ if(/^\/(auth|me|menus|permissions|dictionaries|client-config|regions|import-templates|files|tasks|contexts|targets|exports|metrics|action-approvals|decrypt-requests|batch-deletions|batch-revocations)/.test(p))return ['M01/M06','API','按领域分派Worker；数据算法由DEV-04、文件与任务底座由DEV-01/DEV-02'];
+ if(/^\/ingestion/.test(p))return ['M03','DATA','DEV-04接入适配/标准化/去重/回放；DEV-01/DEV-02公开API与权限编排'];
+ if(/^\/dashboard/.test(p))return ['M04','METRIC','DEV-04指标计算；DEV-03首页展示'];
+ if(/^\/operations/.test(p))return ['M13','METRIC','DEV-04共用指标；DEV-03运维展示'];
+ if(/^\/(captures|faces)/.test(p))return ['M05','DATA','DEV-04检索查询及人像适配，DEV-01/DEV-02公共API与授权'];
+ if(/^\/(map|trajectories|statistics)/.test(p))return ['M07/M13','DATA','DEV-04空间/轨迹/统计查询；DEV-03地图交互'];
+ if(/^\/analysis-tasks/.test(p))return ['M08','DATA','DEV-04分析计算与结果；DEV-01/DEV-02任务资源与编排'];
+ if(/^\/(datasets|set-tasks)/.test(p))return ['M09','DATA','DEV-04成员投影和集合运算；DEV-01/DEV-02资源/版本/范围'];
+ if(/^\/(watch-rules|alerts|notification|deliveries)/.test(p))return ['M10/M14','API','DEV-04命中候选计算；DEV-01/DEV-02规则状态、告警及可靠投递'];
+ if(/^\/(person-libraries|profiles|trend-models|model-tags)/.test(p))return ['M11','DATA','DEV-04关联/模型/导入解析；DEV-01/DEV-02档案事务、谱系、公开API'];
+ if(/^\/(sites|devices|device-groups|device-commands|reports)/.test(p))return ['M12','API','DEV-04遥测标准化/报表计算；DEV-01/DEV-02设备协议命令适配与回执'];
+ if(/^\/(users|roles|audit-events)/.test(p))return ['M14','API','DEV-01/DEV-02用户、角色、审计；DEV-05安全反例验证'];
  return ['UNMAPPED','UNMAPPED','需检查'];
 }
-const rows=operations.map(({id,path:p,method,op})=>{const [module,workstream,handoff]=assign(p),refs=references.get(id),args=(op.parameters||[]).map(v=>v.$ref?deref(v.$ref):v);return {operationId:id,method,path:p,summary:op.summary,module,publicApiOwner:'DEV-01',dataWorkerOwner:['DATA','METRIC'].includes(workstream)?'DEV-03':'按handoff',handoff,frontendStaticReference:refs.length?'REFERENCED':'CONTRACT_ONLY',references:refs,operationPending:op['x-design-status']==='pending',pendingReason:op['x-pending-reason']||'',reachablePendingIds:pending(op),permission:op['x-permission']||op['x-permission-code']||contract.operations[id]?.permission||null,parameters:args.map(a=>({name:a.name,in:a.in,required:!!a.required})),requestSchema:op.requestBody?.content?.['application/json']?.schema||op.requestBody?.content?.['multipart/form-data']?.schema||null,success:Object.fromEntries(Object.entries(op.responses||{}).filter(([s])=>/^2/.test(s)).map(([s,r])=>[s,r.content?.['application/json']?.schema||'binary_or_empty']))};});
+const rows=operations.map(({id,path:p,method,op})=>{const [module,workstream,handoff]=assign(p),refs=references.get(id),args=(op.parameters||[]).map(v=>v.$ref?deref(v.$ref):v);return {operationId:id,method,path:p,summary:op.summary,module,publicApiOwner:'DEV-01/DEV-02',dataWorkerOwner:['DATA','METRIC'].includes(workstream)?'DEV-04':'按handoff',handoff,frontendStaticReference:refs.length?'REFERENCED':'CONTRACT_ONLY',references:refs,operationPending:op['x-design-status']==='pending',pendingReason:op['x-pending-reason']||'',designStatus:op['x-design-status']||'baseline',clientConfirmation:op['x-client-confirmation']||null,decisionIds:op['x-decision-ids']||[],reachablePendingIds:pending(op),permission:op['x-permission']||op['x-permission-code']||contract.operations[id]?.permission||null,parameters:args.map(a=>({name:a.name,in:a.in,required:!!a.required})),requestSchema:op.requestBody?.content?.['application/json']?.schema||op.requestBody?.content?.['multipart/form-data']?.schema||null,success:Object.fromEntries(Object.entries(op.responses||{}).filter(([s])=>/^2/.test(s)).map(([s,r])=>[s,r.content?.['application/json']?.schema||'binary_or_empty']))};});
 let missingRefs=[];function checkRefs(obj){if(!obj||typeof obj!=='object')return;if(obj.$ref&&!deref(obj.$ref))missingRefs.push(obj.$ref);Object.values(obj).forEach(v=>Array.isArray(v)?v.forEach(checkRefs):checkRefs(v));}checkRefs(api);
 const summary={generatedAt:new Date().toISOString(),openapiSha256:crypto.createHash('sha256').update(raw).digest('hex'),operations:rows.length,schemas:Object.keys(api.components.schemas).length,operationPending:rows.filter(r=>r.operationPending).length,referenced:rows.filter(r=>r.references.length).length,contractOnly:rows.filter(r=>!r.references.length).length,unmapped:rows.filter(r=>r.module==='UNMAPPED'),unresolvedCalls:unresolved,duplicateIds:rows.length-ids.size,missingRefs:[...new Set(missingRefs)],generatedCatalogMatches:rows.every(r=>contract.operations[r.operationId]?.path===r.path&&contract.operations[r.operationId]?.method===r.method),method:'TS AST runtime string references and request-call literal/conditional resolution; static references do not prove a reachable button or successful real HTTP integration.'};
 fs.writeFileSync(path.join(out,'api-inventory.json'),JSON.stringify({summary,rows,calls},null,2)+'\n');

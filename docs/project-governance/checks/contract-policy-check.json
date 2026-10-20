@@ -1,0 +1,14 @@
+{
+  "policyVersion": "PD-2026-10-18.v1",
+  "scope": "static_contract_and_policy_not_backend_acceptance",
+  "openapiSha256": "232ac4cf683d30d15ed6791f6afb4e28e8ef5d089c9fc7e7b0619c320874731e",
+  "operations": 198,
+  "schemas": 623,
+  "originalPendingLocationsCovered": 102,
+  "remainingDesignPending": 0,
+  "clientConfirmation": "pending",
+  "coverageItems": 62,
+  "validatedExamples": 1894,
+  "checkedRefs": 2626,
+  "errors": []
+}

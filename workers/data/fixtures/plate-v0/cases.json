@@ -1,0 +1,261 @@
+[
+  {
+    "caseId": "P01",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "正常带时区输入"
+  },
+  {
+    "caseId": "P02",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "包含查询起点"
+  },
+  {
+    "caseId": "P03",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "排除查询终点"
+  },
+  {
+    "caseId": "P04",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "查询窗口之前"
+  },
+  {
+    "caseId": "P05",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "同一时刻不同源事件，用ID稳定排序"
+  },
+  {
+    "caseId": "P06",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "同一目标再次采集不能误去重"
+  },
+  {
+    "caseId": "P07",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "另一场所与目标"
+  },
+  {
+    "caseId": "P08",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "合法未知位置，显式成对null"
+  },
+  {
+    "caseId": "P09",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "未解析目标仍保留采集"
+  },
+  {
+    "caseId": "P10",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "未知设备，设备和场所均为空"
+  },
+  {
+    "caseId": "P11",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "省略全部可选字段及位置"
+  },
+  {
+    "caseId": "P12",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "保留微秒"
+  },
+  {
+    "caseId": "P13",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "明确提供的合法零坐标"
+  },
+  {
+    "caseId": "P14",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "经纬度合法上界"
+  },
+  {
+    "caseId": "P15",
+    "expectedOutcome": "DUPLICATE",
+    "field": null,
+    "reasonCode": null,
+    "title": "同批次完全重复"
+  },
+  {
+    "caseId": "P16",
+    "expectedOutcome": "REJECTED",
+    "field": "recordId",
+    "reasonCode": "FIXTURE_KEY_CONFLICT",
+    "title": "同键不同载荷"
+  },
+  {
+    "caseId": "P17",
+    "expectedOutcome": "REJECTED",
+    "field": "recordId",
+    "reasonCode": "FIXTURE_REQUIRED",
+    "title": "缺少源记录键"
+  },
+  {
+    "caseId": "P18",
+    "expectedOutcome": "REJECTED",
+    "field": "captureTime",
+    "reasonCode": "FIXTURE_REQUIRED",
+    "title": "缺少采集时间"
+  },
+  {
+    "caseId": "P19",
+    "expectedOutcome": "REJECTED",
+    "field": "captureTime",
+    "reasonCode": "FIXTURE_TIME_INVALID",
+    "title": "无时区时间"
+  },
+  {
+    "caseId": "P20",
+    "expectedOutcome": "REJECTED",
+    "field": "captureTime",
+    "reasonCode": "FIXTURE_TIME_INVALID",
+    "title": "禁止数字时间戳"
+  },
+  {
+    "caseId": "P21",
+    "expectedOutcome": "REJECTED",
+    "field": "captureTime",
+    "reasonCode": "FIXTURE_TIME_INVALID",
+    "title": "不存在的日期"
+  },
+  {
+    "caseId": "P22",
+    "expectedOutcome": "REJECTED",
+    "field": "latitude",
+    "reasonCode": "FIXTURE_COORDINATE_PAIR",
+    "title": "经纬度只缺一项"
+  },
+  {
+    "caseId": "P23",
+    "expectedOutcome": "REJECTED",
+    "field": "latitude",
+    "reasonCode": "FIXTURE_COORDINATE_INVALID",
+    "title": "纬度越界"
+  },
+  {
+    "caseId": "P24",
+    "expectedOutcome": "REJECTED",
+    "field": "longitude",
+    "reasonCode": "FIXTURE_COORDINATE_INVALID",
+    "title": "经度越界"
+  },
+  {
+    "caseId": "P25",
+    "expectedOutcome": "REJECTED",
+    "field": "longitude",
+    "reasonCode": "FIXTURE_COORDINATE_INVALID",
+    "title": "坐标字符串"
+  },
+  {
+    "caseId": "P26",
+    "expectedOutcome": "REJECTED",
+    "field": "longitude",
+    "reasonCode": "FIXTURE_COORDINATE_INVALID",
+    "title": "布尔值不能冒充数字"
+  },
+  {
+    "caseId": "P27",
+    "expectedOutcome": "REJECTED",
+    "field": "crs",
+    "reasonCode": "FIXTURE_CRS_UNSUPPORTED",
+    "title": "未批准坐标系"
+  },
+  {
+    "caseId": "P28",
+    "expectedOutcome": "REJECTED",
+    "field": "plateText",
+    "reasonCode": "FIXTURE_REQUIRED",
+    "title": "空车牌标识"
+  },
+  {
+    "caseId": "P29",
+    "expectedOutcome": "REJECTED",
+    "field": "plateText",
+    "reasonCode": "FIXTURE_REQUIRED",
+    "title": "缺少车牌标识"
+  },
+  {
+    "caseId": "P30",
+    "expectedOutcome": "REJECTED",
+    "field": "unexpectedField",
+    "reasonCode": "FIXTURE_UNKNOWN_FIELD",
+    "title": "未知字段"
+  },
+  {
+    "caseId": "P31",
+    "expectedOutcome": "REJECTED",
+    "field": "dataType",
+    "reasonCode": "FIXTURE_DATA_TYPE",
+    "title": "类型不匹配"
+  },
+  {
+    "caseId": "P32",
+    "expectedOutcome": "REJECTED",
+    "field": "deviceKey",
+    "reasonCode": "FIXTURE_REQUIRED",
+    "title": "缺少设备源键"
+  },
+  {
+    "caseId": "P33",
+    "expectedOutcome": "REJECTED",
+    "field": "vehicleImageRef",
+    "reasonCode": "FIXTURE_IMAGE_REFERENCE",
+    "title": "图片引用未登记"
+  },
+  {
+    "caseId": "P34",
+    "expectedOutcome": "REJECTED",
+    "field": "plateColor",
+    "reasonCode": "FIXTURE_FIELD_TYPE",
+    "title": "颜色类型错误"
+  },
+  {
+    "caseId": "P35",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "增量新事件"
+  },
+  {
+    "caseId": "P36",
+    "expectedOutcome": "REJECTED",
+    "field": "recordId",
+    "reasonCode": "FIXTURE_KEY_CONFLICT",
+    "title": "增量批次同键不同载荷"
+  },
+  {
+    "caseId": "P37",
+    "expectedOutcome": "ACCEPTED",
+    "field": null,
+    "reasonCode": null,
+    "title": "不同来源的相同源键仍是新事实"
+  }
+]

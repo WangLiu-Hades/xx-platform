@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   多维数据分析平台 · 正式 HTTP API（DEV-01）
-  契约唯一来源：contracts/api/openapi.yaml（OpenAPI 3.0.3，版本 1.0.0-dev.2）
+  契约唯一来源：contracts/api/openapi.yaml（OpenAPI 3.0.3，版本 1.0.0-dev.4-provisional）
   基线：Java 17 / Spring Boot 3.5.16 / Maven 3.9.x
   说明见同目录 README.md；分工与边界见 docs/project-governance/BACKEND_TWO_DEV_SPLIT.md
 -->
@@ -99,7 +99,7 @@
 
     <!--
       以下依赖按分工分阶段加入，当前故意不引入，避免骨架跑不起来：
-      - spring-session-jdbc：SID Cookie 会话（P-001 签认后；当前自己管理 auth.user_session）
+      - spring-session-jdbc：SID Cookie 会话（按 P-001 暂定方案；当前自己管理 auth.user_session）
       - spring-boot-starter-data-redis：幂等键/游标/限流缓存（按需，首版按设计不引入）
       - spring-boot-starter-actuator：契约已自带 /health、/ready，不叠加 agent 端点
     -->

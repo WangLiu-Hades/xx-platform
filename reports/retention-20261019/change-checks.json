@@ -1,0 +1,15 @@
+{
+  "wireShapesUnchanged": true,
+  "otherRuntimeSettingsUnchanged": true,
+  "validationContractUnchanged": true,
+  "deferredSentencePreserved": true,
+  "retentionMonths": 12,
+  "backupRetentionMonths": 12,
+  "policyVersion": "PD-2026-10-19.v1",
+  "currentRuleMonthlyRetentionConflicts": 0,
+  "newDocumentLinksChecked": 4,
+  "brokenLinks": [],
+  "backendEnvironmentUser": "CodexSandboxOffline",
+  "backendRuntimeNotModified": true,
+  "postgresExistingServerModified": false
+}

@@ -1,0 +1,27 @@
+{
+  "dataType": "PLATE",
+  "dedupVersion": "plate-dedup-v0",
+  "expectedFacts": 16,
+  "files": {
+    "batches.json": "b3032aa6443037d8f57a15767747fc67ea1462758bba264bdcc9b1eee120e3c9",
+    "cases.json": "64ec20e0f2efdc5497182cf94f08ab96b98205d118ec8933ceda300fcf34cbc7",
+    "expected/captures.jsonl": "c920d83a56d0480989730288712970379dcd3b4fd1d54f49989c9ce0218879fc",
+    "expected/queries.json": "0d5e59e545e9964ce8362901cecb8e0cf1f752965c43cfed3bb67f28e7e86613",
+    "expected/rows.jsonl": "3134af222f3b36b5d04e73cbbc5999cef0d5abca10a2e359c72ec408c13c609d",
+    "expected/summary.json": "acb6a0e665348d2460983e26e34fd2f07f843ecae06ef0725de749a6dd78e800",
+    "raw/incremental.jsonl": "d3061171f57e3e3d3a93edb697ea38b1798991089521d0bcb6bcc8d86196f4d6",
+    "raw/initial.jsonl": "bf952c03c94c8e54a9ed80c9d0a15428e4b26bbfb994dbd9d68c49bebe4b5f07",
+    "raw/other-source.jsonl": "1947433ad786325a617791d060e659f36a7619748b0f17a7f975fdf2d78b6f9e",
+    "reference-data.json": "2cd5718d2f7baa3a108fa88d359cf0d8f5472a176488f4a6c27f0e87e37f0001"
+  },
+  "format": "UTF-8, LF, JSON/JSONL",
+  "generator": "tools/generate_plate_samples.py",
+  "mappingVersion": "plate-map-v0",
+  "processingRows": 72,
+  "protocolVersion": "plate-synthetic-v0",
+  "qualityVersion": "plate-quality-v0",
+  "rawPhysicalRows": 38,
+  "seed": 20261016,
+  "sourceInstances": 2,
+  "synthetic": true
+}

@@ -1,0 +1,23 @@
+{
+  "stableOrderedBatchIds": [
+    "30e5f855-8f81-5364-b099-12d48690945b",
+    "5e013b77-f66c-5caf-8345-0ff3da7642d7",
+    "687a8454-f15a-5fe4-b741-7ca70728e31f",
+    "a3264423-b617-508e-8f5f-2a24724518b7"
+  ],
+  "detail": {
+    "batchId": "a3264423-b617-508e-8f5f-2a24724518b7",
+    "source": "SYNTH_PLATE_A",
+    "mappingVersion": "plate-map-v0",
+    "dedupVersion": "plate-dedup-v0",
+    "status": "SUCCESS",
+    "acceptedCount": 14,
+    "rejectedCount": 19,
+    "duplicateCount": 1,
+    "createdAt": "2026-10-16T05:51:41.507216Z",
+    "finishedAt": "2026-10-16T05:51:41.739553Z",
+    "errorSummary": null,
+    "taskId": "f1702562-5ac3-5532-97c9-917d1e36a2b1",
+    "sourceFileId": "bf1cce34-d032-5cf3-9352-6523665a5ddd"
+  }
+}

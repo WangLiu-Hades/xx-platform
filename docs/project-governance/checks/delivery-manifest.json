@@ -1,0 +1,650 @@
+{
+  "policyVersion": "PD-2026-10-18.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "action": "modified",
+      "originalSha256": "eaf79dc595c5c36b769b2d36e56d23c241da9a7da558ab05a25cfa82ee04fb77",
+      "sha256": "a4a380851336d67be576f5d5cb897dc6214d37e7a77aba6586c2c550105a87cc",
+      "bytes": 3929
+    },
+    {
+      "path": "apps/api/README.md",
+      "action": "modified",
+      "originalSha256": "5182650a39edaaf0946ff047afa8a0535545d6fa0e13342409bac9e084db335a",
+      "sha256": "52c6c6872f731186399c2eedc9f8056de6a5ebd5f57ed7db56a9819e0da67802",
+      "bytes": 775
+    },
+    {
+      "path": "apps/web/scripts/generate-api.mjs",
+      "action": "modified",
+      "originalSha256": "f18967c40c950c834bc493dc44930b851b34fe69b79300798c9eb3bb17ea47a1",
+      "sha256": "3265c2c55267fee23c71e2585460cfec314a32343c2768a9e9277fc64f070372",
+      "bytes": 4863
+    },
+    {
+      "path": "apps/web/src/api/client.ts",
+      "action": "modified",
+      "originalSha256": "4f799c05290d5abfe4a7fe3b67d28230eb1138be61a1155d7a110fdc2e97df4c",
+      "sha256": "1692c97b0faf0f681874794b44a3ce54d5586594ffd680c16ca40a6b9b202be8",
+      "bytes": 6758
+    },
+    {
+      "path": "apps/web/src/api/contract.json",
+      "action": "modified",
+      "originalSha256": "c4ec519679507bb229d3a618035e8e72b0863a71f8f52e36fc5b969bed2a0d35",
+      "sha256": "7fcedab70f96c69ddaaeba5b658b81aee28d6d2ede3ab8a166e8d27ae4fdaf2c",
+      "bytes": 1449023
+    },
+    {
+      "path": "apps/web/src/api/operations.ts",
+      "action": "modified",
+      "originalSha256": "3f67163c55b6dd16809bf71b0a634cbc121ab120ecdd74e2240653ec2b612bae",
+      "sha256": "78bff8b384c9cdeddd950c99d1dfb12c132121ba9dc6295ebf3ca881d7e59ef3",
+      "bytes": 62041
+    },
+    {
+      "path": "apps/web/src/api/schema.ts",
+      "action": "modified",
+      "originalSha256": "b0cd832a11bc385d8a833e3b6a8f247cf15a8ec9eb3f9ab62e6e423e44e7bf5e",
+      "sha256": "93b0046ee35b5ffd74425e1d4a6572db5985863bd672abcacae9ca694f2e4b75",
+      "bytes": 1183987
+    },
+    {
+      "path": "apps/web/src/api/validation-contract.json",
+      "action": "modified",
+      "originalSha256": "27c1e5687d9e461c6962f3cceeedae9d71651820f123a181ce39207722f6731f",
+      "sha256": "3f19ef5afb1883b46e2c11bb9d1bd3a1ce559c2cad6f09a5f275af44f3716d8b",
+      "bytes": 470701
+    },
+    {
+      "path": "apps/web/src/components/RemoteMap.vue",
+      "action": "modified",
+      "originalSha256": "4fa2f97b6f15d036ab15a75887aa4dc6c8dfb6a6ae60e137fad29cdff31f4abe",
+      "sha256": "b1e2fb1fa42e0335fefc2a1f9472aad035df1ee23cafedf667821b517321d2c6",
+      "bytes": 7282
+    },
+    {
+      "path": "apps/web/tests/provisional-contract.test.ts",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "4d628205b1d866eab7655cf01be66eb02c1f1cf0dd593cad3782caf8f5c1c4d8",
+      "bytes": 2505
+    },
+    {
+      "path": "apps/web/tests/session.test.ts",
+      "action": "modified",
+      "originalSha256": "d80ee7aa972c8d937cc267c25434d9e164e0a1df3d5b24384281c10e98239477",
+      "sha256": "c31769c6db9a4cca0d70fb2ecf6cd654a3d31ecc2d24984635c38d339a6614ae",
+      "bytes": 3112
+    },
+    {
+      "path": "contracts/api/FRONTEND_INTEGRATION.md",
+      "action": "modified",
+      "originalSha256": "fd8ee0cfc9aec62058ad9162092c9e239ad7597f7eaed0e1d48a0de55da57741",
+      "sha256": "10b1cce6041d1b6d3962d3096e425880b7f7be9df43fd246c0eb79dbd8f90d02",
+      "bytes": 9227
+    },
+    {
+      "path": "contracts/api/OPENAPI_CHANGELOG.md",
+      "action": "modified",
+      "originalSha256": "8ad57d79f423fcbe0662f67237a9bd8c4811d392142f3c3e25d0cb97b7b7c5d5",
+      "sha256": "a6894031e1523c2d0fdf4f24a5a178b7a55fd47dcdebc9bb97e643af4c207bd5",
+      "bytes": 21507
+    },
+    {
+      "path": "contracts/api/OPENAPI_COVERAGE.md",
+      "action": "modified",
+      "originalSha256": "560cb64204d624c874b9216da250c8ecdf76e26562c681bb56387cc3d917ae1c",
+      "sha256": "571fcf799943e56ffaa58691ea29592a0f23e920478e24cad2d1ce0aaff52444",
+      "bytes": 7383
+    },
+    {
+      "path": "contracts/api/OPENAPI_PENDING.md",
+      "action": "modified",
+      "originalSha256": "ba3d5d48c82cb228facfd295f2304e54f88bb8e600e1acff2cca1d71ada496a6",
+      "sha256": "2fb0e577265c8d9262089d5e5d9b66b2628ff53fc5e25c4673c6eda219eb510b",
+      "bytes": 10007
+    },
+    {
+      "path": "contracts/api/README.md",
+      "action": "modified",
+      "originalSha256": "e8c2aeb830db52edce75c2e1ce6fb838a42d064fa30d4f719628dc3beeba09c0",
+      "sha256": "74d40a0397f9a9a7a2550ab1c50381bdc0f4e16c93d6bee71d5b54c77e35f0a9",
+      "bytes": 3428
+    },
+    {
+      "path": "contracts/api/api-conventions.md",
+      "action": "modified",
+      "originalSha256": "7e9835235a311fb8c2044dccbc714f4ba5c52eb8a1eff09921c9f474b7acb8fd",
+      "sha256": "707d6fc9b0473112b84349382d5cd4922a7a94820fe457e47b82e7a87e7c8504",
+      "bytes": 15929
+    },
+    {
+      "path": "contracts/api/api-coverage-matrix.md",
+      "action": "modified",
+      "originalSha256": "824c4904e0e46177ffc6869432f18987db4fcdbe707e96cbacbfa8c43715c9ed",
+      "sha256": "c0adc8bf517dfb726b3e8f5228a098d7606eae64e11622d1881822773a72c567",
+      "bytes": 273568
+    },
+    {
+      "path": "contracts/api/openapi-audit-report.md",
+      "action": "modified",
+      "originalSha256": "4fefd684ba82d4c3c7e650a129a0d7cb2271662f405fc0145ddcb09fc3a4bcd7",
+      "sha256": "b52d36907532839200938fe68418a5a64f64b78801a4d1786a418186344b0862",
+      "bytes": 23791
+    },
+    {
+      "path": "contracts/api/openapi.yaml",
+      "action": "modified",
+      "originalSha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd",
+      "sha256": "232ac4cf683d30d15ed6791f6afb4e28e8ef5d089c9fc7e7b0619c320874731e",
+      "bytes": 1457388
+    },
+    {
+      "path": "contracts/database/README.md",
+      "action": "modified",
+      "originalSha256": "da75e88f5c9e41cc26d8b1725e8c965e10ec70e45f4e243ef98345deee8cbe2d",
+      "sha256": "ab1523c6d29fbc19c9230b30244614793233030c94ac1fc407eb73269c13f53e",
+      "bytes": 3128
+    },
+    {
+      "path": "contracts/database/api-storage-map.md",
+      "action": "modified",
+      "originalSha256": "b5f9d61e2cc11e1251362cb6246e994431dc1baa3d0755da851153a2abd20c32",
+      "sha256": "6e5054e3a68ce16e267eac1c0be30b78e17b5413f7ae6105abc75662e976b8c4",
+      "bytes": 406668
+    },
+    {
+      "path": "contracts/database/data-dictionary.md",
+      "action": "modified",
+      "originalSha256": "c3ea88f36d93855c570f6a469ac73983d43fff84495833721a4009dd40537ebd",
+      "sha256": "aefa534d8395506c40fea0139df5a80371e9cc8f4916a8239b78c73452cc8441",
+      "bytes": 177941
+    },
+    {
+      "path": "contracts/database/design-changelog.md",
+      "action": "modified",
+      "originalSha256": "78add25217bab332e37fd1646ba9d3b74aa31e9565199b7776d09f36d5fa5e93",
+      "sha256": "c1627d1e6ca78883f55873752a034b86ceed0e010a403af0ddf3c1458808469c",
+      "bytes": 2752
+    },
+    {
+      "path": "contracts/database/design-validation.md",
+      "action": "modified",
+      "originalSha256": "8ed3a684f1468f2e615dff23569731036ef23ea5a687f4945480b6110eafecc5",
+      "sha256": "5d1cd33c87b02ae62223a0472ec310316d70ef733db5116ebdb5ced4bec5b577",
+      "bytes": 8081
+    },
+    {
+      "path": "contracts/database/migration-plan.md",
+      "action": "modified",
+      "originalSha256": "cc9ececc727b44979af85172925e3f270540539e81f16f287a3c6ccd852dbf3d",
+      "sha256": "523f4b40e67f2d54a267cd03a8571046eb3dca7917116dc8b3c0d69512a8f149",
+      "bytes": 5123
+    },
+    {
+      "path": "contracts/database/migrations/PD_20261018_approval.sql",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "7c628af4f1f5bf89e76d648f580ec34b995d5504da3044b8a7383a15ea1d2e53",
+      "bytes": 4522
+    },
+    {
+      "path": "contracts/database/migrations/README.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "e749374932ff5bc9da22768b04a0532596548d46cf491fb7a5957eee6886ca76",
+      "bytes": 484
+    },
+    {
+      "path": "contracts/database/pending-design.md",
+      "action": "modified",
+      "originalSha256": "fec0506db3c951bebd9462cc453c385692260dc68201059e1052eb00955ea4c5",
+      "sha256": "b56a59572d378b79e1f59c062ea5f5b8c877603bbc7245d0cb33b9b262fdae2a",
+      "bytes": 4282
+    },
+    {
+      "path": "contracts/database/schema.sql",
+      "action": "modified",
+      "originalSha256": "7d3534b536e46a5879d338df08cc70a02012ef86d0efe423d25747cf37a26ab1",
+      "sha256": "3de112db0681c35e42522bd68108df82d8b8903340bbaa122201bc18e4854ec2",
+      "bytes": 374963
+    },
+    {
+      "path": "docs/API速读指南.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "df64b628b1c9ae69e669c2fd4703fea0e4da5eb40e484e04f5a48e20fdbbe9d6",
+      "bytes": 2298
+    },
+    {
+      "path": "docs/README.md",
+      "action": "modified",
+      "originalSha256": "e69729c56e10623fae61f318c38162fcfe4751e9f4636acc072e8c3244bd00da",
+      "sha256": "0107f09b70776a7732bb05a58b1959c7a9de760c0ec8af6f5ddbb6fdfd86acc9",
+      "bytes": 1045
+    },
+    {
+      "path": "docs/START_HERE.md",
+      "action": "modified",
+      "originalSha256": "7c8c9cb2fbfd996c74bf4fd6d86a5315511042b7ed34454455ea669c495f31a2",
+      "sha256": "e08afbe35fd6185ca36587ddac140b58d3b57d191cc8909150161642f1868b57",
+      "bytes": 2318
+    },
+    {
+      "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+      "action": "modified",
+      "originalSha256": "754b09734f4855ee61b9481fab0b3b7c50a0d9517b9a2e64b770c1a4ad1a7abd",
+      "sha256": "f7f771f10dab89c12f86a33ce48c753d655ee478050cc8e682cca4d9a34dd047",
+      "bytes": 9591
+    },
+    {
+      "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+      "action": "modified",
+      "originalSha256": "4b7b8b6d598b46501f6e7860ad1e9ae0de875cebdf93b222015b19084d536b90",
+      "sha256": "35b6713a354760f8d597e2bd913065f476e19ef7328956ab7f84cd6d3e200f79",
+      "bytes": 1356
+    },
+    {
+      "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+      "action": "modified",
+      "originalSha256": "a92dc772f841d163ad342a7f5787ce3fa8a7b9e4f727fcf5855287d24835dd6e",
+      "sha256": "c941f88ab7b9019d7f2d7ce4c8821d749fa639eca2d8655425c4b4a25be7274f",
+      "bytes": 8031
+    },
+    {
+      "path": "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "88ae4e80d8b09240aedeadcfd06053063c107b4641ac24fabcc837e4299c314e",
+      "bytes": 3214
+    },
+    {
+      "path": "docs/project-governance/METRIC_ALGORITHM_RULES.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "4a385de5c60d99c212d7d2bd8d28a3cdd017eb76ea86f6ec1bfb6234d1497dd1",
+      "bytes": 9199
+    },
+    {
+      "path": "docs/project-governance/PENDING_REGISTER.md",
+      "action": "modified",
+      "originalSha256": "2b11792449d2fdb91e304b53d9fcd4b2b58b49da82a59732065f0254e40594e1",
+      "sha256": "46cb8083de59d23918fc450acabd4a0fee1627994ba6aad4d0d660d74c655242",
+      "bytes": 3743
+    },
+    {
+      "path": "docs/project-governance/PROJECT_AUDIT.md",
+      "action": "modified",
+      "originalSha256": "9ba7f6f696bf2fca8de5f9b2ff4431faaaa69544ba3828a37b316421f016293b",
+      "sha256": "69f177b3ce5e6d3d2772eb10b612a0d0eb708094959ff50b0a59d3e8a5b037e0",
+      "bytes": 10842
+    },
+    {
+      "path": "docs/project-governance/README.md",
+      "action": "modified",
+      "originalSha256": "883cba5f7e8cc29c571ca0a9d7b9172f78800f9cb971c6dfceb13045b53c570d",
+      "sha256": "b67f054a9e74351dbc0228f2b714b2ed2b8b81a0471464e9ce8d0a617ee81fd5",
+      "bytes": 3401
+    },
+    {
+      "path": "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "83217242f9f2847326a3f174a3fa547e3be540a1ab24fadf6c9d7f0fa8252497",
+      "bytes": 5480
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.csv",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "e7a53aafaaf03dc01ff166400a01e3574db62b7f9453cae7e7d9fdae420bb490",
+      "bytes": 43357
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "5ec528430f3443d22567f584cb256551eaa7e52228c7bc04f56334e30620f89b",
+      "bytes": 316072
+    },
+    {
+      "path": "docs/project-governance/checks/build.log",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "f2ae22ca5b33cd661b09445d0d01033db1e1ea05a9b2cf092191fe1036b709db",
+      "bytes": 2798
+    },
+    {
+      "path": "docs/project-governance/checks/contract-only-operations.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "fcae09a2409ccb8920696df7e07e5b8996a8362306b9fcc801f22a3182e4b708",
+      "bytes": 4709
+    },
+    {
+      "path": "docs/project-governance/checks/contract-policy-check.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "339f609e39008e65e9f1872721692a706cb6a27d702a219c10239f8995684a91",
+      "bytes": 431
+    },
+    {
+      "path": "docs/project-governance/checks/document-check.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "64c2592c52b1cf0a5f731e4907f79907e8d3a8f3d55c9eb476d9dec09883a873",
+      "bytes": 80
+    },
+    {
+      "path": "docs/project-governance/checks/generation.log",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "2f7bfd618a6acd3f11d143f8f12c293dc5964002ac2d311aac11bc15e14df375",
+      "bytes": 10598
+    },
+    {
+      "path": "docs/project-governance/checks/sql-check.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "99a8a9f161377943078f815fb1bd7111ee2dfc9a2e60dbfbf3ade02e9ec29d47",
+      "bytes": 591
+    },
+    {
+      "path": "docs/project-governance/checks/tests.log",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "993bf4d91f7749442b015a51a8bfd3155aa9c8562a37f9386316c3f771f01ad0",
+      "bytes": 594
+    },
+    {
+      "path": "docs/project-governance/checks/typecheck.log",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/project-governance/provisional-contract-changes.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "0004d063cd72d19aa5734e74edc32e7b381556f08aae1de6e98eee0e50d47e07",
+      "bytes": 34543
+    },
+    {
+      "path": "docs/project-governance/provisional-policy.json",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "b1ebf437bfa305552d62b3b498ad87b114276cc63c7b16e0bbfb8f02920d1839",
+      "bytes": 127474
+    },
+    {
+      "path": "docs/project-governance/scripts/README.md",
+      "action": "modified",
+      "originalSha256": "0de91d248268f785f05ced45eb951c9c418e6b7a60f98c9878486c117360bd53",
+      "sha256": "8b19f13b2b1a2f3ba375a134a76ccc607a651b97d52a2c4b9afa620620e80ec9",
+      "bytes": 3410
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_api.cjs",
+      "action": "modified",
+      "originalSha256": "946254acbcb81cb3a176465e595d5b781a0576c5b4a785443af3dbf23d1e75b2",
+      "sha256": "053ddf6dfeb82328a70408d4e268bbe6375001bb5dad8f5d891d8322c7f14b52",
+      "bytes": 9573
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_provisional.cjs",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "aa99e1e87b2a1a95193cc7668271ce9a923627852e71458b42554c2432254f75",
+      "bytes": 8386
+    },
+    {
+      "path": "docs/project-governance/修改与检查记录.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "9cb285ea368e9068bc85763d64a2357a13df088bc07fda945247e3468d5797e0",
+      "bytes": 6187
+    },
+    {
+      "path": "docs/project-governance/暂定方案与修改记录.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "cb5b10f86cc07481e248b764b68dc6c19887631ed7aae1be3881298e3857390e",
+      "bytes": 12306
+    },
+    {
+      "path": "docs/project-governance/暂定规则明细.md",
+      "action": "added",
+      "originalSha256": null,
+      "sha256": "497793147bdae2a6e3123223cd03f92cf34578b78c49b17504da677882ec5126",
+      "bytes": 40251
+    },
+    {
+      "path": "docs/system-design/00_需求追踪与设计说明.md",
+      "action": "modified",
+      "originalSha256": "6eabfacc3b4d7336ab58cc90df053a550a6d59a443e18e73f3f01b30b090333b",
+      "sha256": "760d292f4c72d314f5a988919cdc0d3c032befa93416cbe5a98fa91da1a39c9d",
+      "bytes": 9648
+    },
+    {
+      "path": "docs/system-design/01_总体系统架构设计.md",
+      "action": "modified",
+      "originalSha256": "3654662e4c45f647f12c0ff61c3c235ff2434513a68edf17156b4730fba27abf",
+      "sha256": "0f6f6ba6d8367780e5d0863b0c68a44d1dfe936ad9b037947c058dd9dd454663",
+      "bytes": 8304
+    },
+    {
+      "path": "docs/system-design/02_技术栈选型与ADR.md",
+      "action": "modified",
+      "originalSha256": "fb00a7a8c11ec7578087012b8bcfa9c0146397588fb7348733f203f57506f99b",
+      "sha256": "d04a2b71ac1c9670fc597b739a87872e00fb2b72fed07826d8d15a78ae7623e4",
+      "bytes": 8694
+    },
+    {
+      "path": "docs/system-design/03_数据库与数据架构设计.md",
+      "action": "modified",
+      "originalSha256": "0181235453c73673e9fe8427f8f240781153ebe4503e3ee0418f501504ef3c8a",
+      "sha256": "37825aeaed64117249f2816862be31b7c7caacd70fac8e9225743950748536f2",
+      "bytes": 33539
+    },
+    {
+      "path": "docs/system-design/04_API与接口契约设计.md",
+      "action": "modified",
+      "originalSha256": "ffbc9ca6b79a559f31431b10742d516378844f0d92b992f54d99485d6ea713fa",
+      "sha256": "7ef98770ed2bd71eaaa482f2bec144cd9ca439f2dc901aae6dc3ba6d592c5625",
+      "bytes": 4979
+    },
+    {
+      "path": "docs/system-design/05_UIUX与交互设计.md",
+      "action": "modified",
+      "originalSha256": "96db920c4a9b236edc1f630379c9ab3423c62e5ff99fbfc05fdeefff56b29034",
+      "sha256": "dc2094aa53a860a77a265b081c9c6946b17066b675580b22f3e8db7fd1825be7",
+      "bytes": 4782
+    },
+    {
+      "path": "docs/system-design/06_安全架构设计.md",
+      "action": "modified",
+      "originalSha256": "7990053f469628b82c826a2eded97ffe1360afd2367d02eeda93b39182747e3d",
+      "sha256": "331c7c8c8635d67d9a376c2fa28b1c5ff1185a98b4ba93bccc0718d8d2e612fd",
+      "bytes": 5120
+    },
+    {
+      "path": "docs/system-design/07_性能与容量设计.md",
+      "action": "modified",
+      "originalSha256": "be893d814da0ef223031c939e23d3df86f6795ba674004ceb218a80e67cc87cf",
+      "sha256": "6130cbb1ae15d36fbc399e6aa119a5b0c1c783a746e03bdd1c575dd615c1c1a6",
+      "bytes": 5031
+    },
+    {
+      "path": "docs/system-design/08_可靠性与可观测性设计.md",
+      "action": "modified",
+      "originalSha256": "9a5dd23bac4e78a8541484291a031855d70628dee12fc3061690ff8d37826037",
+      "sha256": "401a45b9b7ce6cbd1f85344c6c81d2b01475023ffd91e0783ac5367ca297b332",
+      "bytes": 4860
+    },
+    {
+      "path": "docs/system-design/09_部署架构设计.md",
+      "action": "modified",
+      "originalSha256": "4a2b6ccef59f53961dcac810b8a767ed2b5b61d0280fd7ab4d2b653fea280041",
+      "sha256": "9ad41087bab83625b4f94ea27f7a95b9035992f9c51f81356d0c0279db98b7e4",
+      "bytes": 3109
+    },
+    {
+      "path": "docs/system-design/10_开发联调与集成方案.md",
+      "action": "modified",
+      "originalSha256": "c8eb4812dc970477c33a0abea84d92b7d3656dac558ccddadf1ea868750ce9c8",
+      "sha256": "6bb4beb13bf83e475272b5ac1e71ae302b3ae49232d6b6bbd3db2b2fb1d493b0",
+      "bytes": 6703
+    },
+    {
+      "path": "docs/system-design/11_架构风险与待确认事项.md",
+      "action": "modified",
+      "originalSha256": "147c03fac3412552e9751eb54c607a34c32058d51f07caf770ace08e811d4006",
+      "sha256": "4a7c3a69de27870b7090de3cf7c2c7d95ccfb498621ef18f1d848acc11e17db8",
+      "bytes": 8954
+    },
+    {
+      "path": "docs/system-design/README.md",
+      "action": "modified",
+      "originalSha256": "63420563f749439a9069e01e96d19b1987528364e587abd7314bd57f4d0320c0",
+      "sha256": "6c46461325c3d67a9c9a8e5e883e81b8bca8bc4c8c527c91f673714e11915cd2",
+      "bytes": 3954
+    },
+    {
+      "path": "docs/system-design/adr/ADR-001-architecture.md",
+      "action": "modified",
+      "originalSha256": "e84dffb4b59806a8cfd2b3f326d82fa59c49abac726989aabb0fe32fad46cd16",
+      "sha256": "1399a7bb6529c24daa4265e6b89ec658a1ed093038d0f089a716f131c7897d81",
+      "bytes": 814
+    },
+    {
+      "path": "docs/system-design/adr/ADR-002-backend.md",
+      "action": "modified",
+      "originalSha256": "ecdc1f1ba706f5405ca3de8db946128f903848b5b706ba6a3dbc38929c1b1fd8",
+      "sha256": "590e3b6d10144255a43fdf2bfb0d6ba7323168b6cc84493139ee46ed9055db95",
+      "bytes": 802
+    },
+    {
+      "path": "docs/system-design/adr/ADR-003-database.md",
+      "action": "modified",
+      "originalSha256": "8663ccda8c1fc15b72c3462286e673a3d176ab29e692620e45107f79a6137d39",
+      "sha256": "1a5ab0a2d07eff8dd113207c7d04ef68a13da0324fb5614c80e31a9b5b504e41",
+      "bytes": 1970
+    },
+    {
+      "path": "docs/system-design/adr/ADR-004-gis.md",
+      "action": "modified",
+      "originalSha256": "2918c596a49aa704dea4cf1e1ae59e8d2c5788650a19371f79b699c66fff5339",
+      "sha256": "c24257f3ac813853938515481ce0649b00bdcb7bb520ace51e27253b1bc1575e",
+      "bytes": 671
+    },
+    {
+      "path": "docs/system-design/adr/ADR-005-async-task.md",
+      "action": "modified",
+      "originalSha256": "3b2fa2066aa222320d989bd5f6bd49b3cc992d1ff7e2c014cd1afca6d4c04848",
+      "sha256": "215cc84ef42eab7c29525327731c86f7e924abbdbb6e2e68905447e2e01c1343",
+      "bytes": 1495
+    },
+    {
+      "path": "docs/system-design/adr/ADR-006-api.md",
+      "action": "modified",
+      "originalSha256": "467e43021cf5ddd648a6dc8af841c65de4d1d23b48ab2ba2144061ae7f675f16",
+      "sha256": "7ebacee0846417bebd7583365024ce1ef36310879e8694d3d484b9a7ce279ca4",
+      "bytes": 714
+    },
+    {
+      "path": "docs/system-design/adr/ADR-007-authentication.md",
+      "action": "modified",
+      "originalSha256": "9be7c226cea114fad21d5c376052bdd84a76f25af395208a16e3ecd2ee566c9d",
+      "sha256": "b396626ff46e2277f3721d95fcbdf1c423eae823cb00e8bfec595bb26aaa8b6e",
+      "bytes": 1181
+    },
+    {
+      "path": "docs/system-design/adr/ADR-008-deployment.md",
+      "action": "modified",
+      "originalSha256": "262ddcd379afe25a5d84adfdafe021fb9d876511766249c742992c79faadc03f",
+      "sha256": "c85476b88be909a0485bb54dad6382fb5383f28b52cee9fa1cb0a9abb7572228",
+      "bytes": 709
+    },
+    {
+      "path": "docs/system-design/adr/README.md",
+      "action": "modified",
+      "originalSha256": "a0a7d84bad5d970c87335c0457afcb9b76a09787100e48f89e2a16ecb9abd285",
+      "sha256": "484d543b24979849945406cea14169ee6be31cc29f4c628c770cf6d6a15256e3",
+      "bytes": 2287
+    },
+    {
+      "path": "docs/system-design/系统设计说明书.md",
+      "action": "modified",
+      "originalSha256": "34404b85f3a50a20264a4ba853580ac733ab2290a5e0aaa2261cc2635ca1dcbc",
+      "sha256": "354a8869a7abd6bb8fdf99a42ffe900f97732e73c6d0cad29f63618a069cd41f",
+      "bytes": 4803
+    },
+    {
+      "path": "docs/team/DEV-01-backend.md",
+      "action": "modified",
+      "originalSha256": "afb1b219e53ba84f8c3c7885334fda01cd128584b9dd4ae133c28ab08343becd",
+      "sha256": "666ebdfd228cd744be5bc094cb726267c7f17c9cea2ddfbce96d240f935508b0",
+      "bytes": 2093
+    },
+    {
+      "path": "docs/team/DEV-02-frontend.md",
+      "action": "modified",
+      "originalSha256": "b3967ea264cde7424bddbd41db3ac811d363fd07fc5a72f1ce2c71fa64550cab",
+      "sha256": "e30fcfe01133f6714dbeb6bb92703757eb426f7d83b0e680eb43e97ddbd80ece",
+      "bytes": 2048
+    },
+    {
+      "path": "docs/team/DEV-03-data.md",
+      "action": "modified",
+      "originalSha256": "488c69099a48557501189b4d9eba6f3bd85a52b39123abd2a63609f1ac422fa7",
+      "sha256": "b8a47d78ab83126ea8911658b38155b6aa6590782c2fde69a12d117b6604062b",
+      "bytes": 2123
+    },
+    {
+      "path": "docs/team/DEV-04-quality.md",
+      "action": "modified",
+      "originalSha256": "8857979393c773b4040810e1654e096b6c004319cf3127227dd6607473064a79",
+      "sha256": "c047629249ba94121b3940fddb8e5b9e42df4a2af0ac49ee6da41162bbe0255b",
+      "bytes": 2037
+    },
+    {
+      "path": "docs/team/README.md",
+      "action": "modified",
+      "originalSha256": "348643ade9ad61a658fcadd4e9669693e772e1dd89365830b14d1fef55dd9d39",
+      "sha256": "b08c3733637d82249435f7e4782ed35d26bc89200e46af49773809313468aa49",
+      "bytes": 1400
+    },
+    {
+      "path": "docs/team/ownership.json",
+      "action": "modified",
+      "originalSha256": "9ee1c90ac3eb1aae290bb725fbf1c432e8e85b0e7aa4ce0a9f5ff5030fae7f3e",
+      "sha256": "080f1414df0804352cf92f1b843927655a4e3dadd8713ffdf2c74350e96e6e59",
+      "bytes": 818
+    },
+    {
+      "path": "infra/README.md",
+      "action": "modified",
+      "originalSha256": "d33ab192ff427faaad0ea67bd89d9e542479a3a7e08c151e009db88cf55cb826",
+      "sha256": "4b62447ae45d1fda8431ba3f91e9dbe6845ae0685de4f55504984fa5830e7fca",
+      "bytes": 854
+    },
+    {
+      "path": "workers/data/README.md",
+      "action": "modified",
+      "originalSha256": "382c775314b2726878be45ef24aef9acfa4afca306cb5b451beb39be351e49fe",
+      "sha256": "80299e1cabc09fcd75a3e0c43388ffbb53aad2f2c79838e3c178e004608b9104",
+      "bytes": 739
+    },
+    {
+      "path": "workers/delivery/README.md",
+      "action": "modified",
+      "originalSha256": "b88ed07930aff84522c0fa06172c3d2dc5959e1bb516975a511648fe1ffcd7f2",
+      "sha256": "f754f9ad1b9169e4ca40d9f14a05732dcbb494307155a71f0ba2db5331556d85",
+      "bytes": 713
+    }
+  ],
+  "selfHash": "manifest本文件不自包含；最终交付hash在workspace交付记录"
+}

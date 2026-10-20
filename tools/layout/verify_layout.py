@@ -20,7 +20,7 @@ def run():
  check('required_entrypoints',all((ROOT/p).is_file() for p in required),[p for p in required if not (ROOT/p).is_file()])
  check('single_active_vue_project',(ROOT/'apps/web/vite.config.ts').exists() and not (ROOT/'package.json').exists())
  own=json.loads((ROOT/'docs/team/ownership.json').read_text('utf-8'))
- check('four_role_owners',set(own['owners'])=={'DEV-01','DEV-02','DEV-03','DEV-04'})
+ check('confirmed_team_owners',set(own['owners'])=={'DEV-01/DEV-02','DEV-03','DEV-04','DEV-05'})
  check('shared_repository',own['repository']=='https://github.com/WangLiu-Hades/xx-platform')
  check('no_invented_github_reviewers',not (ROOT/'.github/CODEOWNERS').exists())
  for path in ['apps/api','workers/data','workers/delivery','infra','tests']:

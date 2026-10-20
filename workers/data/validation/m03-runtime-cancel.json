@@ -1,0 +1,7 @@
+{
+  "batchId": "b1c597e6-03f4-4f75-8d32-efa831a7ddf6",
+  "facts": 0,
+  "otherConnectionCancelCommitted": true,
+  "workerError": "TASK_LEASE_INVALID",
+  "phase": "PREPARING"
+}

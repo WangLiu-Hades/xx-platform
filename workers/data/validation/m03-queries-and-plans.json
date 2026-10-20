@@ -1,0 +1,919 @@
+[
+  {
+    "name": "site_a_window",
+    "captureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "691932f0-eb03-538e-9f04-442b43ebec0f",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "pages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "691932f0-eb03-538e-9f04-442b43ebec0f"
+      ],
+      [
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d"
+      ],
+      [
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20"
+      ],
+      [
+        "564002f9-b165-5779-b600-374866a015c3",
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 14.63,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 28.7,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 24.97,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 16.71,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 00:00:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 01:00:00+00'::timestamp with time zone))",
+                            "Filter": "(site_id = ANY ('{a81222c5-9ee6-527c-8d58-39a062c7c3f4}'::uuid[]))"
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "target_a_site_a",
+    "captureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "pages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f"
+      ],
+      [
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1"
+      ],
+      [
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+        "564002f9-b165-5779-b600-374866a015c3"
+      ],
+      [
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 18.71,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 36.87,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 33.14,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 24.88,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 16.33,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 00:00:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 01:00:00+00'::timestamp with time zone))",
+                            "Filter": "((site_id = ANY ('{a81222c5-9ee6-527c-8d58-39a062c7c3f4}'::uuid[])) AND ((primary_target_id = ANY ('{5ec2a369-9fe3-5de6-8f10-bf6838e0f213}'::uuid[])) OR (hashed SubPlan 2)))",
+                            "Plans": [
+                              {
+                                "Node Type": "Index Scan",
+                                "Parent Relationship": "SubPlan",
+                                "Subplan Name": "SubPlan 2",
+                                "Parallel Aware": false,
+                                "Async Capable": false,
+                                "Scan Direction": "Forward",
+                                "Index Name": "ix_capture_other_target",
+                                "Relation Name": "capture_target",
+                                "Alias": "ct",
+                                "Startup Cost": 0.14,
+                                "Total Cost": 8.16,
+                                "Plan Rows": 1,
+                                "Plan Width": 16,
+                                "Index Cond": "(target_id = ANY ('{5ec2a369-9fe3-5de6-8f10-bf6838e0f213}'::uuid[]))",
+                                "Filter": "((target_type)::text = 'PLATE'::text)"
+                              }
+                            ]
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "site_b_window",
+    "captureIds": [
+      "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+      "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+    ],
+    "pages": [
+      [
+        "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+        "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 14.63,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 28.7,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 24.97,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 16.71,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 00:00:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 01:00:00+00'::timestamp with time zone))",
+                            "Filter": "(site_id = ANY ('{d5a7b52d-140e-5afa-8a11-6264beebddb1}'::uuid[]))"
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "empty_site_scope",
+    "captureIds": [],
+    "pages": [
+      []
+    ],
+    "plan": {
+      "items": [],
+      "nextCursor": null,
+      "pageSize": 3
+    }
+  },
+  {
+    "name": "wrong_data_type",
+    "captureIds": [],
+    "pages": [
+      []
+    ],
+    "plan": {
+      "items": [],
+      "nextCursor": null,
+      "pageSize": 3
+    }
+  },
+  {
+    "name": "end_boundary_next_window",
+    "captureIds": [
+      "e54b6c00-98b2-5b5d-a1df-00f5cf445473"
+    ],
+    "pages": [
+      [
+        "e54b6c00-98b2-5b5d-a1df-00f5cf445473"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 14.63,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 28.7,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 24.97,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 16.71,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 01:00:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 01:00:01+00'::timestamp with time zone))",
+                            "Filter": "(site_id = ANY ('{a81222c5-9ee6-527c-8d58-39a062c7c3f4}'::uuid[]))"
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "same_second_stable_order",
+    "captureIds": [
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be"
+    ],
+    "pages": [
+      [
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 14.63,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 28.7,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 24.97,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 16.71,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 00:30:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 00:30:01+00'::timestamp with time zone))",
+                            "Filter": "(site_id = ANY ('{a81222c5-9ee6-527c-8d58-39a062c7c3f4}'::uuid[]))"
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "both_authorized_sites",
+    "captureIds": [
+      "db327f43-2735-52e2-9f02-284529cd7153",
+      "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+      "691932f0-eb03-538e-9f04-442b43ebec0f",
+      "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+      "2d2332b0-e960-55c3-b809-64184a624661",
+      "9ae12c6c-c6d2-5954-8b03-4df67635ab8d",
+      "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+      "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+      "6c633bdb-6d94-58e1-a76a-386a17e721f1",
+      "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+      "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+      "564002f9-b165-5779-b600-374866a015c3",
+      "e10863cc-7867-5e45-b42d-b4b6097b5798"
+    ],
+    "pages": [
+      [
+        "db327f43-2735-52e2-9f02-284529cd7153",
+        "8f7c3a00-7dda-5f92-8bbe-10b1bfda15a9",
+        "691932f0-eb03-538e-9f04-442b43ebec0f"
+      ],
+      [
+        "17ed3f89-e4c8-59af-a13e-6eb272c47a3f",
+        "2d2332b0-e960-55c3-b809-64184a624661",
+        "9ae12c6c-c6d2-5954-8b03-4df67635ab8d"
+      ],
+      [
+        "8a7157a9-6ee6-53ee-b1a0-6b75ba0bdc11",
+        "83d01f99-76d2-54da-b2f8-4b1f013baea1",
+        "6c633bdb-6d94-58e1-a76a-386a17e721f1"
+      ],
+      [
+        "55d1538a-3a4e-539f-a0f0-c584b83c08be",
+        "cb4220cb-ed4b-51ff-a61e-8257b6389e20",
+        "564002f9-b165-5779-b600-374866a015c3"
+      ],
+      [
+        "e10863cc-7867-5e45-b42d-b4b6097b5798"
+      ]
+    ],
+    "plan": {
+      "QUERY PLAN": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.56,
+            "Total Cost": 14.63,
+            "Plan Rows": 4,
+            "Plan Width": 2912,
+            "Plans": [
+              {
+                "Node Type": "Nested Loop",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Join Type": "Left",
+                "Startup Cost": 0.56,
+                "Total Cost": 28.7,
+                "Plan Rows": 8,
+                "Plan Width": 2912,
+                "Inner Unique": true,
+                "Plans": [
+                  {
+                    "Node Type": "Nested Loop",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Join Type": "Inner",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 24.97,
+                    "Plan Rows": 8,
+                    "Plan Width": 2928,
+                    "Inner Unique": true,
+                    "Plans": [
+                      {
+                        "Node Type": "Nested Loop",
+                        "Parent Relationship": "Outer",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Join Type": "Inner",
+                        "Startup Cost": 0.28,
+                        "Total Cost": 16.71,
+                        "Plan Rows": 1,
+                        "Plan Width": 2494,
+                        "Inner Unique": true,
+                        "Plans": [
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Outer",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "ix_capture_type_time",
+                            "Relation Name": "capture_event",
+                            "Alias": "e",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1398,
+                            "Index Cond": "(((data_type)::text = 'PLATE'::text) AND (capture_time >= '2026-10-16 00:00:00+00'::timestamp with time zone) AND (capture_time < '2026-10-16 01:00:00+00'::timestamp with time zone))",
+                            "Filter": "(site_id = ANY ('{a81222c5-9ee6-527c-8d58-39a062c7c3f4,d5a7b52d-140e-5afa-8a11-6264beebddb1}'::uuid[]))"
+                          },
+                          {
+                            "Node Type": "Index Scan",
+                            "Parent Relationship": "Inner",
+                            "Parallel Aware": false,
+                            "Async Capable": false,
+                            "Scan Direction": "Forward",
+                            "Index Name": "source_event_pkey",
+                            "Relation Name": "source_event",
+                            "Alias": "s",
+                            "Startup Cost": 0.14,
+                            "Total Cost": 8.16,
+                            "Plan Rows": 1,
+                            "Plan Width": 1112,
+                            "Index Cond": "(id = e.source_event_id)"
+                          }
+                        ]
+                      },
+                      {
+                        "Node Type": "Index Scan",
+                        "Parent Relationship": "Inner",
+                        "Parallel Aware": false,
+                        "Async Capable": false,
+                        "Scan Direction": "Forward",
+                        "Index Name": "plate_record_pkey",
+                        "Relation Name": "plate_record",
+                        "Alias": "p",
+                        "Startup Cost": 0.14,
+                        "Total Cost": 8.16,
+                        "Plan Rows": 1,
+                        "Plan Width": 450,
+                        "Index Cond": "(capture_id = e.id)"
+                      }
+                    ]
+                  },
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Inner",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "file_asset_pkey",
+                    "Relation Name": "file_asset",
+                    "Alias": "image",
+                    "Startup Cost": 0.14,
+                    "Total Cost": 0.46,
+                    "Plan Rows": 1,
+                    "Plan Width": 434,
+                    "Index Cond": "(id = p.vehicle_image_asset_id)"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,8 +1,10 @@
+> 当前基线：PD-2026-10-19.v1；后端个人模块按[当前分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。前端DEV-03、数据DEV-04、测试DEV-05。
+
 # xx-platform 后端服务（`apps/api`）
 
-多维数据分析平台的**正式 HTTP API**。前端（Vue 原型）已经按契约写好，这里要把 193 个操作真正实现出来。
+多维数据分析平台的**正式 HTTP API**。前端（Vue 原型）已经按契约写好，这里要把 198 个操作真正实现出来。
 
-- 契约唯一来源：[openapi.yaml](../../contracts/api/openapi.yaml)（OpenAPI 3.0.3，版本 `1.0.0-dev.2`，193 操作 / 581 Schema，Base URL `/api/v1`）
+- 契约唯一来源：[openapi.yaml](../../contracts/api/openapi.yaml)（OpenAPI 3.0.3，版本 `1.0.0-dev.4-provisional`，198 操作 / 623 Schema，Base URL `/api/v1`）
 - 接口约定：[api-conventions.md](../../contracts/api/api-conventions.md) ｜ 错误码：[error-codes.md](../../contracts/api/error-codes.md)
 - 前端对接：[FRONTEND_INTEGRATION.md](../../contracts/api/FRONTEND_INTEGRATION.md)
 - 契约速读（新人先看这个）：[API速读指南.md](../../docs/API速读指南.md)
@@ -20,15 +22,15 @@
 
 环境要求：**JDK 17** + Maven（本机实测：Java 17.0.12 + Maven 3.9.16，装在 `C:\Tools\apache-maven-3.9.16`）。
 
-**两个构建入口，二选一**：
+**构建入口**：
 
 ```powershell
 # 入口 A：用本机 Maven（本机已装，最省事）
-mvn -o -B compile
+mvn -B compile
 
-# 入口 B：用 Maven Wrapper（团队成员不用各自装 Maven，版本由 .mvn/wrapper 固定）
-.\mvnw.cmd -o -B compile        # cmd/PowerShell
-./mvnw -o -B compile            # Git Bash / Linux / macOS
+# 入口 B：用 轻量Maven启动脚本（复用已有安装或缓存，不自动下载）
+.\mvnw.cmd -B compile        # cmd/PowerShell
+sh mvnw -B compile            # Git Bash / Linux / macOS
 ```
 
 Wrapper 的行为：**优先复用本机已装的 Maven**；本机没装时，按 `.mvn/wrapper/maven-wrapper.properties` 里的 `distributionUrl` 指引使用缓存发行版。说明：本目录的 `mvnw`/`mvnw.cmd` 是**轻量等价实现**（官方 `mvn wrapper:wrapper` 会额外生成一个二进制 `maven-wrapper.jar`，当前离线环境不便引入，详见 properties 文件里的注释）。需要换成官方 wrapper 时执行 `mvn -N wrapper:wrapper -Dmaven=3.9.16` 即可，properties 文件可继续沿用。
@@ -127,8 +129,8 @@ apps/api/
     │   │   │   ├── MeView.java
     │   │   │   ├── AuthenticatedSession.java
     │   │   │   ├── ScopeCalculator.java
-│   │   │   ├── ClientConfigService.java / ClientConfigScalars.java / ClientConfigView.java
-│   │   │   └── HealthService.java / HealthView.java
+    │   │   │   ├── ClientConfigService.java / ClientConfigScalars.java / ClientConfigView.java
+    │   │   │   └── HealthService.java / HealthView.java
     │   │   ├── infra/                     ③ 基础设施：持久化、口令哈希、频控、种子数据
     │   │   │   ├── UserAccountRepository.java
     │   │   │   ├── UserSessionRepository.java
@@ -137,8 +139,8 @@ apps/api/
     │   │   │   ├── PasswordHasher.java
     │   │   │   ├── LoginThrottle.java
     │   │   │   ├── DevUserSeeder.java
-│   │   │   └── ClientConfigRepository.java
-    │   │   ├── client/                    ④ 外部依赖：DEV-03 查询计算、通知通道、设备协议（空）
+    │   │   │   └── ClientConfigRepository.java
+    │   │   ├── client/                    ④ 外部依赖：DEV-04 查询计算、通知通道、设备协议（空）
     │   │   ├── common/                    ⑤ 跨层共享：响应壳、错误码、异常兜底、traceId、时间与摘要
     │   │   │   ├── ApiResponses.java / ErrorResponse.java / ErrorCode.java / ApiException.java
     │   │   │   ├── ApiExceptionHandler.java / RequestIdFilter.java
@@ -166,9 +168,9 @@ apps/api/
 | 层 | 只做 | 不做 |
 | --- | --- | --- |
 | `api` | 参数绑定与校验、调 service、返回响应壳 | 业务规则、直接访问数据库、自己拼错误壳 |
-| `service` | 领域规则、状态机、`@Transactional` | 重写 DEV-03 的查询/算法 |
+| `service` | 领域规则、状态机、`@Transactional` | 重写 DEV-04 的查询/算法 |
 | `infra` | 持久化、幂等键、游标签名、文件存储、迁移、口令哈希、频控 | 业务判断 |
-| `client` | 调 DEV-03、通知通道、设备协议；超时/重试/错误翻译 | 把厂商协议暴露到 `/api/v1` |
+| `client` | 调 DEV-04、通知通道、设备协议；超时/重试/错误翻译 | 把厂商协议暴露到 `/api/v1` |
 | `common` | 响应壳、错误码、异常兜底、traceId、时间/摘要工具 | 业务规则（**只有平台侧能改**，见 §6） |
 | `config` | 配置类、`@ConfigurationProperties`、开发期 CORS | 业务规则 |
 
@@ -232,7 +234,7 @@ mvn -Pgenerate-api generate-sources
 | 包 | 内容 |
 | --- | --- |
 | `com.xxplatform.api.generated.api` | 每个 operationId 一个 Java 接口方法 |
-| `com.xxplatform.api.generated.model` | 581 个 Schema 对应的 DTO 与枚举（`TaskStatus`、`ErrorCode`…） |
+| `com.xxplatform.api.generated.model` | 623 个 Schema 对应的 DTO 与枚举（`TaskStatus`、`ErrorCode`…） |
 
 配置（在 `pom.xml` 的 `generate-api` profile 内，必须与契约 `info.x-codegen.spring` 一致）：
 
@@ -921,7 +923,7 @@ $ mvn -B -Pgenerate-api compile
 [INFO] BUILD SUCCESS
 ```
 
-- 生成 **600 个 Java 文件**（193 个 Api 接口 + 模型/枚举），编译通过。
+- 生成 **600 个 Java 文件**（193 个 Api 接口 + 模型/枚举；此为契约 `1.0.0-dev.2` 的实测结果，`dev.4-provisional` 增到 198 操作 / 623 Schema），编译通过。
 - 生成物 **0 处** `io.swagger` 引用 —— 全局离线可用。
 - `SetTaskCreated` 正确生成 `setOperationId(...)`（JSON 仍是 `setTaskId`）+ `setTaskId(...)`，不再重复。
 - **默认构建（无 profile）仍可完全离线**：`mvn -o -B compile` 通过。
@@ -931,7 +933,7 @@ $ mvn -B -Pgenerate-api compile
 
 ---
 
-## 5. 还没做（按阶段，见分工方案 §4）
+## 5. 还没做（依当前分工与主分支计划）
 
 
 **基础设施（平台侧先做，另一侧只调用）**
@@ -948,12 +950,12 @@ $ mvn -B -Pgenerate-api compile
 - [ ] 签名游标：绑定账号/范围版本/查询快照/排序/页大小，只校验不解析，失败 400 `DATA_CURSOR_INVALID`
 - [ ] 任务底座：`async_task` 表 + 状态机 + 领取/续租/取消/重试/发布协议（H04 交接物）
 - [ ] 文件底座：multipart 分类策略、`PROCESSING→ACTIVE`、受权下载（不返回永久裸 URL）
-- [ ] 审计埋点；未签认的业务端点返回 422 `REQUIREMENT_PENDING`（能力开关本身已随 `GET /client-config` 下发，见任务 7）
+- [ ] 审计埋点；未签认能力在 `features` 里禁用，资源缺失时按契约禁用能力或返回 503，`REQUIREMENT_PENDING` 只作兼容保留（能力开关本身已随 `GET /client-config` 下发，见任务 7）
 - [x] 数据库迁移框架（DDL 版本化，只有平台侧统一合并）+ 启动时自动迁移（任务 3，2026-10-17）
 
-**业务接口**：193 个操作全部未实现，按分工方案的模块归属与阶段推进。
+**业务接口**：198 个操作全部未实现，按当前分工的模块归属和主分支60工作日计划推进。
 
-**重要提醒**：65 个操作在契约里标了 `x-design-status: pending`（**Profile 领域 36 个里有 24 个**）。这些**不要猜规则、不要用 Mock 阈值实现**，必须返回 `422 REQUIREMENT_PENDING`。动手前先查 [OPENAPI_PENDING.md](../../contracts/api/OPENAPI_PENDING.md)。
+**重要提醒**：原65操作已按主分支转为provisional，甲方确认仍pending；按暂定设计开发，不再仅因未签认统一返回422。资源缺失时按契约禁用能力或返回503，保留REQUIREMENT_PENDING兼容用途。动手前读当前[OPENAPI_PENDING.md](../../contracts/api/OPENAPI_PENDING.md)。
 
 ---
 
@@ -962,11 +964,11 @@ $ mvn -B -Pgenerate-api compile
 
 模块级不重叠，完整清单见 [BACKEND_TWO_DEV_SPLIT.md](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)：
 
-| | 平台与运维侧 | 数据与研判侧 |
+| | DEV-01 平台与运维侧 | DEV-02 数据与研判侧 |
 | --- | --- | --- |
 | 模块 | M01、M06、M10、M12、M14、M15 | M03、M04、M05、M07、M08、M09、M11、M13 |
-| 操作数 | 113 | 80 |
-| 依赖 DEV-03 | 0 | 72 |
+| 操作数 | 118 | 80 |
+| 数据协作 | 统计、报表等消费DEV-04结果 | 查询、计算与结果消费DEV-04交付 |
 
 **三条硬规则**
 
@@ -974,7 +976,7 @@ $ mvn -B -Pgenerate-api compile
 2. **`async_task` 表与任务状态机只有平台侧能动**；另一侧创建任务只调已发布接口，不自己推进状态。
 3. **数据库迁移由平台侧统一合并**；另一侧的迁移片段走 PR 提交，不各自改库。
 
-**已知的跨边界三处**（规则见分工方案 §3）：设备实体只有平台侧能改（另一侧报表只读引用）；通知投递/回执/频控的写路径只有平台侧能动（另一侧只读 `/deliveries`、`/messages`）；任务底座如上。
+**已知的跨边界三处**（规则见当前分工“共享层与跨域边界”）：设备实体只有平台侧能改（另一侧报表只读引用）；通知投递/回执/频控的写路径只有平台侧能动（另一侧只读 `/deliveries`、`/messages`）；任务底座如上。
 
 ---
 
@@ -988,7 +990,7 @@ $ mvn -B -Pgenerate-api compile
 5. 时间是 RFC 3339 带偏移（UTC 存储/返回 Z），`TimeRange` 是 `[from,to)`；地图是 WGS84 且**经度在前**。
 6. `targetId`（目标代理 ID）≠ `fileAssetId`（文件资产）；`analysisTaskId`（分析任务）≠ `taskId`（执行任务）。
 7. 异步 202 只代表"已接受"，不代表执行成功；取消要先写 `cancelRequestedAt`，终态不可撤回（409）。
-8. 未签认能力在 `features` 里禁用并返回 `REQUIREMENT_PENDING`，**不得用 Mock 阈值上线**。
+8. 按PD暂定设计开发；生产启用仍需真实资源与审批配置。缺资源明确不可用，不得用Mock结果或阈值冒充真实能力。
 9. 文件上传要校验真实内容（不是扩展名），只有 `ACTIVE` 才可引用；下载返回二进制流、不套 JSON 壳。
 10. `interfaceOnly=true` 不生成 Controller，**同一个生成的 Api 接口只允许一个实现类**，否则 Spring 启动报 `NoUniqueBeanDefinitionException`（建议后续加个"一接口一实现"的上下文测试）。
 11. **未知字段必须拒绝**（`additionalProperties:false`）：多传/拼错字段要 400 并在 `details.field` 指出，不能静默忽略。

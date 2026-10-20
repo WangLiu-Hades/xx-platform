@@ -1,0 +1,76 @@
+{
+  "deviceMappings": [
+    {
+      "deviceId": "8f5e7766-f7c2-5ed4-ad7a-341caab36f7d",
+      "deviceKey": "DEVICE-A",
+      "siteId": "a81222c5-9ee6-527c-8d58-39a062c7c3f4",
+      "source": "SYNTH_PLATE_A"
+    },
+    {
+      "deviceId": "ff1c9f54-9791-5aaf-880b-490900372de8",
+      "deviceKey": "DEVICE-B",
+      "siteId": "d5a7b52d-140e-5afa-8a11-6264beebddb1",
+      "source": "SYNTH_PLATE_A"
+    },
+    {
+      "deviceId": "ff1c9f54-9791-5aaf-880b-490900372de8",
+      "deviceKey": "DEVICE-A",
+      "siteId": "d5a7b52d-140e-5afa-8a11-6264beebddb1",
+      "source": "SYNTH_PLATE_B"
+    }
+  ],
+  "devices": [
+    {
+      "id": "8f5e7766-f7c2-5ed4-ad7a-341caab36f7d",
+      "siteId": "a81222c5-9ee6-527c-8d58-39a062c7c3f4"
+    },
+    {
+      "id": "ff1c9f54-9791-5aaf-880b-490900372de8",
+      "siteId": "d5a7b52d-140e-5afa-8a11-6264beebddb1"
+    }
+  ],
+  "files": [
+    {
+      "fileAssetId": "6ae05965-01e3-51c6-8b83-f9f672180697",
+      "note": "仅测试文件元数据参照；未上传文件或创建ACTIVE资源",
+      "sourceRef": "IMAGE-A"
+    }
+  ],
+  "seed": 20261016,
+  "sites": [
+    {
+      "id": "a81222c5-9ee6-527c-8d58-39a062c7c3f4",
+      "label": "合成场所A"
+    },
+    {
+      "id": "d5a7b52d-140e-5afa-8a11-6264beebddb1",
+      "label": "合成场所B"
+    }
+  ],
+  "sources": [
+    {
+      "adapter": "synthetic-plate-v0",
+      "productionEnabled": false,
+      "source": "SYNTH_PLATE_A"
+    },
+    {
+      "adapter": "synthetic-plate-v0",
+      "productionEnabled": false,
+      "source": "SYNTH_PLATE_B"
+    }
+  ],
+  "synthetic": true,
+  "targets": [
+    {
+      "rawValue": "SYNTH-PLATE-001",
+      "targetId": "5ec2a369-9fe3-5de6-8f10-bf6838e0f213",
+      "targetType": "PLATE"
+    },
+    {
+      "rawValue": "SYNTH-PLATE-002",
+      "targetId": "a54d5038-2ca2-5966-b4e6-898f840c9913",
+      "targetType": "PLATE"
+    }
+  ],
+  "uuidNamespace": "6ad0ed3c-41c3-4b51-b09f-29af04cd7138"
+}

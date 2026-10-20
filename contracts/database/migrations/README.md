@@ -1,0 +1,5 @@
+# 暂定增量迁移
+
+PD_20261018_approval.sql用于已核验DB-DESIGN-2的隔离升级，新增审批表/一次性许可；本轮不连接服务器。空库直接使用schema.sql，不能再叠加本脚本。已有解密许可会主动中止，需另做历史安全迁移。
+
+字段/流程见docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md。部署前分别授予真实API/Worker/维护账号权限，应用不能使用owner。暂定方案不自动启用未实现能力。

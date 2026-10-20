@@ -1,5 +1,5 @@
 # 多维数据分析平台 · 正式 HTTP API 基础配置
-# 契约：contracts/api/openapi.yaml（Base URL /api/v1，版本 1.0.0-dev.2）
+# 契约：contracts/api/openapi.yaml（Base URL /api/v1，版本 1.0.0-dev.4-provisional）
 # 约定：contracts/api/api-conventions.md ｜ 对接：contracts/api/FRONTEND_INTEGRATION.md
 #
 # 本文件只放"骨架级"配置。会话、CSRF、权限、幂等、任务租约、文件存储等
@@ -16,7 +16,7 @@ server:
       force: true
   error:
     # 不使用 Spring Boot 默认错误页/默认错误体，所有错误一律走契约错误壳
-    # （由 common/GlobalExceptionHandler 统一输出）。
+    # （由 common/ApiExceptionHandler 统一输出）。
     whitelabel:
       enabled: false
   shutdown: graceful
