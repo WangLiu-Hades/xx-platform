@@ -16,6 +16,7 @@ PROJECT = Path(__file__).resolve().parent
 PACKAGE_ROOT = PROJECT
 from data_worker.common import WorkerError, canonical, check, file_digest, read_json
 from data_worker.metrics import audit_export
+from data_worker.contracts import verify_contracts, pg_evidence_matches
 from data_worker.settings import output_path, OUTPUT_ROOT
 
 def save(path, value):
@@ -51,8 +52,10 @@ def main(argv=None):
               "h04Integration": "NOT_IMPLEMENTED", "vendorProtocol": "PENDING",
               "scope": "Synthetic SQLite, M03 execution/read contracts, regression and engineering metrics"}
     try:
+        contract = verify_contracts()
+        report["contractBaseline"] = contract
         suites, counts = [], {}
-        for folder in ("tests", "tests_pg_unit", "tests_metrics", "tests_m03"):
+        for folder in ("tests", "tests_pg_unit", "tests_metrics", "tests_m03", "tests_contracts"):
             suite = unittest.TestLoader().discover(str(PROJECT / folder), pattern="test_*.py")
             suites.append(suite)
             counts[folder] = suite.countTestCases()
@@ -118,20 +121,13 @@ def main(argv=None):
         report["postgresEvidence"] = {
             "path": pg_path.relative_to(OUTPUT_ROOT).as_posix(), "sha256": file_digest(pg_path) if pg_path.is_file() else None,
             "recorded": pg_record}
-        pg_passed = (pg_record.get("status") == "PASS" and pg_record.get("postgresExecuted") is True
-                     and pg_record.get("schemaApplied") is True and type(pg_record.get("testsRun")) is int
-                     and pg_record["testsRun"] >= 12
-                     and pg_record["testsRun"] == sum(pg_record.get("testGroups", {}).values())
-                     and pg_record.get("testGroups", {}).get("m03", 0) > 0
-                     and pg_record.get("sourceHashes") == source_before
-                     and all(pg_record.get(key) == 0 for key in ("failures", "errors", "skipped"))
-                     and pg_record.get("clusterStopExitCode") == 0)
+        pg_passed = pg_evidence_matches(pg_record, source_before, contract)
         report["postgresVerification"] = "PASS" if pg_passed else "PENDING"
         report["openItems"] = [
             "DEV-01 agreement and actual H04 claim/renew/cancel/retry/publication integration",
-            "Agree bounded ingestion limits, quality policy and public cursor/session ownership with DEV-01",
+            "DEV-01 task/authorization integration and DEV-02 M03 quality/API/cursor ownership",
             "Business approval of P-006/P-020 and missing source counters/telemetry",
-            "DEV-04 independent reproduction"]
+            "DEV-05 independent reproduction"]
         if not pg_passed:
             report["openItems"].insert(0, "Run the current PostgreSQL suite against this source snapshot and collect plans/control probes")
         check(snapshot(PROJECT) == source_before, "Worker source changed during local validation",

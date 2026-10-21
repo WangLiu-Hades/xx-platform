@@ -45,6 +45,8 @@ def validate_dto(value, spec, schemas, path="record"):
             require(str(uuid.UUID(value)) == value,path+": noncanonical UUID")
         if spec.get("format") == "date-time":
             instant(value)
+        if "minLength" in spec:
+            require(len(value)>=spec["minLength"],path+": too short")
         if "maxLength" in spec:
             require(len(value)<=spec["maxLength"],path+": too long")
     elif kind == "boolean":

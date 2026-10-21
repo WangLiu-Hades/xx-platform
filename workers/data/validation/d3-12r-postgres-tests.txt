@@ -1,0 +1,39 @@
+test_cursor_tamper_scope_change_and_new_session_are_rejected (lab.integration.RealPostgresTests) ... ok
+test_golden_rows_facts_counts_and_actual_dtos (lab.integration.RealPostgresTests) ... ok
+test_invalid_storage_values_are_isolated_and_do_not_claim_key (lab.integration.RealPostgresTests) ... ok
+test_lease_cancel_expiry_generation_and_attempt_guards (lab.integration.RealPostgresTests) ... ok
+test_publisher_expiry_rolls_back_domain_and_task_together (lab.integration.RealPostgresTests) ... ok
+test_query_eight_frozen_cases_and_query_plan (lab.integration.RealPostgresTests) ... ok
+test_query_sort_options_and_authority (lab.integration.RealPostgresTests) ... ok
+test_same_batch_retry_and_changed_input (lab.integration.RealPostgresTests) ... ok
+test_source_file_hash_mismatch_is_rejected_before_claiming_events (lab.integration.RealPostgresTests) ... ok
+test_transaction_failure_rolls_back_then_retry_succeeds (lab.integration.RealPostgresTests) ... ok
+test_z_concurrent_batches_with_same_event_create_one_fact (lab.integration.RealPostgresTests) ... ok
+test_zz_repeatable_read_snapshot_excludes_concurrent_late_arrival (lab.integration.RealPostgresTests) ... ok
+test_batch_list_detail_filters_and_unique_tiebreaker_match_contract (lab.m03_integration.M03PostgresTests) ... ok
+test_batch_scope_and_revocation_do_not_leak_foreign_counts (lab.m03_integration.M03PostgresTests) ... ok
+test_cancel_after_preparation_is_rechecked_before_publication (lab.m03_integration.M03PostgresTests) ... ok
+test_cancel_during_preparation_is_recorded_without_waiting_for_batch_lock (lab.m03_integration.M03PostgresTests) ... ok
+test_current_attempt_errors_do_not_overwrite_previous_attempt_diagnostics (lab.m03_integration.M03PostgresTests) ... ok
+test_discarded_commit_response_is_reconciled_without_duplicate_rows (lab.m03_integration.M03PostgresTests) ... ok
+test_error_pages_match_contract_and_reject_foreign_snapshot (lab.m03_integration.M03PostgresTests) ... ok
+test_ingestor_rejects_caller_owned_transaction (lab.m03_integration.M03PostgresTests) ... ok
+test_insufficient_lease_budget_rejects_before_writes (lab.m03_integration.M03PostgresTests) ... ok
+test_other_connection_can_renew_during_preparation (lab.m03_integration.M03PostgresTests) ... ok
+test_oversized_batch_rejected_without_partial_rows (lab.m03_integration.M03PostgresTests) ... ok
+test_process_crash_rolls_back_and_new_attempt_publishes_once (lab.m03_integration.M03PostgresTests) ... ok
+test_publication_statement_deadline_rolls_back_written_facts (lab.m03_integration.M03PostgresTests) ... ok
+test_quality_counts_rows_without_join_multiplication_and_counts_distinct_devices (lab.m03_integration.M03PostgresTests) ... ok
+test_superseded_worker_cannot_publish_after_preparation (lab.m03_integration.M03PostgresTests) ... ok
+test_existing_legacy_record_colon_replays_with_persisted_ids (lab.identity_integration.IdentityPostgresTests) ... ok
+test_existing_legacy_source_colon_replays_with_persisted_ids (lab.identity_integration.IdentityPostgresTests) ... ok
+test_new_boundary_pairs_store_two_facts_and_replay (lab.identity_integration.IdentityPostgresTests) ... ok
+test_approval_storage_constraints_and_foreign_keys (lab.current_contract_integration.CurrentContractPostgresTests) ... ok
+test_decisions_are_unique_and_append_only (lab.current_contract_integration.CurrentContractPostgresTests) ... ok
+test_decryption_alters_exist_without_worker_decryption_writes (lab.current_contract_integration.CurrentContractPostgresTests) ... ok
+test_new_design_does_not_enable_unimplemented_features (lab.current_contract_integration.CurrentContractPostgresTests) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 7.877s
+
+OK

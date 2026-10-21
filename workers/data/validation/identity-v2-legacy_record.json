@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "legacyFact": {
+    "source_code": "ID_LEGACY_RECORD",
+    "source_record_key": "B:C",
+    "source_event_id": "746608a4-bae5-5532-aa92-d90963fdd021",
+    "capture_id": "7859e5bf-2ba4-5788-a274-35db0e214a91",
+    "payload_digest": "24fa0f0557ebc64100a25ffeafcc53813dc863ef736ec896c0db82de47a2b4e1",
+    "batch_id": "f048acab-0c11-4967-8f94-7bb5b6ee5c52",
+    "plate_capture_id": "7859e5bf-2ba4-5788-a274-35db0e214a91"
+  },
+  "facts": [
+    {
+      "source_code": "ID_LEGACY_RECORD",
+      "source_record_key": "B:C",
+      "source_event_id": "746608a4-bae5-5532-aa92-d90963fdd021",
+      "capture_id": "7859e5bf-2ba4-5788-a274-35db0e214a91",
+      "payload_digest": "24fa0f0557ebc64100a25ffeafcc53813dc863ef736ec896c0db82de47a2b4e1",
+      "batch_id": "f048acab-0c11-4967-8f94-7bb5b6ee5c52",
+      "plate_capture_id": "7859e5bf-2ba4-5788-a274-35db0e214a91"
+    },
+    {
+      "source_code": "ID_LEGACY_RECORD:B",
+      "source_record_key": "C",
+      "source_event_id": "81151fe8-29d3-535a-abc3-d19ce181d325",
+      "capture_id": "5e09c890-59c8-5be8-8bfc-5ac7bec0bfcf",
+      "payload_digest": "127634549429d9b15283c0297d44658c517cf6208546b5c57d9d70bacc5e83be",
+      "batch_id": "5bfc19d2-40ce-4d44-9532-b0a4099801b9",
+      "plate_capture_id": "5e09c890-59c8-5be8-8bfc-5ac7bec0bfcf"
+    }
+  ],
+  "legacyIdsRetained": true,
+  "changedPayloadRejected": true
+}

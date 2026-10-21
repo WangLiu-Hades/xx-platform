@@ -10,6 +10,7 @@ import uuid
 
 from ..common import WorkerError, canonical, check, digest, strict_json, utc, uuid_text
 from .projection import SELECT_FIELDS, FROM_TABLES, timestamp, to_dto
+from ..contracts import QUERY_WINDOW_SECONDS, STATEMENT_TIMEOUT_MS, CURSOR_SECONDS
 
 
 def query_check(condition, message):
@@ -60,7 +61,7 @@ class QuerySpec:
         query_check(isinstance(request, dict) and set(request) <= allowed, "Unsupported query fields")
         query_check(request.get("dataType") == "PLATE", "This query module only supports PLATE")
         if "plateNumber" in request:
-            raise WorkerError("REQUIREMENT_PENDING", "Resolve raw plate identifiers through the approved target service")
+            raise WorkerError("SYSTEM_UNAVAILABLE", "The authorized raw plate resolver is not connected")
         window = request.get("timeRange")
         query_check(isinstance(window, dict) and set(window) == {"from", "to"}, "Time range is required")
         try:
@@ -94,6 +95,9 @@ class QueryBudget:
     def __post_init__(self):
         for value in (self.max_window_seconds, self.statement_timeout_ms, self.session_seconds):
             query_check(type(value) is int and value > 0, "An explicit positive server query budget is required")
+        query_check(self.max_window_seconds <= QUERY_WINDOW_SECONDS and
+                    self.statement_timeout_ms <= STATEMENT_TIMEOUT_MS and self.session_seconds <= CURSOR_SECONDS,
+                    "Query budget exceeds PD-2026-10-19.v1 limits")
 
 
 def build_query(spec, scope, last=None):

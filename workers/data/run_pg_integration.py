@@ -12,6 +12,7 @@ import uuid
 sys.dont_write_bytecode = True
 sys.stdout.reconfigure(encoding="utf-8")
 from data_worker.common import WorkerError, check, read_json
+from data_worker.contracts import verify_contracts, baseline
 from data_worker.pg.connection import connect
 from lab.diagnostics import failure_details
 from data_worker.settings import PACKAGE_ROOT, output_path, OUTPUT_ROOT, REPO_ROOT
@@ -41,6 +42,8 @@ def main():
     report["sourceHashes"] = source_before
     admin = database = None
     try:
+        contract = verify_contracts()
+        report["contractBaseline"] = contract
         stage("load_driver")
         from psycopg import sql
         from psycopg.conninfo import make_conninfo
@@ -55,11 +58,11 @@ def main():
         check(Path(actual).resolve() == cluster, "Connected server is not the newly-created test cluster", "PG_LAB_REQUIRED")
         report["postgresExecuted"] = True
         stage("verify_schema_baseline")
-        baseline = read_json(PACKAGE_ROOT / "fixtures/contract-baseline.json")["sources"]
+        expected = baseline()
         schema_path = REPO_ROOT / "contracts/database/schema.sql"
         schema_bytes = schema_path.read_bytes()
         schema_hash = hashlib.sha256(schema_bytes).hexdigest()
-        check(schema_hash == baseline["contracts/database/schema.sql"],
+        check(schema_hash == expected["sources"]["contracts/database/schema.sql"],
               "Platform schema changed; review the new contract before integration", "SCHEMA_BASELINE_CHANGED")
         database_name = "d3_lab_" + uuid.uuid4().hex[:16]
         stage("create_isolated_database")
@@ -78,7 +81,13 @@ def main():
             SELECT count(*) AS n FROM information_schema.tables
             WHERE table_schema=ANY(%s::text[]) AND table_type='BASE TABLE'
             """, (["auth", "core", "capture", "analysis", "operation", "audit"],)).fetchone()["n"]
-        check(table_count == 163, "Unexpected platform table count", "SCHEMA_INCOMPLETE")
+        check(table_count == expected["platformTableCount"], "Unexpected platform table count", "SCHEMA_INCOMPLETE")
+        actual_tables = database.execute("""
+            SELECT table_schema || '.' || table_name AS name FROM information_schema.tables
+            WHERE table_schema=ANY(%s::text[]) AND table_type='BASE TABLE' ORDER BY 1
+            """, (["auth", "core", "capture", "analysis", "operation", "audit"],)).fetchall()
+        check([row["name"] for row in actual_tables] == expected["platformTables"],
+              "Platform table names differ from the reviewed catalog", "SCHEMA_INCOMPLETE")
         database.close()
         database = None
         from lab.integration import run_integration

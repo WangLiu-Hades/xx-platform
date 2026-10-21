@@ -5,6 +5,7 @@ import math
 import time
 
 from ..common import RowError, check, digest
+from ..contracts import INGEST_MAX_BYTES, INGEST_MAX_ROWS
 from ..pipeline import input_lines
 from ..plate import parse_line
 
@@ -25,6 +26,8 @@ class IngestBudget:
                      "lease_margin_ms", "checkpoint_rows"):
             check(type(getattr(self, name)) is int and getattr(self, name) > 0,
                   "Positive explicit ingestion limits are required", "INGEST_BUDGET_INVALID")
+        check(self.max_input_bytes <= INGEST_MAX_BYTES and self.max_rows <= INGEST_MAX_ROWS,
+              "Ingestion budget exceeds PD-2026-10-19.v1 limits", "INGEST_BUDGET_INVALID")
         for name in ("prepare_seconds", "checkpoint_seconds"):
             value = getattr(self, name)
             check(type(value) in (int, float) and math.isfinite(value) and value > 0,
