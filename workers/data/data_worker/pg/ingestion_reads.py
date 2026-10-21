@@ -14,6 +14,7 @@ import uuid
 
 from ..common import WorkerError, canonical, check, digest, strict_json, utc, uuid_text
 from .projection import timestamp
+from ..contracts import QUERY_WINDOW_SECONDS, STATEMENT_TIMEOUT_MS, CURSOR_SECONDS
 
 STATUSES = ("PENDING", "RUNNING", "SUCCESS", "FAILED", "CANCELLED")
 
@@ -57,6 +58,8 @@ class IngestionReadBudget:
         valid(all(type(v) is int and v > 0 for v in
                   (self.statement_timeout_ms, self.session_seconds, self.max_window_seconds,
                    self.max_authorized_batches)), "Explicit positive read limits are required")
+        valid(self.max_window_seconds <= QUERY_WINDOW_SECONDS and self.statement_timeout_ms <= STATEMENT_TIMEOUT_MS
+              and self.session_seconds <= CURSOR_SECONDS, "Read budget exceeds PD-2026-10-19.v1 limits")
 
 
 @dataclass(frozen=True)
@@ -184,7 +187,7 @@ SAFE_FIELDS = frozenset(("$", "recordId", "dataType", "deviceKey", "captureTime"
 def synthetic_error_projection(row):
     """Proposal for synthetic row errors; no raw record key or free-form diagnostic is exposed."""
     check(row["error_code"] in KNOWN_ROW_CODES, "A public mapping is required for this row error",
-          "REQUIREMENT_PENDING")
+          "SYSTEM_UNAVAILABLE")
     dto = {"rowNumber": row["row_number"], "code": "VALIDATION_ERROR",
            "reason": "Input row failed the selected mapping or validation rule."}
     if row["field_name"] in SAFE_FIELDS:

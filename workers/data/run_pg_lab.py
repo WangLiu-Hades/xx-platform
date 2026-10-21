@@ -7,12 +7,14 @@ from pathlib import Path
 import shutil
 import socket
 import subprocess
+import runpy
 import sys
 import uuid
 
 sys.dont_write_bytecode = True
 sys.stdout.reconfigure(encoding="utf-8")
 from data_worker.common import WorkerError, check, read_json
+from data_worker.contracts import verify_contracts
 from data_worker.settings import PACKAGE_ROOT, output_path, OUTPUT_ROOT
 
 PROJECT = Path(__file__).resolve().parent
@@ -59,6 +61,9 @@ def main():
         return result.returncode
 
     try:
+        report["contractBaseline"] = verify_contracts()
+        checker = runpy.run_path(str(PROJECT / "verify_package.py"))
+        report["sourceHashes"] = checker["source_hashes"]()
         candidate = find_postgres_bin(args.postgres_bin)
         check(candidate is not None, "PostgreSQL tools were not found", "PG_NATIVE_TOOLS_MISSING")
         pg_bin = candidate.resolve()

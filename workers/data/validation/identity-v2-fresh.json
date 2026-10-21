@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "facts": [
+    {
+      "source_code": "ID_FRESH",
+      "source_record_key": "B:C",
+      "source_event_id": "9af1845c-58ed-5863-a0cc-7b4ac0f505f8",
+      "capture_id": "6fc8feaa-e949-52f6-9fc8-758ac3ef568f",
+      "payload_digest": "24fa0f0557ebc64100a25ffeafcc53813dc863ef736ec896c0db82de47a2b4e1",
+      "batch_id": "608e348e-594a-41e3-9ada-f8cc82741982",
+      "plate_capture_id": "6fc8feaa-e949-52f6-9fc8-758ac3ef568f"
+    },
+    {
+      "source_code": "ID_FRESH:B",
+      "source_record_key": "C",
+      "source_event_id": "d892a86c-c30f-5456-a6c8-30a3bd24e26a",
+      "capture_id": "5470c103-b072-5626-863d-0c9b5debbb00",
+      "payload_digest": "127634549429d9b15283c0297d44658c517cf6208546b5c57d9d70bacc5e83be",
+      "batch_id": "d87af59f-b147-41cf-9a13-c67d29d4d951",
+      "plate_capture_id": "5470c103-b072-5626-863d-0c9b5debbb00"
+    }
+  ],
+  "newConnectionReplay": true,
+  "uniqueFactsAfterReplay": 2
+}

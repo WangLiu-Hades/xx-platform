@@ -1,0 +1,5 @@
+{
+  "status": "PASS",
+  "scope": "Unique vote and mutation trigger only; self-approval exclusion remains service-owned",
+  "rollbackRegisteredInCleanup": true
+}

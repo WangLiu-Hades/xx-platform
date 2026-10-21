@@ -4,7 +4,7 @@
 
 面向H02/H03内部接入；正式H04仍需DEV-01实现。原版本在PG16.15/PostGIS3.4.1的12项实测保留为历史。当前27项套件包含M03控制与读取，实际结果见[验证记录](../validation/README.md)，接口变化见[M03交接](m03-execution-and-reads-v0.md)。
 
-仓库根运行python workers/data/run_pg_lab.py，默认输出到workers/data/.artifacts，可用D3_ARTIFACT_ROOT指定独立目录。原schema从仓库contracts/database/schema.sql读取，冻结摘要位于fixtures/contract-baseline.json。脚本新建本机实例、加载原DDL、测试后停止，既有服务不参与。
+当前统一运行python workers/data/run_d3_12r.py，也可单独运行run_pg_lab.py；默认输出到workers/data/.artifacts，可用D3_ARTIFACT_ROOT指定独立目录。当前schema从仓库contracts/database/schema.sql读取，独立摘要位于fixtures/contract-pd-2026-10-19-v1.json，历史contract-baseline.json保持原样。脚本新建本机实例、加载原DDL、测试后停止，既有服务不参与。
 
 DEV-04负责数据与自测，DEV-01负责统一迁移、任务与授权，DEV-05负责共享环境和独立复验；步骤见[交付指南](DELIVERY_GUIDE.md)。
 
@@ -61,7 +61,7 @@ DEV-01 后续还需确认：领取/续租、任务失败落盘、取消响应、
 
 ## 真实数据库验收脚本包含什么
 
-脚本会在新建的 d3_lab_ 隔离库中原样执行完整 schema.sql，核对163张平台表，保留全部外键、检查约束、索引和触发器。额外的 dev3_test.marker 只标记测试库，不属于业务迁移。
+脚本会在新建的 d3_lab_ 隔离库中原样执行完整 schema.sql，核对当前165张平台表及完整名称集合，保留全部外键、检查约束、索引和触发器。额外的 dev3_test.marker 只标记测试库，不属于业务迁移。
 
 测试种子显式创建禁用登录的测试账户、来源/映射、场所/设备/目标、任务/尝试/批次及受控文件。图片是程序生成的1像素合成PNG；原始 JSONL 复制到本轮 assets 目录，文件大小和 SHA-256 对应实际字节。所有资源都只在该隔离实例内。
 

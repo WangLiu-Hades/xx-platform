@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "scope": "DDL checks and FK only; no approval authorization service",
+  "rollbackRegisteredInCleanup": true,
+  "syntheticCiphertextNotEncryptionValidation": true
+}

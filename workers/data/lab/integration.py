@@ -338,11 +338,14 @@ def run_integration(dsn, assets, output, progress=None):
     RealPostgresTests.golden_rows, RealPostgresTests.golden_facts, RealPostgresTests.golden_batches = rows, facts, batches
     stream = io.StringIO()
     from .m03_integration import M03PostgresTests
-    for name in ("dsn", "settings", "assets", "output", "owner", "golden_rows", "golden_facts", "golden_batches"):
-        setattr(M03PostgresTests, name, getattr(RealPostgresTests, name))
+    from .identity_integration import IdentityPostgresTests
+    from .current_contract_integration import CurrentContractPostgresTests
+    for cls in (M03PostgresTests, IdentityPostgresTests, CurrentContractPostgresTests):
+        for name in ("dsn", "settings", "assets", "output", "owner", "golden_rows", "golden_facts", "golden_batches"):
+            setattr(cls, name, getattr(RealPostgresTests, name))
     suites = [unittest.defaultTestLoader.loadTestsFromTestCase(cls)
-              for cls in (RealPostgresTests, M03PostgresTests)]
-    groups = {name: suite.countTestCases() for name, suite in zip(("platform", "m03"), suites)}
+              for cls in (RealPostgresTests, M03PostgresTests, IdentityPostgresTests, CurrentContractPostgresTests)]
+    groups = {name: suite.countTestCases() for name, suite in zip(("platform", "m03", "identity", "d3_12r"), suites)}
     suite = unittest.TestSuite(suites)
     progress("run_database_tests", preparedTests=suite.countTestCases())
     result = unittest.TextTestRunner(stream=stream, verbosity=2).run(suite)

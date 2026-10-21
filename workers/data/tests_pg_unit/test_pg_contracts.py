@@ -110,7 +110,7 @@ class PgContractTests(unittest.TestCase):
     def test_unapproved_raw_plate_lookup_fails_explicitly(self):
         with self.assertRaises(WorkerError) as error:
             QuerySpec.parse(dict(self.request, plateNumber="SYNTH-PLATE-001"))
-        self.assertEqual(error.exception.code, "REQUIREMENT_PENDING")
+        self.assertEqual(error.exception.code, "SYSTEM_UNAVAILABLE")
 
     def test_cursor_round_trip_and_expiry(self):
         token = self.codec.encode("bound", self.last, 2000)

@@ -108,7 +108,7 @@ class IngestionReadContractTests(unittest.TestCase):
     def test_unmapped_internal_error_requires_explicit_public_policy(self):
         with self.assertRaises(WorkerError) as error:
             synthetic_error_projection({"error_code": "VENDOR_UNKNOWN"})
-        self.assertEqual(error.exception.code, "REQUIREMENT_PENDING")
+        self.assertEqual(error.exception.code, "SYSTEM_UNAVAILABLE")
 
     def test_error_cursor_binds_scope_query_attempt_and_snapshot(self):
         last = (8, str(uuid.uuid4()))

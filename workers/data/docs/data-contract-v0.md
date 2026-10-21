@@ -8,7 +8,7 @@
 
 - [Excel 可打开的字段映射 CSV](data-field-mapping-v0.csv)：建议先看这份。
 - [同内容的 JSON](data-field-mapping-v0.json)：后续工具和代码可读。
-- [冻结的来源版本和 SHA-256](../fixtures/contract-baseline.json)：记录本次依赖的 8 个文件。
+- [冻结的历史来源版本和 SHA-256](../fixtures/contract-baseline.json)：记录原版本依赖的8个文件；当前165表与OpenAPI使用[独立D3-12R基线](../fixtures/contract-pd-2026-10-19-v1.json)，详见[复验说明](d3-12r-current-contract.md)。
 - [首批车牌合成样本](../fixtures/plate-v0/README.md)：用于检验接入程序。
 
 ## 当前依据与适用范围

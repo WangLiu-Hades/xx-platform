@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import math
 import uuid
 
-from .common import RowError, check, digest, strict_json, utc, uuid_text
+from .common import RowError, canonical, check, digest, strict_json, utc, uuid_text
 
 ADAPTER = "synthetic-plate-v0"
 VERSIONS = {"schemaVersion": "plate-synthetic-v0", "mappingVersion": "plate-map-v0",
@@ -89,6 +89,14 @@ class PlateAdapter:
     def identity(self, label):
         return str(uuid.uuid5(self.namespace, str(self.seed) + ":" + label))
 
+    def _source_identity(self, kind, source, key):
+        # Keep the released IDs only where the source/key separator is unambiguous.
+        # A separate domain plus a JSON tuple prevents delimiter/escape collisions,
+        # including aliasing with legacy IDs already stored under ambiguous keys.
+        if ":" not in source and ":" not in key:
+            return self.identity(kind + ":" + source + ":" + key)
+        return self.identity("plate-id-v2:" + canonical([kind, source, key]))
+
     def normalize(self, raw, source, received_at):
         check(source in self.sources, "Source is not registered")
         for field in REQUIRED:
@@ -139,7 +147,7 @@ class PlateAdapter:
         if "vehicleImageRef" in raw:
             plate["vehicleImageAssetId"] = self.files[raw["vehicleImageRef"]]
         record = {
-            "captureId": self.identity("capture:" + source + ":" + raw["recordId"]),
+            "captureId": self._source_identity("capture", source, raw["recordId"]),
             "dataType": "PLATE", "targetType": "PLATE", "targetId": target,
             "deviceId": device["deviceId"] if device else None,
             "siteId": device["siteId"] if device else None,
@@ -148,5 +156,5 @@ class PlateAdapter:
             "displayTarget": MASK, "isMasked": True, "plate": plate,
         }
         return Normalized(raw["recordId"], digest(raw),
-                          self.identity("source-event:" + source + ":" + raw["recordId"]),
+                          self._source_identity("source-event", source, raw["recordId"]),
                           record, warnings)
