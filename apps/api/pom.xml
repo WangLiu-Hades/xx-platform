@@ -32,6 +32,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+      <version>2.2.54</version>
+    </dependency>
     <!-- Web 层：REST 接口（统一响应壳、异常兜底、traceId 过滤都在这里落地） -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -106,7 +111,8 @@
                   <generateModelTests>false</generateModelTests>
                   <generateApiDocumentation>false</generateApiDocumentation>
                   <generateModelDocumentation>false</generateModelDocumentation>
-                  <configOptions>
+                  <nameMappings><nameMapping>setTaskId=setOperationId</nameMapping></nameMappings>
+<configOptions>
                     <interfaceOnly>true</interfaceOnly>
                     <useSpringBoot3>true</useSpringBoot3>
                     <useOneOfInterfaces>true</useOneOfInterfaces>
@@ -118,7 +124,7 @@
                       契约要求：JSON 字段仍是 taskId，Java 侧 setter 改名，
                       避开与"执行 taskId"的 setter 重名。这是契约指定的唯一改名，不要额外增删。
                     -->
-                    <nameMappings>setTaskId=setOperationId</nameMappings>
+                    
                   </configOptions>
                 </configuration>
               </execution>
