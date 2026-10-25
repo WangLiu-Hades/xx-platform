@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-13T09:49:07.811323+00:00",
+  "checkedAt": "2026-10-25T09:28:45.368074+00:00",
   "scope": "portable navigation, critical contracts and mapping",
   "checks": [
     {
@@ -13,7 +13,7 @@
       "detail": null
     },
     {
-      "check": "four_role_owners",
+      "check": "confirmed_team_owners",
       "passed": true,
       "detail": null
     },
@@ -56,8 +56,8 @@
       "check": "active_markdown_links",
       "passed": true,
       "detail": {
-        "files": 103,
-        "links": 649,
+        "files": 130,
+        "links": 857,
         "broken": []
       }
     },
