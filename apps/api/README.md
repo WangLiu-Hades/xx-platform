@@ -206,7 +206,7 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 47 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 28、`migration.*` 4） |
+| `mvn -o -B test` | 48 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 28、`migration.*` 5；2026-10-25 迁移用例由 4 条改为 5 条） |
 | `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
@@ -1008,18 +1008,21 @@ $ mvn -B -Pgenerate-api compile
 
 ```
 apps/api/src/main/resources/db/migration/
-├── V1__baseline_design_2.sql            ← 契约 schema.sql 的逐字节副本（空库基线）
-└── V2__seed_deployment_client_config.sql ← client-config 的部署默认值（任务 7）
+├── V1__baseline_design_2.sql              ← 2026-10-17 的契约快照（163 表 / 6 schema，已冻结）
+├── V2__seed_deployment_client_config.sql  ← client-config 的部署默认值（任务 7）
+└── V3__approval_aggregate_and_policy_v1.sql ← 审批聚合 + 解密许可列 + 策略文案（2026-10-25 补）
 ```
 
 - 命名必须 `V<序号>__<描述>.sql`（**双下划线**），否则 Flyway 会静默忽略。
-- **V1 是 `contracts/database/schema.sql` 的逐字节副本**，SHA256 `7d3534b5…`（163 表 / 6 schema）。
+- **V1 是 2026-10-17 那份 `contracts/database/schema.sql` 的逐字节副本**，SHA256 `7d3534b5…`（163 表 / 6 schema）。
   采取复制而非重写，是为了让"契约与实现漂移"变成一条红测试，而不是靠人记得同步。
+  **V1 已冻结，不再代表最新契约**：2026-10-18 的契约提交把审批聚合写进了 `schema.sql`（165 表），
+  但当时没交迁移，于是出现了 `V1 ≠ schema.sql` 的漂移；V3 就是补上的那个增量。
 - **禁止编辑已发布的 V1**：Flyway 用 checksum 校验，改了会拒绝启动（这就是我们要的保护）。
 - **V2 是数据种子，不是结构变更**：只往 `core.config_item` 插一行部署配置，用
   `ON CONFLICT DO NOTHING` 保证不覆盖运维改过的值。业务上它是"部署参数"，改它不需要新迁移
   （直接 `UPDATE` 那行），只有**新增键或改结构**才需要下一个迁移。
-- 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V3__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 的基线哈希。
+- 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V<n>__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 里的 `EXPECTED_CONTRACT_SHA256`（细则见 §8.7）。
 
 ### 8.2 一次性 provisioning（超级用户）
 
@@ -1048,7 +1051,7 @@ $env:DB_USER     = 'xxplatform_owner'      # 迁移专用账号，与 app/Worker
 $env:DB_PASSWORD = '...'
 
 cd apps/api
-mvn -Pdb-migrate flyway:migrate      # 空库 → 建 163 张表
+mvn -Pdb-migrate flyway:migrate      # 空库 → V1+V2+V3，建 165 张表
 mvn -Pdb-migrate flyway:info         # 看已应用版本
 mvn -Pdb-migrate flyway:validate     # 校验 checksum 未漂移
 ```
@@ -1076,7 +1079,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 ### 8.5 空库 vs 升级库
 
-- **空库**：直接 `flyway:migrate`，一条 `V1` 建出全部 163 表。
+- **空库**：直接 `flyway:migrate`，V1+V2+V3 依次执行，建出与当前契约一致的 165 表（V1 163 表 + V3 的审批 2 表）。
 - **升级旧库**：`schema.sql` **不是旧库升级脚本**（它假设空库）。旧库迁移必须按
   [migration-plan.md](../../contracts/database/migration-plan.md) 的 5 步生成**增量**迁移，
   其中大索引要 `CREATE INDEX CONCURRENTLY` 且在事务块外单独执行。
@@ -1085,16 +1088,60 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 ### 8.6 守卫测试
 
-`src/test/java/.../migration/MigrationBaselineTests.java`（4 个用例，不连数据库、不启动 Spring）：
+`src/test/java/.../migration/MigrationBaselineTests.java`（**5 个用例，不连数据库、不启动 Spring**，2026-10-25 由 4 个改为 5 个）：
 
 | 用例 | 拦住什么 |
 | --- | --- |
-| V1 与 `schema.sql` 逐字节一致 | 有人改了契约但没同步迁移 |
-| `schema.sql` 的 SHA256 未变 | 契约被静默改动 |
-| 六个 schema + PG/PostGIS 守卫 + 事务包裹齐全 | 基线被"优化"掉关键部分 |
-| 迁移命名符合 `V<n>__<desc>.sql` | 文件命名错导致 Flyway 忽略 |
+| `migrationsCoverContractStructure` | 有人改了 `schema.sql` 但没交迁移：逐项比对 `CREATE TABLE` 表体列名、`ALTER TABLE … ADD COLUMN` 累积列、索引名、具名约束名、触发器名（双向，多一个少一个都红），报错直接说缺哪张表/哪列/哪个索引 |
+| `contractSchemaHashIsUnchanged` | 契约被静默改动：`schema.sql` 的 SHA256 必须是 `05a894a76…`（2026-10-20 核对） |
+| `baselineStaysFrozen` | 有人回头去改 V1（会让已有库 `Migration checksum mismatch` 起不来）：V1 必须仍是 163 表、不得含 `operation.action_approval`；该表只能由 V3 之后提供 |
+| `baselineCoversAllSchemasAndGuards` | 基线被"优化"掉关键部分：六个 schema + PG/PostGIS 守卫 + 事务包裹 |
+| `migrationDirectoryFollowsNamingConvention` | 文件命名错导致 Flyway 忽略：版本号必须从 1 连续、`V<n>__<desc>.sql` |
 
 > 该测试**只跑自身**可用 `mvn -Dtest=MigrationBaselineTests test`（不连库、不起 Spring）。
+
+### 8.7 规矩：改契约必须同交增量迁移（2026-10-25 补充，来自一次真实漂移）
+
+**背景**：2026-10-18 的契约提交 `b2f6374` 给 `schema.sql` 加了审批聚合（`operation.action_approval`、
+`audit.action_approval_decision`、3 个索引、`tr_action_approval_decision_append_only` 触发器、
+`decryption_request.approval_id` 等 4 列、`ck_decrypt_controlled_no_file`），**但没有交 Flyway 增量**。
+结果：空库跑 V1+V2 只有 163 表，`MigrationBaselineTests` 两条红灯，且这个缺口会一直带到部署环境
+（运行时 `relation "operation.action_approval" does not exist`，42P01）。
+
+**规矩（评审时按这三条驳回）**：
+
+1. **一次提交内同时包含四件套**：`contracts/database/schema.sql`（+ 数据字典 + `api-storage-map`）、
+   `V<n>__*.sql` 增量、`MigrationBaselineTests.EXPECTED_CONTRACT_SHA256` 的新值、迁移用例的期望对象更新。
+   只有第一个、没有第二个 = 漂移提交，不予合并。
+2. **不改已发布的 V1…Vn，只追加 V(n+1)**。改老迁移会让所有已部署库 `checksum mismatch` 直接起不来；
+   要"修"历史只能新增一个增量去纠正。
+3. **增量里不写 `IF NOT EXISTS`**。迁移必须"要么整体成功、要么报错停下"，把 `IF NOT EXISTS` 塞进去
+   只会把"库已经处于半迁移状态"变成静默继续。若某库手工跑过草案脚本（例如有人跑过
+   `contracts/database/migrations/PD_20261018_approval.sql`），先确认
+   `SELECT to_regclass('operation.action_approval')` 为空，再跑正式迁移。
+
+**怎么验**（两道，第一道秒级，第二道分钟级）：
+
+```powershell
+cd apps/api
+mvn -Dtest=MigrationBaselineTests test     # 文本层：迁移链的对象集合是否覆盖契约
+
+# 语义层：真起两个库，跑完比对象指纹（表/列/索引/约束/触发器/种子/函数）
+powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/verify-migration-parity.ps1 -Port 55433
+# → PASS  structure is identical: 3033 fingerprints match (165 tables)
+#   退出码 0 = 一致，1 = 漂移（会列出前 40 条差异），2 = 环境问题
+```
+
+脚本需要**一个已经就绪的 PG 实例**（不自己起/停数据库，便于 CI 与沙箱复用）：它会建
+`parity_mig`（跑 V1…Vn）与 `parity_ref`（跑 `schema.sql`）两个临时库，比完即删。临时实例可以这样起：
+
+```powershell
+$bin = 'C:\Program Files\PostgreSQL\16\bin'
+& "$bin\initdb.exe" -D ..\pg-scratch\data -U postgres -A trust
+& "$bin\pg_ctl.exe" -D ..\pg-scratch\data -o '-p 55433' -l ..\pg-scratch\pg.log start
+# …跑上面的 verify-migration-parity.ps1 …
+& "$bin\pg_ctl.exe" -D ..\pg-scratch\data stop
+```
 
 ---
 
@@ -1112,7 +1159,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 | `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
 | `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
 | `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
-| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 47 例全绿 |
+| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 48 例全绿（`migration.*` 5 例） |
 | 启动报 `Failed to instantiate [LoginThrottle]: No default constructor found` | 类里有**多个构造器**时 Spring 不会"选参数最多的那个"，而是报这个错——用 `@Autowired` 显式标出生产构造器 |
 | `@SpringBootTest` 报 `Failed to determine a suitable driver class` | 加了数据源依赖后，全上下文启动就需要 `DataSource` bean。不连库的测试要给占位 url + `spring.datasource.hikari.initialization-fail-timeout=-1` + `spring.flyway.enabled=false`（见 `ApiApplicationTests` 注释） |
 | 单测报端口 8080 被占用 | `SpringApplicationBuilder.properties(...)` 设的是 **default properties，优先级低于 `application.yml`**，`server.port=0` 会被 yml 的 `8080` 覆盖。改用 `.run("--server.port=0", ...)`（命令行参数优先级最高）。这个坑的失败信息看起来像环境问题，其实是测试写错——只在"本机没起服务"时才碰巧通过 |
