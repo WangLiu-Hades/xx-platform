@@ -141,11 +141,11 @@ public class IngestionController implements IngestionApi {
 
     @Override
     public ResponseEntity<ReplayIngestionBatchResponse> replayIngestionBatch(
-            UUID batchId, String xCSRFToken, String idempotencyKey, ReplayInput replayInput) {
+            UUID batchId, String xCSRFToken, String idempotencyKey, ReplayInput replayInput, UUID xApprovalId) {
         ReplayCommand command = replayInput == null ? null : new ReplayCommand(
                 replayInput.getReason(), replayInput.getMappingVersion(), replayInput.getDedupVersion());
         var receipt = replays.replay(batchId, xCSRFToken, idempotencyKey,
-                ingestionApprovalHeader(batchId), command);
+                ingestionApprovalHeader(batchId, xApprovalId), command);
         var envelope = ApiResponses.success(receipt, RequestIdFilter.currentTraceIdOrFallback());
         var response = mapper.convertValue(envelope, ReplayIngestionBatchResponse.class);
         response.setData(mapper.convertValue(receipt, PublicTaskCreated.class));
@@ -153,12 +153,12 @@ public class IngestionController implements IngestionApi {
     }
 
     @Override
-    public ResponseEntity<CreateIngestionBackfillResponse> createIngestionBackfill(String xCSRFToken, String idempotencyKey, BackfillInput backfillInput) {
+    public ResponseEntity<CreateIngestionBackfillResponse> createIngestionBackfill(String xCSRFToken, String idempotencyKey, BackfillInput backfillInput, UUID xApprovalId) {
         var range = backfillInput == null ? null : backfillInput.getTimeRange();
         BackfillCommand command = backfillInput == null ? null : new BackfillCommand(
                 backfillInput.getSource(), range == null ? null : range.getFrom(),
                 range == null ? null : range.getTo(), backfillInput.getReason());
-        var receipt = backfills.create(xCSRFToken, idempotencyKey, ingestionApprovalHeader(null), command);
+        var receipt = backfills.create(xCSRFToken, idempotencyKey, ingestionApprovalHeader(null, xApprovalId), command);
         var envelope = ApiResponses.success(receipt, RequestIdFilter.currentTraceIdOrFallback());
         var response = mapper.convertValue(envelope, CreateIngestionBackfillResponse.class);
         response.setData(mapper.convertValue(receipt, PublicTaskCreated.class));
@@ -170,11 +170,13 @@ public class IngestionController implements IngestionApi {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static final class PublicTaskCreated extends TaskCreated {}
 
-    // This generator omitted the optional approval header from the method.
-    // Read the contract header from the current request without changing generated code.
-    private String ingestionApprovalHeader(UUID batchId) {
+    // Supplement generated binding with single-value and canonical-text checks.
+    // Approval verification and consumption belong to the shared transaction.
+    private String ingestionApprovalHeader(UUID batchId, UUID approvalId) {
         var attributes = RequestContextHolder.getRequestAttributes();
-        if (!(attributes instanceof ServletRequestAttributes servlet)) return null;
+        if (!(attributes instanceof ServletRequestAttributes servlet)) {
+            return approvalId == null ? null : approvalId.toString();
+        }
         var request = servlet.getRequest();
         Object pathParameters = request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         if (pathParameters instanceof Map<?, ?> values
@@ -188,7 +190,12 @@ public class IngestionController implements IngestionApi {
             throw new DataApiException(ErrorCode.VALIDATION_ERROR,
                     "approvalId", "Only one X-Approval-Id header is allowed");
         }
-        return approvals.isEmpty() ? null : approvals.get(0);
+        if (!approvals.isEmpty() && (approvalId == null
+                || !approvalId.toString().equalsIgnoreCase(approvals.get(0)))) {
+            throw new DataApiException(ErrorCode.VALIDATION_ERROR,
+                    "approvalId", "X-Approval-Id must be a canonical UUID");
+        }
+        return approvalId == null ? null : approvalId.toString();
     }
 
     // source is optional and is not nullable in the contract. Keep this rule local
@@ -199,6 +206,15 @@ public class IngestionController implements IngestionApi {
         public String getSource() {
             return super.getSource();
         }
+    }
+
+    @ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> invalidType(
+            org.springframework.web.method.annotation.MethodArgumentTypeMismatchException error) {
+        String field = "X-Approval-Id".equalsIgnoreCase(error.getName())
+                || "xApprovalId".equals(error.getName()) ? "approvalId" : error.getName();
+        return handleProblem(new DataApiException(
+                ErrorCode.VALIDATION_ERROR, field, "Invalid request parameter type"));
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)

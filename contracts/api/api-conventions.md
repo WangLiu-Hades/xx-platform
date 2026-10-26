@@ -1,6 +1,6 @@
 # API 开发约定
 
-版本1.0.0-dev.2，2026-10-07。唯一机器契约`openapi.yaml`；原始PDF文字优先分析业务，原型定位页面，system-design确定工程边界。Mock值不是签认规则。
+版本1.0.0-dev.4-provisional，2026-10-19。唯一机器契约`openapi.yaml`；原始PDF文字优先分析业务，原型定位页面，system-design确定工程边界。Mock值不是签认规则。
 
 ## 1. HTTP、字段与响应
 
@@ -34,7 +34,7 @@
 - TimeRange为[from,to)，from必须早于to。报告date按Asia/Shanghai自然日/月/年，periodEnd含所指自然周期，省略只取起始周期。
 - WGS84/EPSG:4326；coordinates=[longitude,latitude]；经度[-180,180]、纬度[-90,90]。Point二维、LineString≥2点、Polygon环≥4点并闭合；非法拓扑/超限422 MAP_GEOMETRY_INVALID。OAS3.0无法分别限制数组第1/2项，服务端须校验纬度、闭环和拓扑。
 - 无可信定位经纬同时null，不能画(0,0)。地图bbox=minLon,minLat,maxLon,maxLat；zoom/limit/aggregation限量，clusterId/count/expansionZoom用于下一bbox，设备与采集点selectionType分开。
-- 手填标识通过resolveTargets得到ContextTarget；只LOOKUP需capture:read，登记需watch:write或person-library:write。逐项FOUND/REGISTERED/NOT_FOUND/REJECTED；规范化/身份规则未定422 REQUIREMENT_PENDING，不自行推断同人。
+- 手填标识通过resolveTargets得到ContextTarget；只LOOKUP需capture:read，登记需watch:write或person-library:write。逐项FOUND/REGISTERED/NOT_FOUND/REJECTED；按P-004/P-016暂定规范化与精确代理匹配，不自行推断同人；未知源或未绑定模型给实际不可用原因。
 - CaptureRecord各分支必返targetType：FENCE为IMSI或IMEI，MAC/PLATE/FACE对应同名目标类型。targetType与targetId形成ContextTarget，不能从脱敏displayTarget推导。
 - displayTarget仅展示/复制；二次检索用targetIds。CAPTURE可保存未解析身份的记录，targetId=null时禁用目标级伴随/布控。
 - POST /contexts冻结查询/来源，contextId/expiresAt用于复用。targets最多100个预览，targetsTruncated与targetCount表示完整范围，不能拿预览当全量。
@@ -42,14 +42,14 @@
 
 ## 4. SID、CSRF、权限
 
-- 当前唯一身份方案SID Cookie Session，HttpOnly/Secure/SameSite=Lax/Path=/api/v1。不并列Bearer或localStorage Token。认证ADR最终签认P-001。
+- 当前唯一身份方案SID Cookie Session，HttpOnly/Secure/SameSite=Lax/Path=/api/v1。不并列Bearer或localStorage Token。P-001暂定空闲15分钟/绝对8小时；单会话、新登录撤旧；轮询不续命。
 - GET /auth/csrf匿名/登录同源可用，设置随机CSRFID HttpOnly Cookie并返回绑定同步器token/headerName；CSRFID不是身份。写请求Cookie+X-CSRF-Token+可信Origin；失败403 AUTH_CSRF_INVALID；不能用通配凭据CORS。
 - login轮换SID，返回userId/idleExpiresAt/absoluteExpiresAt；重新获取csrf并/me。renew延长空闲不延长绝对过期；退出清Cookie。401清身份回登录，不自动重放写请求。
 - /me返回menus/permissionCodes/SiteScope/DataScope；前端按钮与API共享PermissionCode。/permissions和/menus给角色授权目录；不能授超授予者范围。
-- 采集DataScope与必要SiteScope交集，管理SiteScope。allSites=false且siteIds=[]无范围；true仍受类型/ownOnly限制。完整多角色策略P-002。
+- 采集DataScope与必要SiteScope交集，管理SiteScope。allSites=false且siteIds=[]无范围；true仍受类型/ownOnly限制。多角色同类范围并集、账号附加grant，按授权元组并集后再施加必要SiteScope，禁止分别合并维度扩大授权；操作权限暂取并集。
 - 列表/详情/Context/任务/导出/文件每次重校范围；操作无权403，单对象不可见404隐藏存在性；Context收缩403 PERMISSION_DATA_SCOPE。
 - 本人改密/me/password须currentPassword；管理员重置不收currentPassword，reason必填并撤销该用户会话。
-- client-config.features是唯一能力目录，featureCode使用契约规定的枚举；旧featureAvailability已deprecated，只能逐项投影features的code/enabled，禁止独立计算。未签认能力disabled并返回reason，不能用Mock阈值上线。
+- client-config.features是唯一能力目录，featureCode使用契约规定的枚举；旧featureAvailability已deprecated，只能逐项投影features的code/enabled，禁止独立计算。设计暂定不再自动disabled；未实现/实际资源未绑定时disabled并给真实reason，不能用Mock数据上线。
 - client-config.catalogBindings提供字段对应的dictionaryCode；设备/人员库category、gender、ethnicity使用该绑定读取字典，不猜目录名。uploadPolicies按category返回限制；旧maxUploadBytes仅全局上限，实际限制取全局与分类maxBytes的较小值。
 
 ## 5. 幂等、版本与批量
@@ -68,8 +68,8 @@
 | SITE | site:write | 不支持 |
 | DEVICE | device:write | 不支持 |
 | USER | user:write | 不支持 |
-| ROLE | role:write | 不支持 |
-| REPORT | report:write | 不支持 |
+| ROLE | role:grant | 不支持 |
+| REPORT | report:delete | 不支持 |
 | NOTIFICATION_TASK | notification:cancel | notification:cancel |
 | DEVICE_COMMAND | device:command | 不支持 |
 | DATASET | dataset:write | 不支持 |
@@ -116,4 +116,10 @@
 - 前端原型使用 openapi-typescript 从唯一 `openapi.yaml` 生成 DTO/操作类型，Axios 负责同源请求、withCredentials 与动态 CSRF；运行时按契约校验。后端生成器选择另行联调确认。
 - Spring Generator 7.25.0 spring，interfaceOnly=true,useSpringBoot3=true,useOneOfInterfaces=true，CLI `--name-mappings setTaskId=setOperationId`。只改变Java变量/方法，JSON仍setTaskId，避开taskId setter重名。
 - 单判别值pattern+mapping使Spring接口/分支getter一致，同时JSON Schema/@Pattern验证常量；不得为编译通过删除业务字段或修改生成代码。
-- 完整生产独立开发结论NO，真实待确认见OPENAPI_PENDING/审计报告；已明确部分可强类型Mock、开发和测试。CI/CD/备份/发布不是业务REST。
+- 本轮未决设计可按暂定方案推进开发/联调；真实资源/后端实现/生产验收独立验证，不能以契约样例代替。CI/CD/备份/发布不是业务REST。
+
+## 2026-10-18暂定开发规则
+
+以[暂定方案](../../docs/project-governance/暂定方案与修改记录.md)及policy为本轮未决值的唯一基线；x-design-status=provisional与x-client-confirmation=pending分离。旧文中“仅书面签认后可校验”的统一门禁由开发负责人本轮授权覆盖；真实密钥/厂商/模型/许可/生产启用门禁仍适用。敏感审批使用X-Approval-Id，精确闭环与幂等/一次性明文消费见审批协议。数据保留一年（12个自然月），访问TTL不代表物理保留期。
+
+并发登录必须锁定账号行后，在同事务撤销旧会话并签发新会话，防止并发成功后留下两个有效SID。常规业务主动请求才滑动空闲期；探针/轮询/资源预加载不续期。

@@ -70,7 +70,7 @@ class IngestionBatchReplayProfileTests {
     }
 
     @Test
-    void optionalApprovalHeaderIsReadDespiteGeneratorOmission() throws Exception {
+    void typedApprovalHeaderRejectsInvalidUuid() throws Exception {
         HttpHeaders headers = headers();
         headers.set("X-Approval-Id", "not-a-uuid");
         var response = rest.postForEntity(BATCH + "/replay", new HttpEntity<>(
@@ -79,5 +79,34 @@ class IngestionBatchReplayProfileTests {
         var json = mapper.readTree(response.getBody());
         assertThat(json.path("code").asText()).isEqualTo("VALIDATION_ERROR");
         assertThat(json.path("details").get(0).path("field").asText()).isEqualTo("approvalId");
+    }
+
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings = {
+            "/ingestion-batches/00000000-0000-4000-8000-000000000001/replay",
+            "/ingestion/backfills"})
+    void duplicateApprovalHeadersAreRejectedBeforeUnavailableAdapters(String path) throws Exception {
+        HttpHeaders requestHeaders = headers();
+        requestHeaders.add("X-Approval-Id", "00000000-0000-4000-8000-000000000010");
+        requestHeaders.add("X-Approval-Id", "00000000-0000-4000-8000-000000000011");
+        String body = path.endsWith("/replay")
+                ? "{\"reason\":\"Synthetic replay verification\"}"
+                : "{\"source\":\"synthetic\",\"reason\":\"Synthetic backfill verification\","
+                  + "\"timeRange\":{\"from\":\"2026-10-07T02:00:00Z\",\"to\":\"2026-10-07T03:00:00Z\"}}";
+        var response = rest.postForEntity(path, new HttpEntity<>(body, requestHeaders), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(mapper.readTree(response.getBody()).path("code").asText())
+                .isEqualTo("VALIDATION_ERROR");
+    }
+
+    @Test
+    void validApprovalIdentifierDoesNotAuthorizeWithoutSharedServices() throws Exception {
+        HttpHeaders requestHeaders = headers();
+        requestHeaders.set("X-Approval-Id", "00000000-0000-4000-8000-000000000010");
+        var response = rest.postForEntity(BATCH + "/replay", new HttpEntity<>(
+                "{\"reason\":\"Synthetic replay verification\"}", requestHeaders), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SERVICE_UNAVAILABLE);
+        assertThat(mapper.readTree(response.getBody()).path("code").asText())
+                .isEqualTo("SYSTEM_UNAVAILABLE");
     }
 }

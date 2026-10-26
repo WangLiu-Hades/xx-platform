@@ -1,0 +1,2547 @@
+{
+  "policyVersion": "PD-2026-10-19.v1",
+  "date": "2026-10-19",
+  "technicalDecisionStatus": "provisional",
+  "clientConfirmation": "pending",
+  "scope": "development_and_integration",
+  "productionActivation": "真实资源就绪、受控配置及甲方确认后按发布门禁启用；不声明已实现",
+  "sourcePrecedence": [
+    "本聊天已确认决定",
+    "现有唯一契约及原始PDF",
+    "本轮开发负责人授权暂定设计",
+    "DEV02清单建议仅供参考"
+  ],
+  "sourceSnapshot": {
+    "openapiSha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd",
+    "previousQuestionGroups": 23,
+    "previousCompositeItems": 62,
+    "originalPendingOperations": 65,
+    "originalPendingLocations": 102
+  },
+  "confirmedConstraints": {
+    "team": {
+      "DEV-01": "后端开发",
+      "DEV-02": "后端开发",
+      "DEV-03": "前端开发",
+      "DEV-04": "数据",
+      "DEV-05": "测试"
+    },
+    "fullTimePeople": 5,
+    "backendAllocation": "DEV-01负责M01/M06/M10/M12/M14/M15及共享底座；DEV-02负责M03/M04/M05/M07/M08/M09/M11/M13；逐操作清单见BACKEND_TWO_DEV_SPLIT及backend-operation-owners.json",
+    "productionInternet": false,
+    "mapDirection": "高德离线/私网PC Web产品",
+    "retention": {
+      "value": 12,
+      "unit": "calendar_month"
+    },
+    "fullBackupInterval": {
+      "value": 1,
+      "unit": "week"
+    },
+    "maxSessions": 1,
+    "newLogin": "revoke_previous_on_success",
+    "roleDataScope": "union_same_type",
+    "userScope": "additive_grants_allowed_with_grantor_upper_bound",
+    "superAdminCaptureScope": "all_platform_capture_data",
+    "smsSuccess": "successful_delivery_receipt_only",
+    "releaseScope": "原始PDF全部功能本期",
+    "schedule": {
+      "start_date": "2026-10-13",
+      "duration": 60,
+      "unit": "工作日",
+      "workday_calendar": "中国大陆法定工作日及调休",
+      "start_day_included": true,
+      "calendar_deadline": null,
+      "known_through": "2026-12-31",
+      "known_workdays": 58,
+      "next_year_workdays_remaining": 2,
+      "deadline_pending_reason": "本轮未核验2027年度官方安排"
+    },
+    "acceptance": {
+      "environment": {
+        "client": "PC Web",
+        "cpu_cores_min": 8,
+        "memory_GB_min": 16,
+        "ssd_GB_min": 500,
+        "bandwidth_Mbps_min": 100,
+        "postgresql_min": "14",
+        "postgis_min": "3.0",
+        "internet_access_allowed": false,
+        "compatible_version_pair_required": true
+      },
+      "workload": {
+        "historical_records_min": 1000000,
+        "daily_new_records_min": 50000,
+        "concurrent_analysis_users_min": 50,
+        "measured_current_volume_verified": false,
+        "peak_ingestion_rate": null,
+        "worker_concurrency": null
+      },
+      "performance": {
+        "ordinary_query_seconds_max": 2,
+        "face_gallery_records": 100000,
+        "face_search_seconds_max": 2,
+        "map_load_seconds_max": 3,
+        "homepage_metric_refresh_seconds_max": 5,
+        "percentile": null,
+        "measurement_boundaries": null
+      },
+      "tasks": {
+        "queue_by_priority": true,
+        "ordinary_completion_seconds_max": 1800,
+        "complex_analysis_completion_seconds_max": 7200,
+        "timeout_alert_required": true,
+        "execution_timer_start": "actual_execution_start",
+        "includes_queue_wait": false,
+        "queue_wait_limit_seconds": null,
+        "queue_budget_status": "pending_later_definition",
+        "clock_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 324,
+          "quote": "> 从实际开始执行起算，排队时间另定",
+          "needle": "从实际开始执行起算，排队时间另定",
+          "kind": "user_clarification"
+        },
+        "category_mapping": null,
+        "type_classification": [
+          {
+            "task_type": "INGESTION",
+            "reference_label": "数据接入",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "BACKFILL",
+            "reference_label": "补数",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "EXPORT",
+            "reference_label": "导出",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "FACE_SEARCH",
+            "reference_label": "人像检索",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "ANALYSIS",
+            "reference_label": "研判分析",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "DATASET_IMPORT",
+            "reference_label": "数据集导入",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "SET_OPERATION",
+            "reference_label": "集合运算",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "PROFILE_MERGE",
+            "reference_label": "档案合并",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "PROFILE_SPLIT",
+            "reference_label": "档案拆分",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "MODEL_RUN",
+            "reference_label": "模型运行",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "DEVICE_COMMAND",
+            "reference_label": "设备命令",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "REPORT",
+            "reference_label": "报表",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "NOTIFICATION",
+            "reference_label": "通知",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "PERSON_LIBRARY_IMPORT",
+            "reference_label": "人员库导入",
+            "tier": null,
+            "execution_limit_seconds": null
+          },
+          {
+            "task_type": "DEVICE_IMPORT",
+            "reference_label": "设备导入",
+            "tier": null,
+            "execution_limit_seconds": null
+          }
+        ],
+        "task_type_source": {
+          "path": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台 - 路径优化\\contracts\\api\\openapi.yaml",
+          "schema": "Task.taskType",
+          "sha256": "f10fc158252bad97cb48d9d223e7878618dda403dca5fa863a54cdf6b8aa54cd"
+        },
+        "category_status": "pending_confirmation",
+        "category_response_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 337,
+          "quote": "> 待确认",
+          "needle": "> 待确认",
+          "kind": "user_pending_response"
+        }
+      },
+      "testing": {
+        "expected_case_version": "V1.0（双方签署确认版）",
+        "permission_coverage": "所有角色及数据范围",
+        "api_coverage": "全部API",
+        "owasp_top10_required": true,
+        "owasp_version": null,
+        "restore_drill_success_required": true,
+        "rpo": null,
+        "rto": null,
+        "defect_list_mutually_confirmed_with_repair_deadlines": true,
+        "case_file_verified": false,
+        "rpo_status": "pending_confirmation",
+        "rpo_response_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 446,
+          "quote": "> 待确认",
+          "needle": "> 待确认",
+          "kind": "user_pending_response"
+        },
+        "rto_status": "pending_confirmation",
+        "rto_response_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 460,
+          "quote": "> 待确认",
+          "needle": "> 待确认",
+          "kind": "user_pending_response"
+        }
+      },
+      "third_party": {
+        "map_provider": "高德",
+        "map_test_pass_required": true,
+        "sms_success_rate_min": 0.99,
+        "sms_rate_formula": null,
+        "device_ingestion_test": "模拟设备数据接入",
+        "device_remote_control_acceptance": null,
+        "tests_passed_verified": false,
+        "sms_success_condition": "successful_delivery_receipt",
+        "sms_success_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 349,
+          "quote": "> 收到送达成功回执才算成功",
+          "needle": "收到送达成功回执才算成功",
+          "kind": "user_clarification"
+        },
+        "sms_statistics_unit": null,
+        "sms_observation_window": null,
+        "sms_retry_counting": null,
+        "sms_retry_counting_status": "pending_confirmation",
+        "sms_retry_response_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 362,
+          "quote": "> 待确认",
+          "needle": "> 待确认",
+          "kind": "user_pending_response"
+        },
+        "sms_observation_mode": "continuous_operation_period",
+        "sms_observation_duration_seconds": null,
+        "sms_observation_window_status": "pending_duration",
+        "sms_observation_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 374,
+          "quote": "> 按连续运行期统计，时长另补充",
+          "needle": "按连续运行期统计，时长另补充",
+          "kind": "user_clarification"
+        },
+        "sms_receipt_wait_seconds": null,
+        "sms_receipt_wait_status": "pending_confirmation",
+        "sms_receipt_wait_response_evidence": {
+          "file": "C:\\Users\\C-Linglong\\Desktop\\Claude杂项\\平台\\分工\\数据分析平台\\outputs\\pending依据核对_2026-10-17\\00_负责人确认记录.md",
+          "line": 386,
+          "quote": "> 待确认",
+          "needle": "> 待确认",
+          "kind": "user_pending_response"
+        }
+      }
+    }
+  },
+  "settings": {
+    "auth": {
+      "idleSeconds": 900,
+      "absoluteSeconds": 28800,
+      "idleWriteThrottleSeconds": 60,
+      "backgroundPollingRenews": false,
+      "explicitRenew": true,
+      "rotateSidOnRenew": false,
+      "rotateCsrfOnRenew": false,
+      "rotateOnLoginOrPrivilegeChange": true,
+      "loginCidrs": "deployment_binding_required",
+      "ipChange": "reauthenticate_and_audit",
+      "operationPermissionMerge": "union",
+      "userScopeDefault": "role_grants_only",
+      "userScopeExplicitEmpty": "no_additional_grant",
+      "userScopeMode": "additive_union_of_typed_scope_tuples",
+      "superAdminOtherResources": "current_object_policy_no_global_bypass"
+    },
+    "password": {
+      "minLength": 15,
+      "maxLength": 128,
+      "normalization": "NFC",
+      "compositionRules": false,
+      "periodicRotationDays": null,
+      "blocklist": "offline_required",
+      "hash": "PBKDF2-HMAC-SHA256",
+      "iterations": 600000,
+      "saltBytes": 16,
+      "mustChangeInitialPassword": true
+    },
+    "resources": {
+      "historyRecordsMin": 1000000,
+      "dailyNewMin": 50000,
+      "analysisUsersMin": 50,
+      "ordinaryQueryMaxDays": 31,
+      "sqlTimeoutMs": 5000,
+      "lockTimeoutMs": 1000,
+      "pageDefault": 20,
+      "pageMax": 100,
+      "imageBytesMax": 10485760,
+      "importBytesMax": 104857600,
+      "importRowsMax": 100000,
+      "ingestionBatchDefault": 1000,
+      "ingestionBatchMax": 10000,
+      "exportRowsMax": 1000000,
+      "exportBytesMax": 1073741824,
+      "exportPartRows": 50000,
+      "downloadGrantSeconds": 300,
+      "cursorSeconds": 900,
+      "contextAccessSeconds": 1800,
+      "heavyWorkers": 2,
+      "ioWorkers": 2,
+      "reservedDeliveryWorkers": 1,
+      "perUserRunningHeavy": 2,
+      "perUserQueuedHeavy": 5,
+      "globalQueueMax": 1000,
+      "ordinaryQueueSecondsMax": 300,
+      "complexQueueSecondsMax": 900,
+      "leaseSeconds": 60,
+      "heartbeatSeconds": 10
+    },
+    "taskClasses": {
+      "INGESTION": "ORDINARY",
+      "BACKFILL": "COMPLEX",
+      "EXPORT": "ORDINARY",
+      "FACE_SEARCH": "ORDINARY",
+      "ANALYSIS": "COMPLEX",
+      "DATASET_IMPORT": "ORDINARY",
+      "SET_OPERATION": "ORDINARY",
+      "PROFILE_MERGE": "COMPLEX",
+      "PROFILE_SPLIT": "COMPLEX",
+      "MODEL_RUN": "COMPLEX",
+      "DEVICE_COMMAND": "ORDINARY",
+      "REPORT": "ORDINARY",
+      "NOTIFICATION": "ORDINARY",
+      "PERSON_LIBRARY_IMPORT": "ORDINARY",
+      "DEVICE_IMPORT": "ORDINARY"
+    },
+    "taskClassOverrides": {
+      "REPORT": "BUNDLE or cross-month -> COMPLEX"
+    },
+    "executionSecondsMax": {
+      "ORDINARY": 1800,
+      "COMPLEX": 7200
+    },
+    "backup": {
+      "fullCron": "0 2 * * 0",
+      "timeZone": "Asia/Shanghai",
+      "walContinuous": true,
+      "fileIncrementalMinutes": 15,
+      "rpoTargetSeconds": 900,
+      "rtoTargetSeconds": 14400,
+      "target": "internal_independent_failure_domain_binding_required",
+      "retentionMonths": 12,
+      "verified": false
+    },
+    "retention": {
+      "unit": "calendar_month",
+      "value": 12,
+      "monthEnd": "clamp_to_last_day",
+      "purgeCron": "30 2 * * *",
+      "timeZone": "Asia/Shanghai",
+      "activeReferenceProtection": true,
+      "auditPurgeRole": "separate_maintenance_identity",
+      "annualReportProtection": {
+        "freezeBeforeSourceExpiry": true,
+        "protectInProgressInputs": true,
+        "frozenReportRetentionMonths": 12,
+        "coverageRequired": true,
+        "implementationStatus": "design_only_not_implemented"
+      }
+    },
+    "metrics": {
+      "formulaVersion": "METRIC_V1",
+      "timeZone": "Asia/Shanghai",
+      "interval": "[start,end)",
+      "last7Days": "today_and_previous_6_calendar_days",
+      "onlineHeartbeatSeconds": 90,
+      "snapshotCommitToPublishSecondsMax": 3,
+      "uiPollSeconds": 2,
+      "lateData": "recompute_affected_retained_buckets",
+      "origin": "versioned_target_attribution_or_UNKNOWN",
+      "zeroDenominator": null,
+      "allowedStatuses": [
+        "READY",
+        "STALE",
+        "UNAVAILABLE"
+      ],
+      "weekStart": "MONDAY",
+      "anomalyFutureToleranceSeconds": 300,
+      "onlineNoDataMinutes": 10,
+      "volumeBaseline": "previous_7_complete_calendar_days_same_5minute_bucket_otherwise_unavailable"
+    },
+    "face": {
+      "mode": "ranked_candidates_require_human_review",
+      "candidateDefault": 20,
+      "candidateMax": 100,
+      "minSimilarityDefault": 0,
+      "comparison": "score_strictly_greater_than_minSimilarity",
+      "genericTrustedThreshold": null,
+      "evaluationTargetFmr": 0.001,
+      "evaluationTargetTop20Recall": 0.95,
+      "model": "authorized_offline_adapter_binding_required",
+      "licensedModelVerified": false,
+      "endToEndTargetMs": 2000,
+      "interactiveQueueBudgetMs": 200,
+      "executionBudgetMs": 1500,
+      "deliveryBudgetMs": 300,
+      "resultPollMs": 100
+    },
+    "map": {
+      "businessCrs": "EPSG:4326",
+      "coordinateOrder": [
+        "longitude",
+        "latitude"
+      ],
+      "pointMax": 2000,
+      "polygonVertexMax": 2000,
+      "areaSquareKmMax": 10000,
+      "zoomMin": 3,
+      "zoomMax": 20,
+      "offlineResource": "licensed_PC_Web_adapter_binding_required",
+      "ordinaryJsapiOfflineSupported": false,
+      "licensedResourceVerified": false
+    },
+    "analysis": {
+      "companionRule": "COMPANION_V1",
+      "collisionRule": "COLLISION_V1",
+      "timeWindowDefault": 120,
+      "timeWindowMax": 3600,
+      "distanceDefaultMeters": 100,
+      "distanceMaxMeters": 5000,
+      "queryMaxDays": 7,
+      "minCompanionBins": 3,
+      "scoreMeaning": "coverage_or_association_not_identity_or_risk_probability",
+      "sameIdentity": "not_inferred_from_cooccurrence"
+    },
+    "notifications": {
+      "recipientsMax": 100,
+      "smsPerMinute": 10,
+      "smsConcurrency": 1,
+      "emailPerMinute": 30,
+      "emailConcurrency": 2,
+      "retriesMax": 3,
+      "retryDelaysSeconds": [
+        30,
+        120,
+        600
+      ],
+      "jitterFraction": 0.2,
+      "unknownMayResend": false,
+      "receiptWaitSeconds": 86400,
+      "receiptPollInitialSeconds": 30,
+      "receiptPollLaterSeconds": 300,
+      "receiptPollInitialDurationSeconds": 600,
+      "acceptanceContinuousDays": 7,
+      "acceptanceLogicalSmsMin": 1000,
+      "successRateMin": 0.99,
+      "retryCounting": "one_logical_occurrence_channel_recipient_final_outcome",
+      "lateReceipt": "retain_fact_without_rewriting_sealed_report",
+      "dailyCatchupGraceSeconds": 3600,
+      "externalResourcesVerified": false
+    },
+    "watch": {
+      "matchRule": "EXACT_TARGET_V1",
+      "dedupeSeconds": 300,
+      "severityDefault": "LOW",
+      "matchDelayTargetSeconds": 5,
+      "pauseResumeAdded": false
+    },
+    "profile": {
+      "crossSourceAssociation": "candidate_then_review",
+      "automaticMerge": false,
+      "confidenceWhenNotCalibrated": null,
+      "identityEvidenceRequired": true,
+      "merge": "retain_retainedProfileId_and_all_source_lineage",
+      "candidateBusinessValidityDays": 30
+    },
+    "residence": {
+      "ruleCode": "RESIDENCE_SITE_NIGHTS_V1",
+      "windowCalendarMonths": 1,
+      "nightStart": "22:00",
+      "nightEnd": "06:00",
+      "minRecords": 10,
+      "minDistinctNights": 5,
+      "minNightFraction": 0.6,
+      "tagAccessValidityDays": 7,
+      "dslAllowed": false,
+      "meaning": "suspected_site_candidate_not_verified_home"
+    },
+    "approval": {
+      "requestSeconds": 86400,
+      "executionGrantSeconds": 600,
+      "decryptViewGrantSeconds": 300,
+      "decryptRowsMax": 200,
+      "bulkDeviceThreshold": 10,
+      "ordinaryReviewers": 1,
+      "criticalReviewers": 2,
+      "selfApprove": false,
+      "bindOperationResourceVersionPayload": true,
+      "singleUse": true,
+      "approverIdentities": "deployment_binding_required"
+    },
+    "device": {
+      "commandTtlSeconds": 120,
+      "resetMeaning": "safe_restart_not_factory_reset",
+      "resetAutomaticRetries": 0,
+      "parameterAutomaticRetries": 1,
+      "unknownRequiresReconciliation": true,
+      "realProfile": "vendor_binding_required"
+    },
+    "testing": {
+      "owaspTop10Version": "2025",
+      "caseVersion": "V1.0（双方签署确认版为正式验收要求）",
+      "criticalOrHighOpenDefectsAllowed": 0,
+      "mediumFixWorkdays": 10,
+      "lowFixWorkdays": 20,
+      "performanceSampleRule": "each_sample_within_original_limit_and_report_P95_P99",
+      "simulatorIsProductionEvidence": false
+    }
+  },
+  "permissionMatrix": {
+    "dashboard:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "capture:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "capture:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "capture:decrypt": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "face:search": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "face:download": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "context:use": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "map:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "analysis:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "analysis:create": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "analysis:update": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "analysis:delete": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "dataset:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "dataset:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "dataset:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "watch:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "watch:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "watch:revoke": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "watch:delete": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "notification:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "notification:send": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "notification:cancel": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "device:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "device:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "device:command": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "device:reset": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "report:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "report:create": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "user:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "user:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "user:disable": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "role:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "role:grant": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "audit:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "audit:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "delivery:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "delivery:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "ingestion:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "ingestion:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "ingestion:replay": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "file:download": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "task:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "task:manage": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "person-library:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "person-library:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "person-library:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "profile:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "profile:correct": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "profile:merge": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "profile:export": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "model:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "model:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "model:execute": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    },
+    "site:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "site:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "device-group:read": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": true
+    },
+    "device-group:write": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": false,
+      "OPERATOR": false
+    },
+    "report:delete": {
+      "SUPER_ADMIN": true,
+      "CLASSIFIED": true,
+      "OPERATOR": false
+    }
+  },
+  "menuCatalog": [
+    {
+      "menuId": "a07fc181-eac1-5be6-bba4-ae4d74a74780",
+      "code": "MNU_001",
+      "label": "系统首页",
+      "group": "系统首页",
+      "permission": "dashboard:read",
+      "route": "/page/0"
+    },
+    {
+      "menuId": "5fa2a4c4-6771-56a6-89dd-ae207f40b928",
+      "code": "MNU_002",
+      "label": "围栏检索",
+      "group": "数据检索",
+      "permission": "capture:read",
+      "route": "/page/1"
+    },
+    {
+      "menuId": "535249d3-9a19-551c-9502-9df4f79a6ac6",
+      "code": "MNU_003",
+      "label": "车牌检索",
+      "group": "数据检索",
+      "permission": "capture:read",
+      "route": "/page/2"
+    },
+    {
+      "menuId": "f72b9310-e158-5fc8-933d-c20d431c36df",
+      "code": "MNU_004",
+      "label": "MAC检索",
+      "group": "数据检索",
+      "permission": "capture:read",
+      "route": "/page/3"
+    },
+    {
+      "menuId": "e0c75d6d-2fe9-59a2-9430-408e782cc08f",
+      "code": "MNU_005",
+      "label": "人像检索",
+      "group": "数据检索",
+      "permission": "face:search",
+      "route": "/page/4"
+    },
+    {
+      "menuId": "61d87c52-d323-576c-bbf4-f073e82090ed",
+      "code": "MNU_006",
+      "label": "人员库",
+      "group": "数据检索",
+      "permission": "person-library:read",
+      "route": "/page/5"
+    },
+    {
+      "menuId": "78b3478c-122d-57bf-acd7-f5c98d78553d",
+      "code": "MNU_007",
+      "label": "地图研判",
+      "group": "综合分析",
+      "permission": "map:read",
+      "route": "/page/6"
+    },
+    {
+      "menuId": "174db06a-6223-5419-911a-0d336960b64e",
+      "code": "MNU_008",
+      "label": "伴随任务",
+      "group": "数据研判",
+      "permission": "analysis:read",
+      "route": "/page/7"
+    },
+    {
+      "menuId": "63f28853-549d-5a7c-bf4c-066dc9481f27",
+      "code": "MNU_009",
+      "label": "碰撞任务",
+      "group": "数据研判",
+      "permission": "analysis:read",
+      "route": "/page/8"
+    },
+    {
+      "menuId": "ba892b47-0a37-55ab-a2f3-7e9d55180419",
+      "code": "MNU_010",
+      "label": "区域统计",
+      "group": "数据研判",
+      "permission": "analysis:read",
+      "route": "/page/9"
+    },
+    {
+      "menuId": "a4560d17-6cf6-5c4b-9c85-dfae3fd515d1",
+      "code": "MNU_011",
+      "label": "数据运算",
+      "group": "数据研判",
+      "permission": "dataset:read",
+      "route": "/page/10"
+    },
+    {
+      "menuId": "48684a0f-4235-5dfa-9099-e620add64816",
+      "code": "MNU_012",
+      "label": "综合布控",
+      "group": "布控预警",
+      "permission": "watch:read",
+      "route": "/page/11"
+    },
+    {
+      "menuId": "4a3c48da-6cf7-55a5-a34d-df2392eb9409",
+      "code": "MNU_013",
+      "label": "告警结果",
+      "group": "布控预警",
+      "permission": "watch:read",
+      "route": "/page/12"
+    },
+    {
+      "menuId": "817e1266-6825-5349-b564-802b193b2825",
+      "code": "MNU_014",
+      "label": "图码档案",
+      "group": "数据模型",
+      "permission": "profile:read",
+      "route": "/page/13"
+    },
+    {
+      "menuId": "d4d4543d-4fca-5dff-b825-f927930765c4",
+      "code": "MNU_015",
+      "label": "车码档案",
+      "group": "数据模型",
+      "permission": "profile:read",
+      "route": "/page/14"
+    },
+    {
+      "menuId": "be80ec8d-1f2f-52c3-a3af-2539d5c30c75",
+      "code": "MNU_016",
+      "label": "数据态势",
+      "group": "数据模型",
+      "permission": "model:read",
+      "route": "/page/15"
+    },
+    {
+      "menuId": "5aca030c-1f32-5e8b-8f90-4bb95e471cb8",
+      "code": "MNU_017",
+      "label": "运维首页",
+      "group": "运维服务",
+      "permission": "dashboard:read",
+      "route": "/page/16"
+    },
+    {
+      "menuId": "d1d153d4-f64d-58b8-870d-1d8c53132a3b",
+      "code": "MNU_018",
+      "label": "场所管理",
+      "group": "运维服务",
+      "permission": "site:read",
+      "route": "/page/17"
+    },
+    {
+      "menuId": "0f90c5ea-fdab-5737-985d-a38747d660b4",
+      "code": "MNU_019",
+      "label": "设备管理",
+      "group": "运维服务",
+      "permission": "device:read",
+      "route": "/page/18"
+    },
+    {
+      "menuId": "46887dd9-7457-5961-8c92-079986e470c6",
+      "code": "MNU_020",
+      "label": "设备分布",
+      "group": "运维服务",
+      "permission": "map:read",
+      "route": "/page/19"
+    },
+    {
+      "menuId": "deca0dbe-c7a3-590c-870d-362ec6ed3fe0",
+      "code": "MNU_021",
+      "label": "参数配置",
+      "group": "运维服务",
+      "permission": "device:read",
+      "route": "/page/20"
+    },
+    {
+      "menuId": "c2e05969-253c-5c4e-b7f5-f7efbac6a071",
+      "code": "MNU_022",
+      "label": "运维报表",
+      "group": "运维服务",
+      "permission": "report:read",
+      "route": "/page/21"
+    },
+    {
+      "menuId": "8aaa038a-ce3b-5829-8a79-5231dc3e2c07",
+      "code": "MNU_023",
+      "label": "运维通知",
+      "group": "运维服务",
+      "permission": "notification:read",
+      "route": "/page/22"
+    },
+    {
+      "menuId": "dbd29420-6fd2-53ba-a74e-d001b4b244d9",
+      "code": "MNU_024",
+      "label": "用户管理",
+      "group": "系统设置",
+      "permission": "user:read",
+      "route": "/page/23"
+    },
+    {
+      "menuId": "b08009fd-4ae6-51aa-ac28-a37425ca3b29",
+      "code": "MNU_025",
+      "label": "角色管理",
+      "group": "系统设置",
+      "permission": "role:read",
+      "route": "/page/24"
+    },
+    {
+      "menuId": "ff28c4be-8e94-57ef-bff0-c154205eaf61",
+      "code": "MNU_026",
+      "label": "操作日志",
+      "group": "系统设置",
+      "permission": "audit:read",
+      "route": "/page/25"
+    },
+    {
+      "menuId": "e2cb5477-f285-5243-b0e3-e39aa1e910a6",
+      "code": "MNU_027",
+      "label": "短信日志",
+      "group": "系统设置",
+      "permission": "delivery:read",
+      "route": "/page/26"
+    },
+    {
+      "menuId": "586b6d56-2fe4-5141-bf9f-ee8aab6d578b",
+      "code": "MNU_028",
+      "label": "任务中心",
+      "group": "共享入口",
+      "permission": "task:read",
+      "route": "/page/27"
+    }
+  ],
+  "rules": {
+    "G01": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "DEV-01/02按BACKEND_TWO_DEV_SPLIT模块分工，DEV-01主写共享底座及运维，DEV-02主写接入及研判；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。"
+      ],
+      "sources": []
+    },
+    "G03": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "生产单套内网Compose：Web/TLS代理、API、数据Worker、投递Worker、PostgreSQL14/PostGIS兼容版本、受控文件卷；8核/16GB/500GB SSD/100Mbps为已确认下限。先按单机恢复方案、不承诺HA；全量备份每周日02:00（Asia/Shanghai），持续WAL归档+文件15分钟增量，RPO暂定15分钟/RTO4小时；每周原备份周期具体落实为全量周期，新增增量策略待甲方确认。备份目标须内网独立故障域，数据库/文件恢复到同一水位；版本固定、TLS同源、网络默认禁止外联。备份保留一年（12个自然月）且恢复链/活跃引用未释放不得提前清理。具体服务器、备份节点和容量需实测及资源绑定。"
+      ],
+      "sources": [
+        "S08",
+        "S21",
+        "S22"
+      ]
+    },
+    "H04": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "交接四源FENCE/PLATE/MAC/FACE参数化查询，每源提供源表映射、统一captureId/targetId/类型/场所/设备/采集及入库时刻、授权谓词、稳定游标和脱敏样本。以当前schema.sql/query-examples.sql及源映射版本为基线，EXPLAIN与权限反例归档；没有真实源字段不声称已交接。",
+        "统一TaskStore协议：claim(workerId,types,limit)、heartbeat(lease)、requestCancel(taskId,actor)、finish(lease,resultManifest)、fail(lease,error)、retry(taskId,idempotencyKey)。lease含taskId/attemptNo/owner/generation/until；10秒心跳/60秒租约，发布同事务核验generation及当前权限，过期0行必须停止；具体签名见内部协议。",
+        "DEV-04数据Worker写采集事实/当前尝试结果；后端统一管理公共任务/事务/租约/发布指针/鉴权。跨域写表只能通过版本化TaskStore或被审查的事务函数；失败/取消不公开半成品，合成回归与真实联调分别记录。"
+      ],
+      "sources": [
+        "S09",
+        "S15"
+      ]
+    },
+    "P-001": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "服务端SID Cookie Session沿用；空闲暂定15分钟、绝对8小时。用户主动业务请求/显式renew可更新空闲期，后台轮询/探针不续命，renew不得越过绝对期限；常规续期不轮换SID/CSRF，登录/改密/权限提升轮换并撤销旧值。服务端lastSeen写入节流60秒但过期判定不延后。",
+        "同账号1有效会话、新登录成功撤销旧会话沿用。登录来源仅允许部署方配置的内网CIDR；IP/UA改变记录告警并要求重新登录，不做公网地理定位；普通登录暂不新增MFA，敏感审批要求重新验证密码及不同审批人。"
+      ],
+      "sources": [
+        "S01",
+        "S02"
+      ]
+    },
+    "P-002": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "保留58项PermissionCode，采用可新增角色；暂定矩阵见policy JSON及角色矩阵。SUPER_ADMIN默认有58项操作码但仍受独立审批/明文控制，CLASSIFIED为研判/涉密授权角色，OPERATOR为普通研判只读及本人任务操作。菜单按现有28页生成稳定UUID/编码/路由，按钮/API共用权限码；批量REPORT删除改用既有report:delete，不新增report:write。",
+        "同类数据多角色范围取并集、账号可额外授权、超管全采集可见为用户已确认。操作权限码暂取并集；个人范围按附加授权与角色范围做集合并集，未配置时只继承角色，显式空附加范围不收窄角色。有效授权以(dataType,siteId,ownershipPredicate)元组并集计算，不能分别合并类型和场所后产生笛卡尔越权；角色/用户明确撤回的grant移除后立即重算，授予不得超授予者范围。超管任务/文件仍按动作权限及对象策略访问，无全局审批豁免。",
+        "28页菜单编码固定MNU_001至MNU_028、路由/名称取当前前端，设备发布/设备分布合并为设备分布；不新建重复接口。菜单可见须同时具备相应页面基础操作码，按钮按各操作码再校验。",
+        "新建用户必须显式分配至少一个角色，不自动给操作员；额外范围默认无。授权/权限范围变更、禁用他人及敏感批量导出纳入P-019复核；授予者权限和数据范围上界均在执行时重校。",
+        "缩权/禁用立即撤销相关会话并更新授权版本；在途任务写取消请求，发布与下载复核当前权限，旧context不越权，服务器旧下载许可即时失效。已完成的外部动作/已离线下载文件不声称能追回，保留审计和受控处置记录，不采用7天继续可见例外。",
+        "区域授权暂以现有siteId为最小单元，行政区仅用于展示/筛选，通过显式版本化映射选择siteId，不自动上下级继承；新增场所不自动授予指定场所角色，allSites语义沿用。行政区边界/甲方组织层级仍作为待确认输入，后续只迁移映射与配置。"
+      ],
+      "sources": [
+        "S02",
+        "S05"
+      ]
+    },
+    "P-003": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "沿用已确认验收下限和2秒/2秒/3秒/5秒、30分钟/2小时指标。验收50用户持续30分钟，普通请求/人像/地图/首页抽样逐次检查时限，同时报告P95/P99和失败率，不用P95替代原时限；时延从浏览器发起到首屏可用，首页新入库水位至可见<=5秒。合成日增5万与100条/秒短峰只是暂定压测工况，不代表真实峰值。Task类型全量分类见配置；普通排队<=5分钟、复杂<=15分钟，执行时限从实际RUNNING开始，超时告警并发起取消，未响应租约到期后终止发布。",
+        "图片10MiB、普通导入100MiB/10万行；接入批默认1000条/上限1万；普通检索31天/分页20默认100上限，SQL硬超时5秒/锁等待1秒；每用户2个重任务+最多5个排队，系统重计算2并发、I/O2并发，其中1个I/O槽保留给通知/命令；导出异步最多100万行或1GiB，5万行分片，超限422 DATA_QUERY_TOO_BROAD，排队满429并给Retry-After。",
+        "同类数据按2026-10-19用户明确要求保存一年（12个自然月），按各类别起算：采集capturedAt、任务终态时间、文件ACTIVE时间、日志occurredAt、备份完成时间。到期先失效不可新引用，每日02:30清理无活跃引用的数据；引用未释放延迟清理并告警，审计物理清理由独立维护身份受控执行。按Asia/Shanghai从起算时刻增加12个自然月，同日不存在则取该月最后一日（如2024-02-29至2025-02-28），不固定换算365天；日志查询默认排除过期。年度报表在相关数据清理前冻结，进行中的生成任务保护所需引用，冻结结果及追溯元数据保留一年；历史不足仍披露实际覆盖，不补零。"
+      ],
+      "sources": [
+        "S07",
+        "S09"
+      ]
+    },
+    "P-004": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "采用版本化SourceProfile适配器：sourceCode/deviceExternalId/sourceRecordKey/sourceTime/时区/sourceCRS/映射版本必填；标准JSON_V1开发协议与SIMULATOR_V1测试协议分离。无厂商资料先开发标准协议和适配接口，未知源、时区或坐标声明进入质量隔离，不填造实际设备型号/私有字段。",
+        "标识保留原文密文和规范化版本，公共规则仅NFC、去首尾空白；IMSI/IMEI按源类型保留数字和前导零、源profile校验长度/校验位；MAC按登记EUI长度移除冒号/连字符并统一十六进制大写；车牌NFC+大写、不删除内部字符或猜地区。FACE使用模型/特征版本代理键，禁止将人像分数当唯一身份。HMAC与加密密钥分离。",
+        "优先(sourceCode,sourceRecordKey)唯一去重；无源key时用batchId+rowNumber实现同批重放幂等，并标记跨批去重未验证，不用粗指纹吞并同秒合法事件。传输/文件格式坏整批拒绝；合法容器中的未知映射、标识不合法、非法/未知坐标、时间异常逐行隔离，错误行带源定位。管理模板导入仍ALL_OR_NOTHING，不套用采集隔离语义。"
+      ],
+      "sources": [
+        "S10",
+        "S18"
+      ]
+    },
+    "P-005": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "ingestion:replay+当前源/场所范围+独立审批；默认只允许当前12个自然月留存窗口内、有源批次与映射版本的补数/回放，不恢复已过期数据。申请冻结源批次、时间、映射及原因；超过默认窗口走新政策版本，不暗中放宽。",
+        "回放新批次追加，replayOfBatchId/replayGeneration持久化，唯一约束阻止同次重放；源事件身份不变，发布已存在事件只更新本次处理结果，不重复入库/累计。失败按未成功行重试，同事件内容改变生成revision/隔离冲突，不覆盖原始事实。"
+      ],
+      "sources": [
+        "S15",
+        "S06"
+      ]
+    },
+    "P-006": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "统一METRIC_V1目录：在线设备=ACTIVE且最近90秒有心跳；在线率=在线数/当前授权ACTIVE设备数，分母0为null。采集量=设备权威counter分段增量（epoch复位独立）；入库量=成功采集事实count；目标去重=count distinct(targetType,targetId)。告警=count alertId；场所Top10按capture时siteId；归属地Top10按带来源/版本的target_attribution，未知单列，不以采集场所冒充号码归属地。应用入口取可见菜单，地图复用M07；分类型图、无线制式和运营商统计按已登记字典，缺源的单项为UNAVAILABLE/null，其他项独立返回。",
+        "Asia/Shanghai自然日/月/季/年，区间内部[start,end)；最近7天为今天及之前6个自然日。采集统计按capturedAt，入库按ingestedAt，counter按reportedAt；去重跨桶重新计算不相加，在线率加总分子分母再计算。异常按现有12种code：错误/重复/未知按事实计数，设备离线>90秒，5分钟速率偏离前7个同桶中位数>=50%且绝对差>=100条时标VOLUME异常，均为暂定阈值。",
+        "首页提交水位到指标发布<=3秒、页面最多2秒刷新，合计<=5秒；运维同源快照5秒刷新，不采用5分钟快照。迟到记录在留存窗口内重算受影响桶，超留存进入隔离；每项meta.asOf记录实际覆盖水位，缺资料/过期/单项异常用现有MetricStatus和null，不输出伪0或伪READY。"
+      ],
+      "sources": [
+        "S09",
+        "S11"
+      ]
+    },
+    "P-007": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "采用可替换内网FaceModelAdapter，必须登记合法模型/哈希/特征版本/分数映射和离线授权。开发默认候选20、上限100，minSimilarity默认0只用于候选排序，不认定同人；无已校准模型时不启用真实检索，不把0.8设为通用可信阈值。版本评测集暂定1000对同人/10000对非同人，报告FMR/FNMR及TopK召回，项目目标FMR<=0.1%/Top20召回>=95%为待甲方确认的评测目标，非模型实测结果。",
+        "候选必须人工复核，分数不是身份结论；原图/缩略图均经受控asset下载，face:download独立授权，5分钟访问许可、文件物理保存一年（12个自然月）。普通人像Excel导出暂不新增；没有模型质量标尺qualityScore=null，不能以任意线性换算冒充质量分。"
+      ],
+      "sources": [
+        "S13",
+        "S02"
+      ]
+    },
+    "P-008": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "capture:read且在范围内可申请转交，recipient必须是具有capture:decrypt和对应数据范围的有效账号；未指定时仅有解密权限的申请人可默认自己，普通账号必须指明recipient。purpose自由文本10至1000字符、单次最多200条，冻结context/采集ID与当前权限；两名不同且非申请人的配置审批人复核，用现有敏感动作审计。",
+        "密钥由部署方以独立secret文件/内网密钥服务注入，禁止仓库存储。批准后仅指定recipient通过受控POST result查看一次，授权窗口5分钟，响应Cache-Control:no-store；明文只即时解密并传输，不形成可复用明文文件/URL，不写日志。申请/审批/审计元数据保存一年（12个自然月），申请24小时过期；再次查看重新授权。实际密钥、审批人和合法用途由甲方提供。",
+        "补充受控审批列表/申请/详情/决定及解密结果接口，复用已有权限码和当前范围校验；resultAvailable只有审批完成、密钥就绪、recipient有效且许可未用/未过期时为true。状态仍PENDING/APPROVED/REJECTED/EXPIRED，不用假grantUrl替代真实接口。"
+      ],
+      "sources": [
+        "S05",
+        "S06",
+        "S22"
+      ]
+    },
+    "P-009": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "Context访问TTL30分钟，按创建时间固定、不显式续期/不因复用重置；到期410 CONTEXT_EXPIRED，物理元数据按一年（12个自然月）保存。每次消费重校权限，缩权403；游标15分钟签名并绑定条件/水位/授权版本，不能将预览100个target当全集。",
+        "普通检索最多31天，SQL statement_timeout5秒、lock_timeout1秒，客户端取消传递到服务端取消令牌并取消DB语句；超时/取消不返回看似完整的部分成功，返回503 SYSTEM_UNAVAILABLE或既定取消/任务错误，性能验收目标仍<=2秒。分析长窗口走异步任务，时间/空间预算超限422。",
+        "导出全异步，格式XLSX/CSV/ZIP沿用；上限100万行/1GiB，5万行分片，超限直接拒绝不静默截断。短时下载5分钟且每次重鉴权，物理文件一年（12个自然月）；临时文件失败即不可公开，临时传输故障最多重试1次且同任务attempt+1，输入快照不变。"
+      ],
+      "sources": [
+        "S07",
+        "S09"
+      ]
+    },
+    "P-010": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "采集适配层负责依SourceProfile声明的坐标系/版本转WGS84；unknown CRS隔离，禁止默认当4326。空间距离用geography米制，业务GeoJSON始终[lon,lat]；高德私网显示转换由地图adapter依合法产品协议处理，不改写原始/业务坐标。",
+        "高德离线/私网PC Web产品为既定方向，采用内网底图adapter（XYZ/WMTS或产品协议），所有JS/字体/瓦片本地化且禁外联；普通JSAPI/移动离线包不当作可用资源。未绑定合法资源时显示明确无底图状态，矢量业务层可联调但地图验收未通过。单次点2000、面2000顶点/面积1万平方千米、缩放3至20，超量聚合/瓦片，非法几何422 MAP_GEOMETRY_INVALID。",
+        "PC Web为本期终端，设备发布/设备分布统一页面，名称设备分布；不追加移动端/大屏；重置/缩放是前端动作，已有地图接口复用。"
+      ],
+      "sources": [
+        "S10",
+        "S11",
+        "S14"
+      ]
+    },
+    "P-011": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "COMPANION_V1：默认120秒/100米，允许1至3600秒/0至5000米，查询最多7天；按capturedAt/captureId排序，以时间差、距离、captureId稳定裁决不重复最近配对；UTC epoch起算按timeWindowSeconds分桶，至少3个共现桶。COLLISION_V1：targets[0]为主目标，其余目标逐个做120秒/100米配对，使用同样米制距离和一对一匹配；只返回有captureId/时刻/场所/距离证据的候选，不自动跨标识归为同一人。",
+        "伴随associationScore=共同桶数/(A桶数+B桶数-共同桶数)，分母0为null；碰撞matchRate=匹配主目标桶数/主目标有效桶数。分数为覆盖/关联度，不是嫌疑概率；阈值默认0保留证据候选，UI标待复核。区域coverageRate沿用经过选区数/总选区数；算法参数/输入/版本固定，正反例及边界回归必须复现。"
+      ],
+      "sources": [
+        "S11",
+        "S12"
+      ]
+    },
+    "P-013": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "集合成员继承源数据权限，dataset_grant只能在授权上界内再限制，不能授予原本无权采集；共享由dataset:write发起并记录接收人、范围、期限。只在双方当前原始数据授权交集内展示，版本不可变，任务引用固定datasetId+version。",
+        "活跃任务/导出引用时删集合409并给前20条引用+hasMore；ARCHIVED只读可查、可显式恢复、不能新引用。管理导入CSV/XLSX/JSON V1及ALL_OR_NOTHING沿用，重复策略仅对契约允许的重复行SKIP，未知标识/错误行不能upsert吞错；历史版本依一年（12个自然月）及引用保护清理。"
+      ],
+      "sources": [
+        "S02",
+        "S15"
+      ]
+    },
+    "P-014": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "默认EXACT_TARGET_V1按targetType+targetId精确匹配；跨源只使用已人工确认的profile_link，不按共现自动认人。每(ruleId,revision,target)5分钟只触发一次外发告警，全部命中事实仍保存；入库后匹配延迟目标<=5秒，调度/队列/通道延时分别记录。",
+        "沿用LOW/MEDIUM/HIGH，默认LOW，人工规则可配置等级但等级不表示犯罪概率。watch:write可确认/关闭且reason必填；确认不等于关闭，关闭后记录仍按一年保存，单次普通查询仍受31天窗口限制，不能自动24小时隐藏。",
+        "运行中显示命中流水与hitsCount，不发布最终完整统计；终态原子冻结统计。规则编辑生成revision、未来命中使用新版本，撤销提交后不再启动未发送副作用，已发送事实保留；本期不新增暂停/恢复状态。"
+      ],
+      "sources": [
+        "S15",
+        "S06"
+      ]
+    },
+    "P-015": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "短信/邮件/平台消息均本期；按内网SmsGatewayAdapter/MailAdapter/PlatformAdapter开发，实际协议/型号/账号/资质为接入条件，不虚构。SMS仅收到成功送达回执才ACKNOWLEDGED，SMTP250仅SENT、DSN成功才ACKNOWLEDGED，平台消息持久化到目标收件箱即ACKNOWLEDGED。送达未知保持UNKNOWN，供应商码归一化后对外，原码限受控内部日志。",
+        "模板冻结code+version和变量白名单；收件人每次最多100且去重，SMS默认10条/分钟/并发1，EMAIL30条/分钟/并发2。明确可重试FAILED最多3次（30/120/600秒+20%抖动），UNKNOWN先对账；成功项永不重发。回执观察24小时，30秒轮询10分钟后每5分钟至截止，未收到成功回执不计成功，迟到回执留事实但不回改已封存验收报表。验收按连续7天、至少1000条逻辑SMS投递，成功数/实际发送的逻辑投递数>=99%，同一计划执行+通道+收件人重试合并计一次，尝试成功率另列。发送Task成功只表示发送工作流完成，不能冒充SMS送达成功；回执由独立对账器继续处理。",
+        "DAILY错过<=1小时补发一次，否则记MISSED/告警，不跨日批量补发；取消/编辑提交后未领取执行失效，在途逐项发送前重校，已发事实保留。短信信号原值按厂商单位显示，未声明标尺为null，不统一假设0至31；余额无真实查询不显示0。日志范围按授权及默认脱敏，平台收件人受当前账号范围校验。"
+      ],
+      "sources": [
+        "S15",
+        "S16",
+        "S17"
+      ]
+    },
+    "P-016": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "同型规范化标识相等仅证明同一标识代理，不自动证明同一自然人/车辆；跨源关联只产候选+证据且confidence=null，人工复核或经授权的强来源证据才能确认。证据标来源/版本/时刻，候选有效30天属访问/业务时效暂定值，物理保存仍按一年（12个自然月）；冲突优先保留现有已复核结论，不能静默覆盖。",
+        "profile:correct允许白名单资料修订、reason+evidence必填；profile:merge执行合并/拆分、非发起人复核，来源与结果谱系不可删。禁止修改设备原始事实，车牌修正不自动合档；撤销通过新revision恢复成员与引用，不反写历史告警或任务快照。",
+        "合并必须遵守现有retainedProfileId，保留其他旧profileId及修订谱系；旧ID查询返回历史档案/关联修订，不自动404或重写成新ID。拆分使用新结果ID且保留来源，历史任务/集合/文件继续按其快照和当前权限访问，需重算时新建版本/任务。"
+      ],
+      "sources": [
+        "S18",
+        "S13",
+        "S06"
+      ]
+    },
+    "P-017": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "仅RESIDENCE_SITE_NIGHTS_V1：输入当前一个自然月的有效siteId记录，夜间22:00至次日06:00，至少10条记录、至少5个不同夜晚，候选场所夜晚数/全部观测夜晚数>=0.6。标签为疑似常驻场所候选，需人工复核，不声明真实住址；缺有效记录不生成标签。参数皆本项目暂定、带类型/单位/上下限，评测正反例由甲方后续确认。",
+        "规则元数据指向受控算法实现，不引入自由DSL；参数版本一经任务引用不可变。候选同分按夜晚数、最近出现时刻、siteId稳定排序；标签访问有效期7天，到期重算，物理数据按一年（12个自然月）保存。普通用户只看本人/授权范围结果，超管其他对象策略按显式对象授权，不因全采集可见跳过任务/文件校验。"
+      ],
+      "sources": [
+        "S11",
+        "S12"
+      ]
+    },
+    "P-018": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "设备登记必须引用版本化DeviceProfile（型号/固件/序列号/参数类型单位范围/敏感标记/命令能力）；只提供明确标注SIMULATOR_V1的测试profile，真实profile未绑定时设备读目录给不可用原因、写/控制503 SYSTEM_UNAVAILABLE，不编造参数。遥测写reported，配置写desired，只有真实回执/回读才更新reported。",
+        "RESET平台语义暂定安全重启，不默认为恢复出厂；实际厂商RESET仅支持清空时禁止自动映射。命令TTL120秒，超时UNKNOWN并先回读/对账；RESET不自动重试，参数写入仅明确可重试且有幂等能力时最多1次自动重试。每设备命令ID/尝试/回执独立，成功设备不再执行，批次成功不代表逐台成功。",
+        "台账维护暂定device:write授权管理员，停用使新命令被拒，退役通过既有状态/审计处理，不新增未要求retiredAt。删除沿用软删/引用409，历史采集仍保持原设备/场所归属；序列号唯一约束沿用，不伪造现网设备。"
+      ],
+      "sources": [
+        "S15",
+        "S05"
+      ]
+    },
+    "P-019": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "高风险：全部RESET、网络/密钥等敏感参数变更、>=10台批量参数、角色/范围授权、禁用他人、解密及敏感批量导出。普通只读参数查询不审批但敏感原值永不直接返回。普通写也需有效操作权限、CSRF和版本校验。",
+        "普通高风险由1名独立审批人复核，解密/密钥/批量>=10台需2名不同审批人；审批人具备动作权限及配置审批资格，申请人/执行人均不得审批，不能越过自身范围。审批申请24小时可决策，批准后10分钟内一次执行，解密展示许可5分钟，均不超过申请截止；内容/目标集合/版本/用途变更即作废。REJECTED保留意见，新申请另建ID。",
+        "统一ActionApproval资源，冻结operationId、路径资源、typed payload、当前资源版本、服务端计算digest；请求执行必须匹配X-Approval-Id和完整摘要并在同事务消费。设备ID集合固定，编辑/重试有副作用时重新检查审批；角色授权、解密复用机制但保留各自审批规则，受控测试账号不冒充真实甲方审批人。"
+      ],
+      "sources": [
+        "S05",
+        "S02"
+      ]
+    },
+    "P-020": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "八报表共用METRIC_V1：设备实时在线率/状态按asOf设备快照；电围运营商按已登记运营商归属；电围区域/设备采集按capture时region/site/device；MAC/PLATE分别给采集条数和typed target去重数；系统组件状态按探针事实。DAY/MONTH/YEAR按自然周期、periodEnd含该周期，内部半开；regionCode=ALL仍只是当前授权范围。SINGLE XLSX/BUNDLE ZIP，预览与文件同一冻结结果、游标分页，不另扫实时源。",
+        "REPORT默认普通任务，BUNDLE或跨月范围升级复杂类（30分钟/2小时仍按执行计时），队列优先级与并发使用统一配置；最多100万行/1GiB/31天原始明细，年度允许汇总但必须披露一年留存及冻结年报的实际覆盖区间，缺历史数据不补0。暂时性失败只重试1次，输入与公式版本不变，发布后文件/预览一年（12个自然月），5分钟下载许可及当前范围复核。"
+      ],
+      "sources": [
+        "S09",
+        "S11"
+      ]
+    },
+    "P-021": {
+      "technicalStatus": "provisional",
+      "clientConfirmation": "pending",
+      "items": [
+        "新设/重置密码15至128个Unicode字符，NFC，离线弱密码清单校验；不强制字符组合、不固定90天改密，泄露/重置则强制更新。既有PBKDF2暂统一HMAC-SHA256/600000次/独立16字节盐并记录算法版本，不声称FIPS认证；初始密码由管理员请求指定、响应不回显，首次登录只放行本人改密/退出等必要接口。本人改密需currentPassword并撤销其他会话，管理员重置reason必填并撤销该用户全部会话。",
+        "user:write/role:grant授权管理，初始矩阵只给SUPER_ADMIN管理权限；授予不能超授权上界且高风险按P-019复核。禁止自改角色/额外范围、自禁用；最后一个有效SUPER_ADMIN不能禁用/删；本人改密不受此限制，当前用户/最后管理员不可删除沿用，管理员不是任意策略豁免。",
+        "用户先禁用才软删，活跃引用409，历史引用/审计不被删除动作抹除；禁用撤会话并请求取消未完成任务、发布/下载当前权限校验。操作/安全审计/SMS及备份保存一年（12个自然月），敏感payload只记字段名/摘要/掩码，不记密码/密钥/明文；应用身份无UPDATE/DELETE/TRUNCATE审计权，过期清理由独立受审计维护作业执行，备份恢复后重放到期规则避免重新公开过期数据。",
+        "必须服务端审计登录/退出/改密/授权、资源写入/删除、查询执行/导出/下载、解密/审批、设备命令、布控/通知、导入/回放、档案修订/合并拆分及拒绝/失败。纯UI导航/弹窗/缩放不进业务审计；客户端复制/查看事件只作非可信遥测且不包含敏感值，不能声称捕获所有系统剪贴板动作。超管可查全部用户操作日志、其他人本人；Audit OWN_ALL和SMS SELECTED_PAGE导出语义沿用。"
+      ],
+      "sources": [
+        "S03",
+        "S04",
+        "S06",
+        "S19"
+      ]
+    }
+  },
+  "P-012": {
+    "status": "existing_converged_baseline",
+    "reopened": false,
+    "rule": "CAPTURE按captureId；TARGET按targetType+targetId；固定版本A-Z表达式，同优先级左结合"
+  },
+  "coverage": [
+    {
+      "id": "G01-03",
+      "group": "G01",
+      "previous_open_item": "运维人员由对应开发者指定，具体负责人先暂定；部署、发布、监控、备份/恢复的实际执行人仍未逐一明确。保留跟进记录，本轮不重复要求用户指定，不自动分给后端或DEV-05测试。",
+      "resolution": "DEV-01/02按BACKEND_TWO_DEV_SPLIT模块分工，DEV-01主写共享底座及运维，DEV-02主写接入及研判；DEV-03前端、DEV-04数据、DEV-05测试，各一人全职。每次发布由认领后端指定releaseOwner，前端/数据指定各自构建与迁移协作者，DEV-05验收；发布记录必须填写实际执行人，不把五人角色等同甲方审批人。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT"
+      ]
+    },
+    {
+      "id": "G03-03",
+      "group": "G03",
+      "previous_open_item": "PC Web、内网禁互联网及附件二的CPU/内存/SSD/带宽、数据库版本下限已明确；同源反向代理/TLS已有设计，不再询问。数据库及受控文件备份执行间隔暂定一周，备份副本保存期限统一暂定一个月，不再追问这两个时长。RPO和RTO均已单独答复待确认，本轮不再追问。具体部署拓扑/资源分摊、可用性、备份时刻/方式/目标/失败补偿及数据库/文件存储配额仍缺，恢复演练成功的要求已记录。",
+      "resolution": "生产单套内网Compose：Web/TLS代理、API、数据Worker、投递Worker、PostgreSQL14/PostGIS兼容版本、受控文件卷；8核/16GB/500GB SSD/100Mbps为已确认下限。先按单机恢复方案、不承诺HA；全量备份每周日02:00（Asia/Shanghai），持续WAL归档+文件15分钟增量，RPO暂定15分钟/RTO4小时；每周原备份周期具体落实为全量周期，新增增量策略待甲方确认。备份目标须内网独立故障域，数据库/文件恢复到同一水位；版本固定、TLS同源、网络默认禁止外联。备份保留一年（12个自然月）且恢复链/活跃引用未释放不得提前清理。具体服务器、备份节点和容量需实测及资源绑定。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S08",
+        "S21",
+        "S22"
+      ]
+    },
+    {
+      "id": "H04-01",
+      "group": "H04",
+      "previous_open_item": "已有SQL是设计模板。请给实际源表/字段/权限过滤、可执行四源查询与脱敏样例，明确哪四条SQL和可运行版本。",
+      "resolution": "交接四源FENCE/PLATE/MAC/FACE参数化查询，每源提供源表映射、统一captureId/targetId/类型/场所/设备/采集及入库时刻、授权谓词、稳定游标和脱敏样本。以当前schema.sql/query-examples.sql及源映射版本为基线，EXPLAIN与权限反例归档；没有真实源字段不声称已交接。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S15"
+      ]
+    },
+    {
+      "id": "H04-02",
+      "group": "H04",
+      "previous_open_item": "提供任务领取/续租/完成/取消/重试的实际内部调用接口或函数签名、回执格式和测试记录；需要证明过期lease_generation不能发布、崩溃可恢复、失败/取消不公开半成品。",
+      "resolution": "统一TaskStore协议：claim(workerId,types,limit)、heartbeat(lease)、requestCancel(taskId,actor)、finish(lease,resultManifest)、fail(lease,error)、retry(taskId,idempotencyKey)。lease含taskId/attemptNo/owner/generation/until；10秒心跳/60秒租约，发布同事务核验generation及当前权限，过期0行必须停止；具体签名见内部协议。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S15"
+      ]
+    },
+    {
+      "id": "H04-03",
+      "group": "H04",
+      "previous_open_item": "确认真实代码中的写入/事务归属已按定义落地：采集事实由数据接入写，公共任务协议由后端整体统一实现（内部自行领取），发布依租约事务；跨模块直接写表和例外须列明。",
+      "resolution": "DEV-04数据Worker写采集事实/当前尝试结果；后端统一管理公共任务/事务/租约/发布指针/鉴权。跨域写表只能通过版本化TaskStore或被审查的事务函数；失败/取消不公开半成品，合成回归与真实联调分别记录。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S15"
+      ]
+    },
+    {
+      "id": "P-001-02",
+      "group": "P-001",
+      "previous_open_item": "空闲超时和绝对有效期用户均已单独答复待确认，本轮不重复追问。哪些请求触发滑动续期、客户端调用既有续期接口的时机、续期SID/CSRF轮换细则仍未明确。续期不延长绝对过期已定义，不重复确认。",
+      "resolution": "服务端SID Cookie Session沿用；空闲暂定15分钟、绝对8小时。用户主动业务请求/显式renew可更新空闲期，后台轮询/探针不续命，renew不得越过绝对期限；常规续期不轮换SID/CSRF，登录/改密/权限提升轮换并撤销旧值。服务端lastSeen写入节流60秒但过期判定不延后。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S01",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-001-03",
+      "group": "P-001",
+      "previous_open_item": "同账号暂限一个有效会话，新登录成功使原会话失效已确认。异地额外限制/二次验证用户已答复待确认，本轮不重复询问；判定条件、验证方式及例外均未定，不默认启用或关闭。",
+      "resolution": "同账号1有效会话、新登录成功撤销旧会话沿用。登录来源仅允许部署方配置的内网CIDR；IP/UA改变记录告警并要求重新登录，不做公网地理定位；普通登录暂不新增MFA，敏感审批要求重新验证密码及不同审批人。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S01",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-002-01",
+      "group": "P-002",
+      "previous_open_item": "SUPER_ADMIN/CLASSIFIED/OPERATOR仅为暂定分类，允许后续确定更多角色，不重复要求现在锁定三种。最终角色×权限×数据类型×场所/区域矩阵及58/15/13授权没有批准证据。另请对齐批量REPORT删除的report:write与现有report:delete映射，不能自行新增权限码。",
+      "resolution": "保留58项PermissionCode，采用可新增角色；暂定矩阵见policy JSON及角色矩阵。SUPER_ADMIN默认有58项操作码但仍受独立审批/明文控制，CLASSIFIED为研判/涉密授权角色，OPERATOR为普通研判只读及本人任务操作。菜单按现有28页生成稳定UUID/编码/路由，按钮/API共用权限码；批量REPORT删除改用既有report:delete，不新增report:write。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-002-02",
+      "group": "P-002",
+      "previous_open_item": "同类数据多角色范围取并集、账号可额外获授角色之外数据、超级管理员默认全平台采集可见均已确认，不再询问；额外授予仍不得超过授予者范围。多角色操作权限码合并已答复待确认，本轮不再追问。账号未配置/覆盖/缩小、管理员其他对象/操作例外仍待明确。",
+      "resolution": "同类数据多角色范围取并集、账号可额外授权、超管全采集可见为用户已确认。操作权限码暂取并集；个人范围按附加授权与角色范围做集合并集，未配置时只继承角色，显式空附加范围不收窄角色。有效授权以(dataType,siteId,ownershipPredicate)元组并集计算，不能分别合并类型和场所后产生笛卡尔越权；角色/用户明确撤回的grant移除后立即重算，授予不得超授予者范围。超管任务/文件仍按动作权限及对象策略访问，无全局审批豁免。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-002-03",
+      "group": "P-002",
+      "previous_open_item": "28个页面名称可取现有代码；请确认最终菜单编码、层级、路由、按钮绑定和角色分配，以及“设备发布/设备分布”菜单去重。",
+      "resolution": "28页菜单编码固定MNU_001至MNU_028、路由/名称取当前前端，设备发布/设备分布合并为设备分布；不新建重复接口。菜单可见须同时具备相应页面基础操作码，按钮按各操作码再校验。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-002-04",
+      "group": "P-002",
+      "previous_open_item": "新用户是否必须显式分配角色；高危权限是授予时还是执行时双人复核，具体哪些权限/动作？",
+      "resolution": "新建用户必须显式分配至少一个角色，不自动给操作员；额外范围默认无。授权/权限范围变更、禁用他人及敏感批量导出纳入P-019复核；授予者权限和数据范围上界均在执行时重校。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-002-05",
+      "group": "P-002",
+      "previous_open_item": "缩权/禁用后在途任务应继续、取消还是仅拒绝结果；服务端旧文件访问如何撤权、离线已下载文件如何管理？现有7天可查建议未签。",
+      "resolution": "缩权/禁用立即撤销相关会话并更新授权版本；在途任务写取消请求，发布与下载复核当前权限，旧context不越权，服务器旧下载许可即时失效。已完成的外部动作/已离线下载文件不声称能追回，保留审计和受控处置记录，不采用7天继续可见例外。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-002-06",
+      "group": "P-002",
+      "previous_open_item": "负责区域按行政区、场所/设备点位还是两者组合划定，以及具体层级、上下级继承、区域变更与新增场所纳入规则，待与甲方对接。本轮已获未定答复，不重复要求现在选定，不以数据库有行政区表推定授权规则。",
+      "resolution": "区域授权暂以现有siteId为最小单元，行政区仅用于展示/筛选，通过显式版本化映射选择siteId，不自动上下级继承；新增场所不自动授予指定场所角色，allSites语义沿用。行政区边界/甲方组织层级仍作为待确认输入，后续只迁移映射与配置。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-003-01",
+      "group": "P-003",
+      "previous_open_item": "历史≥100万、日增≥5万、≥50人同时研判分析及最低硬件已有附件二。任务时限从实际执行开始、不含排队已确认；排队时限另定，普通/复杂分类用户已答复待确认，本轮不再追问。峰值写入速率、数据分布、查询负载组合及其他性能测量口径仍需补齐。",
+      "resolution": "沿用已确认验收下限和2秒/2秒/3秒/5秒、30分钟/2小时指标。验收50用户持续30分钟，普通请求/人像/地图/首页抽样逐次检查时限，同时报告P95/P99和失败率，不用P95替代原时限；时延从浏览器发起到首屏可用，首页新入库水位至可见<=5秒。合成日增5万与100条/秒短峰只是暂定压测工况，不代表真实峰值。Task类型全量分类见配置；普通排队<=5分钟、复杂<=15分钟，执行时限从实际RUNNING开始，超时告警并发起取消，未响应租约到期后终止发布。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-003-02",
+      "group": "P-003",
+      "previous_open_item": "上传分类大小、单批接入量、查询扫描/时间窗口、Worker任务并发、查询QPS、导出频率/总行数/文件大小仍缺。50并发用户不是Worker并发数，日增5万不是导出限额；已提供的响应/完成时限不能直接作为执行硬超时。",
+      "resolution": "图片10MiB、普通导入100MiB/10万行；接入批默认1000条/上限1万；普通检索31天/分页20默认100上限，SQL硬超时5秒/锁等待1秒；每用户2个重任务+最多5个排队，系统重计算2并发、I/O2并发，其中1个I/O槽保留给通知/命令；导出异步最多100万行或1GiB，5万行分片，超限422 DATA_QUERY_TOO_BROAD，排队满429并给Retry-After。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-003-03",
+      "group": "P-003",
+      "previous_open_item": "采集记录、任务记录/参数快照/分析结果、导出文件等同类数据保存期限统一暂定一个月，此前采集保留期待定已被覆盖，不再逐类询问时长。起算事件、月份计算和到期处理未定；清理须继续遵守活跃引用保护和另需核对的机构留存要求，不据此立即启用删除。",
+      "resolution": "同类数据按2026-10-19用户明确要求保存一年（12个自然月），按各类别起算：采集capturedAt、任务终态时间、文件ACTIVE时间、日志occurredAt、备份完成时间。到期先失效不可新引用，每日02:30清理无活跃引用的数据；引用未释放延迟清理并告警，审计物理清理由独立维护身份受控执行。按Asia/Shanghai从起算时刻增加12个自然月，同日不存在则取该月最后一日（如2024-02-29至2025-02-28），不固定换算365天；日志查询默认排除过期。年度报表在相关数据清理前冻结，进行中的生成任务保护所需引用，冻结结果及追溯元数据保留一年；历史不足仍披露实际覆盖，不补零。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-004-01",
+      "group": "P-004",
+      "previous_open_item": "提供四类采集及设备状态/计数原始样本、协议版本、source目录、字段映射、时区和原始坐标依据。",
+      "resolution": "采用版本化SourceProfile适配器：sourceCode/deviceExternalId/sourceRecordKey/sourceTime/时区/sourceCRS/映射版本必填；标准JSON_V1开发协议与SIMULATOR_V1测试协议分离。无厂商资料先开发标准协议和适配接口，未知源、时区或坐标声明进入质量隔离，不填造实际设备型号/私有字段。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S18"
+      ]
+    },
+    {
+      "id": "P-004-02",
+      "group": "P-004",
+      "previous_open_item": "IMSI/IMEI/MAC/车牌/人像标识逐类型规范化和校验规则是什么？是否保留前导零等必须由协议明确，不按清单猜测。",
+      "resolution": "标识保留原文密文和规范化版本，公共规则仅NFC、去首尾空白；IMSI/IMEI按源类型保留数字和前导零、源profile校验长度/校验位；MAC按登记EUI长度移除冒号/连字符并统一十六进制大写；车牌NFC+大写、不删除内部字符或猜地区。FACE使用模型/特征版本代理键，禁止将人像分数当唯一身份。HMAC与加密密钥分离。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S18"
+      ]
+    },
+    {
+      "id": "P-004-03",
+      "group": "P-004",
+      "previous_open_item": "source_record_key或无源ID指纹如何生成；除已有“未知映射/非法坐标进入质量隔离”定义外，其余错误哪些整批拒绝、哪些逐行隔离？原始采集隔离不可与标准管理导入事务混用。",
+      "resolution": "优先(sourceCode,sourceRecordKey)唯一去重；无源key时用batchId+rowNumber实现同批重放幂等，并标记跨批去重未验证，不用粗指纹吞并同秒合法事件。传输/文件格式坏整批拒绝；合法容器中的未知映射、标识不合法、非法/未知坐标、时间异常逐行隔离，错误行带源定位。管理模板导入仍ALL_OR_NOTHING，不套用采集隔离语义。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S18"
+      ]
+    },
+    {
+      "id": "P-005-01",
+      "group": "P-005",
+      "previous_open_item": "允许哪些来源、时间范围、映射版本回放/补数；谁可以获准使用ingestion:replay，是否还需审批及由谁审批？",
+      "resolution": "ingestion:replay+当前源/场所范围+独立审批；默认只允许当前12个自然月留存窗口内、有源批次与映射版本的补数/回放，不恢复已过期数据。申请冻结源批次、时间、映射及原因；超过默认窗口走新政策版本，不暗中放宽。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-005-02",
+      "group": "P-005",
+      "previous_open_item": "批次级幂等身份、回放代次和失败补偿如何定义；如何验证不重计且不误吞合法源事件？清单的sourceBatchId/replayGeneration组合未单独获签。",
+      "resolution": "回放新批次追加，replayOfBatchId/replayGeneration持久化，唯一约束阻止同次重放；源事件身份不变，发布已存在事件只更新本次处理结果，不重复入库/累计。失败按未成功行重试，同事件内容改变生成revision/隔离冲突，不覆盖原始事实。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-006-01",
+      "group": "P-006",
+      "previous_open_item": "请逐项确认系统首页12类区块、运维首页4类区域及报表共享指标的公式、源字段、去重键和单位。",
+      "resolution": "统一METRIC_V1目录：在线设备=ACTIVE且最近90秒有心跳；在线率=在线数/当前授权ACTIVE设备数，分母0为null。采集量=设备权威counter分段增量（epoch复位独立）；入库量=成功采集事实count；目标去重=count distinct(targetType,targetId)。告警=count alertId；场所Top10按capture时siteId；归属地Top10按带来源/版本的target_attribution，未知单列，不以采集场所冒充号码归属地。应用入口取可见菜单，地图复用M07；分类型图、无线制式和运营商统计按已登记字典，缺源的单项为UNAVAILABLE/null，其他项独立返回。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S11"
+      ]
+    },
+    {
+      "id": "P-006-02",
+      "group": "P-006",
+      "previous_open_item": "当日、最近7天、月度与累计分别按什么边界；采集/入库/去重量来源、在线率分母、归属地Top10依据和异常分类如何定？",
+      "resolution": "Asia/Shanghai自然日/月/季/年，区间内部[start,end)；最近7天为今天及之前6个自然日。采集统计按capturedAt，入库按ingestedAt，counter按reportedAt；去重跨桶重新计算不相加，在线率加总分子分母再计算。异常按现有12种code：错误/重复/未知按事实计数，设备离线>90秒，5分钟速率偏离前7个同桶中位数>=50%且绝对差>=100条时标VOLUME异常，均为暂定阈值。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S11"
+      ]
+    },
+    {
+      "id": "P-006-03",
+      "group": "P-006",
+      "previous_open_item": "首页指标刷新≤5秒已在验收表给出，不再询问数值；该要求的计时含义、各指标水位/刷新触发、迟到数据重算及不可用状态仍待明确，不能直接变为60秒/5分钟或固定5秒轮询。",
+      "resolution": "首页提交水位到指标发布<=3秒、页面最多2秒刷新，合计<=5秒；运维同源快照5秒刷新，不采用5分钟快照。迟到记录在留存窗口内重算受影响桶，超留存进入隔离；每项meta.asOf记录实际覆盖水位，缺资料/过期/单项异常用现有MetricStatus和null，不输出伪0或伪READY。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S11"
+      ]
+    },
+    {
+      "id": "P-007-01",
+      "group": "P-007",
+      "previous_open_item": "提供可合法使用的模型/版本及授权评测集；质量/相似度标尺、可信阈值、候选上限与分页策略是什么？不能直接采用0.8/100或原文>0上线。",
+      "resolution": "采用可替换内网FaceModelAdapter，必须登记合法模型/哈希/特征版本/分数映射和离线授权。开发默认候选20、上限100，minSimilarity默认0只用于候选排序，不认定同人；无已校准模型时不启用真实检索，不把0.8设为通用可信阈值。版本评测集暂定1000对同人/10000对非同人，报告FMR/FNMR及TopK召回，项目目标FMR<=0.1%/Top20召回>=95%为待甲方确认的评测目标，非模型实测结果。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S13",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-007-02",
+      "group": "P-007",
+      "previous_open_item": "图像文件保存期限统一暂定一个月；候选复核、用途、原图/缩略图交付及访问授权有效期仍待明确。除图片下载外是否需要普通人像Excel导出仍需依据，保存期限不增加导出权限。",
+      "resolution": "候选必须人工复核，分数不是身份结论；原图/缩略图均经受控asset下载，face:download独立授权，5分钟访问许可、文件物理保存一年（12个自然月）。普通人像Excel导出暂不新增；没有模型质量标尺qualityScore=null，不能以任意线性换算冒充质量分。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S13",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-008-01",
+      "group": "P-008",
+      "previous_open_item": "哪些角色/权限可以申请、审批、实际查看；非涉密用户如何转交密文；用途、批量上限和审批级数/人员是什么？",
+      "resolution": "capture:read且在范围内可申请转交，recipient必须是具有capture:decrypt和对应数据范围的有效账号；未指定时仅有解密权限的申请人可默认自己，普通账号必须指明recipient。purpose自由文本10至1000字符、单次最多200条，冻结context/采集ID与当前权限；两名不同且非申请人的配置审批人复核，用现有敏感动作审计。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S06",
+        "S22"
+      ]
+    },
+    {
+      "id": "P-008-02",
+      "group": "P-008",
+      "previous_open_item": "密钥/证书由谁提供并托管；明文通过页面、流式下载还是临时文件交付，是否一次性及允许再次查看仍缺规则。实际获准保存的数据采用统一暂定一个月的保存期限；本规则不批准保存明文，不决定明文查看授权有效期。",
+      "resolution": "密钥由部署方以独立secret文件/内网密钥服务注入，禁止仓库存储。批准后仅指定recipient通过受控POST result查看一次，授权窗口5分钟，响应Cache-Control:no-store；明文只即时解密并传输，不形成可复用明文文件/URL，不写日志。申请/审批/审计元数据保存一年（12个自然月），申请24小时过期；再次查看重新授权。实际密钥、审批人和合法用途由甲方提供。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S06",
+        "S22"
+      ]
+    },
+    {
+      "id": "P-008-03",
+      "group": "P-008",
+      "previous_open_item": "批准后实际明文通道如何与当前无明文DTO衔接；如增加grantUrl/新状态/用途枚举，应明确契约变更与销毁/审计证据。",
+      "resolution": "补充受控审批列表/申请/详情/决定及解密结果接口，复用已有权限码和当前范围校验；resultAvailable只有审批完成、密钥就绪、recipient有效且许可未用/未过期时为true。状态仍PENDING/APPROVED/REJECTED/EXPIRED，不用假grantUrl替代真实接口。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S06",
+        "S22"
+      ]
+    },
+    {
+      "id": "P-009-01",
+      "group": "P-009",
+      "previous_open_item": "Context暂存数据保存期限统一暂定一个月；访问有效期TTL、起算事件、固定/滑动、显式续期和复用重置策略仍未定，不由保存期限代答。",
+      "resolution": "Context访问TTL30分钟，按创建时间固定、不显式续期/不因复用重置；到期410 CONTEXT_EXPIRED，物理元数据按一年（12个自然月）保存。每次消费重校权限，缩权403；游标15分钟签名并绑定条件/水位/授权版本，不能将预览100个target当全集。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-009-02",
+      "group": "P-009",
+      "previous_open_item": "查询最大时间窗、执行超时、服务端取消/硬中断及超时部分结果策略是什么，并由哪个测量环境验证？",
+      "resolution": "普通检索最多31天，SQL statement_timeout5秒、lock_timeout1秒，客户端取消传递到服务端取消令牌并取消DB语句；超时/取消不返回看似完整的部分成功，返回503 SYSTEM_UNAVAILABLE或既定取消/任务错误，性能验收目标仍<=2秒。分析长窗口走异步任务，时间/空间预算超限422。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-009-03",
+      "group": "P-009",
+      "previous_open_item": "异步导出总行数/大小、超限分片或拒绝、重试策略是什么；如要新增同步导出，须单独确认契约变更。",
+      "resolution": "导出全异步，格式XLSX/CSV/ZIP沿用；上限100万行/1GiB，5万行分片，超限直接拒绝不静默截断。短时下载5分钟且每次重鉴权，物理文件一年（12个自然月）；临时文件失败即不可公开，临时传输故障最多重试1次且同任务attempt+1，输入快照不变。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S07",
+        "S09"
+      ]
+    },
+    {
+      "id": "P-010-01",
+      "group": "P-010",
+      "previous_open_item": "各源坐标系是什么、谁负责转换至WGS84、依据和验证样本是什么？不能因API统一4326就认定采集侧无需转换。",
+      "resolution": "采集适配层负责依SourceProfile声明的坐标系/版本转WGS84；unknown CRS隔离，禁止默认当4326。空间距离用geography米制，业务GeoJSON始终[lon,lat]；高德私网显示转换由地图adapter依合法产品协议处理，不改写原始/业务坐标。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S11",
+        "S14"
+      ]
+    },
+    {
+      "id": "P-010-02",
+      "group": "P-010",
+      "previous_open_item": "地图方向高德离线包、PC Web验收及地图加载≤3秒已明确；具体产品待选型，本轮不重复追问。选定后核实版本、包形态、文件/接口、Web内网接入、授权、覆盖/更新；点位/顶点/面积/缩放限额仍缺。普通JSAPI的离线限制不能被移动SDK能力代替。",
+      "resolution": "高德离线/私网PC Web产品为既定方向，采用内网底图adapter（XYZ/WMTS或产品协议），所有JS/字体/瓦片本地化且禁外联；普通JSAPI/移动离线包不当作可用资源。未绑定合法资源时显示明确无底图状态，矢量业务层可联调但地图验收未通过。单次点2000、面2000顶点/面积1万平方千米、缩放3至20，超量聚合/瓦片，非法几何422 MAP_GEOMETRY_INVALID。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S11",
+        "S14"
+      ]
+    },
+    {
+      "id": "P-010-03",
+      "group": "P-010",
+      "previous_open_item": "“设备发布/设备分布”最终是否同一菜单仍待确认；PC Web验收范围已有表，不再重复询问终端类型或自动增加移动/大屏。",
+      "resolution": "PC Web为本期终端，设备发布/设备分布统一页面，名称设备分布；不追加移动端/大屏；重置/缩放是前端动作，已有地图接口复用。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S10",
+        "S11",
+        "S14"
+      ]
+    },
+    {
+      "id": "P-011-01",
+      "group": "P-011",
+      "previous_open_item": "伴随/碰撞时空窗口、共同出现/轨迹重合、网格或匹配规则分别如何定义？",
+      "resolution": "COMPANION_V1：默认120秒/100米，允许1至3600秒/0至5000米，查询最多7天；按capturedAt/captureId排序，以时间差、距离、captureId稳定裁决不重复最近配对；UTC epoch起算按timeWindowSeconds分桶，至少3个共现桶。COLLISION_V1：targets[0]为主目标，其余目标逐个做120秒/100米配对，使用同样米制距离和一对一匹配；只返回有captureId/时刻/场所/距离证据的候选，不自动跨标识归为同一人。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "P-011-02",
+      "group": "P-011",
+      "previous_open_item": "关联度、matchRate/置信度公式、阈值、算法版本、正反例及效果验收标准是什么？覆盖率公式已有定义，不能用来替代这些未定义分数。",
+      "resolution": "伴随associationScore=共同桶数/(A桶数+B桶数-共同桶数)，分母0为null；碰撞matchRate=匹配主目标桶数/主目标有效桶数。分数为覆盖/关联度，不是嫌疑概率；阈值默认0保留证据候选，UI标待复核。区域coverageRate沿用经过选区数/总选区数；算法参数/输入/版本固定，正反例及边界回归必须复现。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "P-013-01",
+      "group": "P-013",
+      "previous_open_item": "成员身份、范围继承与共享授予流程如何定？共享仍不能放宽源数据，但多方范围如何组合尚缺决定。",
+      "resolution": "集合成员继承源数据权限，dataset_grant只能在授权上界内再限制，不能授予原本无权采集；共享由dataset:write发起并记录接收人、范围、期限。只在双方当前原始数据授权交集内展示，版本不可变，任务引用固定datasetId+version。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S15"
+      ]
+    },
+    {
+      "id": "P-013-02",
+      "group": "P-013",
+      "previous_open_item": "被任务/导出引用时是否一律409，返回何种引用信息；ARCHIVED是否只读、可恢复、可被新任务引用，删除与历史版本清理如何定？",
+      "resolution": "活跃任务/导出引用时删集合409并给前20条引用+hasMore；ARCHIVED只读可查、可显式恢复、不能新引用。管理导入CSV/XLSX/JSON V1及ALL_OR_NOTHING沿用，重复策略仅对契约允许的重复行SKIP，未知标识/错误行不能upsert吞错；历史版本依一年（12个自然月）及引用保护清理。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S02",
+        "S15"
+      ]
+    },
+    {
+      "id": "P-014-01",
+      "group": "P-014",
+      "previous_open_item": "布控跨源匹配规则、同规则同目标去重窗口及命中延迟目标是什么？",
+      "resolution": "默认EXACT_TARGET_V1按targetType+targetId精确匹配；跨源只使用已人工确认的profile_link，不按共现自动认人。每(ruleId,revision,target)5分钟只触发一次外发告警，全部命中事实仍保存；入库后匹配延迟目标<=5秒，调度/队列/通道延时分别记录。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-014-02",
+      "group": "P-014",
+      "previous_open_item": "告警级别、确认/关闭权限、关闭原因、确认后展示时间如何定；当前LOW/MEDIUM/HIGH仍是拟议枚举。",
+      "resolution": "沿用LOW/MEDIUM/HIGH，默认LOW，人工规则可配置等级但等级不表示犯罪概率。watch:write可确认/关闭且reason必填；确认不等于关闭，关闭后记录仍按一年保存，单次普通查询仍受31天窗口限制，不能自动24小时隐藏。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-014-03",
+      "group": "P-014",
+      "previous_open_item": "运行中是否另展示临时统计；规则修改生效边界、撤销后的最终统计范围及是否新增暂停/恢复功能如何定？",
+      "resolution": "运行中显示命中流水与hitsCount，不发布最终完整统计；终态原子冻结统计。规则编辑生成revision、未来命中使用新版本，撤销提交后不再启动未发送副作用，已发送事实保留；本期不新增暂停/恢复状态。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-015-02",
+      "group": "P-015",
+      "previous_open_item": "短信猫/网关及内网邮件服务待甲方确认，重试计数和回执等待时限已答复待确认，本轮均不重复追问。成功率≥99%、收到送达成功回执才算成功、按连续运行期统计已明确；运行期时长待用户补充，本轮不追问。实际通道/协议、回执码映射、统计单位及分母仍缺。正式交付禁互联网，不把受理或UNKNOWN计为成功。",
+      "resolution": "短信/邮件/平台消息均本期；按内网SmsGatewayAdapter/MailAdapter/PlatformAdapter开发，实际协议/型号/账号/资质为接入条件，不虚构。SMS仅收到成功送达回执才ACKNOWLEDGED，SMTP250仅SENT、DSN成功才ACKNOWLEDGED，平台消息持久化到目标收件箱即ACKNOWLEDGED。送达未知保持UNKNOWN，供应商码归一化后对外，原码限受控内部日志。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S16",
+        "S17"
+      ]
+    },
+    {
+      "id": "P-015-03",
+      "group": "P-015",
+      "previous_open_item": "确认模板/变量、收件人及上限、频控、费用/吞吐、自动与人工重试/退避、UNKNOWN对账及人工接管规则。",
+      "resolution": "模板冻结code+version和变量白名单；收件人每次最多100且去重，SMS默认10条/分钟/并发1，EMAIL30条/分钟/并发2。明确可重试FAILED最多3次（30/120/600秒+20%抖动），UNKNOWN先对账；成功项永不重发。回执观察24小时，30秒轮询10分钟后每5分钟至截止，未收到成功回执不计成功，迟到回执留事实但不回改已封存验收报表。验收按连续7天、至少1000条逻辑SMS投递，成功数/实际发送的逻辑投递数>=99%，同一计划执行+通道+收件人重试合并计一次，尝试成功率另列。发送Task成功只表示发送工作流完成，不能冒充SMS送达成功；回执由独立对账器继续处理。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S16",
+        "S17"
+      ]
+    },
+    {
+      "id": "P-015-04",
+      "group": "P-015",
+      "previous_open_item": "DAILY错过执行如何补发，任务撤销/编辑与在途投递边界如何定；短信猫信号标尺、SIM余额展示和短信日志访问范围是什么？",
+      "resolution": "DAILY错过<=1小时补发一次，否则记MISSED/告警，不跨日批量补发；取消/编辑提交后未领取执行失效，在途逐项发送前重校，已发事实保留。短信信号原值按厂商单位显示，未声明标尺为null，不统一假设0至31；余额无真实查询不显示0。日志范围按授权及默认脱敏，平台收件人受当前账号范围校验。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S16",
+        "S17"
+      ]
+    },
+    {
+      "id": "P-016-01",
+      "group": "P-016",
+      "previous_open_item": "哪些标识/证据能证明同一人或车；置信度、有效期、冲突优先级、成员去重和正反例是什么？",
+      "resolution": "同型规范化标识相等仅证明同一标识代理，不自动证明同一自然人/车辆；跨源关联只产候选+证据且confidence=null，人工复核或经授权的强来源证据才能确认。证据标来源/版本/时刻，候选有效30天属访问/业务时效暂定值，物理保存仍按一年（12个自然月）；冲突优先保留现有已复核结论，不能静默覆盖。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S18",
+        "S13",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-016-02",
+      "group": "P-016",
+      "previous_open_item": "人工修订、合并、拆分、冲突解决的条件、审批、可改字段和撤销/重算规则是什么？",
+      "resolution": "profile:correct允许白名单资料修订、reason+evidence必填；profile:merge执行合并/拆分、非发起人复核，来源与结果谱系不可删。禁止修改设备原始事实，车牌修正不自动合档；撤销通过新revision恢复成员与引用，不反写历史告警或任务快照。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S18",
+        "S13",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-016-03",
+      "group": "P-016",
+      "previous_open_item": "合并/拆分后原ID保留、重定向还是其他方式；对历史告警/任务/集合/文件如何追溯并复核权限？SUPERSEDED/mergedInto不是现有已签展示约定。",
+      "resolution": "合并必须遵守现有retainedProfileId，保留其他旧profileId及修订谱系；旧ID查询返回历史档案/关联修订，不自动404或重写成新ID。拆分使用新结果ID且保留来源，历史任务/集合/文件继续按其快照和当前权限访问，需重算时新建版本/任务。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S18",
+        "S13",
+        "S06"
+      ]
+    },
+    {
+      "id": "P-017-01",
+      "group": "P-017",
+      "previous_open_item": "RESIDENCE输入、有效数据、参数代码/单位/上下界、阈值、算法/标签含义、评测集及验收标准是什么？",
+      "resolution": "仅RESIDENCE_SITE_NIGHTS_V1：输入当前一个自然月的有效siteId记录，夜间22:00至次日06:00，至少10条记录、至少5个不同夜晚，候选场所夜晚数/全部观测夜晚数>=0.6。标签为疑似常驻场所候选，需人工复核，不声明真实住址；缺有效记录不生成标签。参数皆本项目暂定、带类型/单位/上下限，评测正反例由甲方后续确认。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "P-017-02",
+      "group": "P-017",
+      "previous_open_item": "任务参数快照与模型版本已有框架；具体规则表达/求值实现、标签有效期、疑似落脚同值裁决和结果访问例外是否需要补充？",
+      "resolution": "规则元数据指向受控算法实现，不引入自由DSL；参数版本一经任务引用不可变。候选同分按夜晚数、最近出现时刻、siteId稳定排序；标签访问有效期7天，到期重算，物理数据按一年（12个自然月）保存。普通用户只看本人/授权范围结果，超管其他对象策略按显式对象授权，不因全采集可见跳过任务/文件校验。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S11",
+        "S12"
+      ]
+    },
+    {
+      "id": "P-018-01",
+      "group": "P-018",
+      "previous_open_item": "附件二已接受模拟设备数据接入作为测试边界；实际设备/模拟源协议版本、参数类型/单位/范围/敏感键、遥测与命令目录仍需资料。远控命令的验证条件及验收方式未由模拟接入条款确定。",
+      "resolution": "设备登记必须引用版本化DeviceProfile（型号/固件/序列号/参数类型单位范围/敏感标记/命令能力）；只提供明确标注SIMULATOR_V1的测试profile，真实profile未绑定时设备读目录给不可用原因、写/控制503 SYSTEM_UNAVAILABLE，不编造参数。遥测写reported，配置写desired，只有真实回执/回读才更新reported。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-018-02",
+      "group": "P-018",
+      "previous_open_item": "下发、回执、超时、失败重试、批量逐台结果、RESET含义及免重复能力如何定？实际超时不能直接取30秒。",
+      "resolution": "RESET平台语义暂定安全重启，不默认为恢复出厂；实际厂商RESET仅支持清空时禁止自动映射。命令TTL120秒，超时UNKNOWN并先回读/对账；RESET不自动重试，参数写入仅明确可重试且有幂等能力时最多1次自动重试。每设备命令ID/尝试/回执独立，成功设备不再执行，批次成功不代表逐台成功。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-018-03",
+      "group": "P-018",
+      "previous_open_item": "确认台账维护人、停用/退役/删除及历史查询规则；若引入retiredAt需列为新需求，不以“契约无删除”作依据。",
+      "resolution": "台账维护暂定device:write授权管理员，停用使新命令被拒，退役通过既有状态/审计处理，不新增未要求retiredAt。删除沿用软删/引用409，历史采集仍保持原设备/场所归属；序列号唯一约束沿用，不伪造现网设备。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S15",
+        "S05"
+      ]
+    },
+    {
+      "id": "P-019-01",
+      "group": "P-019",
+      "previous_open_item": "哪些动作/参数/批量规模算高风险；哪些查询涉及敏感值，是否也需审批？",
+      "resolution": "高风险：全部RESET、网络/密钥等敏感参数变更、>=10台批量参数、角色/范围授权、禁用他人、解密及敏感批量导出。普通只读参数查询不审批但敏感原值永不直接返回。普通写也需有效操作权限、CSRF和版本校验。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-019-02",
+      "group": "P-019",
+      "previous_open_item": "审批/二次确认的级数、审批人、自审限制、有效期、生效时机、单次或批次授权范围和拒绝后重提规则是什么？",
+      "resolution": "普通高风险由1名独立审批人复核，解密/密钥/批量>=10台需2名不同审批人；审批人具备动作权限及配置审批资格，申请人/执行人均不得审批，不能越过自身范围。审批申请24小时可决策，批准后10分钟内一次执行，解密展示许可5分钟，均不超过申请截止；内容/目标集合/版本/用途变更即作废。REJECTED保留意见，新申请另建ID。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-019-03",
+      "group": "P-019",
+      "previous_open_item": "设备审批与解密/角色授权是否共用机制、资源绑定及批量设备集合是否冻结；现有审批表并不证明这些策略已批准。",
+      "resolution": "统一ActionApproval资源，冻结operationId、路径资源、typed payload、当前资源版本、服务端计算digest；请求执行必须匹配X-Approval-Id和完整摘要并在同事务消费。设备ID集合固定，编辑/重试有副作用时重新检查审批；角色授权、解密复用机制但保留各自审批规则，受控测试账号不冒充真实甲方审批人。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S05",
+        "S02"
+      ]
+    },
+    {
+      "id": "P-020-01",
+      "group": "P-020",
+      "previous_open_item": "八类报表逐项公式、字段业务含义、在线/异常判定、周期数据截止水位是什么？",
+      "resolution": "八报表共用METRIC_V1：设备实时在线率/状态按asOf设备快照；电围运营商按已登记运营商归属；电围区域/设备采集按capture时region/site/device；MAC/PLATE分别给采集条数和typed target去重数；系统组件状态按探针事实。DAY/MONTH/YEAR按自然周期、periodEnd含该周期，内部半开；regionCode=ALL仍只是当前授权范围。SINGLE XLSX/BUNDLE ZIP，预览与文件同一冻结结果、游标分页，不另扫实时源。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S11"
+      ]
+    },
+    {
+      "id": "P-020-02",
+      "group": "P-020",
+      "previous_open_item": "普通任务≤30分钟/复杂分析≤2小时从实际执行开始、不含排队已确认，超时自动告警，排队时限另定。报表及预览等数据保存期限统一暂定一个月，不再逐类追问。任务归类、并发、执行硬超时、失败重试、最大区间/行数/体积、保存起算及到期处理仍缺；不直接将完成时限当作取消阈值。",
+      "resolution": "REPORT默认普通任务，BUNDLE或跨月范围升级复杂类（30分钟/2小时仍按执行计时），队列优先级与并发使用统一配置；最多100万行/1GiB/31天原始明细，年度允许汇总但必须披露一年留存及冻结年报的实际覆盖区间，缺历史数据不补0。暂时性失败只重试1次，输入与公式版本不变，发布后文件/预览一年（12个自然月），5分钟下载许可及当前范围复核。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S09",
+        "S11"
+      ]
+    },
+    {
+      "id": "P-021-01",
+      "group": "P-021",
+      "previous_open_item": "密码长度/复杂度、过期、历史重复、存储方案；初始密码交付及首次登录强改策略是什么？",
+      "resolution": "新设/重置密码15至128个Unicode字符，NFC，离线弱密码清单校验；不强制字符组合、不固定90天改密，泄露/重置则强制更新。既有PBKDF2暂统一HMAC-SHA256/600000次/独立16字节盐并记录算法版本，不声称FIPS认证；初始密码由管理员请求指定、响应不回显，首次登录只放行本人改密/退出等必要接口。本人改密需currentPassword并撤销其他会话，管理员重置reason必填并撤销该用户全部会话。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S03",
+        "S04",
+        "S06",
+        "S19"
+      ]
+    },
+    {
+      "id": "P-021-02",
+      "group": "P-021",
+      "previous_open_item": "哪些角色可以建用户、改角色/范围、重置密码；是否双人复核、禁止自改角色/自禁用、禁止禁用最后管理员，规则及例外是什么？当前用户/最后管理员不可删除已有规定，不再重复确认。",
+      "resolution": "user:write/role:grant授权管理，初始矩阵只给SUPER_ADMIN管理权限；授予不能超授权上界且高风险按P-019复核。禁止自改角色/额外范围、自禁用；最后一个有效SUPER_ADMIN不能禁用/删；本人改密不受此限制，当前用户/最后管理员不可删除沿用，管理员不是任意策略豁免。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S03",
+        "S04",
+        "S06",
+        "S19"
+      ]
+    },
+    {
+      "id": "P-021-03",
+      "group": "P-021",
+      "previous_open_item": "禁用对未完成任务、结果与文件的处理如何定；删除已有软删/活跃任务引用保护，其余例外是否需要补充？审计/短信日志及备份副本保存期限统一暂定一个月，备份执行间隔暂定一周，不再询问这两个时长；保存起算、具体备份方式/目标、到期销毁/聚合、掩码和导出许可仍待确认。",
+      "resolution": "用户先禁用才软删，活跃引用409，历史引用/审计不被删除动作抹除；禁用撤会话并请求取消未完成任务、发布/下载当前权限校验。操作/安全审计/SMS及备份保存一年（12个自然月），敏感payload只记字段名/摘要/掩码，不记密码/密钥/明文；应用身份无UPDATE/DELETE/TRUNCATE审计权，过期清理由独立受审计维护作业执行，备份恢复后重放到期规则避免重新公开过期数据。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S03",
+        "S04",
+        "S06",
+        "S19"
+      ]
+    },
+    {
+      "id": "P-021-04",
+      "group": "P-021",
+      "previous_open_item": "“每次操作记日志”是否包括导航、复制、弹窗等纯UI动作，哪些事件必须服务端审计，谁负责出不可遗漏清单？",
+      "resolution": "必须服务端审计登录/退出/改密/授权、资源写入/删除、查询执行/导出/下载、解密/审批、设备命令、布控/通知、导入/回放、档案修订/合并拆分及拒绝/失败。纯UI导航/弹窗/缩放不进业务审计；客户端复制/查看事件只作非可信遥测且不包含敏感值，不能声称捕获所有系统剪贴板动作。超管可查全部用户操作日志、其他人本人；Audit OWN_ALL和SMS SELECTED_PAGE导出语义沿用。",
+      "status": "provisional",
+      "client_confirmation": "pending",
+      "basis": [
+        "USER_CONFIRMED",
+        "EXISTING_CONTRACT",
+        "S03",
+        "S04",
+        "S06",
+        "S19"
+      ]
+    }
+  ],
+  "externalBindings": [
+    {
+      "id": "MAP_LICENSE",
+      "status": "required_not_verified",
+      "developmentHandling": "配置内网地图adapter；无资源显示无底图及不可用原因",
+      "clientAction": "给出高德PC Web私网产品、覆盖/更新与授权"
+    },
+    {
+      "id": "FACE_MODEL",
+      "status": "required_not_verified",
+      "developmentHandling": "内网模型adapter和合成契约测试；无模型503",
+      "clientAction": "提供授权模型/特征版本和可用评测数据"
+    },
+    {
+      "id": "DEVICE_PROFILE",
+      "status": "required_not_verified",
+      "developmentHandling": "标准适配接口及SIMULATOR_V1；真实命令无profile拒绝",
+      "clientAction": "提供型号/固件/协议/参数/安全重启能力及回执样本"
+    },
+    {
+      "id": "SMS_GATEWAY",
+      "status": "required_not_verified",
+      "developmentHandling": "内网适配/状态机/对账可先开发；无服务不假送达",
+      "clientAction": "提供网关或短信猫型号、协议、回执能力、发送资质"
+    },
+    {
+      "id": "MAIL_SERVER",
+      "status": "required_not_verified",
+      "developmentHandling": "SMTP/DSN内网适配；无服务不假成功",
+      "clientAction": "提供内网SMTP/认证/DSN及允许收件域"
+    },
+    {
+      "id": "KEYS_APPROVERS",
+      "status": "required_not_verified",
+      "developmentHandling": "secret注入及配置审批人；缺失时敏感动作不可执行",
+      "clientAction": "提供密钥托管方案与实际审批人员"
+    },
+    {
+      "id": "BACKUP_TARGET",
+      "status": "required_not_verified",
+      "developmentHandling": "周全量+增量作业设计；开发本地副本不作正式灾备",
+      "clientAction": "提供内网独立备份目标与恢复演练环境"
+    },
+    {
+      "id": "REAL_SOURCE_DATA",
+      "status": "required_not_verified",
+      "developmentHandling": "标准SourceProfile+四源查询/质量样本",
+      "clientAction": "提供真实字段映射、时区、坐标系、稳定源身份及脱敏正反例"
+    }
+  ],
+  "clientReviewPriorities": [
+    "地区/角色矩阵与额外授权边界",
+    "敏感动作审批与明文查看",
+    "算法/模型效果与误差目标",
+    "设备/地图/短信/邮件真实资源及许可",
+    "一月保存与完整年度报表覆盖冲突",
+    "性能工况、队列/容量、RPO/RTO及增量备份",
+    "业务指标/异常/通知统计公式与数值"
+  ],
+  "sources": [
+    {
+      "id": "S01",
+      "title": "OWASP Session Management",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "服务端空闲/绝对过期、权限变化时更新会话；本项目具体分钟数另行暂定。"
+    },
+    {
+      "id": "S02",
+      "title": "OWASP Authorization",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "最小权限、默认拒绝、每次请求及静态资源重新鉴权。"
+    },
+    {
+      "id": "S03",
+      "title": "NIST SP 800-63B-4",
+      "url": "https://pages.nist.gov/800-63-4/sp800-63b/authenticators/",
+      "checkedDate": "2026-10-18",
+      "supports": "单因素密码至少15字符；阻止弱密码，不强制字符组合或定期改密。"
+    },
+    {
+      "id": "S04",
+      "title": "OWASP Password Storage",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "慢哈希、独立盐；PBKDF2-HMAC-SHA256建议至少600000次。"
+    },
+    {
+      "id": "S05",
+      "title": "OWASP Transaction Authorization",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Transaction_Authorization_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "审批绑定交易内容、服务端校验、限时且每次执行核验。"
+    },
+    {
+      "id": "S06",
+      "title": "OWASP Logging",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "记录安全事件和操作结果，避免日志泄露凭据与敏感数据。"
+    },
+    {
+      "id": "S07",
+      "title": "OWASP File Upload",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html",
+      "checkedDate": "2026-10-18",
+      "supports": "文件类型、大小和访问权限校验；存储与公开Web目录隔离。"
+    },
+    {
+      "id": "S08",
+      "title": "PostgreSQL 14 PITR",
+      "url": "https://www.postgresql.org/docs/14/continuous-archiving.html",
+      "checkedDate": "2026-10-18",
+      "supports": "基础备份加WAL归档支持时间点恢复；仍需保留完整恢复链和演练。"
+    },
+    {
+      "id": "S09",
+      "title": "PostgreSQL 14 Client Defaults",
+      "url": "https://www.postgresql.org/docs/14/runtime-config-client.html",
+      "checkedDate": "2026-10-18",
+      "supports": "可按连接或事务设置statement_timeout和lock_timeout。"
+    },
+    {
+      "id": "S10",
+      "title": "RFC 7946 GeoJSON",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.html",
+      "checkedDate": "2026-10-18",
+      "supports": "GeoJSON使用WGS84，经度在前、纬度在后。"
+    },
+    {
+      "id": "S11",
+      "title": "PostGIS ST_DWithin",
+      "url": "https://postgis.net/docs/ST_DWithin.html",
+      "checkedDate": "2026-10-18",
+      "supports": "geography距离使用米，geometry距离使用其坐标系单位。"
+    },
+    {
+      "id": "S12",
+      "title": "PostGIS ST_ClusterDBSCAN",
+      "url": "https://postgis.net/docs/ST_ClusterDBSCAN.html",
+      "checkedDate": "2026-10-18",
+      "supports": "密度聚类需要距离和密度参数，确定性结果需固定排序。"
+    },
+    {
+      "id": "S13",
+      "title": "NIST FRTE",
+      "url": "https://pages.nist.gov/frvt/html/frvt11.html",
+      "checkedDate": "2026-10-18",
+      "supports": "相似度阈值与误匹配/漏匹配相关，不能把统一分数当成模型准确率。"
+    },
+    {
+      "id": "S14",
+      "title": "高德JSAPI离线说明",
+      "url": "https://lbs.amap.com/faq/js-api/map-js-api/create-project/43351",
+      "checkedDate": "2026-10-18",
+      "supports": "普通JSAPI不支持离线；私网/离线产品需核实商务产品与授权。"
+    },
+    {
+      "id": "S15",
+      "title": "AWS Timeouts Retries Backoff",
+      "url": "https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/",
+      "checkedDate": "2026-10-18",
+      "supports": "超时不证明外部副作用未发生；重试需幂等、退避与抖动。"
+    },
+    {
+      "id": "S16",
+      "title": "RFC 5321 SMTP",
+      "url": "https://www.rfc-editor.org/rfc/rfc5321.html",
+      "checkedDate": "2026-10-18",
+      "supports": "SMTP通道受理与最终投递应区分。"
+    },
+    {
+      "id": "S17",
+      "title": "RFC 3464 DSN",
+      "url": "https://www.rfc-editor.org/rfc/rfc3464.html",
+      "checkedDate": "2026-10-18",
+      "supports": "邮件送达状态通知提供投递结果。"
+    },
+    {
+      "id": "S18",
+      "title": "Unicode UAX15",
+      "url": "https://www.unicode.org/reports/tr15/",
+      "checkedDate": "2026-10-18",
+      "supports": "区分规范等价与兼容折叠，不盲目将不同标识合为同一值。"
+    },
+    {
+      "id": "S19",
+      "title": "OWASP Top 10:2025",
+      "url": "https://top10.owasp.org/2025/0x00_2025-Introduction/",
+      "checkedDate": "2026-10-18",
+      "supports": "本轮暂以2025版建立安全测试分类，不声称系统已通过测试。"
+    },
+    {
+      "id": "S20",
+      "title": "OpenAPI 3.0.3",
+      "url": "https://spec.openapis.org/oas/v3.0.3",
+      "checkedDate": "2026-10-18",
+      "supports": "使用x-扩展表达暂定政策和来源；不把开发暂定等同甲方批准。"
+    },
+    {
+      "id": "S21",
+      "title": "Docker Compose Production",
+      "url": "https://docs.docker.com/compose/how-tos/production/",
+      "checkedDate": "2026-10-18",
+      "supports": "分环境配置、重启策略、受控生产挂载。"
+    },
+    {
+      "id": "S22",
+      "title": "Docker Compose Secrets",
+      "url": "https://docs.docker.com/compose/how-tos/use-secrets/",
+      "checkedDate": "2026-10-18",
+      "supports": "凭据以挂载的secret文件提供，限定服务可读，不提交仓库。"
+    }
+  ],
+  "sourceInterpretation": "来源支持设计原则和协议语义；项目数值、业务公式、角色矩阵及算法阈值为本轮暂定选择，并非来源原文规定，尚待甲方确认。",
+  "modelParameterCatalog": [
+    {
+      "parameterCode": "WINDOW_CALENDAR_MONTHS",
+      "valueType": "INTEGER",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 1,
+      "unit": "calendar_month"
+    },
+    {
+      "parameterCode": "NIGHT_START_MINUTE",
+      "valueType": "INTEGER",
+      "default": 1320,
+      "minimum": 0,
+      "maximum": 1439,
+      "unit": "local_minute_of_day"
+    },
+    {
+      "parameterCode": "NIGHT_END_MINUTE",
+      "valueType": "INTEGER",
+      "default": 360,
+      "minimum": 0,
+      "maximum": 1439,
+      "unit": "local_minute_of_day"
+    },
+    {
+      "parameterCode": "MIN_RECORDS",
+      "valueType": "INTEGER",
+      "default": 10,
+      "minimum": 1,
+      "maximum": 1000000,
+      "unit": "records"
+    },
+    {
+      "parameterCode": "MIN_DISTINCT_NIGHTS",
+      "valueType": "INTEGER",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 31,
+      "unit": "nights"
+    },
+    {
+      "parameterCode": "MIN_NIGHT_FRACTION",
+      "valueType": "NUMBER",
+      "default": 0.6,
+      "minimum": 0,
+      "maximum": 1,
+      "unit": "fraction"
+    },
+    {
+      "parameterCode": "TAG_VALIDITY_DAYS",
+      "valueType": "INTEGER",
+      "default": 7,
+      "minimum": 1,
+      "maximum": 31,
+      "unit": "access_days"
+    }
+  ],
+  "formulaDocument": "docs/project-governance/METRIC_ALGORITHM_RULES.md",
+  "retentionDecision": {
+    "id": "RETENTION-2026-10-19",
+    "status": "user_confirmed",
+    "confirmedAt": "2026-10-19",
+    "previousMonths": 1,
+    "months": 12,
+    "unit": "calendar_month",
+    "scope": "business_data_files_tasks_results_audit_backups",
+    "definition": "一年为12个自然月；闰日按目标月最后一日钳制，活跃引用及恢复链继续保护。",
+    "source": "本轮用户明确要求：将保存期限改为一年以解决F08。",
+    "unchanged": "访问TTL、普通查询31天、RESIDENCE统计一个自然月、审批许可及备份执行周期不变。"
+  }
+}

@@ -1,0 +1,20 @@
+name: Backend contract build
+on:
+  pull_request:
+    paths: ['apps/api/**', 'contracts/api/**', '.github/workflows/backend.yml']
+  push:
+    paths: ['apps/api/**', 'contracts/api/**', '.github/workflows/backend.yml']
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: apps/api/pom.xml
+      - name: Generate, compile, test and package from clean sources
+        working-directory: apps/api
+        run: mvn -B -Pgenerate-api clean verify
