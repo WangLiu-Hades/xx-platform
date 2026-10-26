@@ -70,15 +70,17 @@ xx:
     cookie-name: CSRFID
     cookie-path: /api/v1
 
-  # 会话策略（见 auth/SessionProperties 与 OPENAPI_PENDING P-001）
+  # 会话策略（见 auth/SessionProperties 与 PD-2026-10-19.v1 暂定政策）
   #
-  # ⚠ 与 csrf 一节同理：SessionData 在契约里标着 x-design-status=pending，
-  #   字段形状已定、**超时取值未签认**。签认后只改本文件。
+  # ⚠ 与 csrf 一节同理：SessionData 在契约里标着 x-design-status=provisional，
+  #   取值仍待甲方确认。签认后只改本文件。
+  #   下列 15m / 8h 与 docs/project-governance/provisional-policy.json 的
+  #   settings.auth.idleSeconds=900、absoluteSeconds=28800 一致。
   session:
     # 空闲超时：每次请求刷新（renew 只延长它）
-    idle-ttl: 30m
+    idle-ttl: 15m
     # 绝对超时：从登录时刻起算，任何活动都不延长
-    absolute-ttl: 12h
+    absolute-ttl: 8h
     cookie-path: /api/v1
     # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试为 false，
     # 否则浏览器不回传 Secure Cookie，登录后下一个请求就是未认证。

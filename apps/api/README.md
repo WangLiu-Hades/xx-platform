@@ -445,19 +445,21 @@ Cookie 四属性、Cookie≠token、两次调用不复用、同源 200 / 异源 
 **成功响应**：
 
 ```
-HTTP 200  X-Trace-Id: 6d34...  Set-Cookie: SID=<43字符>; Path=/api/v1; Max-Age=43200; HttpOnly; SameSite=Lax
+HTTP 200  X-Trace-Id: 6d34...  Set-Cookie: SID=<43字符>; Path=/api/v1; Max-Age=28800; HttpOnly; SameSite=Lax
 {"code":"0","message":"success","data":{
   "userId":"45845f1c-...",
-  "idleExpiresAt":"2026-10-17T05:57:04Z",
-  "absoluteExpiresAt":"2026-10-17T17:27:04Z"},
+  "idleExpiresAt":"2026-10-17T05:42:04Z",
+  "absoluteExpiresAt":"2026-10-17T13:27:04Z"},
  "traceId":"6d34..."}
 ```
 
-时间一律 UTC + `Z`（契约 §3）。`SessionData` 在契约里带 `x-design-status: pending`（P-001），
-所以 **TTL 是配置项**（`xx.session.idle-ttl`=30m、`absolute-ttl`=12h），不是硬编码常量。
+时间一律 UTC + `Z`（契约 §3）。`SessionData` 在契约里带 `x-design-status: provisional`（取值待甲方确认），
+所以 **TTL 是配置项**（`xx.session.idle-ttl`=15m、`absolute-ttl`=8h），不是硬编码常量；
+两个默认值与 `docs/project-governance/provisional-policy.json` 的
+`settings.auth.idleSeconds=900`、`absoluteSeconds=28800` 一致（PD-2026-10-19.v1）。
 
 **Cookie 的四个属性**：`HttpOnly`、`SameSite=Lax`、`Path=/api/v1`（契约 `api-conventions.md` §4 写死）、
-`Max-Age` 取到**绝对超时**的剩余秒数——若用会话 Cookie，关掉浏览器就失效，与"绝对超时 12 小时"的语义不符。
+`Max-Age` 取到**绝对超时**的剩余秒数——若用会话 Cookie，关掉浏览器就失效，与"绝对超时 8 小时"的语义不符。
 `Secure` 默认 `false` 但可配（`xx.session.secure-cookie`）：本地 `http://127.0.0.1` 调试时浏览器**不会回传** Secure Cookie，
 链路会直接断；**生产必须置 `true` 并强制 TLS**（挂在 P-001 名下）。
 
@@ -553,7 +555,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-login.p
 ```
 
 脚本覆盖 8 组 65 条：CSRF 三态拒绝、失败信息不可区分（含停用账号、大小写）、成功壳与 Cookie 四属性、
-时间戳格式与 30m/12h 偏移、数据库 8 条（`sid_hash = sha256(SID)`、原文不入库、traceId 落库、
+时间戳格式与 15m/8h 偏移、数据库 8 条（`sid_hash = sha256(SID)`、原文不入库、traceId 落库、
 `csrf_session.session_id` 已绑定、`last_login_at` 已写）、登录轮换 SID 且旧会话被撤销、
 频控 10 次 401 后 429 且 `Retry-After >= 1`、以及未知字段/超长/缺字段/405/跨源。
 
@@ -708,7 +710,7 @@ Cookie: SID=<opaque>
 | `maxUploadBytes` | `…value.maxUploadBytes` | **deprecated**：旧全局上传上限，实际单类上限 = `min(本值, uploadPolicies[].maxBytes)` |
 | `contextTtlSeconds` | `…value.contextTtlSeconds` | Context 存活时间（秒），≥1 |
 | `maxOnlineQuerySeconds` | `…value.maxOnlineQuerySeconds` | 在线查询服务端时间预算（秒），≥1 |
-| `maxOnlineWindowDays` | `…value.maxOnlineWindowDays` | 在线查询允许回溯的最大天数，≥1 |
+| `maxOnlineWindowDays` | `…value.maxOnlineWindowDays` | 在线查询允许回溯的最大天数，≥1；**部署默认 31**（PD-2026-10-19.v1），与"留存 12 个月"是两个口径 |
 | `features` | `core.feature_config` | 12 个能力开关，含 disabled 的与 `pendingReason` |
 | `featureAvailability` | 由 `features` 投影 | **deprecated**：`{code,enabled}`，同序同长，**不做任何独立计算** |
 | `uploadPolicies` | `core.upload_policy` | 分类上传限制；**空数组是合法结果** |
@@ -735,6 +737,11 @@ UPDATE core.config_item
 其中 `contextTtlSeconds`/`maxOnlineQuerySeconds`/`maxOnlineWindowDays` 属 **P-009**（查询取消、
 限流、Context TTL 与导出限值，仍未签认）范围，`mapCoordinateSystem`/`institutionTimeZone` 属
 **P-010**。种子里的数字是**可运行的部署默认值，不是已签认的业务口径**，不得据此对外承诺配额。
+
+V2 播的是 90 天，与 PD-2026-10-19.v1 的 31 天不符；**已执行 V2 的库由
+[`V4__policy_parameters_20261019.sql`](src/main/resources/db/migration/V4__policy_parameters_20261019.sql)
+纠正**（改 V2 本身会让 Flyway 报 checksum mismatch）。V4 只动 `maxOnlineWindowDays` 与
+`value.version`，并按 `config_version + 1` 递增，运维已自定义过的版本号不会被覆盖。
 
 #### 部署故障优先于可用性
 
@@ -1010,7 +1017,8 @@ $ mvn -B -Pgenerate-api compile
 apps/api/src/main/resources/db/migration/
 ├── V1__baseline_design_2.sql              ← 2026-10-17 的契约快照（163 表 / 6 schema，已冻结）
 ├── V2__seed_deployment_client_config.sql  ← client-config 的部署默认值（任务 7）
-└── V3__approval_aggregate_and_policy_v1.sql ← 审批聚合 + 解密许可列 + 策略文案（2026-10-25 补）
+├── V3__approval_aggregate_and_policy_v1.sql ← 审批聚合 + 解密许可列 + 策略文案（2026-10-25 补）
+└── V4__policy_parameters_20261019.sql     ← 查询窗口 90→31 天（PD-2026-10-19.v1，2026-10-26 补）
 ```
 
 - 命名必须 `V<序号>__<描述>.sql`（**双下划线**），否则 Flyway 会静默忽略。
@@ -1020,8 +1028,12 @@ apps/api/src/main/resources/db/migration/
   但当时没交迁移，于是出现了 `V1 ≠ schema.sql` 的漂移；V3 就是补上的那个增量。
 - **禁止编辑已发布的 V1**：Flyway 用 checksum 校验，改了会拒绝启动（这就是我们要的保护）。
 - **V2 是数据种子，不是结构变更**：只往 `core.config_item` 插一行部署配置，用
-  `ON CONFLICT DO NOTHING` 保证不覆盖运维改过的值。业务上它是"部署参数"，改它不需要新迁移
-  （直接 `UPDATE` 那行），只有**新增键或改结构**才需要下一个迁移。
+  `ON CONFLICT DO NOTHING` 保证不覆盖运维改过的值。运维**临时调参**可以直接 `UPDATE` 那行；
+  但**政策口径变更（例如查询窗口 90→31 天）必须再交一条增量迁移**，否则已经执行过 V2 的库
+  永远停在旧值——V4 就是这么来的（只 UPDATE 数据、不动结构，见 §8.7）。
+- **V4 是数据修正，不是结构变更**：把 `maxOnlineWindowDays` 从 90 改成 31，并把 `value.version`
+  从 `'1'` 升到 `'2'`（运维已自定义过版本号时不覆盖）；`config_version` 同步 +1。
+  它证明"数据类修正"同样要按 V3 的规矩走增量，而不是回头改 V2。
 - 契约变更的正确顺序：改 `schema.sql` + 数据字典 + `api-storage-map` → **新增 `V<n>__xxx.sql` 增量迁移** → 同步更新 `MigrationBaselineTests` 里的 `EXPECTED_CONTRACT_SHA256`（细则见 §8.7）。
 
 ### 8.2 一次性 provisioning（超级用户）
@@ -1051,7 +1063,7 @@ $env:DB_USER     = 'xxplatform_owner'      # 迁移专用账号，与 app/Worker
 $env:DB_PASSWORD = '...'
 
 cd apps/api
-mvn -Pdb-migrate flyway:migrate      # 空库 → V1+V2+V3，建 165 张表
+mvn -Pdb-migrate flyway:migrate      # 空库 → V1+V2+V3+V4，建 165 张表
 mvn -Pdb-migrate flyway:info         # 看已应用版本
 mvn -Pdb-migrate flyway:validate     # 校验 checksum 未漂移
 ```
@@ -1079,7 +1091,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
 
 ### 8.5 空库 vs 升级库
 
-- **空库**：直接 `flyway:migrate`，V1+V2+V3 依次执行，建出与当前契约一致的 165 表（V1 163 表 + V3 的审批 2 表）。
+- **空库**：直接 `flyway:migrate`，V1+V2+V3+V4 依次执行，建出与当前契约一致的 165 表（V1 163 表 + V3 的审批 2 表；V4 只改 `client-config` 的查询窗口，不动结构）。
 - **升级旧库**：`schema.sql` **不是旧库升级脚本**（它假设空库）。旧库迁移必须按
   [migration-plan.md](../../contracts/database/migration-plan.md) 的 5 步生成**增量**迁移，
   其中大索引要 `CREATE INDEX CONCURRENTLY` 且在事务块外单独执行。
@@ -1119,6 +1131,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
    只会把"库已经处于半迁移状态"变成静默继续。若某库手工跑过草案脚本（例如有人跑过
    `contracts/database/migrations/PD_20261018_approval.sql`），先确认
    `SELECT to_regclass('operation.action_approval')` 为空，再跑正式迁移。
+4. **数据类修正也走增量**：改 V2 播的部署默认值（例如 `maxOnlineWindowDays` 90→31）时，
+   回头改 V2 会让已执行库 `checksum mismatch`，正确做法是追加一条只含 `UPDATE` 的迁移（V4），
+   并在 README/记录里写清"改的是部署默认值，不是已签认口径"。
 
 **怎么验**（两道，第一道秒级，第二道分钟级）：
 

@@ -7,23 +7,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 会话 TTL 与 Cookie 属性（{@code xx.session.*}）。
  *
  * <p><b>为什么 TTL 是配置项而不是常量</b>：契约里 {@code SessionData} 带
- * {@code x-design-status: "pending"}，{@code x-pending-reason} 指向 <b>P-001</b>
- * （"空闲/绝对超时、并发与异地登录、跨域部署边界待签认"）。也就是说**字段形状已定、
- * 取值未签认** —— 把 30 分钟/12 小时写进代码，等于替产品做了一个未授权的决定。
- * 做成配置后，签认结果只需改 yml，不用改代码、不用重新走一遍评审。
+ * {@code x-design-status: "provisional"}，取值仍待甲方确认 —— 把 15 分钟/8 小时写进代码，
+ * 等于替产品做了一个未授权的决定。做成配置后，签认结果只需改 yml，不用改代码、不用重新走一遍评审。
  *
- * <p>默认值的选择依据：空闲 30 分钟对"后台运维系统"是常见量级（够处理一次故障排查，
- * 又不会让离开工位的终端一直可写）；绝对 12 小时覆盖一个工作日，跨天必须重新登录。
- * 两者都不是安全边界，真正的边界是 SID 轮换 + 改密/停用即撤销会话。
+ * <p><b>默认值取自 PD-2026-10-19.v1 暂定政策</b>：{@code docs/project-governance/provisional-policy.json}
+ * 的 {@code settings.auth.idleSeconds=900}、{@code absoluteSeconds=28800}。空闲 15 分钟对
+ * "后台运维系统"够处理一次故障排查，又不会让离开工位的终端一直可写；绝对 8 小时覆盖一个工作日，
+ * 跨天必须重新登录。两者都不是安全边界，真正的边界是 SID 轮换 + 改密/停用即撤销会话。
  */
 @ConfigurationProperties(prefix = "xx.session")
 public class SessionProperties {
 
     /** 空闲超时：每次请求刷新，超过即失效（{@code renew} 只延长它）。 */
-    private Duration idleTtl = Duration.ofMinutes(30);
+    private Duration idleTtl = Duration.ofMinutes(15);
 
     /** 绝对超时：从登录时刻起算，任何活动都不延长它。 */
-    private Duration absoluteTtl = Duration.ofHours(12);
+    private Duration absoluteTtl = Duration.ofHours(8);
 
     /** SID Cookie 的 Path；契约 {@code api-conventions.md} 硬约定 {@code /api/v1}。 */
     private String cookiePath = "/api/v1";

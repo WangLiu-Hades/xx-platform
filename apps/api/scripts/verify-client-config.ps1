@@ -205,7 +205,7 @@ Report ($data.taskPollIntervalSeconds -ge 1) 'taskPollIntervalSeconds >= 1' "got
 Report ($data.maxUploadBytes -ge 1) 'maxUploadBytes >= 1' "got: $($data.maxUploadBytes)"
 Report ($data.contextTtlSeconds -ge 1) 'contextTtlSeconds >= 1' "got: $($data.contextTtlSeconds)"
 Report ($data.maxOnlineQuerySeconds -ge 1) 'maxOnlineQuerySeconds >= 1' "got: $($data.maxOnlineQuerySeconds)"
-Report ($data.maxOnlineWindowDays -ge 1) 'maxOnlineWindowDays >= 1' "got: $($data.maxOnlineWindowDays)"
+Report ($data.maxOnlineWindowDays -eq 31) 'maxOnlineWindowDays is 31 (PD-2026-10-19.v1; 12-month retention is not a query window)' "got: $($data.maxOnlineWindowDays)"
 
 # ---------------------------------------------------------------- 3) features
 Show-Step '3) features: closed enum, stable order, pendingReason, deprecated projection'
@@ -319,7 +319,7 @@ SELECT count(*) FROM core.dictionary_binding b
     Report ($bindingRows -eq [string]$bindings.Count) 'catalogBindings length equals enabled dictionary bindings' "db: $bindingRows api: $($bindings.Count)"
 
     $configVersion = Query-Scalar "SELECT config_version FROM core.config_item WHERE config_key = 'client-config';"
-    Report ($configVersion -eq '1') 'config_version starts at 1 (ops bumps it when changing values)' "got: $configVersion"
+    Report ([int]$configVersion -ge 1) 'config_version is a positive counter (ops bumps it whenever a value changes; V2 seeds 1, V4 moves it to 2)' "got: $configVersion"
 }
 
 # ---------------------------------------------------------------- 7) guards

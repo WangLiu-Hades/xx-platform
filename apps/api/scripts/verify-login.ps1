@@ -206,7 +206,7 @@ if ($sidCookie) {
     $maxAge = [regex]::Match($sidCookie, '(?i);\s*Max-Age=(\d+)')
     if ($maxAge.Success) {
         $age = [int]$maxAge.Groups[1].Value
-        Report (([math]::Abs($age - 43200)) -lt 180) 'Max-Age tracks absolute TTL (~12h)' "Max-Age: $age"
+        Report (([math]::Abs($age - 28800)) -lt 180) 'Max-Age tracks absolute TTL (~8h)' "Max-Age: $age"
     } else {
         Report $false 'SID cookie carries Max-Age (session cookie would contradict the absolute TTL)' $sidCookie
     }
@@ -224,8 +224,8 @@ if ($okJson) {
     $nowUtc = [datetimeoffset]::UtcNow
     $idle = [datetimeoffset]::Parse($okJson.data.idleExpiresAt)
     $abs  = [datetimeoffset]::Parse($okJson.data.absoluteExpiresAt)
-    Report (([math]::Abs(($idle - $nowUtc).TotalMinutes - 30)) -lt 2) 'idleExpiresAt ~= now + 30m' "delta: $([math]::Round(($idle - $nowUtc).TotalMinutes,1)) min"
-    Report (([math]::Abs(($abs - $nowUtc).TotalHours - 12)) -lt 0.1) 'absoluteExpiresAt ~= now + 12h' "delta: $([math]::Round(($abs - $nowUtc).TotalHours,2)) h"
+    Report (([math]::Abs(($idle - $nowUtc).TotalMinutes - 15)) -lt 2) 'idleExpiresAt ~= now + 15m' "delta: $([math]::Round(($idle - $nowUtc).TotalMinutes,1)) min"
+    Report (([math]::Abs(($abs - $nowUtc).TotalHours - 8)) -lt 0.1) 'absoluteExpiresAt ~= now + 8h' "delta: $([math]::Round(($abs - $nowUtc).TotalHours,2)) h"
     Report ($idle -lt $abs) 'idleExpiresAt < absoluteExpiresAt' ''
 }
 

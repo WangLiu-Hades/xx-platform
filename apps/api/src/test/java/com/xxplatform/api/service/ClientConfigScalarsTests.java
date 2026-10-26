@@ -29,7 +29,7 @@ class ClientConfigScalarsTests {
               "institutionTimeZone": "Asia/Shanghai",
               "contextTtlSeconds": 1800,
               "maxOnlineQuerySeconds": 5,
-              "maxOnlineWindowDays": 90
+              "maxOnlineWindowDays": 31
             }
             """;
 
@@ -57,7 +57,7 @@ class ClientConfigScalarsTests {
         assertEquals("Asia/Shanghai", scalars.institutionTimeZone());
         assertEquals(1800, scalars.contextTtlSeconds());
         assertEquals(5, scalars.maxOnlineQuerySeconds());
-        assertEquals(90, scalars.maxOnlineWindowDays());
+        assertEquals(31, scalars.maxOnlineWindowDays());
         assertTrue(ClientConfigScalars.unknownKeys(read(VALID)).isEmpty());
     }
 
