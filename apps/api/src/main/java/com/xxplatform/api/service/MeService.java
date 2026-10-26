@@ -46,9 +46,11 @@ public class MeService {
         List<String> permissionCodes = rbac.permissionCodes(userId);
         List<MeView.MenuView> menus = menus(userId, permissionCodes);
 
-        RbacRepository.RoleScopeFlags roleFlags = rbac.roleScopeFlags(userId);
-        List<RbacRepository.SiteGrant> roleSites = rbac.roleSites(userId);
-        List<String> roleDataTypes = rbac.roleDataTypes(userId);
+        // 逐角色的原始行：元组关系（谁能看哪些类型、在哪些场所）只有按角色取回才不丢，
+        // 先聚合再取交集会把"PLATE@A + FACE@B"算成 {PLATE,FACE}×{A,B}（评审 A01）。
+        List<RbacRepository.RoleScope> roles = rbac.roleScopes(userId);
+        List<RbacRepository.RoleSite> roleSites = rbac.roleSiteGrants(userId);
+        List<RbacRepository.RoleDataType> roleDataTypes = rbac.roleDataTypes(userId);
 
         RbacRepository.UserScopeRow userScope = rbac.userScope(userId).orElse(null);
         // 没有用户范围行时不查它的子表：user_scope_site/user_scope_data_type 的 FK 指向
@@ -58,8 +60,8 @@ public class MeService {
         List<String> userDataTypes = userScope == null
                 ? List.of() : rbac.userScopeDataTypes(userId);
 
-        ScopeCalculator.ScopeResult scope = ScopeCalculator.combine(
-                roleFlags, roleSites, roleDataTypes, userScope, userSites, userDataTypes);
+        ScopeCalculator.ScopeResult scope = ScopeCalculator.resolve(
+                roles, roleSites, roleDataTypes, userScope, userSites, userDataTypes);
 
         UserAccountRepository.UserAccountRow user = session.user();
         return new MeView(
@@ -68,7 +70,15 @@ public class MeService {
                 List.copyOf(permissionCodes),
                 menus,
                 new MeView.DataScopeView(scope.dataSiteIds(), scope.dataAllSites(),
-                        scope.dataTypes(), scope.ownOnly(), scope.scopeVersion()),
+                        scope.dataTypes(), scope.ownOnly(), scope.scopeVersion(),
+                        scope.grants().stream()
+                                .map(grant -> new MeView.ScopeGrantView(
+                                        grant.dataType(),
+                                        new MeView.SiteScopeView(
+                                                grant.siteScope().siteIds(),
+                                                grant.siteScope().allSites()),
+                                        grant.ownOnly()))
+                                .toList()),
                 new MeView.SiteScopeView(scope.managementSiteIds(), scope.managementAllSites()),
                 new MeView.SessionView(session.userId(),
                         Instants.iso(session.idleExpiresAt()),

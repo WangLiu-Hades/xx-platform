@@ -23,6 +23,9 @@
       5) session lifecycle -> idle timeout / revoked / disabled account all 401
       6) menu projection -> required_permission_code the user lacks is filtered out
       7) contract guards -> POST /me is 405, unknown query params are ignored, no ETag
+      8) A01 -> dataScope.scopeGrants is the tuple union; the legacy five fields are
+         only its projection (the cross-product case needs non-all-sites roles and is
+         covered by verify-scope-tuples.ps1)
 
     Persistence checks shell out to psql and are skipped when it is absent.
 
@@ -227,6 +230,20 @@ Report ((@($data.dataScope.dataTypes) -join ',') -eq 'FENCE,MAC,PLATE,FACE') 'da
 Report ($data.dataScope.ownOnly -eq $false) 'admin ownOnly is false' "got: $($data.dataScope.ownOnly)"
 Report ($data.dataScope.scopeVersion -eq 0) 'scopeVersion is 0 without an auth.user_scope row' "got: $($data.dataScope.scopeVersion)"
 
+# A01: scopeGrants is the authoritative grant set; the five siblings above are only a
+# UI projection of it. The cross-product regression (PLATE@A + FACE@B) needs roles that
+# do not carry all sites, so it lives in verify-scope-tuples.ps1.
+$scopeKeys = @($data.dataScope.PSObject.Properties.Name)
+Report ($scopeKeys.Count -eq 6 -and $scopeKeys -contains 'scopeGrants') 'dataScope carries exactly six properties including scopeGrants' "keys: $($scopeKeys -join ',')"
+$adminGrants = @($data.dataScope.scopeGrants)
+Report ($adminGrants.Count -eq 4) 'admin has one grant per seeded data type' "count: $($adminGrants.Count)"
+Report ((@($adminGrants | ForEach-Object { $_.dataType }) -join ',') -eq 'FENCE,MAC,PLATE,FACE') 'admin grants are ordered by data type' "got: $((@($adminGrants | ForEach-Object { $_.dataType }) -join ','))"
+Report (@($adminGrants | Where-Object { -not $_.siteScope.allSites }).Count -eq 0) 'every admin grant carries allSites' ''
+Report (@($adminGrants | Where-Object { @($_.siteScope.siteIds).Count -ne 0 }).Count -eq 0) 'admin allSites grants carry siteIds=[]' ''
+Report (@($adminGrants | Where-Object { $_.ownOnly }).Count -eq 0) 'admin grants are not ownOnly' ''
+$grantShapeOk = @($adminGrants | Where-Object { (@($_.PSObject.Properties.Name) -join ',') -ne 'dataType,siteScope,ownOnly' }).Count -eq 0
+Report $grantShapeOk 'each grant has exactly dataType/siteScope/ownOnly' 'contract additionalProperties=false'
+
 Report ($data.siteScope.allSites -eq $true) 'siteScope.allSites is true' "got: $($data.siteScope.allSites)"
 Report (@($data.siteScope.siteIds).Count -eq 0) 'siteScope.siteIds is [] when allSites' ''
 
@@ -255,6 +272,11 @@ if ($opJson) {
     Report ((@($opJson.data.dataScope.dataTypes) -join ',') -eq 'FENCE,PLATE') 'operator data types narrowed to FENCE,PLATE' "got: $((@($opJson.data.dataScope.dataTypes) -join ','))"
     Report ($opJson.data.dataScope.allSites -eq $true) 'operator allSites is true (roles carry all sites)' ''
     Report (@($opJson.data.roleIds).Count -eq 1) 'operator has exactly one role' ''
+    $opGrants = @($opJson.data.dataScope.scopeGrants)
+    Report ($opGrants.Count -eq 2) 'operator has two grants (FENCE, PLATE)' "count: $($opGrants.Count)"
+    Report ((@($opGrants | ForEach-Object { $_.dataType }) -join ',') -eq 'FENCE,PLATE') 'operator grant data types match the legacy projection' "got: $((@($opGrants | ForEach-Object { $_.dataType }) -join ','))"
+    Report (@($opGrants | Where-Object { -not $_.ownOnly }).Count -eq 0) 'every operator grant is ownOnly (the flag stays per tuple)' ''
+    Report (@($opGrants | Where-Object { -not $_.siteScope.allSites }).Count -eq 0) 'operator grants are allSites' ''
     if (@($adminRoles).Count -eq 1) {
         Report ($opJson.data.roleIds[0] -ne $adminRoles[0]) 'operator role differs from admin role' "op: $($opJson.data.roleIds[0])"
     }
@@ -273,6 +295,10 @@ if ($clJson) {
     Report ($clPerms -contains 'audit:read') 'classified has audit:read' ''
     Report ((@($clJson.data.dataScope.dataTypes) -join ',') -eq 'FENCE,MAC,PLATE,FACE') 'classified sees all four data types' "got: $((@($clJson.data.dataScope.dataTypes) -join ','))"
     Report ($clJson.data.dataScope.ownOnly -eq $false) 'classified ownOnly is false' ''
+    $clGrants = @($clJson.data.dataScope.scopeGrants)
+    Report ($clGrants.Count -eq 4) 'classified has four grants' "count: $($clGrants.Count)"
+    Report ((@($clGrants | ForEach-Object { $_.dataType }) -join ',') -eq 'FENCE,MAC,PLATE,FACE') 'classified grant data types cover all four' ''
+    Report (@($clGrants | Where-Object { $_.ownOnly }).Count -eq 0) 'classified grants are not ownOnly' ''
 }
 
 # ---------------------------------------------------------------- 5) database

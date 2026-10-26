@@ -74,35 +74,42 @@ public class RbacRepository {
             """;
 
     /**
-     * 角色的三个范围开关，聚合为一行。
+     * 角色范围开关，<b>按角色各一行</b>。
      *
-     * <p>{@code bool_or} 在零行时返回 {@code NULL}，{@code getBoolean} 会得到 {@code false}——
-     * 恰好符合"没有角色就没有任何范围"的最小权限语义，不需要额外判空。
+     * <p>这里刻意不再用 {@code bool_or} 把三列压成一行：范围是按
+     * {@code (dataType, siteScope, ownOnly)} 元组授权的，一旦先合并维度，后面就只能对合并后的
+     * 集合取交集，会把"角色甲给 PLATE@A、角色乙给 FACE@B"算成 {@code {PLATE,FACE}×{A,B}}
+     * 的交叉扩权（评审 A01）。逐角色取回原始行，元组关系才不会丢。
      */
-    private static final String SELECT_ROLE_SCOPE_FLAGS = """
-            SELECT bool_or(r.data_all_sites)        AS data_all_sites,
-                   bool_or(r.management_all_sites)  AS management_all_sites,
-                   bool_or(r.own_only)              AS own_only
+    private static final String SELECT_ROLE_SCOPES = """
+            SELECT r.id AS role_id,
+                   r.data_all_sites,
+                   r.management_all_sites,
+                   r.own_only
               FROM auth.user_role ur
               JOIN auth.role r ON r.id = ur.role_id AND r.deleted = false
              WHERE ur.user_id = ?
+             ORDER BY r.role_code
             """;
 
-    private static final String SELECT_ROLE_SITES = """
-            SELECT DISTINCT rs.site_id, rs.scope_kind
+    /** 角色授予的场所，带 {@code role_id}，供上层按角色还原元组。 */
+    private static final String SELECT_ROLE_SITE_ALL = """
+            SELECT rs.role_id, rs.site_id, rs.scope_kind
               FROM auth.user_role ur
               JOIN auth.role r ON r.id = ur.role_id AND r.deleted = false
               JOIN auth.role_site rs ON rs.role_id = ur.role_id
              WHERE ur.user_id = ?
+             ORDER BY rs.role_id, rs.site_id, rs.scope_kind
             """;
 
-    private static final String SELECT_ROLE_DATA_TYPES = """
-            SELECT DISTINCT rdt.data_type
+    /** 角色授予的数据类型，带 {@code role_id}，供上层按角色还原元组。 */
+    private static final String SELECT_ROLE_DATA_TYPE_ALL = """
+            SELECT rdt.role_id, rdt.data_type
               FROM auth.user_role ur
               JOIN auth.role r ON r.id = ur.role_id AND r.deleted = false
               JOIN auth.role_data_type rdt ON rdt.role_id = ur.role_id
              WHERE ur.user_id = ?
-             ORDER BY rdt.data_type
+             ORDER BY rdt.role_id, rdt.data_type
             """;
 
     private static final String SELECT_USER_SCOPE = """
@@ -152,35 +159,40 @@ public class RbacRepository {
                 rs.getString("required_permission_code")), userId);
     }
 
-    /** 角色范围开关的并集（OR）：任一角色给了就认为给到。 */
-    public RoleScopeFlags roleScopeFlags(UUID userId) {
-        return jdbc.query(SELECT_ROLE_SCOPE_FLAGS, rs -> rs.next()
-                ? new RoleScopeFlags(
-                        rs.getBoolean("data_all_sites"),
-                        rs.getBoolean("management_all_sites"),
-                        rs.getBoolean("own_only"))
-                : new RoleScopeFlags(false, false, false), userId);
+    /** 每个角色一行的范围开关（不聚合），按 {@code role_code} 排序。 */
+    public List<RoleScope> roleScopes(UUID userId) {
+        return jdbc.query(SELECT_ROLE_SCOPES, (rs, rowNum) -> new RoleScope(
+                rs.getObject("role_id", UUID.class),
+                rs.getBoolean("data_all_sites"),
+                rs.getBoolean("management_all_sites"),
+                rs.getBoolean("own_only")), userId);
     }
 
-    /** 角色授予的场所（含 {@code scope_kind}：MANAGEMENT/DATA）。 */
-    public List<SiteGrant> roleSites(UUID userId) {
-        return jdbc.query(SELECT_ROLE_SITES, (rs, rowNum) -> new SiteGrant(
+    /** 角色授予的场所（含 {@code scope_kind}：MANAGEMENT/DATA），带 {@code roleId}。 */
+    public List<RoleSite> roleSiteGrants(UUID userId) {
+        return jdbc.query(SELECT_ROLE_SITE_ALL, (rs, rowNum) -> new RoleSite(
+                rs.getObject("role_id", UUID.class),
                 rs.getObject("site_id", UUID.class),
                 rs.getString("scope_kind")), userId);
     }
 
-    /** 角色授予的数据类型。 */
-    public List<String> roleDataTypes(UUID userId) {
-        return jdbc.query(SELECT_ROLE_DATA_TYPES, (rs, rowNum) -> rs.getString("data_type"), userId);
+    /** 角色授予的数据类型，带 {@code roleId}。 */
+    public List<RoleDataType> roleDataTypes(UUID userId) {
+        return jdbc.query(SELECT_ROLE_DATA_TYPE_ALL, (rs, rowNum) -> new RoleDataType(
+                rs.getObject("role_id", UUID.class),
+                rs.getString("data_type")), userId);
     }
 
     /**
      * 用户的显式范围行（{@code auth.user_scope} 一对一）。
      *
-     * <p><b>存在与否是语义分界</b>：没有这一行表示"管理员没有对该用户做额外收窄"，
-     * 有效范围直接取角色并集；有这一行则按"角色是上限、用户行只能收窄"组合。
+     * <p><b>存在与否是语义分界</b>：没有这一行表示"账号没有附加授权"，有效范围全部来自角色；
+     * 有这一行则是**账号附加授权**，与角色授权按 {@code (dataType, siteScope, ownOnly)} 元组求**并集**
+     * （契约 {@code userScopeMode = additive_union_of_typed_scope_tuples}，评审 A01）。
+     * 旧实现把它当"角色是上限、用户行只能收窄"，会把账号本应获得的权限吞掉。
      * 依据：{@code data-dictionary.md} 说该表"保存输入而非猜测合并策略"，
-     * {@code ADR-007} 与 SD06 要求 P-002 签认前**不合并扩大权限**。
+     * {@code ADR-007} 与 SD06 要求 P-002 签认前**不自行合并扩大权限**——所以并集只在
+     * 显式授权（角色行 + 用户行）之间做，不推断继承。
      */
     public Optional<UserScopeRow> userScope(UUID userId) {
         List<UserScopeRow> rows = jdbc.query(SELECT_USER_SCOPE, (rs, rowNum) -> new UserScopeRow(
@@ -191,20 +203,28 @@ public class RbacRepository {
         return rows.stream().findFirst();
     }
 
-    /** 用户显式收窄的场所。 */
+    /** 账号附加授权的 DATA/MANAGEMENT 场所（与角色授权按元组求并集）。 */
     public List<SiteGrant> userScopeSites(UUID userId) {
         return jdbc.query(SELECT_USER_SCOPE_SITES, (rs, rowNum) -> new SiteGrant(
                 rs.getObject("site_id", UUID.class),
                 rs.getString("scope_kind")), userId);
     }
 
-    /** 用户显式收窄的数据类型。 */
+    /** 账号附加授权的数据类型（与角色授权按元组求并集）。 */
     public List<String> userScopeDataTypes(UUID userId) {
         return jdbc.query(SELECT_USER_SCOPE_DATA_TYPES, (rs, rowNum) -> rs.getString("data_type"), userId);
     }
 
-    /** 角色范围开关。 */
-    public record RoleScopeFlags(boolean dataAllSites, boolean managementAllSites, boolean ownOnly) {
+    /** 一个角色的范围开关（一行一角色；不再压成"全体角色 OR"的一行）。 */
+    public record RoleScope(UUID roleId, boolean dataAllSites, boolean managementAllSites, boolean ownOnly) {
+    }
+
+    /** 角色 → 场所授权，带 {@code roleId} 以便按角色还原元组。 */
+    public record RoleSite(UUID roleId, UUID siteId, String scopeKind) {
+    }
+
+    /** 角色 → 数据类型授权，带 {@code roleId} 以便按角色还原元组。 */
+    public record RoleDataType(UUID roleId, String dataType) {
     }
 
     /** 用户显式范围行。 */

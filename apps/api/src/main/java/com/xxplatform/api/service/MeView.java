@@ -49,13 +49,29 @@ public record MeView(
             String requiredPermission) {
     }
 
-    /** 契约 {@code DataScope}：五个字段全 required。 */
+    /**
+     * 契约 {@code DataScope}：旧五字段全 required，{@code scopeGrants} 为可选但本轮**始终返回**。
+     *
+     * <p>为什么始终返回：契约明文"多元组无法由旧字段精确表达时必返"，而只要有两条以上
+     * 不同类型/场所的授权，旧五字段的投影就不精确（{@code dataTypes × siteIds} 会被读成笛卡尔积）。
+     * 旧五字段保留是为了不破坏既有前端，仅供 UI 提示，服务端鉴权以 {@code scopeGrants} 为准。
+     */
     public record DataScopeView(
             List<UUID> siteIds,
             boolean allSites,
             List<String> dataTypes,
             boolean ownOnly,
-            long scopeVersion) {
+            long scopeVersion,
+            List<ScopeGrantView> scopeGrants) {
+    }
+
+    /**
+     * 契约 {@code DataScope.scopeGrants[]}：一条 {@code (dataType, siteScope, ownOnly)} 授权元组。
+     *
+     * <p>三个字段在契约里都是 required，所以不能为 null；{@code siteScope.allSites=true} 时
+     * {@code siteIds} 必为 {@code []}。
+     */
+    public record ScopeGrantView(String dataType, SiteScopeView siteScope, boolean ownOnly) {
     }
 
     /** 契约 {@code SiteScope}：两个字段全 required。 */

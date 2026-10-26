@@ -108,7 +108,8 @@ apps/api/
 │   ├── verify-skeleton.ps1    共享层验收 25 条
 │   ├── verify-csrf.ps1        CSRF 验收 34 条
 │   ├── verify-login.ps1       登录验收 65 条
-│   ├── verify-me.ps1          /me 验收 80 条
+│   ├── verify-me.ps1          /me 验收 94 条
+│   ├── verify-scope-tuples.ps1 数据范围元组验收 15 条（A01 交叉扩权反例）
 │   ├── verify-client-config.ps1  前端配置验收 53 条
 │   ├── verify-health.ps1      探针验收 47 条
 │   └── verify-logout.ps1      退出登录验收 41 条
@@ -206,11 +207,12 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 48 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 28、`migration.*` 5；2026-10-25 迁移用例由 4 条改为 5 条） |
+| `mvn -o -B test` | 53 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 33、`migration.*` 5；2026-10-26 A01 把 `ScopeCalculatorTests` 由 8 条扩到 13 条） |
 | `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
-| `verify-me.ps1` | 80 passed, 0 failed |
+| `verify-me.ps1` | 94 passed, 0 failed |
+| `verify-scope-tuples.ps1` | 15 passed, 0 failed（A01：造 PLATE@A + FACE@B 两个角色，断言 `/me` 无交叉） |
 | `verify-client-config.ps1` | 53 passed, 0 failed |
 | `verify-health.ps1` | 47 passed, 0 failed |
 | `verify-logout.ps1` | 41 passed, 0 failed |
@@ -294,7 +296,7 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 口令哈希 | `infra/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
 | 登录频控 | `infra/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
 | 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
-| 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围只能收窄不能放宽**（见下） |
+| 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围按 `(类型, 场所, ownOnly)` 元组求并集**，`scopeGrants` 是权威集合、旧五字段只是 UI 投影（见下） |
 | 退出登录 | `api/AuthController#logout`、`service/SessionService#end`、`infra/UserSessionRepository#revokeById` | `POST /auth/logout`：先认证（401）→ 校验 CSRF（403）→ 撤销当前会话行（**只写 `revoked_at`，不删行**）→ 用 `Max-Age=0` 清掉 `SID` 与 `CSRFID` → 200 `{accepted:true}`（见下） |
 | 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
 | 运维探针 | `api/SystemController`、`service/HealthService`、`service/HealthView` | `GET /health`（存活）永远 200 + `UP`，不查依赖；`GET /ready`（就绪）查 `database`/`schema`/`deployment-config` 三项，任一不就绪 → **503 + `Retry-After: 5`**、`details` 指出是哪个依赖（见下） |
@@ -527,8 +529,9 @@ $env:XX_AUTH_DEVSEED_PASSWORD = '<口令>'    # 只从环境变量读，yml 里�
 
 **刻意不种菜单**（`auth.menu`/`role_menu`）：仓库里没有真实导航目录，`apps/web` 只把
 `menus` 的 label 平铺成一个列表。塞假菜单等于把未签认的导航结构固化成"事实"，
-而空菜单是合法结果（前端已按空数组处理）。同理不种 `auth.user_scope`：没有行 = 不收窄，
-才是"管理员看全部"的正确表达。
+而空菜单是合法结果（前端已按空数组处理）。同理不种 `auth.user_scope`：没有行就等于"账号没有附加授权"，
+全部范围都来自角色，这才是"管理员看全部"的正确表达（A01 之后 `user_scope` 是**加法**授权，
+不是缩小角色的收窄规则；要造收窄场景只能靠角色本身没有该场所）。
 
 ##### `reset-password`：口令漂移的出口
 
@@ -599,22 +602,28 @@ Cookie: SID=<登录拿到的会话 cookie>
 "查不到"用 `AUTH_REQUIRED` 而不是 `AUTH_SESSION_EXPIRED`：后者会诱导前端去调 renew，
 而一个根本不存在的 SID 续不活，只会多一次必然失败的请求。真实原因（账号被停用 / 已软删）只进服务端日志。
 
-#### 为什么数据范围只能收窄，不能放宽
+#### 为什么数据范围按"元组"求并集，而不是把维度摊平
 
-`dataScope`/`siteScope` 都是 `x-design-status: pending`（P-002：角色默认授权与范围组合规则待签认），
-形状照契约给，但组合规则必须选一个**只可能更严**的方向。实现在 `auth/ScopeCalculator`，七条规则写在类注释里：
+`dataScope`/`siteScope` 是 `x-design-status: provisional`（PD-2026-10-19.v1；P-002：角色默认授权与范围组合规则待签认）。
+`scopeGrants` 是**唯一权威**授权集合：每条是一个 `(dataType, siteScope, ownOnly)` 三元组，判定时逐元组独立匹配再 OR。
+规则在 `service/ScopeCalculator#resolve`，类注释里逐条写明：
 
-1. 多个角色之间取**并集**（角色是叠加授权）；
-2. `allSites` = 角色允许 **且** 用户未被收窄 —— 逻辑与。用户范围是"限制"，不是"追加"；
-3. 场所列表 = 角色并集 **∩** 用户列表；
-4. `ownOnly` 取**或** —— 任一角色说"只看自己的"，就是只看自己的。取与等于取消限制，即扩权；
-5. `allSites=true` 时 `siteIds` 必须 `[]`（契约明文）；
-6. 用户范围行存在但子表没有条目 = **该方面无权限**，不是"不受限"。这是最小权限，也正对齐
-   契约对 `allSites=false` 且 `siteIds` 为空的定义；
-7. 没有用户范围行 = 未收窄，直接取角色并集。
+1. 每个角色按 `数据类型 × 该角色的 DATA 场所` 展开成元组；`data_all_sites=true` 表示该类型对全部场所授权（`siteIds=[]`）；
+2. 多角色之间、以及账号附加授权（`auth.user_scope`）之间，都对**元组**取并集——并集只加授权、不减授权；
+3. 角色没有数据类型，或 `allSites=false` 又没有场所行 → 该角色不产生采集元组（空集是"无权限"，不是"不受限"）；
+4. `ownOnly` 留在元组里，不跨元组取"或"：一个角色的"只看自己的"不会传染给另一个全量角色，也不会被它救活；
+5. 旧的五个字段（`siteIds`/`allSites`/`dataTypes`/`ownOnly`/`scopeVersion`）只是元组的**投影**，仅供 UI 提示，
+   **不得作为服务端鉴权依据**：`allSites` = 所有元组都是 `allSites`；`siteIds` = 非全量元组的场所并集；
+   `dataTypes` = 类型并集按枚举序；`ownOnly` = 任一元组为真。
 
-第 6 条是唯一容易写反的地方：把"空子集"当成"没有限制"，会让一个被收窄到零个场所的账号看到全部数据——
-是提权级的错误，且在生产里几乎不可能被偶然发现。`ScopeCalculatorTests` 有一条专门钉它。
+为什么不能摊平（这是 A01 指出的原始缺陷）：角色甲授 PLATE@A、角色乙授 FACE@B，若先把类型和场所各摊成一个集合，
+得到 `dataTypes={PLATE,FACE}`、`sites={A,B}`，任何"类型 ∈ 集合 && 场所 ∈ 集合"的判定都会放行 **PLATE@B 与 FACE@A** ——
+凭空多出两条没人授过的授权（交叉扩权）。反过来，把账号附加授权当成"收窄"（取交集）又会吞掉它本该获得的权限；
+契约 `userScopeMode` 写的就是 `additive_union_of_typed_scope_tuples`，即"按类型化范围元组做加法并集"。
+
+`ScopeCalculatorTests` 用 13 条单测钉这些规则（含交叉扩权反例、账号追加、`ownOnly` 不跨元组、全量场所强制空列表）；
+HTTP 级的交叉用例在 `scripts/verify-scope-tuples.ps1`：它临时造两个"只授单类型单场所"的角色和一个同时持两角色的账号，
+断言 `/me.scopeGrants` 恰好两条、且不存在 PLATE@B / FACE@A，跑完删掉夹具。
 
 #### 菜单为什么要按权限过滤
 
@@ -630,14 +639,27 @@ Cookie: SID=<登录拿到的会话 cookie>
 ```bash
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-me.ps1 `
   -DB_PASSWORD '<db口令>' -SeedPassword '<种子口令>'
-# => passed: 80   failed: 0
+# => passed: 94   failed: 0
 ```
 
-覆盖 6 组 80 条：匿名/伪造 SID 401 且 `data:null`+`details` 为数组、admin 全量形状（七键恰好 7 个、
+覆盖 8 组 94 条：匿名/伪造 SID 401 且 `data:null`+`details` 为数组、admin 全量形状（七键恰好 7 个、
 58 个权限码、四类型有序、`allSites` 时 `siteIds=[]`、无 ETag）、operator 收窄（13 码、两类型、`ownOnly=true`）、
 classified（15 码含 `capture:decrypt`）、数据库侧会话生命周期（时间与库内 `epoch` 无漂移、
 改过去→`AUTH_SESSION_EXPIRED`、撤销→401、停用→401）、菜单投影（三条临时菜单只有两条可见、
-被过滤那条不出现、无权限码时省略 `requiredPermission`）、以及 405 与未知查询参数。
+被过滤那条不出现、无权限码时省略 `requiredPermission`）、以及 405 与未知查询参数；
+A01 之后新增第 8 组：`dataScope` 恰好六个属性且含 `scopeGrants`、admin 四条全 `allSites`、operator 两条全 `ownOnly`、
+classified 四条非 `ownOnly`、每条元组恰好 `dataType/siteScope/ownOnly` 三键。
+
+交叉扩权这条单独的用例需要"非全量场所"的角色，种子账号造不出来，所以拆到独立脚本：
+
+```bash
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-scope-tuples.ps1 `
+  -DB_PASSWORD '<db口令>' -SeedPassword '<种子口令>'
+# => RESULT: 15 passed, 0 failed
+```
+
+它用 psql 建一套一次性夹具（一个区域、两个场所 A/B、两个只授单类型单场所的角色、一个同时持两角色的账号），
+登录后断言 `/me.scopeGrants` 恰好两条且没有交叉，`finally` 里删干净；缺 psql 或口令时打印 `[SKIP]` 并以 0 退出。
 
 ---
 
