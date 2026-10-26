@@ -34,6 +34,25 @@ public class UserAccountRepository {
              WHERE id = ?
             """;
 
+    /**
+     * 登录事务内锁住账号行（A02：单账号单会话）。
+     *
+     * <p><b>为什么必须锁在这一行</b>：签发会话要保证"撤销该账号全部旧会话 + 插入新会话"
+     * 对同一账号是串行的。没有行锁时，两个浏览器同时登录会各自撤销一次、各自插入一行，
+     * 结果是两条会话都有效——正是 A02 要修的现象。锁在 {@code auth.app_user} 上而不是
+     * 进程内的 {@code synchronized}/{@code ReentrantLock}：多实例部署时进程内锁互不可见。
+     *
+     * <p>{@code deleted = false} 与读路径一致；软删账号（必然 {@code status='DISABLED'}）
+     * 查不到，调用方按"账号不可用"处理。
+     */
+    private static final String LOCK_BY_ID = """
+            SELECT id, user_code, login_name, display_name, password_hash, status
+              FROM auth.app_user
+             WHERE id = ?
+               AND deleted = false
+               FOR UPDATE
+            """;
+
     private final JdbcTemplate jdbc;
 
     public UserAccountRepository(JdbcTemplate jdbc) {
@@ -76,6 +95,24 @@ public class UserAccountRepository {
      */
     public Optional<UserAccountRow> findById(UUID userId) {
         List<UserAccountRow> rows = jdbc.query(SELECT_BY_ID, (rs, rowNum) -> new UserAccountRow(
+                rs.getObject("id", UUID.class),
+                rs.getString("user_code"),
+                rs.getString("login_name"),
+                rs.getString("display_name"),
+                rs.getString("password_hash"),
+                rs.getString("status")), userId);
+        return rows.stream().findFirst();
+    }
+
+    /**
+     * 在登录事务里锁住账号行并读回状态（A02：单账号单会话）。
+     *
+     * <p>必须与"撤销旧会话 + 插入新会话"在同一个事务里调用：锁随事务提交/回滚释放。
+     * 调用方拿到行后要**再判一次** {@link UserAccountRow#isActive()}——口令校验在事务外，
+     * 校验通过到拿锁之间账号可能已被停用。
+     */
+    public Optional<UserAccountRow> lockById(UUID userId) {
+        List<UserAccountRow> rows = jdbc.query(LOCK_BY_ID, (rs, rowNum) -> new UserAccountRow(
                 rs.getObject("id", UUID.class),
                 rs.getString("user_code"),
                 rs.getString("login_name"),

@@ -110,6 +110,7 @@ apps/api/
 │   ├── verify-login.ps1       登录验收 65 条
 │   ├── verify-me.ps1          /me 验收 94 条
 │   ├── verify-scope-tuples.ps1 数据范围元组验收 15 条（A01 交叉扩权反例）
+│   ├── verify-session-singleton.ps1 单账号单会话验收 13 条（A02 含并发登录）
 │   ├── verify-client-config.ps1  前端配置验收 53 条
 │   ├── verify-health.ps1      探针验收 47 条
 │   └── verify-logout.ps1      退出登录验收 41 条
@@ -207,12 +208,13 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 53 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 33、`migration.*` 5；2026-10-26 A01 把 `ScopeCalculatorTests` 由 8 条扩到 13 条） |
+| `mvn -o -B test` | 58 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 38、`migration.*` 5；A01 把 `ScopeCalculatorTests` 由 8 条扩到 13 条，A02 新增 `SessionServiceBeginTests` 5 条） |
 | `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
 | `verify-me.ps1` | 94 passed, 0 failed |
 | `verify-scope-tuples.ps1` | 15 passed, 0 failed（A01：造 PLATE@A + FACE@B 两个角色，断言 `/me` 无交叉） |
+| `verify-session-singleton.ps1` | 13 passed, 0 failed（A02：连续两次登录 + 并发两次登录，库里始终只有 1 条有效会话） |
 | `verify-client-config.ps1` | 53 passed, 0 failed |
 | `verify-health.ps1` | 47 passed, 0 failed |
 | `verify-logout.ps1` | 41 passed, 0 failed |
@@ -292,7 +294,7 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | 数据库接入 | `application-db.yml` | 数据源配置**只在 `db` profile 下**；但仓储层从任务 4 起就依赖 `JdbcTemplate`，所以**启动必须带数据库**（`mvn compile`/`mvn test` 仍可离线无库运行，见 §1） |
 | Flyway 启动迁移 | `application-db.yml`（`spring.flyway`） | `db` profile 启动时先 `validate` 再 `migrate`；校验和漂移会让进程**启动失败**而不是带病服务 |
 | CSRF 令牌 | `api/AuthController`、`service/CsrfTokenService`、`infra/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
-| 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService` | `POST /auth/login`：校验 CSRF → 口令 → **轮换 SID**（旧会话 `revoked_at`）→ 写 `auth.user_session`（只存 SID 的 SHA-256）→ 回填 `csrf_session.session_id` |
+| 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService`、`infra/UserAccountRepository#lockById` | `POST /auth/login`：校验 CSRF → 口令 → **锁 `auth.app_user` 行并复核状态** → 撤销呈递的旧 SID + 该账号**全部**其他会话（单账号单会话）→ 写 `auth.user_session`（只存 SID 的 SHA-256）并签发新 SID → 回填 `csrf_session.session_id` |
 | 口令哈希 | `infra/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
 | 登录频控 | `infra/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
 | 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
@@ -473,6 +475,32 @@ HTTP 200  X-Trace-Id: 6d34...  Set-Cookie: SID=<43字符>; Path=/api/v1; Max-Age
 **CSRF 缺失/不匹配 → 403 而不是 400**：403 对前端是**可操作**的信号（"重新取一次 csrf"），
 400 会被当成"我的请求写错了"。来源校验（Origin）由 CORS 过滤器在进控制器之前完成，控制器不重复实现。
 
+#### 单账号单会话：登录必须锁住账号行（A02）
+
+契约 `SessionData` 写的是"**单账号 1 会话**，新登录撤销旧会话"。旧实现只撤销**客户端呈递上来的那个 SID**，
+于是同一浏览器重复登录没问题，但**第二台设备/另一个浏览器首次登录时根本没有 SID 可呈递**，
+旧会话就一直活着——同一个人可以同时握着多条有效会话。
+
+现在的顺序（`SessionService#begin`，同一个事务里）：
+
+1. `SELECT … FROM auth.app_user WHERE id = ? AND deleted = false FOR UPDATE`（`UserAccountRepository#lockById`）；
+2. **在锁里再判一次** `status='ACTIVE'`——口令校验在事务外（慢哈希不占连接），校验通过到拿到锁之间账号可能刚被停用；
+3. `revokeBySidHash(presentedSid)`：呈递的旧 SID 未必属于本账号（共用终端上换账号登录），这条不能省；
+4. `revokeAllForUser(userId)`：撤销该账号**全部**有效会话（契约要求的"踢掉旧会话"）；
+5. 插入新会话 → 绑定 CSRF 会话。
+
+**为什么必须是数据库行锁，不是进程内锁**：`synchronized`/`ReentrantLock` 只在单实例内互斥，
+多实例部署时两个实例可以同时通过检查、各自插入一行，缺陷原样复现。行锁的互斥范围是数据库，与实例数无关。
+效果是"后登录者胜"：并发两次登录都会返回 200，但只有最后一行的会话有效，先签发的那条下一个请求就 401。
+
+**失败仍是统一的 401**：锁里发现账号不可用，抛 `AUTH_INVALID_CREDENTIALS` + **与登录失败同一句**
+`"登录名或口令不正确"`（常量 `LoginService.FAILURE_MESSAGE` 因此是包私有而不是 `private`）。
+别改成 `AUTH_SESSION_EXPIRED`：这条路径根本没有会话可过期，而且文案一改就等于告诉攻击者"账号存在但被停用"。
+
+验收：单测 `SessionServiceBeginTests` 钉住调用顺序（无 SID 也必须 `revokeAllForUser`、且发生在 `insert` 之前；
+停用/软删的账号 401 且不插入）；端到端 `scripts/verify-session-singleton.ps1` 13 条，
+包含**并发两次登录后库里只剩 1 条有效会话**——这条没有行锁就会变成 2 条。
+
 **已知限制（有意为之，不要"顺手修"）**：`login_name` **大小写精确匹配**。数据库唯一索引是大小写敏感的，
 若服务层容忍大小写，就会出现两个仅大小写不同的账号互相歧义的情况。
 
@@ -561,6 +589,10 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-login.p
 时间戳格式与 15m/8h 偏移、数据库 8 条（`sid_hash = sha256(SID)`、原文不入库、traceId 落库、
 `csrf_session.session_id` 已绑定、`last_login_at` 已写）、登录轮换 SID 且旧会话被撤销、
 频控 10 次 401 后 429 且 `Retry-After >= 1`、以及未知字段/超长/缺字段/405/跨源。
+
+"单账号单会话"另由 `scripts/verify-session-singleton.ps1` 单独验（13 条，A02）：两次都不带 SID 的登录
+之后，旧 SID 必须 401、库里该账号只剩 1 条 `revoked_at IS NULL`；再用两个 runspace 同时发起登录，
+断言并发结束后同样只剩 1 条。**后者是行锁的直接证据**——没有 `FOR UPDATE` 时两次插入互不可见，会留下 2 条。
 
 ---
 
@@ -1199,7 +1231,7 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 | `Non-parseable POM ... in comment after two dashes (--)` | **XML 注释里不能出现 `--`**。写 Java 注释时随口写 `--spring.profiles.active=db` 就会炸，而且报错位置指向注释内部，不太好找 |
 | `Cannot access central ... in offline mode` 却又明显联网可用 | 本机 `~/.m2` **只读**（沙箱策略），Maven 无法写入缓存 → 加 `-Dmaven.repo.local=<workspace 内可写目录>` 即可，网络本身是通的 |
 | `spring-boot:run` 报插件依赖缺 `spring-boot-loader-tools` | 用了 `-o` 且本地仓库里只有编译期依赖。去掉 `-o` 让它拉一次插件依赖（`compile` 仍可离线） |
-| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 48 例全绿（`migration.*` 5 例） |
+| `mvn test` 全量跑挂但单测本身没问题 | 先看是不是又引入了 `@SpringBootTest`/Mockito（受限环境里它们让**整个套件**终止）。当前套件 58 例全绿（`migration.*` 5 例） |
 | 启动报 `Failed to instantiate [LoginThrottle]: No default constructor found` | 类里有**多个构造器**时 Spring 不会"选参数最多的那个"，而是报这个错——用 `@Autowired` 显式标出生产构造器 |
 | `@SpringBootTest` 报 `Failed to determine a suitable driver class` | 加了数据源依赖后，全上下文启动就需要 `DataSource` bean。不连库的测试要给占位 url + `spring.datasource.hikari.initialization-fail-timeout=-1` + `spring.flyway.enabled=false`（见 `ApiApplicationTests` 注释） |
 | 单测报端口 8080 被占用 | `SpringApplicationBuilder.properties(...)` 设的是 **default properties，优先级低于 `application.yml`**，`server.port=0` 会被 yml 的 `8080` 覆盖。改用 `.run("--server.port=0", ...)`（命令行参数优先级最高）。这个坑的失败信息看起来像环境问题，其实是测试写错——只在"本机没起服务"时才碰巧通过 |
@@ -1227,7 +1259,7 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 
 1. **先跑 `mvn -o -B compile`，再带着数据库启动 `mvn spring-boot:run "-Dspring-boot.run.profiles=dev,db"`**（见 §1），用 §4 的两条响应确认骨架在你机器上也是通的。
 2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1`、`scripts/verify-client-config.ps1`、`scripts/verify-health.ps1` 与 `scripts/verify-logout.ps1` 确认库、迁移、登录、`/me`、前端配置、探针、退出都正常。
+3. 要动数据库的接口，带 `db` profile 启动（见 §1），跑一次 `scripts/verify-csrf.ps1`、`scripts/verify-login.ps1`、`scripts/verify-me.ps1`、`scripts/verify-session-singleton.ps1`、`scripts/verify-client-config.ps1`、`scripts/verify-health.ps1` 与 `scripts/verify-logout.ps1` 确认库、迁移、登录、单会话、`/me`、前端配置、探针、退出都正常。
    前端联调用 `demo.admin` / `demo.operator` / `demo.classified`（三种权限档）：启动时给 `XX_AUTH_DEVSEED_ENABLED=true` + `XX_AUTH_DEVSEED_PASSWORD=<口令>`（见 §4 种子账号）。
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。

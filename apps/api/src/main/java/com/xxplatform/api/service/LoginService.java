@@ -54,7 +54,14 @@ public class LoginService {
      * <p>不含"账号/口令"哪个错、也不含"用户不存在"，因为这两句话本身就是枚举工具。
      * 它是可展示文本（前端可以直接弹给用户）。
      */
-    private static final String FAILURE_MESSAGE = "登录名或口令不正确";
+    /**
+     * 统一的登录失败文案。
+     *
+     * <p>包私有（而不是 {@code private}）是刻意的：{@link SessionService#begin} 在签发阶段发现
+     * 账号已被停用时也要用**同一句**话回 401，否则错误文案本身会泄露“账号存在但被停用”。
+     * 单一常量避免两处文案以后改出差异。
+     */
+    static final String FAILURE_MESSAGE = "登录名或口令不正确";
 
     private static final int CLIENT_LABEL_MAX = 200;
 

@@ -50,6 +50,19 @@ public class UserSessionRepository {
     private static final String REVOKE_BY_ID =
             "UPDATE auth.user_session SET revoked_at = now() WHERE id = ? AND revoked_at IS NULL";
 
+    /**
+     * 撤销某账号的全部有效会话（A02：单账号单会话）。
+     *
+     * <p>契约 {@code SessionData} 写明"单账号 1 会话，新登录撤销旧会话"。旧实现只撤销
+     * 客户端**提交上来的那个 SID**，所以另一台浏览器（或另一台机器）首次登录时没有 SID 可提交，
+     * 旧会话就活着——同一个人可以同时有多条有效会话。
+     *
+     * <p>调用方必须已持有 {@code auth.app_user} 行锁（{@link UserAccountRepository#lockById}），
+     * 否则两个并发登录会互相看不见对方刚插入的行。
+     */
+    private static final String REVOKE_ALL_FOR_USER =
+            "UPDATE auth.user_session SET revoked_at = now() WHERE user_id = ? AND revoked_at IS NULL";
+
     private final JdbcTemplate jdbc;
 
     public UserSessionRepository(JdbcTemplate jdbc) {
@@ -99,6 +112,19 @@ public class UserSessionRepository {
             throw new IllegalArgumentException("sessionId 不能为空");
         }
         return jdbc.update(REVOKE_BY_ID, sessionId);
+    }
+
+    /**
+     * 按账号撤销全部有效会话（A02：新登录踢掉同一账号的其他会话）。
+     *
+     * <p>返回行数是**被踢掉的旧会话条数**，正常为 0（首次登录）或 1（换设备登录）；
+     * 不做"必须恰好 1 行"的断言——多行说明历史数据里本来就有并发会话，撤销它们正是目的。
+     */
+    public int revokeAllForUser(UUID userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId 不能为空");
+        }
+        return jdbc.update(REVOKE_ALL_FOR_USER, userId);
     }
 
     /** 按 SID 摘要取会话（含已撤销/已过期的，好让调用方区分失败原因）。 */

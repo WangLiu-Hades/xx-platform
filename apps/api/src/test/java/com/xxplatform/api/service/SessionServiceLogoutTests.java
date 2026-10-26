@@ -2,6 +2,7 @@ package com.xxplatform.api.service;
 
 import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.infra.CsrfSessionRepository;
+import com.xxplatform.api.infra.UserAccountRepository;
 import com.xxplatform.api.infra.UserSessionRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +48,10 @@ class SessionServiceLogoutTests {
     }
 
     private static SessionService service(StubSessions sessions) {
-        // CsrfSessionRepository 不参与退出逻辑（见 SessionService#end 注释），给个不碰库的实例即可
-        return new SessionService(sessions, new CsrfSessionRepository(new JdbcTemplate()), new SessionProperties());
+        // CsrfSessionRepository 不参与退出逻辑（见 SessionService#end 注释），给个不碰库的实例即可；
+        // UserAccountRepository 只在 begin() 里用（A02 行锁），退出路径根本不会碰它。
+        return new SessionService(sessions, new CsrfSessionRepository(new JdbcTemplate()),
+                new UserAccountRepository(new JdbcTemplate()), new SessionProperties());
     }
 
     @Test

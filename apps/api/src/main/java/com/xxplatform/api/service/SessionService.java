@@ -1,8 +1,11 @@
 package com.xxplatform.api.service;
 
+import com.xxplatform.api.common.ApiException;
+import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Sha256;
 import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.infra.CsrfSessionRepository;
+import com.xxplatform.api.infra.UserAccountRepository;
 import com.xxplatform.api.infra.UserSessionRepository;
 import java.security.SecureRandom;
 import java.time.OffsetDateTime;
@@ -58,18 +61,29 @@ public class SessionService {
 
     private final UserSessionRepository sessionRepository;
     private final CsrfSessionRepository csrfSessionRepository;
+    private final UserAccountRepository userAccountRepository;
     private final SessionProperties properties;
 
     public SessionService(UserSessionRepository sessionRepository,
                           CsrfSessionRepository csrfSessionRepository,
+                          UserAccountRepository userAccountRepository,
                           SessionProperties properties) {
         this.sessionRepository = sessionRepository;
         this.csrfSessionRepository = csrfSessionRepository;
+        this.userAccountRepository = userAccountRepository;
         this.properties = properties;
     }
 
     /**
-     * 签发新会话（并撤销提交上来的旧 SID）。
+     * 签发新会话：锁账号 → 复核状态 → 撤销旧会话（含该账号的全部其他会话）→ 插入 → 绑定 CSRF。
+     *
+     * <p><b>为什么先锁 {@code auth.app_user}</b>（A02）：契约要求"单账号 1 会话，新登录撤销旧会话"。
+     * 只撤销客户端提交的 SID 只能覆盖"同一浏览器重复登录"，另一台设备首次登录时没有 SID 可提交，
+     * 旧会话会活着。锁住账号行让"撤销全部旧会话 + 插入新会话"对同一账号串行，多实例部署下也成立
+     * （进程内锁只在单实例内有效，不能用作保证）。
+     *
+     * <p><b>为什么锁里要再判一次状态</b>：口令校验在事务外（慢哈希不占连接），从校验通过到拿到锁
+     * 之间账号可能已被停用或软删。对外仍抛与登录失败一致的 401，避免暴露"账号存在但被停用"。
      *
      * @param userId      已通过口令校验的用户
      * @param traceId     本次请求的 traceId（落库用于把会话与请求日志串起来）
@@ -80,12 +94,29 @@ public class SessionService {
     @Transactional
     public IssuedSession begin(UUID userId, String traceId, String clientLabel,
                                String presentedSid, UUID csrfId) {
+        UserAccountRepository.UserAccountRow account = userAccountRepository.lockById(userId)
+                .orElseThrow(SessionService::accountUnavailable);
+        if (!account.isActive()) {
+            log.warn("登录竞态：会话签发前账号已不可用 status={} userId={} traceId={}",
+                    account.status(), userId, traceId);
+            throw accountUnavailable();
+        }
+
         if (presentedSid != null && !presentedSid.isBlank()) {
+            // 提交上来的旧 SID 未必属于本账号（共用终端上换账号登录），所以这条必须单独做：
+            // revokeAllForUser 只覆盖同一 user_id 的行。
             int revoked = sessionRepository.revokeBySidHash(Sha256.of(presentedSid));
             // 0 行是正常情况（旧 SID 本来就已经撤销或不存在），只在 >0 时记 info
             if (revoked > 0) {
                 log.info("登录轮换：撤销旧会话 {} 条 userId={} traceId={}", revoked, userId, traceId);
             }
+        }
+
+        // 单账号单会话：把该账号在其他浏览器/设备上的有效会话一并撤销（A02）。
+        int kicked = sessionRepository.revokeAllForUser(userId);
+        if (kicked > 0) {
+            log.info("单会话策略：撤销该账号其他有效会话 {} 条 userId={} traceId={}",
+                    kicked, userId, traceId);
         }
 
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC).truncatedTo(ChronoUnit.SECONDS);
@@ -117,6 +148,17 @@ public class SessionService {
         }
 
         return new IssuedSession(sidValue, sessionId, idleExpiresAt, absoluteExpiresAt);
+    }
+
+    /**
+     * 会话签发时账号已不可用：对外与登录失败完全一致（401 {@code AUTH_INVALID_CREDENTIALS}）。
+     *
+     * <p>不复用 {@code AUTH_SESSION_EXPIRED}：这条路径根本没有会话可过期，而且登录接口返回
+     * "会话过期"会诱导客户端去调 renew。文案也必须与 {@link LoginService} 的失败提示一致，
+     * 否则攻击者能靠错误文案区分"账号存在但被停用"。
+     */
+    private static ApiException accountUnavailable() {
+        return new ApiException(ErrorCode.AUTH_INVALID_CREDENTIALS, LoginService.FAILURE_MESSAGE);
     }
 
     /**
