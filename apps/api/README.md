@@ -1132,8 +1132,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/verify-migr
 #   退出码 0 = 一致，1 = 漂移（会列出前 40 条差异），2 = 环境问题
 ```
 
-脚本需要**一个已经就绪的 PG 实例**（不自己起/停数据库，便于 CI 与沙箱复用）：它会建
-`parity_mig`（跑 V1…Vn）与 `parity_ref`（跑 `schema.sql`）两个临时库，比完即删。临时实例可以这样起：
+脚本需要**一个已经就绪的 PG 实例**（不自己起/停数据库，便于 CI 与沙箱复用）。每次运行按
+`parity_<pid>_<时间戳>_mig`（跑 V1…Vn）与 `parity_<pid>_<时间戳>_ref`（跑 `schema.sql`）各建一库：
+这两个名字**已存在就拒绝运行并退出 2**（宁可停下，也不删别人的库或别人的半成品），结束时只清理
+本次自己建的库，中途失败同样清理；`-Keep` 保留 `apps/api/target/pg-parity/<run>` 下的 SQL 与指纹便于排查，
+`-RunTag xxx` 可把库名固定成 `parity_xxx_mig/_ref`（自测“名字冲突即拒”时用）。临时实例可以这样起：
 
 ```powershell
 $bin = 'C:\Program Files\PostgreSQL\16\bin'

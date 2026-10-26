@@ -13,6 +13,10 @@
     (docker, a scratch cluster from initdb, or the local service) and pass -Port. This keeps the
     script usable in CI and inside sandboxes where a child server cannot outlive the shell.
 
+    Each run owns two databases named parity_<pid>_<MMddHHmmss>_mig and ..._ref, plus a matching
+    work directory. If either name already exists the script refuses with exit code 2 instead of
+    dropping it, and the finally block drops only the databases this run actually created.
+
     Example - scratch cluster without touching your main installation:
         $bin = 'C:\Program Files\PostgreSQL\16\bin'
         & "$bin\initdb.exe" -D ..\pg-scratch\data -U postgres -A trust
@@ -37,6 +41,10 @@
 .PARAMETER Keep
     Keep the work directory (SQL, fingerprint files, sessions) for debugging.
 
+.PARAMETER RunTag
+    Override the run tag that makes database names unique (default: <pid>_<MMddHHmmss>). Used by the
+    self-test to prove that a name collision is refused; keep it 1-24 characters of a-z 0-9 _.
+
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File apps/api/scripts/verify-migration-parity.ps1 -Port 55433
 #>
@@ -45,10 +53,23 @@ param(
     [int]$Port = 55433,
     [string]$HostName = '127.0.0.1',
     [string]$User = 'postgres',
-    [switch]$Keep
+    [switch]$Keep,
+    [string]$RunTag = ''
 )
 
 $ErrorActionPreference = 'Continue'
+
+# Each run derives its own database names and work directory from the PID plus the start time, so a
+# concurrent run (or a human) can never end up sharing them. $createdDbs records exactly the
+# databases this run created -- the finally block drops those and nothing else.
+if ($RunTag -and $RunTag -notmatch '^[a-z0-9_]{1,24}$') {
+    Write-Host "ERROR  -RunTag must be 1-24 characters of a-z 0-9 _ (got '$RunTag')" -ForegroundColor Red
+    exit 2
+}
+$dbRun = if ($RunTag) { $RunTag } else { '{0}_{1}' -f $PID, (Get-Date -Format 'MMddHHmmss') }
+$dbMig = "parity_${dbRun}_mig"
+$dbRef = "parity_${dbRun}_ref"
+$createdDbs = New-Object System.Collections.ArrayList
 
 function Fail([string]$message) {
     Write-Host ""
@@ -67,7 +88,7 @@ $repoRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $PSScript
 $apiRoot = Join-Path $repoRoot 'apps/api'
 $migrations = Join-Path $apiRoot 'src/main/resources/db/migration'
 $contract = Join-Path $repoRoot 'contracts/database/schema.sql'
-$workDir = Join-Path $apiRoot 'target/pg-parity'
+$workDir = Join-Path $apiRoot "target/pg-parity/$dbRun"
 
 if (-not $PgBin) {
     $cmd = Get-Command psql.exe -ErrorAction SilentlyContinue
@@ -107,12 +128,28 @@ if (Test-Path $pgIsReady) {
 if (Test-Path $workDir) { Remove-Item -Recurse -Force $workDir -ErrorAction SilentlyContinue }
 New-Item -ItemType Directory -Force -Path $workDir | Out-Null
 
-$dbMig = 'parity_mig'
-$dbRef = 'parity_ref'
-$r = Invoke-Tool $psql ($conn + @('-d', 'postgres', '-q', '-v', 'ON_ERROR_STOP=1', '-c', "DROP DATABASE IF EXISTS $dbMig;", '-c', "DROP DATABASE IF EXISTS $dbRef;", '-c', "CREATE DATABASE $dbMig;", '-c', "CREATE DATABASE $dbRef;"))
-if ($r.Code -ne 0) { Fail "creating throwaway databases failed: $($r.Output -join ' ')" }
+function Test-DatabaseExists([string]$database) {
+    $out = & $psql ($conn + @('-d', 'postgres', '-tA', '-c', "SELECT 1 FROM pg_database WHERE datname = '$database'")) 2>&1
+    $lines = @($out | ForEach-Object { "$_".Trim() } | Where-Object { $_ -ne '' })
+    return ($lines -contains '1')
+}
+
+# A name collision means "somebody else owns that database": refuse instead of dropping it. This is
+# the whole point of A05 -- the script used to DROP DATABASE IF EXISTS on two fixed names.
+foreach ($database in @($dbMig, $dbRef)) {
+    if (Test-DatabaseExists $database) {
+        Fail "refusing to run: database '$database' already exists (concurrent run, or created by hand). This script never drops a database it did not create; wait for the other run to finish or point -Port at an isolated instance."
+    }
+}
 
 try {
+    foreach ($database in @($dbMig, $dbRef)) {
+        $r = Invoke-Tool $psql ($conn + @('-d', 'postgres', '-q', '-v', 'ON_ERROR_STOP=1', '-c', "CREATE DATABASE $database;"))
+        if ($r.Code -ne 0) { Fail "creating $database failed: $($r.Output -join ' ')" }
+        $null = $createdDbs.Add($database)
+        Write-Host "      created $database"
+    }
+
     Write-Host "[2/4] applying $($migrationFiles.Count) migration(s) to $dbMig"
     foreach ($file in $migrationFiles) {
         Write-Host "      - $($file.Name)"
@@ -183,7 +220,14 @@ SELECT 'S ' || p.proname||' | '||n.nspname FROM pg_proc p JOIN pg_namespace n ON
     }
 }
 finally {
-    $null = Invoke-Tool $psql ($conn + @('-d', 'postgres', '-q', '-c', "DROP DATABASE IF EXISTS $dbMig;", '-c', "DROP DATABASE IF EXISTS $dbRef;"))
+    if ($createdDbs.Count -gt 0) {
+        $dropArgs = @('-d', 'postgres', '-q')
+        foreach ($database in $createdDbs) { $dropArgs += @('-c', "DROP DATABASE IF EXISTS $database;") }
+        $null = Invoke-Tool $psql ($conn + $dropArgs)
+        Write-Host "cleaned up $($createdDbs -join ', ') (only databases this run created)"
+    } else {
+        Write-Host "nothing to clean up: no throwaway database was created by this run"
+    }
     if ($Keep) {
         Write-Host "Work directory kept at $workDir"
     } else {
