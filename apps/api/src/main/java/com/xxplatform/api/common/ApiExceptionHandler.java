@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
@@ -139,6 +141,25 @@ public class ApiExceptionHandler {
     public ResponseEntity<ErrorResponse> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
         return error(ErrorCode.VALIDATION_ERROR, "参数类型非法",
                 List.of(new FieldErrorDetail(ex.getName(), "类型或格式非法")));
+    }
+
+    /**
+     * multipart 里的文件超过容器上限 → 413 {@code FILE_TOO_LARGE}。
+     *
+     * <p>这条分支与业务层的 {@code xx.file.max-bytes} 是两道闸门：容器闸门先于任何控制器代码，
+     * 触发时请求体已被拒收（不会把超大文件读进内存/临时目录）。不映射的话它会掉进
+     * {@link #handleUnexpected(Exception)} 变成 500，前端无法区分"文件太大"和"服务坏了"。
+     */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleUploadTooLarge(MaxUploadSizeExceededException ex) {
+        return error(ErrorCode.FILE_TOO_LARGE, "文件超过上传上限", List.of());
+    }
+
+    /** multipart 缺少必需的文件/表单部件 → 400（带字段名，便于前端定位）。 */
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<ErrorResponse> handleMissingPart(MissingServletRequestPartException ex) {
+        return error(ErrorCode.VALIDATION_ERROR, "缺少必填表单部件",
+                List.of(new FieldErrorDetail(ex.getRequestPartName(), "必填部件缺失")));
     }
 
     /** 路径不存在 → 404 DATA_NOT_FOUND（不暴露内部路由信息）。 */

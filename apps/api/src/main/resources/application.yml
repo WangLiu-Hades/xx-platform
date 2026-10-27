@@ -34,6 +34,15 @@ spring:
     problemdetails:
       # 关闭 RFC 7807，避免与契约错误壳（code/message/data/traceId/details）混用两套错误格式
       enabled: false
+  servlet:
+    multipart:
+      # 容器层的硬闸门：没有它，Spring 会在解析 multipart 时把超大文件读进临时目录，
+      # 业务层的 413 判断（xx.file.max-bytes）就永远轮不到。这里比业务上限略宽 2 MiB，
+      # 让"刚好超业务上限"的文件仍由业务层返回契约壳 413，而不是容器错误页。
+      max-file-size: 10MB
+      max-request-size: 12MB
+      # 超限时不静默截断，直接抛 MaxUploadSizeExceededException（见 ApiExceptionHandler → 413）
+      resolve-lazily: false
 
 # 日志：traceId 由 common/RequestIdFilter 写入 MDC，这里把它打进每一行，
 # 便于联调时"浏览器请求 → 服务端日志"对齐同一个 traceId（H06 验收要求）。
@@ -100,6 +109,15 @@ xx:
     # 默认关闭：单测与骨架启动不起后台线程。只有 db profile 打开（见 application-db.yml）。
     reaper-enabled: false
     reaper-interval: 30s
+
+  # 受控文件（见 service/file/FileService 与 config/FileProperties）
+  #
+  # ⚠ client-config.maxUploadBytes 与这里的 max-bytes 是同一个甲方口径（10 MiB）：
+  #   前者给前端做预校验，后者是服务端硬闸门。改一个就要同步改另一个。
+  file:
+    # 内容根目录；生产挂持久卷，本地默认在用户目录下（可用 XX_FILE_STORAGE_ROOT 覆盖）
+    storage-root: ${user.home}/.xx-platform/files
+    max-bytes: 10485760
 
   # 认证策略（任务 5：POST /auth/login）
   auth:

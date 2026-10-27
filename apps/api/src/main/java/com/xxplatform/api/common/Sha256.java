@@ -28,12 +28,34 @@ public final class Sha256 {
      * @return 32 字节摘要
      */
     public static byte[] of(String value) {
+        return ofBytes(value.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * 计算任意字节内容的 SHA-256（文件上传写入 {@code core.file_asset.sha256}）。
+     *
+     * @param bytes 原始字节（null 视为非法，调用方应先判空）
+     * @return 32 字节摘要
+     */
+    public static byte[] ofBytes(byte[] bytes) {
+        if (bytes == null) {
+            throw new IllegalArgumentException("bytes 不能为空");
+        }
         try {
-            return MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8));
+            return MessageDigest.getInstance("SHA-256").digest(bytes);
         } catch (NoSuchAlgorithmException e) {
             // SHA-256 是 JDK 必须提供的算法，走到这里说明 JRE 被裁剪过
             throw new IllegalStateException("JRE 缺少 SHA-256", e);
         }
+    }
+
+    /** 小写十六进制（64 字符，正好对上各表 {@code char(64)} 的指纹列）。 */
+    public static String hex(byte[] digest) {
+        StringBuilder out = new StringBuilder(digest.length * 2);
+        for (byte b : digest) {
+            out.append(Character.forDigit((b >> 4) & 0xF, 16)).append(Character.forDigit(b & 0xF, 16));
+        }
+        return out.toString();
     }
 
     /**
