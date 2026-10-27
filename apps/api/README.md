@@ -1272,7 +1272,7 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 ## 11. 2026-10-26 评审修复对照（A01–A05 与 §2.6）
 
 `PR审查报告_20261026.md` 提的五条，外加 §2.6 的一处契约文案，落在下面这些提交上。**这些提交目前只在本地**
-（领先远端 5 个提交），推送后随骨架分支进 PR #3；逐条的现场记录（现象、改法、证据、未闭环项）见
+（领先远端 6 个提交），推送后随骨架分支进 PR #3；逐条的现场记录（现象、改法、证据、未闭环项）见
 `docs/project-governance/修改与检查记录.md` 的 2026-10-26 补充记录与 2026-10-27 收尾段。
 
 | 评审项 | 改了什么 | 提交 | 怎么验的 |
@@ -1282,7 +1282,9 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 | A03（P0） | 把 #4 的 `V3` 增量并回骨架分支；`V1` 冻结、守卫改为结构比对而不是逐字节相等 | `0498373`（#4 已 fast-forward 合入） | `migration.*` 5 例、`verify-migration-parity.ps1`（3033 指纹 / 165 表） |
 | A04（P1） | 空闲 15 分钟 / 绝对 8 小时 / `maxOnlineWindowDays` 31；改配置**新增 `V4` 增量**，不动已执行过的 `V2` | `f301122` | `verify-login.ps1` 65 条、`verify-client-config.ps1` 53 条、`V4` 在临时库上的重复执行与"运维覆盖"用例 |
 | A05（P2） | `verify-migration-parity.ps1` 每次运行自带唯一库名、名字冲突即拒、只清理本次自建的库 | `9a26419` | 四条自测：冲突退出 2 且他人库仍在 / 正常 `PASS` / 中途失败仍清理 / 默认命名 |
-| §2.6 | 契约文案 `IdempotencyKey.description` 里 `409 TASK_CONFLICT` → `409 IDEMPOTENCY_CONFLICT`（只改这一处） | 待做（C6） | 改完必须同批提交 `apps/web/src/api/*` 生成物，`npm run generate:api` 后 `git diff --exit-code -- apps/web/src/api` 要干净 |
+| §2.6 | 契约文案 `IdempotencyKey.description` 里 `409 TASK_CONFLICT` → `409 IDEMPOTENCY_CONFLICT`（只改这一处，其余 6 处 `TASK_CONFLICT` 是任务/资源状态语义，不动） | 本提交 | `npm run generate:api` 后 `git diff --exit-code -- apps/web/src/api` 干净；`typecheck`、`vitest` 294 例、`build` 均通过 |
+
+改契约的连带规则（本轮实测）：`contracts/api/openapi.yaml` 一动，`apps/web/src/api/schema.ts` 的每个带 `Idempotency-Key` 的 operation 都会内联这行描述，所以生成物的 diff 是 85 行而不是 1 行；CI 只校验 `apps/web/src/api`，`apps/web/audit/vue-migration/*` 这两个审计快照**不同批刷新**（它们带生成时间和本机绝对路径，刷新只会制造噪声，且 `tools/layout/verify_layout.py` 会跳过 `/audit/` 路径）。
 
 仍然没闭环的三类事（写在这里，免得下一个人以为"评审已全部关闭"）：
 

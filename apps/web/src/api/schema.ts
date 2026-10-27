@@ -18971,7 +18971,7 @@ export type components = {
         Cursor: string;
         /** @description 统一参数，管理page或事件cursor分页；默认值见schema。 */
         CursorPageSize: number;
-        /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+        /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
         IdempotencyKey: string;
         /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
         IfMatch: string;
@@ -19027,7 +19027,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19113,7 +19113,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19287,7 +19287,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19468,7 +19468,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -19511,7 +19511,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -19554,7 +19554,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -19625,7 +19625,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -19823,7 +19823,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -19862,7 +19862,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20026,7 +20026,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20175,7 +20175,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20322,7 +20322,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -20365,7 +20365,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20445,7 +20445,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20561,7 +20561,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -20747,7 +20747,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -20874,7 +20874,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -21023,7 +21023,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -21066,7 +21066,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21154,7 +21154,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21224,7 +21224,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21269,7 +21269,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21347,7 +21347,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21388,7 +21388,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21473,7 +21473,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21543,7 +21543,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21588,7 +21588,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21665,7 +21665,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -21814,7 +21814,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21852,7 +21852,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -21922,7 +21922,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -21962,7 +21962,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22103,7 +22103,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22243,7 +22243,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22345,7 +22345,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -22388,7 +22388,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -22671,7 +22671,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -22775,7 +22775,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -22883,7 +22883,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23033,7 +23033,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23069,7 +23069,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23242,7 +23242,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23312,7 +23312,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -23357,7 +23357,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -23396,7 +23396,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -23439,7 +23439,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23521,7 +23521,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23562,7 +23562,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23601,7 +23601,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23643,7 +23643,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -23684,7 +23684,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -23792,7 +23792,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -23837,7 +23837,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -23919,7 +23919,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -24001,7 +24001,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24134,7 +24134,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -24313,7 +24313,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24383,7 +24383,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24490,7 +24490,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -24567,7 +24567,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -24639,7 +24639,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24686,7 +24686,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24727,7 +24727,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24774,7 +24774,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -24858,7 +24858,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25041,7 +25041,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25111,7 +25111,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -25156,7 +25156,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -25195,7 +25195,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25338,7 +25338,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25447,7 +25447,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25558,7 +25558,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25629,7 +25629,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -25713,7 +25713,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -25869,7 +25869,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -25954,7 +25954,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -26026,7 +26026,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -26073,7 +26073,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -26114,7 +26114,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -26159,7 +26159,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 强ETag，格式为双引号包裹的资源version（如 "1"）；详情成功响应的ETag可直接回传。不匹配返回409 RESOURCE_VERSION_CONFLICT，缺失/格式错误返回400 VALIDATION_ERROR。 */
                 "If-Match": components["parameters"]["IfMatch"];
@@ -26204,7 +26204,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 命中PD-2026-10-19.v1高风险规则时必填。服务端绑定operationId、路径资源、版本及typed请求体摘要；只可消费一次，不替代动作权限/当前范围校验。 */
                 "X-Approval-Id"?: components["parameters"]["ApprovalId"];
@@ -26294,7 +26294,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26442,7 +26442,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
@@ -26483,7 +26483,7 @@ export interface operations {
         parameters: {
             query?: never;
             header: {
-                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
+                /** @description 同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。 */
                 "Idempotency-Key": components["parameters"]["IdempotencyKey"];
                 /** @description 状态变更请求必填；Origin 同时由服务端校验。 */
                 "X-CSRF-Token": components["parameters"]["CsrfToken"];
