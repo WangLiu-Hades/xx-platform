@@ -226,6 +226,56 @@ class TaskReadServiceTests {
         assertEquals(0, tasks.findCalls);
     }
 
+    @Test
+    void attemptsRequireTaskReadPermission() {
+        rbac.codes = List.of("task:manage");
+
+        ApiException failure = assertThrows(ApiException.class,
+                () -> service.attempts(session(OWNER), TASK_ID));
+
+        assertEquals(ErrorCode.PERMISSION_DENIED, failure.code());
+        assertEquals(0, tasks.findCalls);
+    }
+
+    @Test
+    void attemptsHideAnotherUsersTaskAsNotFound() {
+        tasks.rows = List.of(row(TASK_ID, TaskStatus.FAILED, OTHER));
+
+        ApiException failure = assertThrows(ApiException.class,
+                () -> service.attempts(session(OWNER), TASK_ID));
+
+        assertEquals(ErrorCode.DATA_NOT_FOUND, failure.code());
+        assertEquals(0, tasks.attemptCalls);
+    }
+
+    @Test
+    void attemptsReturnRowsInAttemptOrderWithNullableFinish() {
+        tasks.attempts = List.of(
+                new AsyncTaskRepository.AttemptRow(1, NOW.minusMinutes(9), NOW.minusMinutes(7),
+                        "SUCCESS", null),
+                new AsyncTaskRepository.AttemptRow(2, NOW.minusMinutes(5), null,
+                        null, "TASK_LEASE_EXPIRED"));
+
+        List<Map<String, Object>> items = service.attempts(session(OWNER), TASK_ID);
+
+        assertEquals(2, items.size());
+        assertEquals(1L, items.get(0).get("attemptNo"));
+        assertEquals("SUCCESS", items.get(0).get("result"));
+        assertNull(items.get(0).get("errorCode"));
+        assertEquals(2L, items.get(1).get("attemptNo"));
+        assertNull(items.get(1).get("finishedAt"));
+        assertFalse(items.get(1).containsKey("result"));
+        assertEquals("TASK_FAILED", items.get(1).get("errorCode"));
+        assertEquals(TASK_ID, tasks.lastAttemptTaskId);
+    }
+
+    @Test
+    void attemptsForTaskWithoutAttemptsReturnEmptyList() {
+        tasks.attempts = List.of();
+
+        assertTrue(service.attempts(session(OWNER), TASK_ID).isEmpty());
+    }
+
     private static AuthenticatedSession session(UUID userId) {
         return new AuthenticatedSession(userId, UUID.randomUUID(), NOW.plusMinutes(15), NOW.plusHours(8), null);
     }
@@ -279,6 +329,9 @@ class TaskReadServiceTests {
         int lastLimit;
         long lastOffset;
         UUID lastTotalOwner;
+        List<AsyncTaskRepository.AttemptRow> attempts = List.of();
+        int attemptCalls;
+        UUID lastAttemptTaskId;
 
         StubTasks() {
             super(new JdbcTemplate());
@@ -312,6 +365,13 @@ class TaskReadServiceTests {
         public Optional<TaskRow> findById(UUID id) {
             findCalls++;
             return rows.stream().filter(row -> row.id().equals(id)).findFirst();
+        }
+
+        @Override
+        public List<AsyncTaskRepository.AttemptRow> listAttempts(UUID taskId) {
+            attemptCalls++;
+            lastAttemptTaskId = taskId;
+            return attempts;
         }
     }
 

@@ -154,8 +154,8 @@ public class AsyncTaskRepository {
 
     private static final String CANCEL_QUEUED = """
             UPDATE analysis.async_task
-               SET status = 'CANCELLED', finished_at = ?, lease_owner = NULL, lease_until = NULL,
-                   version = version + 1
+               SET status = 'CANCELLED', finished_at = ?, cancel_requested_at = COALESCE(cancel_requested_at, ?),
+                   lease_owner = NULL, lease_until = NULL, version = version + 1
              WHERE id = ? AND status IN ('PENDING','QUEUED') AND deleted = false
             """;
 
@@ -223,6 +223,27 @@ public class AsyncTaskRepository {
                 (id, task_id, attempt_no, previous_status, status, occurred_at, reason, trace_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """;
+
+    /**
+     * 一次任务的全部尝试，按 attempt_no 升序。
+     *
+     * <p>为什么按 attempt_no 而不是 startedAt 排：重试会沿用同一个 taskId 追加次数，
+     * attempt_no 是主键的一部分（{@code (task_id, attempt_no)}），天然唯一且单调；
+     * startedAt 在时钟回拨或并发写入时可能乱序，拿它当顺序键会让"第几次尝试"看起来是错的。
+     */
+    private static final String SELECT_ATTEMPTS = """
+            SELECT attempt_no, started_at, finished_at, result, error_code
+              FROM analysis.task_attempt
+             WHERE task_id = ?
+             ORDER BY attempt_no
+            """;
+
+    private static final RowMapper<AttemptRow> ATTEMPT_MAPPER = (rs, rowNum) -> new AttemptRow(
+            rs.getLong("attempt_no"),
+            rs.getObject("started_at", OffsetDateTime.class),
+            rs.getObject("finished_at", OffsetDateTime.class),
+            rs.getString("result"),
+            rs.getString("error_code"));
 
     private static final RowMapper<TaskRow> ROW_MAPPER = (rs, rowNum) -> new TaskRow(
             rs.getObject("id", UUID.class),
@@ -430,7 +451,7 @@ public class AsyncTaskRepository {
 
     /** 排队中直接取消。 */
     public int cancelQueued(UUID taskId, OffsetDateTime at) {
-        return jdbc.update(CANCEL_QUEUED, at, taskId);
+        return jdbc.update(CANCEL_QUEUED, at, at, taskId);
     }
 
     /** 把失败任务重新排队（重试同 taskId、attemptNo 由下一次领取递增）。 */
@@ -472,6 +493,19 @@ public class AsyncTaskRepository {
         jdbc.update(INSERT_EVENT, id, taskId, attemptNo,
                 previousStatus == null ? null : previousStatus.name(), status.name(),
                 occurredAt, reason, traceId);
+    }
+
+    /**
+     * 读一个任务的尝试历史（调用方必须已确认任务归属与读权限）。
+     *
+     * <p>{@code userId} 不在这里过滤：归属判定已在 {@code TaskService.get} 里做过一次，
+     * 这里再拼一次 owner 条件会让"任务存在但没尝试"与"不是你的任务"两种 200/404 语义混在一条 SQL 里。
+     */
+    public List<AttemptRow> listAttempts(UUID taskId) {
+        if (taskId == null) {
+            throw new IllegalArgumentException("taskId 不能为空");
+        }
+        return jdbc.query(SELECT_ATTEMPTS, ATTEMPT_MAPPER, taskId);
     }
 
     private static TaskRow mapRow(java.sql.ResultSet rs) throws java.sql.SQLException {
@@ -518,5 +552,15 @@ public class AsyncTaskRepository {
 
     /** 一条被收回的任务：新状态、以及需要关闭的 attempt 号。 */
     public record ExpiredLease(UUID taskId, TaskStatus status, long attemptNo) {
+    }
+
+    /**
+     * 一次尝试的读视图。
+     *
+     * <p>{@code result} 用字符串而不是 {@link TaskStatus}：列上允许为 {@code NULL}（还在跑），
+     * 而 {@code valueOf(null)} 会抛异常——这里把"未结束"当成正常的读结果，不是错误。
+     */
+    public record AttemptRow(long attemptNo, OffsetDateTime startedAt, OffsetDateTime finishedAt,
+                             String result, String errorCode) {
     }
 }

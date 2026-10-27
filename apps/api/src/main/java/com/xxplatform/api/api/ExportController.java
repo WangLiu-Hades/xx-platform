@@ -4,6 +4,7 @@ import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ApiResponses;
 import com.xxplatform.api.common.ApiResponses.FieldErrorDetail;
 import com.xxplatform.api.common.ErrorCode;
+import com.xxplatform.api.common.IdempotencyKeyHeader;
 import com.xxplatform.api.common.RequestIdFilter;
 import com.xxplatform.api.service.AuthenticatedSession;
 import com.xxplatform.api.service.ExportFormat;
@@ -45,13 +46,6 @@ public class ExportController {
 
     private static final Logger log = LoggerFactory.getLogger(ExportController.class);
 
-    /** 契约里 {@code IdempotencyKey} 的 header 名。 */
-    public static final String IDEMPOTENCY_HEADER = "Idempotency-Key";
-    /** 契约 minLength。 */
-    public static final int IDEMPOTENCY_MIN = 16;
-    /** 契约 maxLength。 */
-    public static final int IDEMPOTENCY_MAX = 160;
-
     private final SessionAuthenticator sessionAuthenticator;
     private final ExportService exportService;
 
@@ -69,12 +63,12 @@ public class ExportController {
      */
     @PostMapping("/exports")
     public ResponseEntity<ApiResponses> create(
-            @RequestHeader(value = IDEMPOTENCY_HEADER, required = false) String idempotencyKey,
+            @RequestHeader(value = IdempotencyKeyHeader.NAME, required = false) String idempotencyKey,
             @Valid @RequestBody ExportRequest body,
             HttpServletRequest request) {
 
         AuthenticatedSession session = sessionAuthenticator.require(request);
-        String key = requireIdempotencyKey(idempotencyKey);
+        String key = IdempotencyKeyHeader.require(idempotencyKey);
         ExportFormat format = requireFormat(body.format());
         String traceId = RequestIdFilter.currentTraceIdOrFallback();
 
@@ -83,25 +77,6 @@ public class ExportController {
 
         log.info("导出已受理 traceId={} taskId={} format={}", traceId, created.taskId(), format);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponses.success(created, traceId));
-    }
-
-    /**
-     * 契约要求 {@code Idempotency-Key} 必填且 16–160 字符。
-     *
-     * <p>为什么长度下限是 16：太短的键（如 {@code "1"}）很容易在客户端被复用，导致"不同导出
-     * 被当成同一次"；下限抬高了这种碰撞的概率成本。上限 160 与库列 {@code varchar(200)} 对齐
-     * （还留了 40 字符给服务端可能的前缀）。
-     */
-    private static String requireIdempotencyKey(String raw) {
-        if (raw == null || raw.isBlank()) {
-            throw validationError(IDEMPOTENCY_HEADER, "缺少 Idempotency-Key 请求头");
-        }
-        String key = raw.trim();
-        if (key.length() < IDEMPOTENCY_MIN || key.length() > IDEMPOTENCY_MAX) {
-            throw validationError(IDEMPOTENCY_HEADER,
-                    "Idempotency-Key 长度必须在 " + IDEMPOTENCY_MIN + "–" + IDEMPOTENCY_MAX + " 字符之间");
-        }
-        return key;
     }
 
     private static ExportFormat requireFormat(String raw) {

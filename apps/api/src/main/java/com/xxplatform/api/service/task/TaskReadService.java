@@ -65,6 +65,22 @@ public class TaskReadService {
         return mapper.view(tasks.get(taskId, session.userId()));
     }
 
+    /**
+     * 读一个任务的尝试历史（{@code GET /tasks/{taskId}/attempts}，W2 任务 9）。
+     *
+     * <p>先过 {@link TaskService#get} 再查 attempt：归属判定与"任务存在"是同一件事，
+     * 先查 attempt 再判归属会让"别人的任务恰好没有 attempt"返回空数组、而"别人的任务有 attempt"
+     * 返回 404——同一个越权 id 两种结果，等于变相泄露存在性。
+     */
+    public List<Map<String, Object>> attempts(AuthenticatedSession session, UUID taskId) {
+        if (taskId == null) {
+            throw new IllegalArgumentException("taskId 不能为空");
+        }
+        requirePermission(session.userId());
+        tasks.get(taskId, session.userId());
+        return mapper.attempts(repository.listAttempts(taskId));
+    }
+
     /** 提交端的权限判定；把码表放进配置之前，它只能在这里查一次。 */
     private void requirePermission(UUID userId) {
         if (!rbac.permissionCodes(userId).contains(PERMISSION)) {

@@ -2,7 +2,9 @@ package com.xxplatform.api.service.task;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
+import com.xxplatform.api.infra.AsyncTaskRepository.AttemptRow;
 import com.xxplatform.api.infra.AsyncTaskRepository.TaskRow;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -70,6 +72,42 @@ public class TaskViewMapper {
     public TaskPageView page(List<TaskRow> rows, int page, int pageSize, long total) {
         List<Map<String, Object>> items = rows.stream().map(this::view).toList();
         return new TaskPageView(items, page, pageSize, total);
+    }
+
+    /** 尝试历史；调用方负责先完成归属与权限判定。 */
+    public List<Map<String, Object>> attempts(List<AttemptRow> rows) {
+        return rows.stream().map(this::attempt).toList();
+    }
+
+    /**
+     * 一条尝试的契约形状（{@code TaskAttempt}）。
+     *
+     * <p>{@code finishedAt} 即使为空也照写 {@code null}：契约把它标成 {@code nullable: true}，
+     * 前端用它判断"还在跑"并计算耗时；省略字段会让"未结束"与"字段缺失"两种状态无法区分。
+     *
+     * <p>{@code errorCode} 与任务行同理折成契约枚举里的值：库里是排障码
+     * （{@code TASK_LEASE_EXPIRED} 等），契约 {@code TaskAttempt.errorCode} 引用 {@code ErrorCode}。
+     */
+    public Map<String, Object> attempt(AttemptRow row) {
+        Map<String, Object> view = new LinkedHashMap<>();
+        view.put("attemptNo", row.attemptNo());
+        view.put("startedAt", Instants.iso(row.startedAt()));
+        view.put("finishedAt", row.finishedAt() == null ? null : Instants.iso(row.finishedAt()));
+        putIfPresent(view, "result", row.result());
+        putIfPresent(view, "errorCode", contractErrorCode(row.errorCode()));
+        return view;
+    }
+
+    /** 只回传契约枚举里确实存在的码；排障码折成 {@code TASK_FAILED}。 */
+    private static String contractErrorCode(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return null;
+        }
+        try {
+            return ErrorCode.valueOf(raw).name();
+        } catch (IllegalArgumentException e) {
+            return "TASK_FAILED";
+        }
     }
 
     private Map<String, Object> parameterSnapshot(TaskRow row) {

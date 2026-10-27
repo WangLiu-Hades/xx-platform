@@ -182,10 +182,14 @@ if (-not $session.Sid) {
 $userId = $session.Json.data.userId
 Write-Host "  [OK]   userId $userId" -ForegroundColor DarkGray
 
-# Remove rows seeded by earlier runs so totals stay deterministic.
-$null = Query-Scalar "DELETE FROM analysis.task_attempt WHERE task_id IN (SELECT id FROM analysis.async_task WHERE trace_id = 'verify-tasks')"
-$null = Query-Scalar "DELETE FROM analysis.task_event WHERE task_id IN (SELECT id FROM analysis.async_task WHERE trace_id = 'verify-tasks')"
-$null = Query-Scalar "DELETE FROM analysis.async_task WHERE trace_id = 'verify-tasks'"
+# The caller shares this dev database with the other acceptance scripts (verify-export
+# creates real EXPORT tasks, verify-task-lifecycle seeds rows), and the list endpoint
+# counts every live row the caller owns. Clear the caller's rows so the count
+# assertions below describe this run only.
+$null = Query-Scalar "DELETE FROM analysis.export_job WHERE task_id IN (SELECT id FROM analysis.async_task WHERE owner_user_id = '$userId')"
+$null = Query-Scalar "DELETE FROM analysis.task_attempt WHERE task_id IN (SELECT id FROM analysis.async_task WHERE owner_user_id = '$userId')"
+$null = Query-Scalar "DELETE FROM analysis.task_event WHERE task_id IN (SELECT id FROM analysis.async_task WHERE owner_user_id = '$userId')"
+$null = Query-Scalar "DELETE FROM analysis.async_task WHERE owner_user_id = '$userId'"
 
 # A second account that owns one task; the caller must never see it. The user_code
 # carries a random suffix so repeated runs never collide on app_user_user_code_key.
