@@ -119,6 +119,20 @@ function Login-As([string]$loginName, [string]$password) {
     }
 }
 
+# A write needs a valid cookie+token pair to get past common/CsrfFilter. The pair is not
+# session-bound (validate only checks cookie hash + token hash), so an anonymous
+# GET /auth/csrf is enough to reach the routing layer.
+function Get-CsrfPair {
+    $r = Invoke-Curl @('--max-time', '10', "$BaseUrl/auth/csrf")
+    $j = ConvertTo-JsonSafe $r.Body
+    $token = $null
+    if ($j) { $token = $j.data.token }
+    return [pscustomobject]@{
+        Cookie = (Get-CookieValue $r.Headers 'CSRFID')
+        Token  = $token
+    }
+}
+
 function Get-ClientConfig([string]$sid, [string[]]$Extra = @()) {
     $curlArgs = @('--max-time', '10', "$BaseUrl/client-config") + $Extra
     if ($sid) { $curlArgs = @('-b', "SID=$sid") + $curlArgs }
@@ -324,9 +338,19 @@ SELECT count(*) FROM core.dictionary_binding b
 
 # ---------------------------------------------------------------- 7) guards
 Show-Step '7) Contract guards'
-$postCc = Invoke-Curl @('--max-time', '10', '-X', 'POST', "$BaseUrl/client-config", '-b', "SID=$($operator.Sid)")
+# common/CsrfFilter runs before routing: an untokened POST is 403, not 405, even though
+# this route is GET-only. Assert the gate first, then the method mismatch with a valid pair.
+$pair = Get-CsrfPair
+$postCcUntokened = Invoke-Curl @('--max-time', '10', '-X', 'POST', "$BaseUrl/client-config", '-b', "SID=$($operator.Sid)")
+Report ($postCcUntokened.Code -eq 403) 'POST /client-config without a CSRF pair -> 403 (gate before routing)' "HTTP $($postCcUntokened.Code)"
+Report ($postCcUntokened.Body -match '"code"\s*:\s*"AUTH_CSRF_INVALID"') 'gate rejection uses AUTH_CSRF_INVALID' "body: $($postCcUntokened.Body.Trim())"
+
+$postCc = Invoke-Curl @(
+    '--max-time', '10', '-X', 'POST', "$BaseUrl/client-config",
+    '-b', "SID=$($operator.Sid); CSRFID=$($pair.Cookie)",
+    '-H', "X-CSRF-Token: $($pair.Token)")
 $postCcJson = ConvertTo-JsonSafe $postCc.Body
-Report ($postCc.Code -eq 405) 'POST /client-config -> 405' "HTTP $($postCc.Code)"
+Report ($postCc.Code -eq 405) 'trusted POST /client-config -> 405' "HTTP $($postCc.Code)"
 if ($postCcJson) {
     Report ($postCcJson.code -eq 'METHOD_NOT_ALLOWED') 'POST /client-config uses METHOD_NOT_ALLOWED' "code: $($postCcJson.code)"
     Report ($null -eq $postCcJson.data) 'METHOD_NOT_ALLOWED body is the contract envelope' "data: $($postCcJson.data)"

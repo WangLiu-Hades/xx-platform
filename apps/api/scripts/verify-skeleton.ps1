@@ -66,6 +66,25 @@ function Get-HeaderValue($headers, [string]$name) {
     return $null
 }
 
+function Get-CookieValue($headers, [string]$name) {
+    $m = [regex]::Match($headers, "(?im)^\s*Set-Cookie\s*:\s*$([regex]::Escape($name))=([^;]+)")
+    if ($m.Success) { return $m.Groups[1].Value }
+    return $null
+}
+
+# A write needs a valid cookie+token pair to get past common/CsrfFilter. The pair is not
+# tied to a session (CsrfTokenService.validate only checks cookie hash + token hash), so
+# an anonymous GET /auth/csrf is enough to reach the routing layer.
+function Get-CsrfPair {
+    $r = Invoke-Curl @('--max-time', '10', "$BaseUrl/auth/csrf")
+    $token = $null
+    if ($r.Body -match '"token"\s*:\s*"([^"]+)"') { $token = $Matches[1] }
+    return [pscustomobject]@{
+        Cookie = (Get-CookieValue $r.Headers 'CSRFID')
+        Token  = $token
+    }
+}
+
 # ---------------------------------------------------------------- reachability
 Show-Step 'Service reachability'
 $probe = Invoke-Curl @("--max-time", "5", "$BaseUrl/health")
@@ -99,11 +118,25 @@ $corsEvil = Invoke-Curl @(
 Report ($corsEvil.Code -eq 403) 'non-whitelisted Origin is still rejected' "HTTP $($corsEvil.Code)"
 
 # ---------------------------------------------------------------- 2) 405
-# GET /health is a GET-only mapping; a POST must be 405 METHOD_NOT_ALLOWED, never the
-# generic 500 that the catch-all handler used to produce.
-Show-Step '2) method not allowed'
-$wrongMethod = Invoke-Curl @('-X', 'POST', "$BaseUrl/health")
-Report ($wrongMethod.Code -eq 405) 'POST to a GET-only route returns 405' "HTTP $($wrongMethod.Code)"
+# GET /health is a GET-only mapping; a trusted POST must be 405 METHOD_NOT_ALLOWED, never
+# the generic 500 that the catch-all handler used to produce.
+#
+# Since the write gate (common/CsrfFilter) runs before the DispatcherServlet, an untokened
+# POST is rejected with 403 AUTH_CSRF_INVALID first. Both layers are asserted here: the
+# 403 proves the gate wins over routing, the 405 proves method mismatch is still handled
+# correctly once the request is trusted.
+Show-Step '2) write gate, then method not allowed'
+$untokened = Invoke-Curl @('-X', 'POST', "$BaseUrl/health")
+Report ($untokened.Code -eq 403) 'POST without a CSRF pair is rejected by the gate (403)' "HTTP $($untokened.Code)"
+Report ($untokened.Body -match '"code"\s*:\s*"AUTH_CSRF_INVALID"') 'gate rejection code is AUTH_CSRF_INVALID' "body: $($untokened.Body.Trim())"
+
+$pair = Get-CsrfPair
+$wrongMethod = Invoke-Curl @(
+    '-X', 'POST', "$BaseUrl/health",
+    '-b', "CSRFID=$($pair.Cookie)",
+    '-H', "X-CSRF-Token: $($pair.Token)"
+)
+Report ($wrongMethod.Code -eq 405) 'trusted POST to a GET-only route returns 405' "HTTP $($wrongMethod.Code)"
 Report ($wrongMethod.Body -match '"code"\s*:\s*"METHOD_NOT_ALLOWED"') 'error code is METHOD_NOT_ALLOWED' "body: $($wrongMethod.Body.Trim())"
 Report ($wrongMethod.Body -notmatch 'SYSTEM_INTERNAL') 'not misreported as SYSTEM_INTERNAL' ''
 $allow = Get-HeaderValue $wrongMethod.Headers 'Allow'

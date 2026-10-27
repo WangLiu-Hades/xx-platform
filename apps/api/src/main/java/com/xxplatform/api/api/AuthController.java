@@ -6,6 +6,7 @@ import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
 import com.xxplatform.api.common.RequestCookies;
 import com.xxplatform.api.common.RequestIdFilter;
+import com.xxplatform.api.common.SameOriginVerifier;
 import com.xxplatform.api.config.CsrfProperties;
 import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.service.AuthenticatedSession;
@@ -82,7 +83,7 @@ public class AuthController {
      */
     @GetMapping("/auth/csrf")
     public ResponseEntity<ApiResponses> getCsrfToken(HttpServletRequest request, HttpServletResponse response) {
-        if (!isSameOrigin(request)) {
+        if (!SameOriginVerifier.isSameOrigin(request)) {
             // 契约把 CSRF/Origin 失败固定映射为 403 AUTH_CSRF_INVALID（不是 PERMISSION_DENIED）
             throw new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信");
         }
@@ -128,7 +129,8 @@ public class AuthController {
      * </ol>
      *
      * <p>Origin 校验不在这里重复：{@code developmentCorsFilter}（{@code WebConfiguration}）
-     * 在过滤器阶段就按 {@code Origin} 拒绝跨源请求，且拒绝体已是契约错误壳。
+     * 与 {@link com.xxplatform.api.common.CsrfFilter} 都在过滤器阶段按 {@code Origin}
+     * 拒绝跨源请求，且拒绝体已是契约错误壳；{@link SameOriginVerifier} 是两边共用的同一份规则。
      * 在控制器再写一遍只会得到两套可能不一致的规则。
      *
      * <p>响应体只返回 {@code userId/idleExpiresAt/absoluteExpiresAt}——契约 {@code SessionData}
@@ -171,10 +173,13 @@ public class AuthController {
      * {@code X-CSRF-Token}）、响应 200/400/401/403/500、200 体 {@code ActionResult}
      * 只有 {@code accepted}（{@code additionalProperties:false}）。
      *
-     * <p><b>为什么先认证、再校验 CSRF</b>：两个检查都必须发生在"撤销会话"之前（否则就成了
-     * 跨站强制下线），但失败时给哪个码有区别。没登录就该看到 401（前端据此清本地身份），
-     * 而不是 403（会让人以为 Origin 配错了）。CSRF 校验只对"已认证的写请求"有意义，
-     * 所以在认证之后做。
+     * <p><b>为什么这里还留着一次 CSRF 校验</b>：{@link com.xxplatform.api.common.CsrfFilter}
+     * 已经在过滤器里拦下了"无 token 的写请求"，正常路径走不到这里。保留这一次是防御纵深：
+     * 过滤器的白名单/路径匹配将来若被改动（例如误把 logout 加进豁免），认证后的这道检查
+     * 仍然保证"撤销会话必须先证明来源可信"，不会退化成跨站强制下线。
+     *
+     * <p><b>失败顺序</b>：闸门在认证之前，所以"未登录 + 无 token"现在得到 403 而不是 401；
+     * 但"未登录 + 有效 token 对"仍是 401（闸门放行、认证拒绝），前端的 401 → 清身份逻辑不变。
      *
      * <p><b>为什么响应里还要清 Cookie</b>：SID 是 HttpOnly，前端 JS 删不掉；服务端不清，
      * 浏览器会一直带着一个已撤销的 SID，下一个请求得到 401 而不是重新取 CSRF 后的干净状态。
@@ -285,68 +290,4 @@ public class AuthController {
         return request.getRemoteAddr();
     }
 
-    /**
-     * 同源校验。
-     *
-     * <p>规则：
-     * <ul>
-     *   <li>有 {@code Origin} → 其 host:port 必须等于本次请求的 Host（含代理头推导）；
-     *   <li>无 {@code Origin} 但有 {@code Referer} → 取 Referer 的 origin 部分按同一规则比较；
-     *   <li>两者都没有 → 视为非浏览器客户端，放行（curl/服务端调用不受 CSRF 攻击模型影响，
-     *       真正防线是 Cookie + token 双要素本身）。</li>
-     * </ul>
-     *
-     * <p>比较的是 {@code scheme://host:port} 三元组：只比 host 会放过 http→https 的降级攻击。
-     * 由于本地是 http、生产是 https，这里用"请求自身的 scheme"作为期望值，
-     * 而不是硬编码 https——否则本地联调全被拒。
-     */
-    private boolean isSameOrigin(HttpServletRequest request) {
-        String origin = request.getHeader("Origin");
-        if (origin == null || origin.isBlank()) {
-            String referer = request.getHeader("Referer");
-            if (referer == null || referer.isBlank()) {
-                return true; // 非浏览器客户端
-            }
-            origin = originOf(referer);
-            if (origin == null) {
-                return false; // 有 Referer 但解析不出 origin（格式非法）
-            }
-        }
-        String expected = requestOrigin(request);
-        boolean ok = origin.equalsIgnoreCase(expected);
-        if (!ok) {
-            log.debug("拒绝 CSRF 请求：Origin={} 期望={}", origin, expected);
-        }
-        return ok;
-    }
-
-    /** 本次请求对外可见的 {@code scheme://host[:port]}。 */
-    private String requestOrigin(HttpServletRequest request) {
-        // 反向代理/网关后需要 ForwardedHeaderFilter 或已配置 server.forward-headers-strategy，
-        // 这里直接信任容器解析后的值，不在代码里自行拼 X-Forwarded-*（避免可伪造）。
-        String scheme = request.getScheme();
-        String host = request.getServerName();
-        int port = request.getServerPort();
-        boolean defaultPort = ("http".equalsIgnoreCase(scheme) && port == 80)
-                || ("https".equalsIgnoreCase(scheme) && port == 443);
-        return defaultPort ? scheme + "://" + host : scheme + "://" + host + ":" + port;
-    }
-
-    /** 从绝对 URL 中取出 {@code scheme://host[:port]}；失败返回 null。 */
-    private String originOf(String url) {
-        try {
-            java.net.URI uri = java.net.URI.create(url);
-            String scheme = uri.getScheme();
-            String host = uri.getHost();
-            if (scheme == null || host == null) {
-                return null;
-            }
-            int port = uri.getPort();
-            boolean defaultPort = ("http".equalsIgnoreCase(scheme) && (port == -1 || port == 80))
-                    || ("https".equalsIgnoreCase(scheme) && (port == -1 || port == 443));
-            return defaultPort ? scheme + "://" + host : scheme + "://" + host + ":" + port;
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
 }

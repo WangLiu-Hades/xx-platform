@@ -428,9 +428,20 @@ SELECT r.id FROM auth.role r
 
 # ---------------------------------------------------------------- 6) contract guards
 Show-Step '6) Contract guards'
-$postMe = Invoke-Curl @('--max-time', '10', '-X', 'POST', "$BaseUrl/me", '-b', "SID=$($admin.Sid)")
+# The write gate (common/CsrfFilter) runs before routing, so an untokened POST is 403 even
+# though /me is GET-only. Both layers are asserted: 403 proves the gate wins over routing,
+# 405 proves the method mismatch is still handled once the request is trusted.
+$pair = Get-CsrfPair
+$postMeUntokened = Invoke-Curl @('--max-time', '10', '-X', 'POST', "$BaseUrl/me", '-b', "SID=$($admin.Sid)")
+Report ($postMeUntokened.Code -eq 403) 'POST /me without a CSRF pair -> 403 (gate before routing)' "HTTP $($postMeUntokened.Code)"
+Report ($postMeUntokened.Body -match '"code"\s*:\s*"AUTH_CSRF_INVALID"') 'gate rejection uses AUTH_CSRF_INVALID' "body: $($postMeUntokened.Body.Trim())"
+
+$postMe = Invoke-Curl @(
+    '--max-time', '10', '-X', 'POST', "$BaseUrl/me",
+    '-b', "SID=$($admin.Sid); CSRFID=$($pair.Cookie)",
+    '-H', "X-CSRF-Token: $($pair.Token)")
 $postMeJson = ConvertTo-JsonSafe $postMe.Body
-Report ($postMe.Code -eq 405) 'POST /me -> 405' "HTTP $($postMe.Code)"
+Report ($postMe.Code -eq 405) 'trusted POST /me -> 405' "HTTP $($postMe.Code)"
 if ($postMeJson) {
     Report ($postMeJson.code -eq 'METHOD_NOT_ALLOWED') 'POST /me uses METHOD_NOT_ALLOWED' "code: $($postMeJson.code)"
     Report ($null -eq $postMeJson.data) 'METHOD_NOT_ALLOWED body is the contract envelope' "data: $($postMeJson.data)"
