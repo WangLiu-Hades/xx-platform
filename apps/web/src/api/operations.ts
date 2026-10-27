@@ -45,8 +45,8 @@ export const operationCatalog = {
     "path": "/auth/session/renew",
     "summary": "续期当前 Cookie 会话",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-001：工程实施版写 Token 续期，ADR-007 拟议 Cookie Session；续期是否显式、空闲与绝对期限尚需安全负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getMe": {
     "method": "GET",
@@ -165,8 +165,8 @@ export const operationCatalog = {
     "path": "/ingestion-batches",
     "summary": "提交文件接入批次",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-004：真实设备协议、字段/坐标映射和稳定去重键待设备方确认；接口仅接收已上传文件与版本引用。"
+    "pending": false,
+    "pendingReason": null
   },
   "getIngestionBatch": {
     "method": "GET",
@@ -197,16 +197,16 @@ export const operationCatalog = {
     "path": "/ingestion-batches/{batchId}/replay",
     "summary": "按版本回放批次",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-004/P-005：回放去重键、映射版本及源协议待确认；不能覆盖原始记录。"
+    "pending": false,
+    "pendingReason": null
   },
   "createIngestionBackfill": {
     "method": "POST",
     "path": "/ingestion/backfills",
     "summary": "创建补数任务",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-004/P-005：补数来源协议与许可时间窗待设备/数据负责人确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getDashboardSummary": {
     "method": "GET",
@@ -253,32 +253,32 @@ export const operationCatalog = {
     "path": "/faces/search-tasks",
     "summary": "创建人像相似检索任务",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-007：模型、阈值、候选上限与人工复核规则未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listFaceSearchResults": {
     "method": "GET",
     "path": "/faces/search-tasks/{taskId}/results",
     "summary": "分页读取人像候选",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-007：候选展示和模型版本保留，可信阈值仍待签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "requestDecryption": {
     "method": "POST",
     "path": "/decrypt-requests",
     "summary": "提交解密申请",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-008：真实解密、审批、密钥和明文暴露规则未签认；此接口边界仅允许申请和状态。"
+    "pending": false,
+    "pendingReason": null
   },
   "getDecryptionRequest": {
     "method": "GET",
     "path": "/decrypt-requests/{requestId}",
     "summary": "查询解密申请状态",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-008：明文结果访问方式待安全负责人确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "createContext": {
     "method": "POST",
@@ -533,8 +533,8 @@ export const operationCatalog = {
     "path": "/watch-rules",
     "summary": "创建布控草稿",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-014/P-015：匹配算法、频控及通知规则未签认；创建 DRAFT，激活前重新校验。"
+    "pending": false,
+    "pendingReason": null
   },
   "getWatchRule": {
     "method": "GET",
@@ -549,8 +549,8 @@ export const operationCatalog = {
     "path": "/watch-rules/{ruleId}",
     "summary": "修改规则并生成新版本",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-014：运行中规则变更生效边界待签认；历史命中仍引用旧版本。"
+    "pending": false,
+    "pendingReason": null
   },
   "deleteWatchRule": {
     "method": "DELETE",
@@ -565,8 +565,8 @@ export const operationCatalog = {
     "path": "/watch-rules/{ruleId}/activate",
     "summary": "激活布控草稿",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-014/P-015：激活前规则匹配和通知频控必须由业务确认；接口只定义状态边界。"
+    "pending": false,
+    "pendingReason": null
   },
   "revokeWatchRule": {
     "method": "POST",
@@ -613,8 +613,8 @@ export const operationCatalog = {
     "path": "/notification-tasks",
     "summary": "创建定时通知任务",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-014/P-015：模板、频控、通道及回执规则待确认；创建请求保留受控引用。"
+    "pending": false,
+    "pendingReason": null
   },
   "getNotificationTask": {
     "method": "GET",
@@ -637,8 +637,8 @@ export const operationCatalog = {
     "path": "/notification-tasks/{notificationTaskId}",
     "summary": "更新未终结通知计划",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-015：错过执行窗口的补发/频控规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "cancelNotificationTask": {
     "method": "POST",
@@ -653,8 +653,8 @@ export const operationCatalog = {
     "path": "/notification-tasks/{notificationTaskId}/retry",
     "summary": "重试符合条件的失败通知",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-015：回执不明时的对账、重试次数和失败转人工策略未定，不能盲重发。"
+    "pending": false,
+    "pendingReason": null
   },
   "listDeliveries": {
     "method": "GET",
@@ -725,8 +725,8 @@ export const operationCatalog = {
     "path": "/person-libraries/{libraryId}/members",
     "summary": "添加人员库成员",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002/P-016：成员身份与源数据权限继承规则未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "removePersonLibraryMember": {
     "method": "DELETE",
@@ -741,40 +741,40 @@ export const operationCatalog = {
     "path": "/person-libraries/{libraryId}/imports",
     "summary": "从文件导入人员库成员",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：人员库导入模板、逐行校验和去重规则未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportPersonLibrary": {
     "method": "POST",
     "path": "/person-libraries/{libraryId}/exports",
     "summary": "导出人员库",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002/P-016：人员库导出字段、数据范围和审批规则未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "searchProfiles": {
     "method": "POST",
     "path": "/profiles/search",
     "summary": "检索人车档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源档案生成与检索字段需产品/算法签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getProfile": {
     "method": "GET",
     "path": "/profiles/{profileId}",
     "summary": "查看档案详情",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listProfileTargets": {
     "method": "GET",
     "path": "/profiles/{profileId}/targets",
     "summary": "查看档案关联目标",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listProfileEvidence": {
     "method": "GET",
@@ -797,80 +797,80 @@ export const operationCatalog = {
     "path": "/profiles/{profileId}/trajectories",
     "summary": "查看档案轨迹",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "createProfileCorrection": {
     "method": "POST",
     "path": "/profiles/{profileId}/corrections",
     "summary": "人工修订档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "mergeProfiles": {
     "method": "POST",
     "path": "/profiles/merge",
     "summary": "合并档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "splitProfile": {
     "method": "POST",
     "path": "/profiles/{profileId}/split",
     "summary": "拆分档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "resolveProfileConflict": {
     "method": "POST",
     "path": "/profiles/{profileId}/conflicts/{conflictId}/resolve",
     "summary": "处理档案证据冲突",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportProfile": {
     "method": "POST",
     "path": "/profiles/{profileId}/exports",
     "summary": "导出档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016/P-021：档案敏感字段和导出审批策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listTrendModels": {
     "method": "GET",
     "path": "/trend-models",
     "summary": "查询趋势模型",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：常驻以外的模型类型与可用参数待算法负责人确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "createTrendModel": {
     "method": "POST",
     "path": "/trend-models",
     "summary": "新建趋势模型",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：模型类型、输入与有效数据筛选规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getTrendModel": {
     "method": "GET",
     "path": "/trend-models/{modelId}",
     "summary": "查看趋势模型详情",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "updateTrendModel": {
     "method": "PUT",
     "path": "/trend-models/{modelId}",
     "summary": "编辑趋势模型",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listModelParameterVersions": {
     "method": "GET",
@@ -885,8 +885,8 @@ export const operationCatalog = {
     "path": "/trend-models/{modelId}/parameter-versions",
     "summary": "新增模型参数版本",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：参数目录、匹配规则与阈值尚未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getModelParameterVersion": {
     "method": "GET",
@@ -901,32 +901,32 @@ export const operationCatalog = {
     "path": "/model-tags",
     "summary": "查询模型标签目录",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：标签代码和含义待模型负责人确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "runTrendModel": {
     "method": "POST",
     "path": "/trend-models/{modelId}/runs",
     "summary": "执行趋势模型",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：算法条件、阈值与复核流程尚未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listTrendModelResults": {
     "method": "GET",
     "path": "/trend-models/{modelId}/results",
     "summary": "查看模型执行结果",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-017：结果置信度解释与标签规则尚未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getTrendModelResult": {
     "method": "GET",
     "path": "/trend-models/{modelId}/results/{resultId}",
     "summary": "查看模型结果详情",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：跨源关联、人工修订、合并拆分和档案冲突解决规则待产品与算法负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listSites": {
     "method": "GET",
@@ -981,8 +981,8 @@ export const operationCatalog = {
     "path": "/devices",
     "summary": "新增设备",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018：设备类型、厂商型号和序列号唯一性规则待设备方确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getDevice": {
     "method": "GET",
@@ -997,8 +997,8 @@ export const operationCatalog = {
     "path": "/devices/{deviceId}",
     "summary": "编辑设备信息",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018：可编辑设备字段和厂商同步语义待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "deleteDevice": {
     "method": "DELETE",
@@ -1021,16 +1021,16 @@ export const operationCatalog = {
     "path": "/devices/{deviceId}/parameters",
     "summary": "读取设备参数",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018/P-019：厂商设备参数、命令协议、审批与确认策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "updateDeviceParameters": {
     "method": "POST",
     "path": "/devices/{deviceId}/parameter-updates",
     "summary": "提交设备参数更新",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018/P-019：厂商设备参数、命令协议、审批与确认策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listDeviceStatusHistory": {
     "method": "GET",
@@ -1045,24 +1045,24 @@ export const operationCatalog = {
     "path": "/devices/{deviceId}/capture-statistics",
     "summary": "查看设备采集历史",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-006：采集与入库指标的窗口和去重口径待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "importDevices": {
     "method": "POST",
     "path": "/devices/imports",
     "summary": "批量导入设备",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018：导入模板和设备型号字段映射待厂商确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportDevices": {
     "method": "POST",
     "path": "/devices/exports",
     "summary": "导出设备清单",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002：设备导出范围与权限策略待安全负责人确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listDeviceGroups": {
     "method": "GET",
@@ -1141,8 +1141,8 @@ export const operationCatalog = {
     "path": "/device-commands",
     "summary": "下发远程设备命令",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018/P-019：厂商设备参数、命令协议、审批与确认策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getDeviceCommand": {
     "method": "GET",
@@ -1173,8 +1173,8 @@ export const operationCatalog = {
     "path": "/device-commands/{taskId}/retry",
     "summary": "重试失败的设备命令",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018/P-019：厂商设备参数、命令协议、审批与确认策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listReports": {
     "method": "GET",
@@ -1189,8 +1189,8 @@ export const operationCatalog = {
     "path": "/reports",
     "summary": "创建报表任务",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-006/P-020：细分报表字段、指标口径、时间粒度和保留期未逐项签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getReport": {
     "method": "GET",
@@ -1213,8 +1213,8 @@ export const operationCatalog = {
     "path": "/reports/{reportId}/preview",
     "summary": "预览单报表",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-006/P-020：细分报表字段、指标口径、时间粒度和保留期未逐项签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "retryReport": {
     "method": "POST",
@@ -1245,8 +1245,8 @@ export const operationCatalog = {
     "path": "/users",
     "summary": "新增用户",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-021：初始密码策略和首次登录要求待安全确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getUser": {
     "method": "GET",
@@ -1261,8 +1261,8 @@ export const operationCatalog = {
     "path": "/users/{userId}",
     "summary": "编辑用户",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002/P-021：范围缩小对会话与在途任务的生效规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "deleteUser": {
     "method": "DELETE",
@@ -1277,8 +1277,8 @@ export const operationCatalog = {
     "path": "/users/{userId}/disable",
     "summary": "禁用用户",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-001/P-021：禁用后现有会话和在途任务的处理策略待签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "enableUser": {
     "method": "POST",
@@ -1293,8 +1293,8 @@ export const operationCatalog = {
     "path": "/users/{userId}/password",
     "summary": "修改用户密码",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-021：用户生命周期、日志保留、脱敏及导出范围待安全负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listRoles": {
     "method": "GET",
@@ -1309,8 +1309,8 @@ export const operationCatalog = {
     "path": "/roles",
     "summary": "新增角色",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002：完整权限目录和角色默认数据范围待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getRole": {
     "method": "GET",
@@ -1341,24 +1341,24 @@ export const operationCatalog = {
     "path": "/roles/{roleId}/permissions",
     "summary": "设置角色菜单和按钮权限",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002：菜单、按钮和接口权限码目录待产品与安全确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "setRoleScopes": {
     "method": "PUT",
     "path": "/roles/{roleId}/scopes",
     "summary": "设置角色场所和数据范围",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-002：场所与数据范围组合以及权限收缩生效规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "searchAuditEvents": {
     "method": "POST",
     "path": "/audit-events/search",
     "summary": "查询操作日志",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-021：管理员可见范围、日志保留与字段脱敏待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getAuditEvent": {
     "method": "GET",
@@ -1373,24 +1373,24 @@ export const operationCatalog = {
     "path": "/audit-events/export",
     "summary": "导出操作日志",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-021：用户生命周期、日志保留、脱敏及导出范围待安全负责人签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "searchSmsLogs": {
     "method": "POST",
     "path": "/deliveries/search",
     "summary": "查询短信送达日志",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-015/P-021：短信通道回执和收件人脱敏规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportSmsLogs": {
     "method": "POST",
     "path": "/deliveries/export",
     "summary": "导出短信送达日志",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-015/P-021：短信日志导出字段、范围与审批规则待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listPermissionCatalog": {
     "method": "GET",
@@ -1421,16 +1421,16 @@ export const operationCatalog = {
     "path": "/targets/resolve",
     "summary": "批量解析或登记目标代理ID",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-004/P-016：标识规范化与FACE身份代理规则待确认；接口不跨类型推断同一人。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportMetrics": {
     "method": "POST",
     "path": "/metrics/exports",
     "summary": "导出首页或运维指标图表",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-006：精确指标公式与数据源待业务签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "removeDatasetItem": {
     "method": "DELETE",
@@ -1445,8 +1445,8 @@ export const operationCatalog = {
     "path": "/notification-templates",
     "summary": "查询已批准通知模板",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-015：模板正文/变量目录须产品确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listPlatformMessages": {
     "method": "GET",
@@ -1461,16 +1461,16 @@ export const operationCatalog = {
     "path": "/person-libraries/{libraryId}/persons",
     "summary": "新增库内人员及手工档案",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：登记标识重复/身份冲突的人工处理策略待确认。"
+    "pending": false,
+    "pendingReason": null
   },
   "listProfileConflicts": {
     "method": "GET",
     "path": "/profiles/{profileId}/conflicts",
     "summary": "读取可复核档案冲突",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：冲突识别与裁决依据尚未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "getImportTemplate": {
     "method": "GET",
@@ -1485,8 +1485,8 @@ export const operationCatalog = {
     "path": "/person-libraries/imports",
     "summary": "批量导入库列表和库内人员",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-016：人员重复判定/身份冲突策略需确认，不自动合并档案。"
+    "pending": false,
+    "pendingReason": null
   },
   "exportPersonLibraries": {
     "method": "POST",
@@ -1501,16 +1501,16 @@ export const operationCatalog = {
     "path": "/device-commands/{taskId}/revisions",
     "summary": "重建参数配置任务",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-018/P-019：参数目录/厂商协议/高风险确认规则需签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "changeMyPassword": {
     "method": "POST",
     "path": "/me/password",
     "summary": "修改本人密码",
     "permission": null,
-    "pending": true,
-    "pendingReason": "P-021：密码策略未签认。"
+    "pending": false,
+    "pendingReason": null
   },
   "deleteResourcesBatch": {
     "method": "POST",
@@ -1540,6 +1540,46 @@ export const operationCatalog = {
     "method": "POST",
     "path": "/batch-revocations",
     "summary": "批量撤销布控或通知计划",
+    "permission": null,
+    "pending": false,
+    "pendingReason": null
+  },
+  "listActionApprovals": {
+    "method": "GET",
+    "path": "/action-approvals",
+    "summary": "查询本人申请或待本人复核的审批",
+    "permission": null,
+    "pending": false,
+    "pendingReason": null
+  },
+  "createActionApproval": {
+    "method": "POST",
+    "path": "/action-approvals",
+    "summary": "创建冻结的敏感动作审批申请",
+    "permission": null,
+    "pending": false,
+    "pendingReason": null
+  },
+  "getActionApproval": {
+    "method": "GET",
+    "path": "/action-approvals/{approvalId}",
+    "summary": "查询受控审批详情",
+    "permission": null,
+    "pending": false,
+    "pendingReason": null
+  },
+  "decideActionApproval": {
+    "method": "POST",
+    "path": "/action-approvals/{approvalId}/decisions",
+    "summary": "提交独立复核决定",
+    "permission": null,
+    "pending": false,
+    "pendingReason": null
+  },
+  "readDecryptionResult": {
+    "method": "POST",
+    "path": "/decrypt-requests/{requestId}/result",
+    "summary": "指定接收人一次性查看受控解密结果",
     "permission": null,
     "pending": false,
     "pendingReason": null

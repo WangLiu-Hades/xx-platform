@@ -55,3 +55,5 @@ Shared common/infra/config and database migration integration belong to DEV01.
 DEV02 consumes these capabilities and owns data-domain orchestration.
 DEV04 supplies parameterized queries and Worker execution.
 Do not create a second TaskStore or authorization implementation.
+
+真实鉴权、审批、共享任务与数据查询的联通尚待完成；模拟测试通过不代表真实业务链路验收完成。
