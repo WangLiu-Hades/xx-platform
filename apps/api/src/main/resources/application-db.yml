@@ -54,3 +54,10 @@ spring:
 xx:
   task:
     reaper-enabled: true
+
+  # 审批冻结载荷的开发密钥（AES-256，base64 编码的 32 字节）。
+  # ⚠ 仅限本地联调：生产必须通过 XX_APPROVAL_PAYLOAD_KEY 注入真实密钥，并把 key-id 一起升级，
+  #   否则历史密文无法区分是用哪把钥匙封的。写在这里是为了本地起库即可跑审批，
+  #   不写则创建审批会返回 503（密钥未配置）。
+  approval:
+    payload-key: BzUuA/4dt8MHLLyD2CTrGyPQpFFwP3oNHwD2YKH1L48=

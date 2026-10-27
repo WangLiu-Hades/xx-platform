@@ -119,6 +119,24 @@ xx:
     storage-root: ${user.home}/.xx-platform/files
     max-bytes: 10485760
 
+  # 敏感动作审批（见 service/approval/ApprovalService 与 config/ApprovalProperties）
+  #
+  # 时间口径来自 PD-2026-10-19.v1（暂定）：申请 24 小时过期；批准后的执行许可 10 分钟，
+  # 解密类 5 分钟，且一律不超过申请本身的 expiresAt。
+  #
+  # payload-key 是冻结快照的 AES-256 密钥（base64，32 字节）。默认留空表示"未配置"——
+  # 此时创建/读取审批返回 503，而不是退化成明文落库。生产由部署 secret 注入；
+  # 本地 db profile 在 application-db.yml 里放了一个仅限开发的默认值。
+  approval:
+    payload-key: ${XX_APPROVAL_PAYLOAD_KEY:}
+    key-id: local-dev-v1
+    ttl: 24h
+    grant-ttl: 10m
+    decryption-grant-ttl: 5m
+    policy-version: PD-2026-10-19.v1
+    page-size-default: 20
+    page-size-max: 100
+
   # 认证策略（任务 5：POST /auth/login）
   auth:
     # 登录失败频控。计数在进程内，多实例部署时实际阈值 = 实例数 × max-failures，
