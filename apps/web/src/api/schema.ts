@@ -5006,7 +5006,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             targets?: components["schemas"]["ContextTarget"][];
         };
@@ -5703,7 +5703,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 0
              */
-            minResultScore: number;
+            minResultScore?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             regionCodes?: string[];
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
@@ -9413,7 +9413,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             siteIds?: string[];
             /**
@@ -9421,13 +9421,13 @@ export type components = {
              * @default captureTime
              * @enum {string}
              */
-            sortBy: "captureTime" | "captureId";
+            sortBy?: "captureTime" | "captureId";
             /**
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default DESC
              * @enum {string}
              */
-            sortOrder: "ASC" | "DESC";
+            sortOrder?: "ASC" | "DESC";
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             targetIds?: string[];
             timeRange: components["schemas"]["TimeRange"];
@@ -9515,7 +9515,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 0
              */
-            minSimilarity: number;
+            minSimilarity?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             siteIds?: string[];
             timeRange: components["schemas"]["TimeRange"];
@@ -9706,7 +9706,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             siteIds?: string[];
             /**
@@ -9714,13 +9714,13 @@ export type components = {
              * @default captureTime
              * @enum {string}
              */
-            sortBy: "captureTime" | "captureId";
+            sortBy?: "captureTime" | "captureId";
             /**
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default DESC
              * @enum {string}
              */
-            sortOrder: "ASC" | "DESC";
+            sortOrder?: "ASC" | "DESC";
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             targetIds?: string[];
             timeRange: components["schemas"]["TimeRange"];
@@ -11908,7 +11908,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             siteIds?: string[];
             /**
@@ -11916,13 +11916,13 @@ export type components = {
              * @default captureTime
              * @enum {string}
              */
-            sortBy: "captureTime" | "captureId";
+            sortBy?: "captureTime" | "captureId";
             /**
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default DESC
              * @enum {string}
              */
-            sortOrder: "ASC" | "DESC";
+            sortOrder?: "ASC" | "DESC";
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             targetIds?: string[];
             timeRange: components["schemas"]["TimeRange"];
@@ -14031,7 +14031,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             plateColor?: string;
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
@@ -14043,13 +14043,13 @@ export type components = {
              * @default captureTime
              * @enum {string}
              */
-            sortBy: "captureTime" | "captureId";
+            sortBy?: "captureTime" | "captureId";
             /**
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default DESC
              * @enum {string}
              */
-            sortOrder: "ASC" | "DESC";
+            sortOrder?: "ASC" | "DESC";
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             targetIds?: string[];
             timeRange: components["schemas"]["TimeRange"];
@@ -16661,7 +16661,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             /** @description 敏感收件人精确条件，仅 POST 请求体。 */
             recipientQuery?: string;
             /**
@@ -16669,7 +16669,7 @@ export type components = {
              * @default sentAt
              * @enum {string}
              */
-            sortBy: "sentAt" | "deliveryId";
+            sortBy?: "sentAt" | "deliveryId";
             sortOrder?: components["schemas"]["SortOrder"];
             /** @description 可选字段省略表示未提供；仅nullable字段允许null。 */
             taskName?: string;
@@ -16946,7 +16946,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default false
              */
-            registerMissing: boolean;
+            registerMissing?: boolean;
         };
         /**
          * @description 有限状态/类型目录，英文值稳定，展示文本来自字典。
@@ -17445,7 +17445,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default 20
              */
-            pageSize: number;
+            pageSize?: number;
             target?: components["schemas"]["ContextTarget"];
             timeRange: components["schemas"]["TimeRange"];
         };
@@ -17566,7 +17566,7 @@ export type components = {
              * @description 可选字段省略表示未提供；仅nullable字段允许null。
              * @default false
              */
-            enabled: boolean;
+            enabled?: boolean;
             /**
              * @description PDF只明确常驻模型，未加入无业务来源的模型类型。
              * @enum {string}
