@@ -221,6 +221,8 @@ apps/api/
 
 注意第三段是必须的：**重构只过编译和单测不够**。这次就踩到过一次——`MeService` 少一行 `import ...infra.UserAccountRepository`，`mvn compile` 报了 `BUILD SUCCESS`（增量编译下 `javac` 把一个 `Unresolved compilation problem` 的桩类写进了 `target/classes`），单测也照样全绿，但真实请求 `/me` 直接 500。只有 `verify-me.ps1` 能抓到它。**改包结构后一定要重跑 HTTP 验收脚本，并且先 `mvn clean`。**
 
+本轮（2026-10-26）评审修复 **A01–A05** 与 §2.6 契约文案的落点、对应提交和验证方式，见 **§11**。
+
 ---
 
 ## 3. 契约生成器（重要，别配错）
@@ -1264,3 +1266,27 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 4. 按分工方案 §2 确认自己负责的模块，再按 §4 的阶段顺序开工。
 5. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
 6. 需要新增分层或改包结构，先在这里更新 §2，别让下一个人对着过时文档写代码。
+
+---
+
+## 11. 2026-10-26 评审修复对照（A01–A05 与 §2.6）
+
+`PR审查报告_20261026.md` 提的五条，外加 §2.6 的一处契约文案，落在下面这些提交上。**这些提交目前只在本地**
+（领先远端 5 个提交），推送后随骨架分支进 PR #3；逐条的现场记录（现象、改法、证据、未闭环项）见
+`docs/project-governance/修改与检查记录.md` 的 2026-10-26 补充记录与 2026-10-27 收尾段。
+
+| 评审项 | 改了什么 | 提交 | 怎么验的 |
+| --- | --- | --- | --- |
+| A01（P0） | 数据范围从"扁平维度取交集"改为按 `(dataType, siteScope, ownOnly)` **元组求并集**；`/me.dataScope.scopeGrants` 是权威字段，旧五字段降级为 UI 投影 | `3734bf6` | `ScopeCalculatorTests` 13 例、`verify-scope-tuples.ps1` 15 条、`verify-me.ps1` 94 条 |
+| A02（P0） | 登录时锁 `auth.app_user` 行 → 复核状态 → 撤销该账号**全部**旧会话 → 签发新 SID（不靠进程内锁） | `318497f` | `SessionServiceBeginTests` 5 例、`verify-session-singleton.ps1` 13 条（含并发登录） |
+| A03（P0） | 把 #4 的 `V3` 增量并回骨架分支；`V1` 冻结、守卫改为结构比对而不是逐字节相等 | `0498373`（#4 已 fast-forward 合入） | `migration.*` 5 例、`verify-migration-parity.ps1`（3033 指纹 / 165 表） |
+| A04（P1） | 空闲 15 分钟 / 绝对 8 小时 / `maxOnlineWindowDays` 31；改配置**新增 `V4` 增量**，不动已执行过的 `V2` | `f301122` | `verify-login.ps1` 65 条、`verify-client-config.ps1` 53 条、`V4` 在临时库上的重复执行与"运维覆盖"用例 |
+| A05（P2） | `verify-migration-parity.ps1` 每次运行自带唯一库名、名字冲突即拒、只清理本次自建的库 | `9a26419` | 四条自测：冲突退出 2 且他人库仍在 / 正常 `PASS` / 中途失败仍清理 / 默认命名 |
+| §2.6 | 契约文案 `IdempotencyKey.description` 里 `409 TASK_CONFLICT` → `409 IDEMPOTENCY_CONFLICT`（只改这一处） | 待做（C6） | 改完必须同批提交 `apps/web/src/api/*` 生成物，`npm run generate:api` 后 `git diff --exit-code -- apps/web/src/api` 要干净 |
+
+仍然没闭环的三类事（写在这里，免得下一个人以为"评审已全部关闭"）：
+
+1. **P-002-05 缩权联动**：撤销会话时写取消请求、升 `scopeVersion`、发布/下载复核——本轮没做。
+2. **按元组判定的业务端点消费方**：本轮只保证 `/me` 输出权威元组，业务接口还没有按元组鉴权的实现。
+3. **与 DEV-02 的三处对齐**：`pom.xml` 内容冲突（B03）、`-Pgenerate-api` 是否进 dev-check/CI（B01）、
+   `X-Approval-Id` 的解析与错误码归属（B02，我方 `apps/api/src` 目前没有任何 `ApprovalId` 代码）。迁移编号 V1–V4 已占用，下一个是 **V5**。
