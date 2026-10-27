@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "d3-worker-handoff-v0",
+  "approvalStatus": "DEV3_PROPOSAL_NOT_APPROVED",
+  "executionStatus": "NOT_EXECUTED_EXAMPLE",
+  "taskType": "INGESTION",
+  "internalEnvelope": {
+    "taskId": "f1702562-5ac3-5532-97c9-917d1e36a2b1",
+    "batchId": "a3264423-b617-508e-8f5f-2a24724518b7",
+    "lease": {
+      "workerId": "dev3-synthetic-worker",
+      "attemptNo": 1,
+      "leaseGeneration": 1
+    },
+    "parameterSchemaVersion": "synthetic-ingestion-v0",
+    "parameterHash": "f4d1929c5594ab841cbca4fd64d07ed69f8cc2b3c763d457cc6c662808debf3a",
+    "parameterSnapshot": {
+      "synthetic": true,
+      "referenceFingerprint": "5aea80031a454dddaac50546ba04a8a1a04be09d7bc23bc0be0a5ff5651df6b7",
+      "inputSha256": "bf952c03c94c8e54a9ed80c9d0a15428e4b26bbfb994dbd9d68c49bebe4b5f07",
+      "batch": {
+        "batchId": "a3264423-b617-508e-8f5f-2a24724518b7",
+        "taskId": "f1702562-5ac3-5532-97c9-917d1e36a2b1",
+        "name": "B01_INITIAL",
+        "source": "SYNTH_PLATE_A",
+        "mappingVersion": "plate-map-v0",
+        "dedupVersion": "plate-dedup-v0",
+        "schemaVersion": "plate-synthetic-v0",
+        "mode": "INGEST",
+        "originalBatchId": null,
+        "inputFile": "raw/initial.jsonl",
+        "receivedAt": "2026-10-16T02:00:00Z"
+      },
+      "signature": "6b18e72a5c4297106b1362cca381d3e9a3f4aef2fff9d2de51cef00338d4fb72"
+    },
+    "traceId": "d3-lab:a3264423-b617-508e-8f5f-2a24724518b7"
+  },
+  "publicTaskProjection": {
+    "parameterSnapshot": {
+      "schemaVersion": "synthetic-ingestion-v0",
+      "submittedAt": "2026-10-16T02:00:00Z",
+      "parameterHash": "f4d1929c5594ab841cbca4fd64d07ed69f8cc2b3c763d457cc6c662808debf3a"
+    },
+    "resultReference": {
+      "resultType": "INGESTION",
+      "resultId": "a3264423-b617-508e-8f5f-2a24724518b7"
+    }
+  },
+  "publicResultPrecondition": "Only serialize resultReference after verified SUCCESS",
+  "operations": [
+    {
+      "name": "claim",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "renew",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "readControl",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "publishSuccess",
+      "owner": "DEV-01",
+      "implemented": false,
+      "currentSubstitute": "lab.fixtures.publish_for_lab"
+    },
+    {
+      "name": "failAttempt",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "acknowledgeCancel",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "retry",
+      "owner": "DEV-01",
+      "implemented": false
+    },
+    {
+      "name": "recoverExpired",
+      "owner": "DEV-01",
+      "implemented": false
+    }
+  ],
+  "ddlReferences": [
+    {
+      "table": "analysis.async_task",
+      "columns": [
+        "id",
+        "status",
+        "parameter_schema_version",
+        "parameter_snapshot",
+        "parameter_hash",
+        "lease_owner",
+        "lease_until",
+        "lease_generation",
+        "current_attempt_no",
+        "cancel_requested_at",
+        "retry_count",
+        "error_code",
+        "error_message",
+        "resource_type",
+        "resource_id",
+        "version"
+      ]
+    },
+    {
+      "table": "analysis.task_attempt",
+      "columns": [
+        "task_id",
+        "attempt_no",
+        "worker_id",
+        "lease_generation",
+        "result",
+        "started_at",
+        "finished_at",
+        "error_code"
+      ]
+    },
+    {
+      "table": "analysis.task_event",
+      "columns": [
+        "task_id",
+        "attempt_no",
+        "previous_status",
+        "status",
+        "occurred_at",
+        "reason",
+        "trace_id"
+      ]
+    },
+    {
+      "table": "analysis.task_row_error",
+      "columns": [
+        "task_id",
+        "attempt_no",
+        "row_number",
+        "source_record_key",
+        "field_name",
+        "error_code"
+      ]
+    },
+    {
+      "table": "capture.ingestion_batch",
+      "columns": [
+        "id",
+        "task_id",
+        "source_file_id",
+        "mapping_version",
+        "dedup_rule_version",
+        "mode",
+        "original_batch_id",
+        "status"
+      ]
+    }
+  ]
+}

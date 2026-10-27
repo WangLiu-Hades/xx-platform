@@ -10,7 +10,7 @@ type Responses<I extends OperationId> = operations[I] extends {responses:infer R
 type Success<R> = R[Extract<keyof R,200|201|202|204>];
 type Content<R> = R extends {content:{'application/json':infer C}} ? C:undefined;
 export type Response<I extends OperationId> = Content<Success<Responses<I>>>;
-export type Request<I extends OperationId> = {path?:Part<Parameters<I>,'path'>;query?:Part<Parameters<I>,'query'>;body?:Body<I>;etag?:string;signal?:AbortSignal;idempotencyKey?:string;upload?:I extends 'uploadFile'?File:never};
+export type Request<I extends OperationId> = {path?:Part<Parameters<I>,'path'>;query?:Part<Parameters<I>,'query'>;body?:Body<I>;etag?:string;signal?:AbortSignal;idempotencyKey?:string;approvalId?:string;upload?:I extends 'uploadFile'?File:never};
 export const apiMode = import.meta.env.VITE_API_MODE === 'http' ? 'http' : 'mock';
 export class ApiError extends Error {constructor(message:string,public code:string,public traceId:string,public status:number,public details:unknown=null){super(message);this.name='ApiError';}}
 let csrfToken='';
@@ -34,6 +34,7 @@ export async function request<I extends OperationId>(id:I,args:Request<I>={}):Pr
  const headers:Record<string,string>={};
  if(writing){if(csrfToken)headers['X-CSRF-Token']=csrfToken;headers['Idempotency-Key']=args.idempotencyKey||crypto.randomUUID();}
  if(args.etag)headers['If-Match']=args.etag;
+ if(args.approvalId)headers['X-Approval-Id']=args.approvalId;
  try{
    let data:unknown=args.body;
    if(id==='uploadFile'){if(!args.upload)throw new ApiError('请选择上传文件','CLIENT_VALIDATION','',0);const multipart=new FormData();multipart.append('category',String((args.body as Body<'uploadFile'>).category));multipart.append('file',args.upload,args.upload.name);data=multipart;}

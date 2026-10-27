@@ -65,7 +65,7 @@ public enum ErrorCode {
     CONTEXT_EXPIRED(410),
     /** 409 任务结果未就绪，轮询到 SUCCESS 再读。 */
     TASK_RESULT_NOT_READY(409),
-    /** 422 未签认业务/算法/安全/厂商规则；页面显示不可用原因。 */
+    /** 422 历史未决错误码，保留兼容；当前按PD暂定方案开发，实际资源门禁另校验。 */
     REQUIREMENT_PENDING(422),
     /** 422 收件人或计划 recipientId 非法。 */
     NOTIFICATION_INVALID_RECIPIENT(422),

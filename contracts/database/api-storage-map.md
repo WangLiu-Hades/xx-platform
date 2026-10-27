@@ -1,3 +1,5 @@
+> 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-19.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。
+
 # API、需求与存储映射（DB-DESIGN-2）
 
 依据：26页原始PDF、完整M01–M15工程实施文档、当前 api/openapi.yaml。沿用API逐项需求编号，工程实施要求优先；未定规则保持OPENAPI_PENDING中的P-001～P-021（P-012已收敛）。
@@ -1963,3 +1965,14 @@ MAPPED表示存储结构已有明确映射；PENDING_RULE表示结构已保留�
 | DataScope | `scopeVersion` | auth.user_scope.scope_version |
 | SiteScope | `siteIds` | 范围关联表site_id；禁止从全库维表自动扩大授权 |
 | SiteScope | `allSites` | 对应范围实体management_all_sites或data_all_sites（由schema确定） |
+
+## PD-2026-10-19.v1新增映射
+
+| operationId | 存储与语义 |
+| --- | --- |
+| listActionApprovals/getActionApproval | operation.action_approval + audit.action_approval_decision；只返回当前有权申请/复核对象 |
+| createActionApproval | 加密冻结提案/摘要/执行人/时限；不直接执行领域动作 |
+| decideActionApproval | 同事务追加decision并计算审批状态；currentPassword不落库 |
+| readDecryptionResult | decryption_request + result_grant + action_approval；同事务消费许可，即时解密；无持久明文fileAsset |
+
+增量脚本与空库快照择一使用，不能叠加重跑；真实服务事务/权限/回执测试由后端实现后验证。

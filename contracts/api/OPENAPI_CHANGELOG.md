@@ -1,5 +1,9 @@
 # OpenAPI 变更记录
 
+## 1.0.0-dev.4-provisional（2026-10-19，保存期限一年）
+
+用户将统一物理保存期限从一个月改为一年（12个自然月），同步PD-2026-10-19.v1、业务数据/文件/任务/审批审计及备份策略。普通查询31天、访问TTL、算法窗口不变；年度报表在源数据清理前冻结并保护引用。仅更新契约说明与policy标识，198操作/623 Schema及报文结构不变。重新生成前端类型与契约。详细规则见[保存策略](../../docs/project-governance/RETENTION_POLICY.md)。
+
 ## 1.0.0-dev.2（2026-10-07，真实开发交付复审）
 
 基线dev.1：134 paths/173 operations/482 schemas；当前152/193/581。初审28+二审3问题，修复30，H12外部待签认保留。最新PDF优先；修改前审计与完整验证见openapi-audit-report。
@@ -294,3 +298,6 @@ YAML语义、官方验证、1,837示例、182静态链路/负例、TS strict编�
 - `POST /watch-rules` — `createWatchRule`
 - `POST /watch-rules/{ruleId}/revoke` — `revokeWatchRule`
 
+## 2026-10-18 / 1.0.0-dev.3-provisional
+
+PD-2026-10-18.v1开发暂定，甲方待确认。65操作/37字段从pending转provisional；新增5个审批/受控解密结果接口、42 Schema。收紧候选/解密/新密码约束，补recipient及审批关联。批量删除敏感单项携带approvalId；批量报表/角色删除文案分别统一report:delete/role:grant。生成器修复权限字段并保留暂定元数据。现198操作/623 Schema。详见暂定方案与修改记录，未声称真实后端实现或验收通过。

@@ -1,0 +1,13 @@
+
+ RUN  v5.0.3 C:/Users/C-Linglong/Desktop/Claude杂项/平台/分工/数据分析平台/tmp/provisional-design-2026-10-18/stage/apps/web
+
+
+ Test Files  8 passed (8)
+      Tests  294 passed (294)
+   Start at  12:49:19
+   Duration  13.64s (import 43%, tests 43%, transform 13%, worker 1%)
+
+     Import  30 modules were evaluated 58 times · 4.82s total, 43% of tracked time
+             ~2.33s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation
+

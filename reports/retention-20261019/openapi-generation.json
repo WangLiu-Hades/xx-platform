@@ -1,0 +1,9 @@
+{
+  "source": "C:\\Users\\Administrator\\Documents\\xx-pr1-merge-20261019\\contracts\\api\\openapi.yaml",
+  "sha256": "340e95f1c58d6215a6434ca3f822856648a12a862c501048fc5e1d37a8ec601f",
+  "operations": 198,
+  "schemas": 623,
+  "generator": "openapi-typescript",
+  "note": "Generated operations/DTOs plus Axios typed facade; no backend implementation.",
+  "time": "2026-10-19T07:28:02.884Z"
+}

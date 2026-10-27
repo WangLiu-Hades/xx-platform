@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "files": [
+    {
+      "file": "contracts/database/schema.sql",
+      "parsedStatements": 2353,
+      "parser": "pglast 8.6",
+      "scope": "PostgreSQL syntax, not database execution"
+    },
+    {
+      "file": "contracts/database/migrations/PD_20261018_approval.sql",
+      "parsedStatements": 22,
+      "parser": "pglast 8.6",
+      "scope": "PostgreSQL syntax, not database execution"
+    }
+  ],
+  "snapshotTables": 165,
+  "referencedTables": 77,
+  "missingReferencedTables": [],
+  "serverExecution": false,
+  "productionMigration": false
+}

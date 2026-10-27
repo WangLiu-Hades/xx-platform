@@ -1,3 +1,5 @@
+> 2026-10-18当前版本：[PD-2026-10-19.v1](../暂定方案与修改记录.md)。当前分工01/02后端、03前端、04数据、05测试；下文旧数量/编号/NO及签认门禁保留作历史追踪，不覆盖本轮暂定设计，也不证明当前实现。旧治理生成脚本不得覆盖本轮policy/暂定文档。
+
 # 工程审查与文档检查脚本
 
 脚本以其位置推导项目根目录；下面命令从**项目根目录**执行。Node任务需前端npm ci，Python任务按具体脚本需要python-docx、pypdf及Pillow；Word渲染另依赖当前电脑的Word、文档工具和Poppler。移到其他电脑先核对硬编码外部资料/运行时路径。
@@ -28,3 +30,7 @@ python docs/project-governance/scripts/verify_deliverables.py
 ## 维护与检查
 
 更新Word需重新导出、逐页视觉审查并刷新哈希，脚本通过不能代替人工版面检查。基线盘点、业务回归和联网审计有不同时间/范围，不以当前汇总时间替代历史执行日期。新增源码README不属于Vite构建输入，交付检查据实际运行文件判断构建新旧。返回[治理入口](<../README.md>)。
+
+## 当前后端分工清单
+
+`node docs/project-governance/scripts/generate_backend_ownership.cjs`读取当前OpenAPI及docs/team/ownership.json，生成backend-operation-owners.json/csv；未知路径失败，要求人工明确模块。脚本不修改契约及业务参数。`node docs/project-governance/scripts/verify_provisional.cjs`校验暂定规则与契约，输出checks/contract-policy-check.json，不能代替真实后端验收。

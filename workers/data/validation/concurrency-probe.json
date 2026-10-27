@@ -1,0 +1,20 @@
+[
+  {
+    "batchId": "cfebe7dd-72cd-4ffc-a641-a717e23fe281",
+    "name": "CONCURRENT-A",
+    "inputRows": 1,
+    "acceptedCount": 0,
+    "duplicateCount": 1,
+    "rejectedCount": 0,
+    "factCountAfter": 17
+  },
+  {
+    "batchId": "bf593bd1-cf3c-424c-9047-167b2087ca10",
+    "name": "CONCURRENT-B",
+    "inputRows": 1,
+    "acceptedCount": 1,
+    "duplicateCount": 0,
+    "rejectedCount": 0,
+    "factCountAfter": 17
+  }
+]

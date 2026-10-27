@@ -1,61 +1,147 @@
-# OpenAPI 待确认事项
+# API暂定设计主账
 
-本清单记录仍需产品、甲方、安全、算法、数据或设备厂商确认的业务决定。按2026-10-07最新要求优先分析原始PDF文字；工程文档保留模块边界，system-design给出当前方案和未决事项。已明确字段可用于强类型Mock及开发已确定部分；完整平台前后端独立开发仍NO。未签认能力disabled且返回REQUIREMENT_PENDING，禁止按Mock上线。相关 OpenAPI 操作或字段应带 x-design-status: pending，并用 x-pending-reason 指向下列编号与缺失的决定。
+PD-2026-10-19.v1：全部未决设计已有暂定开发规则，**甲方仍待确认**。不再仅因未获甲方签字将全部相关能力统一挡为422。实现/实际资源未就绪仍按能力目录禁用并给出真实原因，不得假成功。
 
-来源缩写：S1＝《平台功能设计（原始）》PDF，页码按 PDF；S2＝《多维数据分析平台开发模块与人员分工》DOCX，模块按 M01–M15；SD04＝04_API与接口契约设计.md；SD06＝06_安全架构设计.md；SD11＝11_架构风险与待确认事项.md。ADR-007 当前状态为“拟议”。
+处理摘要与官方来源见[暂定方案与修改记录](../../docs/project-governance/暂定方案与修改记录.md)；细则见[policy](../../docs/project-governance/provisional-policy.json)。
 
-## 影响 API 契约的待确认事项
+| 编号 | 领域 | 暂定处理 |
+| --- | --- | --- |
+| P-001 | 登录 | 服务端SID；空闲15分钟/绝对8小时；主动操作续空闲，轮询不续期；IP/UA变化重新认证。单会话、新登录撤旧沿用。 |
+| P-002 | 权限 | 保留58码/28菜单；操作码暂取角色并集；账号额外范围为附加授权；siteId最小边界；缩权立即生效。三类初始角色可扩展。 |
+| P-003 | 容量/保存 | 沿用已给验收指标；查询31天；图片10MiB、导入100MiB/10万行；普通/复杂排队5/15分钟。按2026-10-19用户决定统一保存一年（12个自然月），保护活跃引用及年报冻结输入。 |
+| P-004 | 采集/去重 | 版本化SourceProfile；未知映射/时区/坐标系隔离；源事件键优先。无源键仅保证批内幂等，跨批去重标未验证。 |
+| P-005 | 回放/补数 | 留存期内、冻结输入、独立审批；新批次追加、源事件不重复计数，失败仅重试未成功行。 |
+| P-006 | 指标 | METRIC_V1；采集counter与入库count分开；在线心跳90秒；自然周期；首页水位至可见≤5秒；未知为null。 |
+| P-007 | 人像 | 授权内网模型adapter；默认20候选、最多100、相似度下限0仅排序；人工复核。评测目标须甲方确认，不是实测。 |
+| P-008 | 解密 | 普通账号可申请转交；指定涉密接收人；两名独立审批人；最多200条；5分钟内一次性受控查看，不生成持久明文文件。 |
+| P-009 | 查询/导出 | Context固定30分钟、游标15分钟；SQL5秒硬超时；异步导出100万行/1GiB、5万行分片；下载许可5分钟。 |
+| P-010 | 地图 | 高德离线PC Web适配；全部资源内网化；WGS84；单次2000点/2000顶点/1万km²。具体产品与许可待落实。 |
+| P-011 | 伴随/碰撞 | 默认120秒/100米；最大3600秒/5000米、7天；伴随≥3共现桶、Jaccard分；碰撞按主目标桶覆盖率；保留证据。 |
+| P-013 | 数据集 | 共享仍与源权限求交；固定版本；ARCHIVED只读、不可新引用；活跃引用删除409；管理导入全有或全无。 |
+| P-014 | 布控/告警 | 同型标识精确匹配；已确认关联才跨源；5分钟外发去重；默认LOW；运行中流水与终态统计分开。 |
+| P-015 | 通知/短信验收 | 短信仅送达成功回执算成功；UNKNOWN先对账。重试3次30/120/600秒+抖动；回执24小时；暂按连续7天/≥1000逻辑投递统计≥99%，重试合并。 |
+| P-016 | 档案 | 跨源关联先候选后复核，不自动合档；合并遵守retainedProfileId；保留旧ID/证据/修订；不改写原始事实。 |
+| P-017 | 常驻模型 | 仅RESIDENCE：自然月、22:00—06:00、≥10条/≥5夜、夜晚占比≥0.6；标签是待复核场所候选；参数不可变，无自由DSL。 |
+| P-018 | 设备 | 真实DeviceProfile必需；desired/reported分开；RESET暂指安全重启；TTL120秒；UNKNOWN先对账；重启不自动重试。 |
+| P-019 | 敏感审批 | 冻结操作/资源/版本/完整payload摘要；普通1人、解密等关键操作2人，禁止自批；申请24小时、执行许可10分钟、一次消费。 |
+| P-020 | 报表 | 保留全部8类；同源公式与冻结预览；SINGLE XLSX/BUNDLE ZIP；年度注明实际覆盖，缺历史不补零；暂时失败重试1次。 |
+| P-021 | 账号/审计 | 密码15—128字符/NFC/弱密码表；PBKDF2-SHA256 60万次；首次强改；不强制组合或90天轮换。先禁用后软删，审计仅追加，UI遥测不冒充服务端审计。 |
 
-| ID | 模块与来源 | 待确认决定 | 当前接口边界和 x-pending-reason |
-| --- | --- | --- | --- |
-| P-001 | M01/M02/M14；S2 M01、M02、M14；SD06 身份与会话；ADR-007；SD11 Q-006 | S2 要求 Token 注入、续期和禁用后的 Token 失效；现有系统设计拟采用服务端 SID Cookie。须正式确认单一认证方案、空闲/绝对超时、并发和异地登录、跨域部署及权限变更的生效策略。 | 以 SD06 的同源 Cookie Session 作为当前拟议接口边界，登录、退出、当前用户、会话失效及 CSRF/Origin 校验保持一致；不得并列定义互相矛盾的 Bearer Token 生命周期。x-pending-reason: P-001，工程文档要求 Token 生命周期而认证 ADR 尚属拟议，最终方案及生命周期待签认。 |
-| P-002 | M01/M14；S2 M01、M14；SD06 授权矩阵；SD11 Q-006 | PermissionCode、菜单与按钮、角色、DataScope、SiteScope 的完整权限目录、默认角色和各数据类型范围如何组合；角色或场所权限收缩时在途任务的结果访问规则。 | 权限码须由前端按钮和后端接口共用；列表、详情、导出、任务结果、地图、文件下载都在服务端重校范围。x-pending-reason: P-002，完整权限目录和作用域组合规则未由产品/安全负责人签认。 |
-| P-003 | M01/M03/M05/M08/M15；S2 M03、M05、M15；SD11 Q-001 | 历史量、日增量、写入峰值、并发、允许查询时间窗、任务和导出结果保留期，以及 P95/限流目标。 | API 可定义游标、分页、超时/取消、异步任务与 429 错误，但不可把容量情景当成已承诺限值。x-pending-reason: P-003，数据规模、保留期限和服务目标未确认。 |
-| P-004 | M03；S2 M03；SD11 Q-003 | 五类原始数据及设备状态的接入协议、字段映射、坐标系、时间字段、source 枚举、去重键、拒绝/隔离规则、回放与补数的输入格式。 | CommonCaptureRecord、FenceRecord、MacRecord、PlateRecord、FaceRecord 使用统一目标、设备、场所、时间、坐标、来源和状态语义；批次列表、详情、错误与质量摘要可供运维查询。厂商原始报文不当作公共 REST DTO。x-pending-reason: P-004，厂商协议和映射/去重规则未交付。 |
-| P-005 | M03；S2 M03；SD11 Q-003；SD06 审计 | 回放、重试和补数允许的来源/时间范围、执行权限、幂等去重与失败后的补偿边界。 | 保留受控异步任务边界、来源和批次引用、进度/错误/审计字段。x-pending-reason: P-005，数据回放与补数的操作范围和重复计数防护规则未确认。 |
-| P-006 | M04/M13；S1 p1–2、p17–18；S2 M04、M13；SD11 ISSUE-004 | 12 类系统首页和 4 类运营指标的精确统计口径、时间边界、去重键、采集量与入库量区别、在线率分母、Top10 归属地、异常分类、单位与刷新周期。 | 首页与运维首页复用一个指标定义和聚合来源；每项返回 asOf、status、unit、refreshPolicy，允许局部失败。S1 明确“采集总量不代表入库总量”，不可合并。x-pending-reason: P-006，指标公式、数据来源和刷新周期尚未逐项签认。 |
-| P-007 | M05；S1 p8；S2 M05；SD11 ISSUE-007、Q-004 | 同人搜索与上传搜图的人像模型、最小相似度、候选上限、分页策略、用途、复核流程；人像页是否允许普通 Excel 导出。S1 写“默认相似度大于 0”，但不足以形成可信上线阈值。 | 保留文件上传/扫描状态、搜图请求、强类型候选结果、图片受权下载和分页边界；不得默认把任何候选判定为同一人。x-pending-reason: P-007，人像算法与导出授权未确认；原始阈值需产品/算法/安全共同裁决。 |
-| P-008 | M05/M06；S1 p2–3；S2 M05、M06；SD06 解密；SD11 ISSUE-014、Q-006 | 涉密角色的明文查看、非涉密用户转交密文、密钥/证书、审批、用途、明文显示/下载、留存和审计规则。 | 仅保留经授权的服务端解密申请/状态契约；实际明文输出不得凭原文自动开放。普通查询和导出默认脱敏。x-pending-reason: P-008，审批、传输、密钥及明文生命周期缺少安全签认。 |
-| P-009 | M05/M06；S2 M05、M06；SD04 Context；SD11 Q-001、Q-006 | 大查询的服务端取消语义、超时、限流、结果集最大范围、导出格式与行数上限、失败重试；Context 保留时长和权限变更后的处理。 | 敏感条件使用 POST JSON，浏览器仅持有 contextId；Context 返回 expiresAt，复用时重校权限；导出走异步任务。x-pending-reason: P-009，查询/导出限值和 Context 生命周期未获数据及安全负责人确认。 |
-| P-010 | M07/M13；S1 p9–10、p20、p23；S2 M07、M13；SD04 GIS；SD11 ISSUE-003、Q-007 | 原始设备坐标到 WGS84 的转换依据、底图与离线地图许可、地图面积/顶点/点位限额；S1 的“设备发布”与“设备分布”是否同一菜单。 | API 统一 WGS84 GeoJSON，显式区分采集点与设备的 selectionType；bbox、zoom、limit、aggregation 用于大数据量地图。地图重置/缩放是前端动作。x-pending-reason: P-010，坐标转换来源、地图许可和重复页面范围未确认。 |
-| P-011 | M08；S1 p10–14；S2 M08；SD11 ISSUE-008、ISSUE-015 | 伴随时间/空间窗口、共同出现和轨迹重合规则、碰撞关联规则、匹配率/关联度含义、算法版本和复核标准。S1 p13 的“经过选区数/总选区数”可定义区域选区覆盖率，但不得把该比例自动解释为嫌疑概率。 | 三类分析参数和结果分型；任务保留参数快照、算法版本、进度、错误、结果引用与可解释证据。x-pending-reason: P-011，伴随/碰撞算法及风险含义未由算法和业务负责人确认。 |
-| P-012 | M09；PDF p14–15；prototype setEvaluate；SD04 | 已收敛：CAPTURE按captureId、TARGET按targetType+targetId相等；A–Z操作数与版本、显式表达式，无括号同优先级左结合；禁止异型集合运算。 | 不再阻塞ID集合语法，接口取消pending。跨源身份归一/模糊等价仍P-004/P-016，不能自行把不同目标当同一人。 |
-| P-013 | M09；S2 M09；SD06 数据范围 | 数据集成员的权限继承、共享、版本化、删除保护、引用中的任务与文件导入模板/错误行处理。 | 数据集范围不得宽于源数据；删除冲突可用 409，并保留引用信息；文件先经受控上传校验。x-pending-reason: P-013，成员身份、共享和生命周期策略未确认。 |
-| P-014 | M10；S1 p15；S2 M10；SD11 ISSUE-009、ISSUE-015 | 布控目标跨源匹配、规则条件、命中去重窗口、告警级别和确认流程；运行中的临时统计是否需要展示。S1 要求任务结束后才生成最终统计，同时要求实时命中通知。 | 实时命中流水与结束后的最终统计分开；命中关联规则、目标、设备、采集原记录、通知状态。x-pending-reason: P-014，匹配和告警规则及运行中统计时效未确认。 |
-| P-015 | M10/M14；S1 p23–24、p26；S2 M10、M14；SD11 Q-005 | 短信猫/邮件/平台消息的通道协议、发送资质、模板变量、收件人规则、限额、频控、重试、回执、人工接管和短信日志字段。 | 对外只暴露通知任务、送达状态/错误/回执和审计；厂商字段放在内部适配器，不直接进入公共 DTO。x-pending-reason: P-015，通道供应商与投递策略未确认。 |
-| P-016 | M11；S1 p9、p16；S2 M11；SD11 ISSUE-013、ISSUE-015、Q-004 | 模板列/逐行错误/ALL_OR_NOTHING已定义，仍待成员身份与去重规则；一人一档/一车一档的身份关联、置信度、来源证据、人工修订、合并/拆分/冲突解决和模型覆盖边界。S1 p16 车码档案场景复制了图码档案/人员搜索文案。 | 人员档案与车辆档案分别建模，展示关联目标、证据、轨迹、历史和修订记录；人员库导入保持异步与受控权限，不自动把不同目标类型当作同一人/车。x-pending-reason: P-016，人员库导入/去重、车档案原文串文及跨源关联与复核规则未确认。 |
-| P-017 | M11；S1 p16；S2 M11；SD11 Q-004 | 只保留原文RESIDENCE常驻模型；待确认其算法、阈值、标签、有效数据与参数版本，不添加未要求的轨迹/频次模型。 | 保留模型目录、参数版本、执行任务和结果的强类型外壳；算法条件与阈值不在契约中杜撰。x-pending-reason: P-017，模型算法、阈值和输出解释未由算法负责人签认。 |
-| P-018 | M12；S1 p19–21；S2 M12；SD11 Q-003 | 设备类型/型号、参数名与类型、有效范围、远程命令、复位含义、厂商协议、单台/批量回执、失败重试与成功设备免重复执行规则。 | 设备详情与参数、批量命令任务、逐设备结果分开；厂商私有载荷不得作为任意 object 暴露给前端。x-pending-reason: P-018，设备协议和参数目录缺少厂商确认。 |
-| P-019 | M12；S2 M12；SD06 高风险操作；SD11 Q-006 | 远程参数修改、设备复位、状态变更的审批/二次确认、权限和生效时间。 | 只提供可审计的命令/任务边界、幂等键、发起人和状态；不预设审批层级。x-pending-reason: P-019，高风险远控审批及确认规则待安全/运维签认。 |
-| P-020 | M12/M13；S1 p21–23；S2 M12、M13；P-006 所涉统计口径 | 8种子类型、SINGLE/BUNDLE、previewKind、明细分页/分时图结构已明确；仍待精确公式、异常识别、容量/保留与重试策略签认。S1 已明确设备/数据/系统三大类和单份 Excel/多份 ZIP。 | 报表作为异步任务，区分单/多报表和下载文件格式；详情需对应已确认的报表类型。x-pending-reason: P-020，细分报表字段、指标公式和生命周期尚未逐项确认。 |
-| P-021 | M14；S1 p24–26；S2 M14；SD06 审计与保留；SD11 Q-006 | 用户禁用/删除与已有任务、会话的处理，密码策略，超级管理员范围，审计/短信日志保留期、脱敏和导出许可。 | 用户/角色删除受引用保护并返回 409；日志查询按权限限域并单独授权导出。x-pending-reason: P-021，用户生命周期和日志保留/脱敏规则未由安全负责人签认。 |
 
-## 源资料差异与项目级待确认事项
+P-012的ID集合语法沿用已收敛基线，不重开；跨源身份问题归P-004/P-016。项目G01/G03/H04详见主文档。
 
-下列问题不应被转化为额外业务 REST 接口，但会影响模块归属、验收或最终范围。
+## 状态标记
 
-| 来源 | 问题与当前处理 |
+`x-design-status: provisional`表示可依本轮暂定规则开发；`x-client-confirmation: pending`表示尚未得到甲方最终确认；`x-decision-ids`追踪P编号。原102处pending均逐一转换，未删除其确认责任。
+
+## 原65个操作对应
+
+| operationId | 方法与路径 | 决策 |
+| --- | --- | --- |
+| renewSession | POST /auth/session/renew | P-001 |
+| createIngestionBatch | POST /ingestion-batches | P-004 |
+| replayIngestionBatch | POST /ingestion-batches/{batchId}/replay | P-004,P-005 |
+| createIngestionBackfill | POST /ingestion/backfills | P-004,P-005 |
+| createFaceSearchTask | POST /faces/search-tasks | P-007 |
+| listFaceSearchResults | GET /faces/search-tasks/{taskId}/results | P-007 |
+| requestDecryption | POST /decrypt-requests | P-008 |
+| getDecryptionRequest | GET /decrypt-requests/{requestId} | P-008 |
+| createWatchRule | POST /watch-rules | P-014,P-015 |
+| updateWatchRule | PATCH /watch-rules/{ruleId} | P-014 |
+| activateWatchRule | POST /watch-rules/{ruleId}/activate | P-014,P-015 |
+| createNotificationTask | POST /notification-tasks | P-014,P-015 |
+| updateNotificationTask | PUT /notification-tasks/{notificationTaskId} | P-015 |
+| retryNotificationTask | POST /notification-tasks/{notificationTaskId}/retry | P-015 |
+| addPersonLibraryMembers | POST /person-libraries/{libraryId}/members | P-002,P-016 |
+| importPersonLibraryMembers | POST /person-libraries/{libraryId}/imports | P-016 |
+| exportPersonLibrary | POST /person-libraries/{libraryId}/exports | P-002,P-016 |
+| searchProfiles | POST /profiles/search | P-016 |
+| getProfile | GET /profiles/{profileId} | P-016 |
+| listProfileTargets | GET /profiles/{profileId}/targets | P-016 |
+| listProfileTrajectories | GET /profiles/{profileId}/trajectories | P-016 |
+| createProfileCorrection | POST /profiles/{profileId}/corrections | P-016 |
+| mergeProfiles | POST /profiles/merge | P-016 |
+| splitProfile | POST /profiles/{profileId}/split | P-016 |
+| resolveProfileConflict | POST /profiles/{profileId}/conflicts/{conflictId}/resolve | P-016 |
+| exportProfile | POST /profiles/{profileId}/exports | P-016,P-021 |
+| listTrendModels | GET /trend-models | P-017 |
+| createTrendModel | POST /trend-models | P-017 |
+| getTrendModel | GET /trend-models/{modelId} | P-016 |
+| updateTrendModel | PUT /trend-models/{modelId} | P-016 |
+| createModelParameterVersion | POST /trend-models/{modelId}/parameter-versions | P-017 |
+| listModelTags | GET /model-tags | P-017 |
+| runTrendModel | POST /trend-models/{modelId}/runs | P-017 |
+| listTrendModelResults | GET /trend-models/{modelId}/results | P-017 |
+| getTrendModelResult | GET /trend-models/{modelId}/results/{resultId} | P-016 |
+| createDevice | POST /devices | P-018 |
+| updateDevice | PUT /devices/{deviceId} | P-018 |
+| getDeviceParameters | GET /devices/{deviceId}/parameters | P-018,P-019 |
+| updateDeviceParameters | POST /devices/{deviceId}/parameter-updates | P-018,P-019 |
+| getDeviceCaptureStatistics | GET /devices/{deviceId}/capture-statistics | P-006 |
+| importDevices | POST /devices/imports | P-018 |
+| exportDevices | POST /devices/exports | P-002 |
+| createDeviceCommand | POST /device-commands | P-018,P-019 |
+| retryDeviceCommand | POST /device-commands/{taskId}/retry | P-018,P-019 |
+| createReport | POST /reports | P-006,P-020 |
+| getReportPreview | GET /reports/{reportId}/preview | P-006,P-020 |
+| createUser | POST /users | P-021 |
+| updateUser | PUT /users/{userId} | P-002,P-021 |
+| disableUser | POST /users/{userId}/disable | P-001,P-021 |
+| changeUserPassword | POST /users/{userId}/password | P-021 |
+| createRole | POST /roles | P-002 |
+| setRolePermissions | PUT /roles/{roleId}/permissions | P-002 |
+| setRoleScopes | PUT /roles/{roleId}/scopes | P-002 |
+| searchAuditEvents | POST /audit-events/search | P-021 |
+| exportAuditEvents | POST /audit-events/export | P-021 |
+| searchSmsLogs | POST /deliveries/search | P-015,P-021 |
+| exportSmsLogs | POST /deliveries/export | P-015,P-021 |
+| resolveTargets | POST /targets/resolve | P-004,P-016 |
+| exportMetrics | POST /metrics/exports | P-006 |
+| listNotificationTemplates | GET /notification-templates | P-015 |
+| createLibraryPerson | POST /person-libraries/{libraryId}/persons | P-016 |
+| listProfileConflicts | GET /profiles/{profileId}/conflicts | P-016 |
+| importPersonLibraries | POST /person-libraries/imports | P-016 |
+| reviseDeviceCommand | POST /device-commands/{taskId}/revisions | P-018,P-019 |
+| changeMyPassword | POST /me/password | P-021 |
+
+## 原37处Schema/字段对应
+
+| 位置 | 决策 |
 | --- | --- |
-| SD11 ISSUE-001、ISSUE-002 | 历史分工版本的 M01–M15 编号与当前工程版不一致，人员库主责也有旧版差异。本契约按 S2 的 M01–M15 和 M11/DEV-03 主责标注；预算、排期及责任签认仍需项目方确认。 |
-| SD11 ISSUE-005、ISSUE-006；S1 p4、p9、p12、p14 | 车牌“检索”写回 IMSI 栏；人员库新增写碰撞页面、导出写区域统计；碰撞编辑和区域统计新增也出现其他业务页面名称。按 S2 的实际模块边界提供业务 API，页面文案和验收脚本须产品签认；不为串文创建对应 API。 |
-| SD11 ISSUE-010、Q-007 | 首版终端暂按 PC Web/管理终端方案，移动端、大屏与离线底图采购待产品和采购确认。 |
-| SD11 ISSUE-011、Q-008 | 排期、人员投入、预算和技术栈熟练度待项目方确认；不属于业务 API 参数。 |
-| SD11 ISSUE-012 | 与 S1 同名的加密 DOCX 尚不能核验是否与可读的 26 页 PDF 等价。用户已明确指定原始PDF为业务优先基线；若后续提供解密版，可另做差异核对，不再重复等待基线选择。 |
-| SD11 ISSUE-016 | PDF 的“如图所示”处缺少可复用截图；视觉控件和高保真 UI 需产品提供原型或签认。 |
-| SD11 Q-002 | 部署拓扑、联网/离线、可用性、RPO/RTO 待运维/安全确认；只影响健康/就绪检查和部署，不应生成备份或发布类公开业务 API。 |
-
-## 确认后更新规则
-
-2026-10-10补充：技术提案负责人、所需确认角色和关闭证据见[待确认责任清单](<../../docs/project-governance/PENDING_REGISTER.md>)；实现分工见[修订版](<../../docs/project-governance/ENGINEERING_ASSIGNMENTS.md>)。这两份文件细化任务，不替代本文件的业务决定主清单，也没有据此解除P-016等未决规则。
-
-1. 每一项被签认后，在 OpenAPI 对应操作或字段移除 x-design-status: pending，并以版本记录保存决策来源。
-2. 修改枚举、必填性、字段含义、统计口径、坐标系或状态机时，按 SD04 的兼容规则评估新版本/ADR；不得悄然改变既有客户端语义。
-3. 阈值、审批、厂商私有协议和算法参数只在书面确认后写入可执行校验。待确认期间可保留强类型请求/响应边界和 Mock 示例，但示例值不代表业务承诺。
-
-
-
-## 本轮消除的接口歧义
-
-- 手填标识→targetId；分析列表→analysisTaskId；手工人员→memberId/profileId；通知→recipientId/RETAINED；成功导入→行资源ID均有明确来源。
-- 首页分组、定时计划、配置修订、批量删除/撤销、报表预览、导入模板和混合集合语法已明确；真实统计/算法/身份/安全/设备/通道规则仍须签认。
-- 原文“每次操作形成日志”是否包括纯UI导航/复制/弹窗尚无留痕口径（P-021）；业务审计由服务端产生，不能让客户端冒充。
+| PermissionCode | P-002 |
+| SessionData | P-001 |
+| DataScope | P-002 |
+| SiteScope | P-002 |
+| ExportRequest | P-003,P-009 |
+| Task | P-003 |
+| AnalysisContext | P-009 |
+| GeoFeatureCollection | P-010 |
+| FaceRecord | P-007 |
+| CaptureSearchRequest | P-003,P-009 |
+| FaceSearchInput | P-007 |
+| DashboardSummary | P-006 |
+| SmsModemStatus | P-015 |
+| OperationsSummary | P-006,P-015 |
+| CompanionAnalysisParameters | P-011 |
+| CollisionAnalysisParameters | P-011 |
+| CompanionResultItem | P-011 |
+| CollisionResultItem | P-011 |
+| DatasetDetail | P-013 |
+| WatchRuleConditions | P-014,P-016 |
+| Alert | P-014 |
+| NotificationTaskInput | P-014,P-015 |
+| Delivery | P-015 |
+| DecryptionInput | P-008 |
+| DecryptionRequestDetail | P-008 |
+| PersonLibraryImportInput | P-016 |
+| ProfileDetail | P-016 |
+| PersonProfileCorrectionInput | P-016 |
+| VehicleProfileCorrectionInput | P-016 |
+| ModelParameterValue | P-017 |
+| ModelRuleDescriptor | P-017 |
+| DeviceParameter | P-018,P-019 |
+| DeviceParameterChange | P-018,P-019 |
+| ReportDefinition | P-006,P-020 |
+| ReportPreview | P-006,P-020 |
+| PasswordChangeInput | P-021 |
+| WatchTargetStatistics.properties.mostFrequentSiteId | P-006,P-017 |

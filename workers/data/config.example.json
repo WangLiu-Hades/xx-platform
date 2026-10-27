@@ -1,0 +1,9 @@
+{
+  "synthetic": true,
+  "adapter": "synthetic-plate-v0",
+  "referenceData": "fixtures/plate-v0/reference-data.json",
+  "batchesFile": "fixtures/plate-v0/batches.json",
+  "statePath": "d3-03-04/demo/state.sqlite3",
+  "outputRoot": "d3-03-04/demo/runs",
+  "maxLineBytes": 65536
+}

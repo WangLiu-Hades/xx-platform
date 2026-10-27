@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-16",
+  "repository_head": "486a5b40f557ac81e6efa6a986cd1b629b3f7c8d",
+  "proposal_version": "d3-data-contract-v0",
+  "openapi_info_version": "1.0.0-dev.2",
+  "status": "working proposal; vendor mapping and business rules remain pending",
+  "sources": {
+    "contracts/api/openapi.yaml": "a331c7955356b06c4e5244c6987ccd5dbd58cc349007703e5cab578fc520b7dc",
+    "contracts/api/api-conventions.md": "f19de7e7dd385f906d1c502bc918485a485c30eb42e5be1333b2cd4f870fd97c",
+    "contracts/database/schema.sql": "7d3534b536e46a5879d338df08cc70a02012ef86d0efe423d25747cf37a26ab1",
+    "contracts/database/pending-design.md": "77aaf8f59a97114d18de126de903c30997921df2ccdc7242aeb7bb4ce3b0042a",
+    "docs/project-governance/PENDING_REGISTER.md": "347118c175fe759b3496225cbac3dd26a188818606052db65aaa274889fac396",
+    "docs/project-governance/ENGINEERING_ASSIGNMENTS.md": "e4235b2f810393457d57fd4ab028bef6e80ad6c74804e491dbe2693f94ba3b47",
+    "docs/team/DEV-03-data.md": "ada5cc6b269cca07d6dae4c1f0064e4756ca1f414d7596a8daba357169c5903c",
+    "apps/web/src/api/contract.json": "c4ec519679507bb229d3a618035e8e72b0863a71f8f52e36fc5b969bed2a0d35"
+  },
+  "generated_contract_note": "contract.json is a generated field-inspection mirror, not the authoritative OpenAPI",
+  "vendor_inputs": "not provided in this session; source aliases and plate protocol are synthetic"
+}

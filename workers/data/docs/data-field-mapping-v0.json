@@ -1,0 +1,1150 @@
+{
+  "document_version": "d3-data-contract-v0",
+  "status": "WORKING_PROPOSAL_NOT_VENDOR_APPROVED",
+  "date": "2026-10-16",
+  "source_name_notice": "源字段为逻辑候选名；PLATE_FIXTURE仅是合成协议，所有真实源协议仍待P-004确认。SYSTEM为平台生成或派生字段。",
+  "rows": [
+    {
+      "id": "F001",
+      "domain": "INGESTION",
+      "source_field": "@source",
+      "source_status": "SYSTEM",
+      "standard_field": "sourceCode",
+      "storage": [
+        "capture.ingestion_source.source_code",
+        "capture.source_mapping_version.source_code",
+        "capture.ingestion_batch.source_code",
+        "capture.source_event.source_code"
+      ],
+      "dto": [
+        "IngestionBatchInput.source",
+        "IngestionBatch.source",
+        "CommonCaptureRecord.source"
+      ],
+      "rule": "源目录代码；API 创建输入最长80，DDL为200，跨层取契约允许范围；真实来源枚举待确认。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F002",
+      "domain": "INGESTION",
+      "source_field": "@mappingVersion",
+      "source_status": "SYSTEM",
+      "standard_field": "mappingVersion",
+      "storage": [
+        "capture.source_mapping_version.mapping_version",
+        "capture.ingestion_batch.mapping_version"
+      ],
+      "dto": [
+        "IngestionBatchInput.mappingVersion",
+        "IngestionBatch.mappingVersion"
+      ],
+      "rule": "不可覆盖的映射版本；合成版 plate-map-v0 只适用于样本。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F003",
+      "domain": "INGESTION",
+      "source_field": "@schemaVersion",
+      "source_status": "SYSTEM",
+      "standard_field": "schemaVersion",
+      "storage": [
+        "capture.source_mapping_version.schema_version"
+      ],
+      "dto": [],
+      "rule": "源模式版本，与mapping/algorithm版本区分。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F004",
+      "domain": "INGESTION",
+      "source_field": "@dedupVersion",
+      "source_status": "SYSTEM",
+      "standard_field": "dedupVersion",
+      "storage": [
+        "capture.source_mapping_version.dedup_rule_version",
+        "capture.ingestion_batch.dedup_rule_version"
+      ],
+      "dto": [
+        "IngestionBatchInput.dedupVersion",
+        "IngestionBatch.dedupVersion"
+      ],
+      "rule": "稳定源键及载荷比较规则独立版本化；合成版 plate-dedup-v0。",
+      "pending": [
+        "P-004",
+        "P-005"
+      ]
+    },
+    {
+      "id": "F005",
+      "domain": "INGESTION",
+      "source_field": "@sourceFileId",
+      "source_status": "SYSTEM",
+      "standard_field": "sourceFileId",
+      "storage": [
+        "capture.ingestion_batch.source_file_id",
+        "capture.source_event.raw_file_id"
+      ],
+      "dto": [
+        "IngestionBatchInput.sourceFileId",
+        "IngestionBatch.sourceFileId"
+      ],
+      "rule": "公开创建输入必填UUID；已受控文件才能引用。DB nullable不放宽API。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F006",
+      "domain": "INGESTION",
+      "source_field": "@batchId",
+      "source_status": "SYSTEM",
+      "standard_field": "batchId",
+      "storage": [
+        "capture.ingestion_batch.id",
+        "capture.ingestion_item.batch_id",
+        "capture.capture_event.batch_id"
+      ],
+      "dto": [
+        "IngestionBatch.batchId"
+      ],
+      "rule": "每次处理批次有独立UUID；重复事件仍指向第一次事实。",
+      "pending": []
+    },
+    {
+      "id": "F007",
+      "domain": "INGESTION",
+      "source_field": "@taskId",
+      "source_status": "SYSTEM",
+      "standard_field": "taskId",
+      "storage": [
+        "capture.ingestion_batch.task_id"
+      ],
+      "dto": [
+        "IngestionBatch.taskId"
+      ],
+      "rule": "dev1提供任务；DDL要求非空且唯一，不能没有任务就直接插批次。",
+      "pending": []
+    },
+    {
+      "id": "F008",
+      "domain": "INGESTION",
+      "source_field": "recordId",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "sourceRecordKey",
+      "storage": [
+        "capture.source_event.source_record_key"
+      ],
+      "dto": [
+        "IngestionError.sourceRecordKey"
+      ],
+      "rule": "与sourceCode组合唯一；合成键1～200字符。真实厂商键及更正语义待确认。",
+      "pending": [
+        "P-004",
+        "P-005"
+      ]
+    },
+    {
+      "id": "F009",
+      "domain": "INGESTION",
+      "source_field": "@sourceEventId",
+      "source_status": "SYSTEM",
+      "standard_field": "sourceEventId",
+      "storage": [
+        "capture.source_event.id",
+        "capture.ingestion_item.source_event_id",
+        "capture.capture_event.source_event_id"
+      ],
+      "dto": [],
+      "rule": "事实唯一引用源事件；样本用固定seed的UUID5，生产ID生成策略另对齐。",
+      "pending": []
+    },
+    {
+      "id": "F010",
+      "domain": "INGESTION",
+      "source_field": "@rawRowNumber",
+      "source_status": "SYSTEM",
+      "standard_field": "rowNumber",
+      "storage": [
+        "capture.ingestion_item.row_number"
+      ],
+      "dto": [
+        "IngestionError.rowNumber"
+      ],
+      "rule": "从1开始；batchId+rowNumber唯一；JSONL按物理行计数。",
+      "pending": []
+    },
+    {
+      "id": "F011",
+      "domain": "INGESTION",
+      "source_field": "@rawOffset",
+      "source_status": "SYSTEM",
+      "standard_field": "rawOffset",
+      "storage": [
+        "capture.source_event.raw_offset"
+      ],
+      "dto": [],
+      "rule": "非负字节偏移；不要把行号误写成字节偏移。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F012",
+      "domain": "INGESTION",
+      "source_field": "@payloadDigest",
+      "source_status": "SYSTEM",
+      "standard_field": "payloadDigest",
+      "storage": [
+        "capture.source_event.payload_digest"
+      ],
+      "dto": [],
+      "rule": "64位SHA-256；本样本对原始业务对象规范JSON摘要，排除批次/行号；真实规范化和更正规则待确认。",
+      "pending": [
+        "P-004",
+        "P-005"
+      ]
+    },
+    {
+      "id": "F013",
+      "domain": "INGESTION",
+      "source_field": "@mode/@originalBatchId",
+      "source_status": "SYSTEM",
+      "standard_field": "replayContext",
+      "storage": [
+        "capture.ingestion_batch.mode",
+        "capture.ingestion_batch.original_batch_id"
+      ],
+      "dto": [],
+      "rule": "INGEST/REPLAY/BACKFILL；回放不改变稳定源键。",
+      "pending": [
+        "P-005"
+      ]
+    },
+    {
+      "id": "F014",
+      "domain": "COMMON",
+      "source_field": "@captureId",
+      "source_status": "SYSTEM",
+      "standard_field": "captureId",
+      "storage": [
+        "capture.capture_event.id"
+      ],
+      "dto": [
+        "CommonCaptureRecord.captureId"
+      ],
+      "rule": "UUID；不使用车牌、IMSI或显示文本当主键。",
+      "pending": []
+    },
+    {
+      "id": "F015",
+      "domain": "COMMON",
+      "source_field": "dataType",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "dataType",
+      "storage": [
+        "capture.capture_event.data_type",
+        "capture.source_event.data_type"
+      ],
+      "dto": [
+        "CommonCaptureRecord.dataType"
+      ],
+      "rule": "采集仅FENCE/MAC/PLATE/FACE；DEVICE_STATUS/COUNTER仅源事件与遥测域。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F016",
+      "domain": "COMMON",
+      "source_field": "@targetType",
+      "source_status": "SYSTEM",
+      "standard_field": "targetType",
+      "storage": [
+        "capture.capture_event.target_type",
+        "capture.target.target_type"
+      ],
+      "dto": [
+        "CommonCaptureRecord.targetType"
+      ],
+      "rule": "必返；FENCE为IMSI或IMEI，其他为同名目标类型。",
+      "pending": []
+    },
+    {
+      "id": "F017",
+      "domain": "COMMON",
+      "source_field": "plateText / imsi / imei / mac / faceRef",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "targetId",
+      "storage": [
+        "capture.capture_event.primary_target_id",
+        "capture.target.id"
+      ],
+      "dto": [
+        "CommonCaptureRecord.targetId"
+      ],
+      "rule": "经受控带类型解析得到UUID；可null，不因同时出现做同人推断。",
+      "pending": [
+        "P-004",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F018",
+      "domain": "COMMON",
+      "source_field": "deviceKey",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "deviceId",
+      "storage": [
+        "capture.source_event.source_device_key",
+        "capture.capture_event.device_id"
+      ],
+      "dto": [
+        "CommonCaptureRecord.deviceId"
+      ],
+      "rule": "以sourceCode+deviceKey查映射；采集设备可null。合成规则保留未知设备并计质量提示。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F019",
+      "domain": "COMMON",
+      "source_field": "@deviceSiteMapping",
+      "source_status": "SYSTEM",
+      "standard_field": "siteId",
+      "storage": [
+        "capture.capture_event.site_id"
+      ],
+      "dto": [
+        "CommonCaptureRecord.siteId"
+      ],
+      "rule": "来源于受控设备/场所映射；未知为null；原始siteId不能当授权依据。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F020",
+      "domain": "COMMON",
+      "source_field": "captureTime",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "captureTime",
+      "storage": [
+        "capture.source_event.source_capture_time",
+        "capture.capture_event.capture_time"
+      ],
+      "dto": [
+        "CommonCaptureRecord.captureTime"
+      ],
+      "rule": "标准层必须带时区并归一UTC；合成协议拒绝裸时间戳/无时区字符串。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F021",
+      "domain": "COMMON",
+      "source_field": "@receivedAt",
+      "source_status": "SYSTEM",
+      "standard_field": "ingestedAt",
+      "storage": [
+        "capture.capture_event.ingested_at",
+        "capture.source_event.first_received_at"
+      ],
+      "dto": [
+        "CommonCaptureRecord.ingestedAt"
+      ],
+      "rule": "首次接收/入库时刻与采集时刻不同；回放保留原事实入库时刻。",
+      "pending": []
+    },
+    {
+      "id": "F022",
+      "domain": "COMMON",
+      "source_field": "longitude / latitude / crs",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "location",
+      "storage": [
+        "capture.capture_event.location"
+      ],
+      "dto": [
+        "CommonCaptureRecord.longitude",
+        "CommonCaptureRecord.latitude"
+      ],
+      "rule": "WGS84二维点；ST_X/ST_Y投影；经纬成对null或有效有限数；不猜坐标系、不补(0,0)。",
+      "pending": [
+        "P-004",
+        "P-010"
+      ]
+    },
+    {
+      "id": "F023",
+      "domain": "COMMON",
+      "source_field": "@locationSource",
+      "source_status": "SYSTEM",
+      "standard_field": "locationSource",
+      "storage": [
+        "capture.capture_event.location_source"
+      ],
+      "dto": [],
+      "rule": "保留坐标来源依据；本样本声明SYNTHETIC_WGS84。",
+      "pending": [
+        "P-010"
+      ]
+    },
+    {
+      "id": "F024",
+      "domain": "COMMON",
+      "source_field": "@validationState",
+      "source_status": "SYSTEM",
+      "standard_field": "status",
+      "storage": [
+        "capture.capture_event.status"
+      ],
+      "dto": [
+        "CommonCaptureRecord.status"
+      ],
+      "rule": "VALID/QUARANTINED/RETRACTED是事实状态；不同于逐行ACCEPTED/REJECTED/DUPLICATE。",
+      "pending": []
+    },
+    {
+      "id": "F025",
+      "domain": "COMMON",
+      "source_field": "@maskedProjection",
+      "source_status": "SYSTEM",
+      "standard_field": "displayTarget / isMasked",
+      "storage": [
+        "capture.target.identifier_cipher",
+        "capture.target.cipher_key_version"
+      ],
+      "dto": [
+        "CommonCaptureRecord.displayTarget",
+        "CommonCaptureRecord.isMasked"
+      ],
+      "rule": "受控读取后做脱敏投影，DDL无同名明文列；合成预期统一SYNTH-PLATE-****。",
+      "pending": [
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F026",
+      "domain": "COMMON",
+      "source_field": "@normalizationVersion/@lookupHash",
+      "source_status": "SYSTEM",
+      "standard_field": "targetLookup",
+      "storage": [
+        "capture.target.normalization_version",
+        "capture.target_lookup.normalization_version",
+        "capture.target_lookup.hmac_key_version",
+        "capture.target_lookup.lookup_hash"
+      ],
+      "dto": [],
+      "rule": "真实精确索引用版本化HMAC；样本只列显式目标参照，不实现密钥/身份归并。",
+      "pending": [
+        "P-004",
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F027",
+      "domain": "COMMON",
+      "source_field": "@traceId",
+      "source_status": "SYSTEM",
+      "standard_field": "traceId",
+      "storage": [
+        "capture.capture_event.trace_id",
+        "capture.ingestion_batch.trace_id"
+      ],
+      "dto": [],
+      "rule": "追踪标识贯穿任务、批次、日志；不是单条CaptureRecord属性。",
+      "pending": []
+    },
+    {
+      "id": "F028",
+      "domain": "COMMON",
+      "source_field": "@regionAtCapture/@deviceCategoryAtCapture",
+      "source_status": "SYSTEM",
+      "standard_field": "historicalDimensions",
+      "storage": [
+        "capture.capture_event.region_code_at_capture",
+        "capture.capture_event.device_category_at_capture"
+      ],
+      "dto": [],
+      "rule": "来自采集时维度快照，不能用现设备归属覆盖历史。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F029",
+      "domain": "FENCE",
+      "source_field": "imsi",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "fence.imsiTargetId",
+      "storage": [
+        "capture.fence_record.imsi_target_id",
+        "capture.capture_target.target_id"
+      ],
+      "dto": [
+        "FenceRecord.imsiMasked"
+      ],
+      "rule": "解析为IMSI代理；可null；掩码输出必有字段，可null。",
+      "pending": [
+        "P-004",
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F030",
+      "domain": "FENCE",
+      "source_field": "imei",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "fence.imeiTargetId",
+      "storage": [
+        "capture.fence_record.imei_target_id",
+        "capture.capture_target.target_id"
+      ],
+      "dto": [
+        "FenceRecord.imeiMasked"
+      ],
+      "rule": "解析为IMEI代理；与IMSI并列保存，不自动判为同一个人。",
+      "pending": [
+        "P-004",
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F031",
+      "domain": "FENCE",
+      "source_field": "carrier",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "fence.carrierCode",
+      "storage": [
+        "capture.fence_record.carrier_code"
+      ],
+      "dto": [
+        "FenceRecord.carrier"
+      ],
+      "rule": "源运营商枚举→受控代码；可空，不从Mock推断。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F032",
+      "domain": "FENCE",
+      "source_field": "radioType",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "fence.radioType",
+      "storage": [
+        "capture.fence_record.radio_type"
+      ],
+      "dto": [
+        "FenceRecord.radioType"
+      ],
+      "rule": "无线制式，选填可null，源枚举待确认。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F033",
+      "domain": "MAC",
+      "source_field": "mac",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "mac.targetId",
+      "storage": [
+        "capture.mac_record.mac_target_id"
+      ],
+      "dto": [
+        "MacRecord.macMasked"
+      ],
+      "rule": "类型MAC；大小写/分隔符规范化规则待确认，不能当自然人身份。",
+      "pending": [
+        "P-004",
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F034",
+      "domain": "MAC",
+      "source_field": "wirelessType",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "mac.wirelessType",
+      "storage": [
+        "capture.mac_record.wireless_type"
+      ],
+      "dto": [
+        "MacRecord.wirelessType"
+      ],
+      "rule": "可选可null，源枚举待确认。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F035",
+      "domain": "PLATE",
+      "source_field": "plateText",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "plate.targetId",
+      "storage": [
+        "capture.plate_record.plate_target_id"
+      ],
+      "dto": [
+        "PlateRecord.plateMasked"
+      ],
+      "rule": "源文本经显式目标映射；plateMasked必返。合成标识故意不使用真实车牌格式。",
+      "pending": [
+        "P-004",
+        "P-008",
+        "P-016"
+      ]
+    },
+    {
+      "id": "F036",
+      "domain": "PLATE",
+      "source_field": "plateColor",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "plate.plateColor",
+      "storage": [
+        "capture.plate_record.plate_color"
+      ],
+      "dto": [
+        "PlateRecord.plateColor"
+      ],
+      "rule": "选填可null；合成协议仅查字符串，不假定真实颜色目录。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F037",
+      "domain": "PLATE",
+      "source_field": "vehicleImageRef",
+      "source_status": "PLATE_FIXTURE",
+      "standard_field": "plate.vehicleImageAssetId",
+      "storage": [
+        "capture.plate_record.vehicle_image_asset_id"
+      ],
+      "dto": [
+        "PlateRecord.vehicleImageAssetId"
+      ],
+      "rule": "受控文件UUID；API属性选填但不允许显式null，无图片时省略。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F038",
+      "domain": "FACE",
+      "source_field": "imageRef",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "face.imageAssetId",
+      "storage": [
+        "capture.face_record.image_asset_id"
+      ],
+      "dto": [
+        "FaceRecord.imageAssetId"
+      ],
+      "rule": "必须映射到可引用受控文件UUID；原始URL不是API fileAssetId。",
+      "pending": [
+        "P-004",
+        "P-007"
+      ]
+    },
+    {
+      "id": "F039",
+      "domain": "FACE",
+      "source_field": "modelVersion",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "face.modelVersion",
+      "storage": [
+        "capture.face_record.model_version"
+      ],
+      "dto": [
+        "FaceRecord.modelVersion"
+      ],
+      "rule": "DTO必返可null；不得将元数据接入当相似度模型已可用。",
+      "pending": [
+        "P-007"
+      ]
+    },
+    {
+      "id": "F040",
+      "domain": "FACE",
+      "source_field": "qualityScore",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "face.qualityScore",
+      "storage": [
+        "capture.face_record.quality_score"
+      ],
+      "dto": [
+        "FaceRecord.qualityScore"
+      ],
+      "rule": "DTO必返可null；DDL限定[0,1]且numeric(6,5)，API缺相同范围，需要对齐，不自动换算供应商分值。",
+      "pending": [
+        "P-004",
+        "P-007"
+      ]
+    },
+    {
+      "id": "F041",
+      "domain": "FACE",
+      "source_field": "featureRef / featureModelVersion",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "face.feature",
+      "storage": [
+        "capture.face_feature.feature_asset_id",
+        "capture.face_feature.model_version"
+      ],
+      "dto": [],
+      "rule": "可选内部特征工件，按capture+model版本关联；无直接公开特征字段。",
+      "pending": [
+        "P-007"
+      ]
+    },
+    {
+      "id": "F042",
+      "domain": "DEVICE_STATUS",
+      "source_field": "@eventId",
+      "source_status": "SYSTEM",
+      "standard_field": "statusEventId",
+      "storage": [
+        "core.device_status_event.id",
+        "capture.ingestion_item.device_status_event_id"
+      ],
+      "dto": [
+        "DeviceStatusEvent.eventId"
+      ],
+      "rule": "UUID，遥测事件不写入四源capture_event。",
+      "pending": []
+    },
+    {
+      "id": "F043",
+      "domain": "DEVICE_STATUS",
+      "source_field": "deviceKey",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "deviceId",
+      "storage": [
+        "core.device_status_event.device_id",
+        "capture.source_event.source_device_key"
+      ],
+      "dto": [
+        "DeviceStatusEvent.deviceId"
+      ],
+      "rule": "状态事件deviceId非空；未知设备如何隔离/待映射需P-004决策，不套用采集可null规则。",
+      "pending": [
+        "P-004",
+        "P-018"
+      ]
+    },
+    {
+      "id": "F044",
+      "domain": "DEVICE_STATUS",
+      "source_field": "previousStatus / @history",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "previousStatus",
+      "storage": [
+        "core.device_status_event.previous_status"
+      ],
+      "dto": [
+        "DeviceStatusEvent.previousStatus"
+      ],
+      "rule": "ONLINE/OFFLINE/UNKNOWN/FAULT；上一状态来自可信报告或排序历史，初次/迟到策略待确认。",
+      "pending": [
+        "P-004",
+        "P-006",
+        "P-018"
+      ]
+    },
+    {
+      "id": "F045",
+      "domain": "DEVICE_STATUS",
+      "source_field": "status",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "status",
+      "storage": [
+        "core.device_status_event.status"
+      ],
+      "dto": [
+        "DeviceStatusEvent.status"
+      ],
+      "rule": "明确厂商状态→四种标准状态映射，不能把缺失当OFFLINE。",
+      "pending": [
+        "P-004",
+        "P-006",
+        "P-018"
+      ]
+    },
+    {
+      "id": "F046",
+      "domain": "DEVICE_STATUS",
+      "source_field": "occurredAt",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "occurredAt",
+      "storage": [
+        "core.device_status_event.occurred_at"
+      ],
+      "dto": [
+        "DeviceStatusEvent.occurredAt"
+      ],
+      "rule": "标准层UTC；区分发生与接收时间，乱序处理规则待确认。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F047",
+      "domain": "DEVICE_STATUS",
+      "source_field": "@source",
+      "source_status": "SYSTEM",
+      "standard_field": "source",
+      "storage": [
+        "core.device_status_event.source"
+      ],
+      "dto": [
+        "DeviceStatusEvent.source"
+      ],
+      "rule": "来源代码，使用接入目录。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F048",
+      "domain": "DEVICE_STATUS",
+      "source_field": "reason",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "reason",
+      "storage": [
+        "core.device_status_event.reason"
+      ],
+      "dto": [
+        "DeviceStatusEvent.reason"
+      ],
+      "rule": "选填可null；DDL最多1000字符。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F049",
+      "domain": "DEVICE_STATUS",
+      "source_field": "@policyVersion/@traceId",
+      "source_status": "SYSTEM",
+      "standard_field": "statusPolicy",
+      "storage": [
+        "core.device_status_event.policy_version",
+        "core.device_status_event.trace_id"
+      ],
+      "dto": [],
+      "rule": "状态策略版本可空；traceId必填；策略阈值不自行设定。",
+      "pending": [
+        "P-006",
+        "P-018"
+      ]
+    },
+    {
+      "id": "F050",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "@counterSampleId",
+      "source_status": "SYSTEM",
+      "standard_field": "counterSampleId",
+      "storage": [
+        "capture.source_counter_sample.id",
+        "capture.ingestion_item.counter_sample_id"
+      ],
+      "dto": [],
+      "rule": "UUID；不作为CaptureRecord返回。",
+      "pending": []
+    },
+    {
+      "id": "F051",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "@source / deviceKey",
+      "source_status": "SYSTEM",
+      "standard_field": "sourceDevice",
+      "storage": [
+        "capture.source_counter_sample.source_code",
+        "capture.source_counter_sample.source_device_key",
+        "capture.source_counter_sample.device_id"
+      ],
+      "dto": [
+        "DeviceCaptureStatistics.deviceId"
+      ],
+      "rule": "以源+设备映射；device_id可null但API设备统计需已映射设备。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F052",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "sampleKey",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "sampleKey",
+      "storage": [
+        "capture.source_counter_sample.sample_key"
+      ],
+      "dto": [],
+      "rule": "sourceCode+sourceDeviceKey+sampleKey唯一；不要把重采样误当新增计数。",
+      "pending": [
+        "P-004",
+        "P-005"
+      ]
+    },
+    {
+      "id": "F053",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "periodFrom / periodTo",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "counterPeriod",
+      "storage": [
+        "capture.source_counter_sample.period_from",
+        "capture.source_counter_sample.period_to"
+      ],
+      "dto": [
+        "DeviceCaptureStatistics.timeRange"
+      ],
+      "rule": "开始早于结束；原始采样窗口与公开统计窗口的聚合关系需明确。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F054",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "reportedCount",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "reportedCount",
+      "storage": [
+        "capture.source_counter_sample.reported_count"
+      ],
+      "dto": [
+        "DeviceCapturePoint.captureCount",
+        "DeviceCaptureStatistics.totalCaptureCount"
+      ],
+      "rule": "非负bigint或null；和累计值至少一项非null；不能直接累加不兼容窗口。",
+      "pending": [
+        "P-004",
+        "P-006",
+        "P-020"
+      ]
+    },
+    {
+      "id": "F055",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "reportedCumulativeCount",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "reportedCumulativeCount",
+      "storage": [
+        "capture.source_counter_sample.reported_cumulative_count"
+      ],
+      "dto": [
+        "DeviceCapturePoint.captureCount",
+        "DeviceCaptureStatistics.totalCaptureCount"
+      ],
+      "rule": "累计值先按epoch差分；缺数/回退/重置规则未定，禁止直接当区间值求和。",
+      "pending": [
+        "P-004",
+        "P-006",
+        "P-020"
+      ]
+    },
+    {
+      "id": "F056",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "counterEpoch",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "counterEpoch",
+      "storage": [
+        "capture.source_counter_sample.counter_epoch"
+      ],
+      "dto": [],
+      "rule": "非空，区分设备重启/清零；供应商epoch来源待确认。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F057",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "asOf",
+      "source_status": "UPSTREAM_PENDING",
+      "standard_field": "asOf",
+      "storage": [
+        "capture.source_counter_sample.as_of"
+      ],
+      "dto": [
+        "DeviceCaptureStatistics.asOf"
+      ],
+      "rule": "数据水位时刻；UTC，不能用当前系统时钟伪装来源已更新。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F058",
+      "domain": "DEVICE_COUNTER",
+      "source_field": "@ingestionAggregation",
+      "source_status": "SYSTEM",
+      "standard_field": "ingestedCount",
+      "storage": [
+        "capture.capture_event.id",
+        "capture.capture_event.device_id",
+        "capture.capture_event.capture_time"
+      ],
+      "dto": [
+        "DeviceCapturePoint.ingestedCount",
+        "DeviceCaptureStatistics.totalIngestedCount"
+      ],
+      "rule": "由成功有效事实聚合，独立于源采集计数；时间桶/更正规则P-006。",
+      "pending": [
+        "P-006",
+        "P-020"
+      ]
+    },
+    {
+      "id": "F059",
+      "domain": "QUALITY",
+      "source_field": "@processingStatus",
+      "source_status": "SYSTEM",
+      "standard_field": "processingStatus",
+      "storage": [
+        "capture.ingestion_item.processing_status"
+      ],
+      "dto": [],
+      "rule": "ACCEPTED/REJECTED/DUPLICATE；行失败不等同整批任务失败。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F060",
+      "domain": "QUALITY",
+      "source_field": "@recordKind",
+      "source_status": "SYSTEM",
+      "standard_field": "recordKind",
+      "storage": [
+        "capture.ingestion_item.record_kind"
+      ],
+      "dto": [],
+      "rule": "CAPTURE/DEVICE_STATUS/DEVICE_COUNTER；接受行恰有相应实体引用。",
+      "pending": []
+    },
+    {
+      "id": "F061",
+      "domain": "QUALITY",
+      "source_field": "@issueCode/@field/@reason",
+      "source_status": "SYSTEM",
+      "standard_field": "qualityIssue",
+      "storage": [
+        "capture.quality_issue.issue_code",
+        "capture.quality_issue.field_name",
+        "capture.quality_issue.reason"
+      ],
+      "dto": [
+        "IngestionError.code",
+        "IngestionError.field",
+        "IngestionError.reason"
+      ],
+      "rule": "内部质量码到公开ErrorCode需显式映射；FIXTURE_*只用于样本，不写进公共枚举。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F062",
+      "domain": "QUALITY",
+      "source_field": "@ruleVersion",
+      "source_status": "SYSTEM",
+      "standard_field": "qualityRuleVersion",
+      "storage": [
+        "capture.quality_issue.rule_version"
+      ],
+      "dto": [],
+      "rule": "可追溯版本；本样本plate-quality-v0。",
+      "pending": [
+        "P-004"
+      ]
+    },
+    {
+      "id": "F063",
+      "domain": "QUALITY",
+      "source_field": "@rowCounts",
+      "source_status": "SYSTEM",
+      "standard_field": "batchCounts",
+      "storage": [
+        "capture.ingestion_batch.accepted_count",
+        "capture.ingestion_batch.rejected_count",
+        "capture.ingestion_batch.duplicate_count"
+      ],
+      "dto": [
+        "IngestionBatch.acceptedCount",
+        "IngestionBatch.rejectedCount",
+        "IngestionBatch.duplicateCount",
+        "IngestionQualitySummary.acceptedCount",
+        "IngestionQualitySummary.rejectedCount",
+        "IngestionQualitySummary.duplicateCount"
+      ],
+      "rule": "按批次处理结果计数；回放会增加处理次数，不增加有效事实。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F064",
+      "domain": "QUALITY",
+      "source_field": "@unmappedDeviceIssues",
+      "source_status": "SYSTEM",
+      "standard_field": "unmappedDeviceCount",
+      "storage": [
+        "capture.quality_issue.source_device_key",
+        "capture.quality_issue.device_id"
+      ],
+      "dto": [
+        "IngestionQualitySummary.unmappedDeviceCount"
+      ],
+      "rule": "行数还是唯一设备数、重放是否累计尚未确认；样本仅逐行warning，不伪造全局口径。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    },
+    {
+      "id": "F065",
+      "domain": "QUALITY",
+      "source_field": "@invalidCoordinateIssues",
+      "source_status": "SYSTEM",
+      "standard_field": "invalidCoordinateCount",
+      "storage": [
+        "capture.quality_issue.issue_code"
+      ],
+      "dto": [
+        "IngestionQualitySummary.invalidCoordinateCount"
+      ],
+      "rule": "聚合质量记录；需明确错误分类和去重口径。",
+      "pending": [
+        "P-004",
+        "P-006"
+      ]
+    }
+  ]
+}

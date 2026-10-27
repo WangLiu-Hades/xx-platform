@@ -1,0 +1,28 @@
+{
+  "policy": "synthetic-m03-quality-v1",
+  "allGrantedBatches": {
+    "asOf": "2026-10-16T05:51:48.495461Z",
+    "acceptedCount": 16,
+    "rejectedCount": 39,
+    "duplicateCount": 17,
+    "unmappedDeviceCount": 1,
+    "invalidCoordinateCount": 12
+  },
+  "exclusiveUpperBound": {
+    "asOf": "2026-10-16T05:51:48.495461Z",
+    "acceptedCount": 14,
+    "rejectedCount": 19,
+    "duplicateCount": 1,
+    "unmappedDeviceCount": 1,
+    "invalidCoordinateCount": 6
+  },
+  "singleSource": {
+    "asOf": "2026-10-16T05:51:48.495461Z",
+    "acceptedCount": 1,
+    "rejectedCount": 0,
+    "duplicateCount": 0,
+    "unmappedDeviceCount": 0,
+    "invalidCoordinateCount": 0,
+    "source": "SYNTH_PLATE_B"
+  }
+}

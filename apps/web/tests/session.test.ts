@@ -20,3 +20,10 @@ it('mutations send the configured CSRF, caller idempotency key and resource vers
  await request('updateSite',{path:{siteId:'00000000-0000-4000-8000-000000000001'},body:{name:'示例场所',regionCode:'MOCK',enabled:true},etag:'"4"',idempotencyKey:'00000000-0000-4000-8000-000000000002'});
  expect(captured!.headers.get('X-CSRF-Token')).toBe('0123456789abcdef0123456789abcdef');expect(captured!.headers.get('If-Match')).toBe('"4"');expect(captured!.headers.get('Idempotency-Key')).toBe('00000000-0000-4000-8000-000000000002');
 });
+it('sends the approval as a header without adding it to the frozen proposal body',async()=>{
+ let captured:InternalAxiosRequestConfig|undefined;
+ http.defaults.adapter=async c=>{captured=c;return response(c,contract.operations.readDecryptionResult.responses['200'].content['application/json'].examples.success.value);};
+ await request('readDecryptionResult',{path:{requestId:'00000000-0000-4000-8000-000000000001'},approvalId:'00000000-0000-4000-8000-000000000002'});
+ expect(captured!.headers.get('X-Approval-Id')).toBe('00000000-0000-4000-8000-000000000002');
+ expect(captured!.data).toBeUndefined();
+});
