@@ -32,6 +32,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+      <version>2.2.54</version>
+    </dependency>
     <!-- Web 层：REST 接口（统一响应壳、异常兜底、traceId 过滤都在这里落地） -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -69,18 +74,9 @@
   </build>
 
   <profiles>
-    <!--
-      契约生成 profile：`mvn -Pgenerate-api generate-sources`
-
-      为什么单独放 profile，而不是放进默认 build：
-      插件本身需要联网下载（本机与 CI 的离线环境跑默认构建时会直接失败，
-      并连带影响本来能编译的代码）。放在 profile 里之后：
-        - 默认 `mvn compile` / `mvn package` 完全离线可用；
-        - 需要生成或更新契约产物时显式加 -Pgenerate-api，并确保能访问 Maven 仓库。
-
-      配置必须与契约 info.x-codegen.spring 及 contracts/api/api-conventions.md §9 一致。
-      生成物进入 target/generated-sources/openapi（target 下，mvn clean 会清除，不提交）。
-    -->
+    <!-- Domain sources require generated interfaces.
+         Unified entry: mvn -B -Pgenerate-api clean verify.
+         Retain the profile on every compile/test/package/run invocation. -->
     <profile>
       <id>generate-api</id>
       <build>
@@ -92,12 +88,14 @@
             <executions>
               <execution>
                 <id>generate-api-from-contract</id>
+                <phase>generate-sources</phase>
                 <goals>
                   <goal>generate</goal>
                 </goals>
                 <configuration>
                   <inputSpec>${openapi.spec}</inputSpec>
                   <generatorName>spring</generatorName>
+                  <addCompileSourceRoot>true</addCompileSourceRoot>
                   <output>${project.build.directory}/generated-sources/openapi</output>
                   <apiPackage>com.xxplatform.api.generated.api</apiPackage>
                   <modelPackage>com.xxplatform.api.generated.model</modelPackage>
@@ -106,6 +104,7 @@
                   <generateModelTests>false</generateModelTests>
                   <generateApiDocumentation>false</generateApiDocumentation>
                   <generateModelDocumentation>false</generateModelDocumentation>
+                  <nameMappings><nameMapping>setTaskId=setOperationId</nameMapping></nameMappings>
                   <configOptions>
                     <interfaceOnly>true</interfaceOnly>
                     <useSpringBoot3>true</useSpringBoot3>
@@ -118,7 +117,7 @@
                       契约要求：JSON 字段仍是 taskId，Java 侧 setter 改名，
                       避开与"执行 taskId"的 setter 重名。这是契约指定的唯一改名，不要额外增删。
                     -->
-                    <nameMappings>setTaskId=setOperationId</nameMappings>
+                    
                   </configOptions>
                 </configuration>
               </execution>

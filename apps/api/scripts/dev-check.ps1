@@ -4,7 +4,7 @@
 #   powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/dev-check.ps1
 #   pwsh -File apps/api/scripts/dev-check.ps1
 #
-# Does three things: check toolchain versions, compile offline once, print next steps.
+# Does three things: check toolchain versions, generate and verify once, print next steps.
 # It does not start the service and does not modify source files (output goes to target/).
 #
 # NOTE: keep this file ASCII-only. Windows PowerShell 5.1 reads .ps1 as ANSI unless the
@@ -55,14 +55,14 @@ if (-not $ok) {
     exit 1
 }
 
-Show-Step 'Offline compile (mvn -o -B -q compile)'
+Show-Step 'Clean contract build (mvn -B -Pgenerate-api clean verify)'
 Push-Location $apiDir
 try {
-    & mvn -o -B -q compile
+    & mvn -B -Pgenerate-api clean verify
     if ($LASTEXITCODE -eq 0) {
-        Write-Host '  [OK]   compile passed' -ForegroundColor Green
+        Write-Host '  [OK]   clean verify passed' -ForegroundColor Green
     } else {
-        Write-Host '  [FAIL] compile failed; see Maven output above' -ForegroundColor Red
+        Write-Host '  [FAIL] clean verify failed; see Maven output above' -ForegroundColor Red
         Write-Host '         If it cannot resolve a plugin/dependency you may be offline:' -ForegroundColor Yellow
         Write-Host '         compile dependencies are usually cached, but plugins' -ForegroundColor Yellow
         Write-Host '         (clean/package/openapi-generator) need one online fetch.' -ForegroundColor Yellow
@@ -78,7 +78,7 @@ if ($ok) {
     Write-Host @'
   1) Start with the self-check endpoint (the /smoke route exists only under the dev profile):
        cd apps/api
-       mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"
+       mvn -B -Pgenerate-api spring-boot:run "-Dspring-boot.run.profiles=dev"
 
   2) In another terminal, verify the contract envelope:
        curl.exe http://127.0.0.1:8080/api/v1/smoke
@@ -89,7 +89,7 @@ if ($ok) {
      the traceId inside the body.
 
   3) Generate contract Java interfaces/DTOs (first run needs network):
-       mvn -Pgenerate-api generate-sources
+       mvn -B -Pgenerate-api clean verify
 
   4) Read the module split before starting work:
        docs/project-governance/BACKEND_TWO_DEV_SPLIT.md
