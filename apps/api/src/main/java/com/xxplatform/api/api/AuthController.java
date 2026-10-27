@@ -33,8 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 认证相关端点（M01）。已实现 {@code GET /auth/csrf}（任务 4）、
- * {@code POST /auth/login}（任务 5）、{@code GET /me}（任务 6）与
- * {@code POST /auth/logout}（任务 11，让"登录 → 进入 → 退出"在真实接口下闭环）。
+ * {@code POST /auth/login}（任务 5）、{@code GET /me}（任务 6）、
+ * {@code POST /auth/logout}（任务 11，让"登录 → 进入 → 退出"在真实接口下闭环）与
+ * {@code POST /auth/session/renew}（W2 任务 4：显式续期，只推空闲期限）。
  *
  * <p>契约要点（{@code openapi.yaml} → {@code /auth/csrf}）：
  * {@code x-permission: PUBLIC}、{@code security: []}（匿名也能取）、同源且校验
@@ -193,10 +194,7 @@ public class AuthController {
     @PostMapping("/auth/logout")
     public ResponseEntity<ApiResponses> logout(HttpServletRequest request, HttpServletResponse response) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
-
-        String csrfCookieValue = RequestCookies.value(request, csrfTokenService.properties().getCookieName());
-        csrfTokenService.resolve(csrfCookieValue, request.getHeader(HEADER_NAME))
-                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
+        requireCsrfPair(request);
 
         sessionService.end(session.sessionId(), RequestIdFilter.currentTraceIdOrFallback());
 
@@ -212,6 +210,47 @@ public class AuthController {
 
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("accepted", true);
+
+        return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
+     * {@code POST /auth/session/renew}：显式续期——只把空闲期限往前推，SID 与 CSRF 都不换。
+     *
+     * <p>契约要点（{@code openapi.yaml} → {@code /auth/session/renew}）：{@code operationId: renewSession}、
+     * {@code x-permission: AUTHENTICATED}、{@code security: [{sessionCookie: []}]}、参数
+     * {@code $ref CsrfToken}、200 体 {@code RenewSessionResponse.data = SessionData}
+     * （只有 {@code userId/idleExpiresAt/absoluteExpiresAt} 三个字段，{@code additionalProperties:false}）。
+     *
+     * <p><b>为什么已有"每个请求都自动续期"还要这个端点</b>：自动续期只在用户**真的发请求**时发生。
+     * 用户盯着一个长报表看、或开着页面不动时，没有请求就没有续期，15 分钟一到照样被踢。
+     * 前端可以用这个端点做"快到期前先续一次"，把"还在用"和"走开了"区分开，而不用为此
+     * 伪造一个业务读请求（那会污染审计日志）。
+     *
+     * <p><b>为什么响应里没有 {@code Set-Cookie}</b>：SID 与 CSRF 都没有变化，重发 Cookie 只会
+     * 让多标签页里"谁持有最新值"变得不确定。Cookie 的 {@code Max-Age} 绑的是绝对期限，
+     * 续期不改变它，自然也不需要重发。
+     *
+     * <p><b>失败语义</b>：空闲或绝对超时都是 401 {@code AUTH_SESSION_EXPIRED}——续期的前提是
+     * "会话还活着"，已经过期就只剩重新登录一条路，返回 200 加一个过去的期限只会让前端困惑。
+     * 未登录是 401 {@code AUTH_REQUIRED}（与 {@code GET /me} 一致）；无 CSRF 对是 403
+     * （由 {@link com.xxplatform.api.common.CsrfFilter} 在过滤器阶段就拦下）。
+     *
+     * <p><b>为什么这里还要再一次 CSRF 校验</b>：与 {@link #logout} 同一理由——过滤器是第一道，
+     * 控制器这一道保证"即使将来过滤器白名单被误改，写操作也不会失去来源校验"。两处共用
+     * {@link #requireCsrfPair}，不存在两份规则。
+     */
+    @PostMapping("/auth/session/renew")
+    public ResponseEntity<ApiResponses> renewSession(HttpServletRequest request) {
+        AuthenticatedSession session = sessionAuthenticator.requireWithoutRenewing(request);
+        requireCsrfPair(request);
+
+        SessionService.RenewedSession renewed = sessionService.renew(session);
+
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("userId", session.userId().toString());
+        data.put("idleExpiresAt", Instants.iso(renewed.idleExpiresAt()));
+        data.put("absoluteExpiresAt", Instants.iso(renewed.absoluteExpiresAt()));
 
         return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
     }
@@ -234,6 +273,19 @@ public class AuthController {
         AuthenticatedSession session = sessionAuthenticator.require(request);
         return ResponseEntity.ok(ApiResponses.success(
                 meService.load(session), RequestIdFilter.currentTraceIdOrFallback()));
+    }
+
+    /**
+     * 校验请求携带的 CSRF 对（Cookie 值 + {@code X-CSRF-Token}），不通过抛 403。
+     *
+     * <p>只做"存在且匹配"的判定，不消费、不轮换：同步器 token 在一次会话内可重复使用，
+     * 换新只发生在 {@code GET /auth/csrf}。把它抽出来是因为 logout 与 renew 都要这一道，
+     * 而两处各写一遍迟早会出现"一个校验了 Header、另一个忘了"。
+     */
+    private void requireCsrfPair(HttpServletRequest request) {
+        String cookieValue = RequestCookies.value(request, csrfTokenService.properties().getCookieName());
+        csrfTokenService.resolve(cookieValue, request.getHeader(HEADER_NAME))
+                .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
     }
 
     /**

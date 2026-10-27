@@ -2,6 +2,7 @@ package com.xxplatform.api.service;
 
 import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ErrorCode;
+import com.xxplatform.api.common.Instants;
 import com.xxplatform.api.common.Sha256;
 import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.infra.CsrfSessionRepository;
@@ -12,6 +13,7 @@ import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.ZoneOffset;
 import java.util.Base64;
+import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,6 +196,74 @@ public class SessionService {
     }
 
     /**
+     * 显式续期（{@code POST /auth/session/renew}）：只把空闲期限往前推，**不**换 SID、不换 CSRF。
+     *
+     * <h2>为什么不轮换</h2>
+     * 契约 {@code SessionData} 写得很明确："常规续期不换 SID/CSRF，登录/改密/权限提升轮换"。
+     * 续期是用户一直坐在电脑前的正常动作，每天可能发生几十次；每次换 SID 都要重发 Cookie，
+     * 多标签页必然出现"这一页已经换、那一页还拿着旧值"的窗口，而攻击面并没有因为轮换变小
+     * （SID 本来就是高熵随机值，且 HttpOnly）。真正需要换新的场景是"凭据状态变了"——登录、
+     * 改密、权限提升，那些路径各自轮换。
+     *
+     * <h2>为什么写库失败要抛而不是学常规请求那样吞掉</h2>
+     * {@link SessionAuthenticator#renewIfActiveRequest} 对普通业务请求是"续不上就按原期限继续"，
+     * 因为不让一次续期抖动把已经通过认证的请求变成 500。但显式续期的**全部意义**就是延长
+     * 期限：如果库写失败却回 200，前端会以为还有 15 分钟，实际再过几秒就 401——那比直接报错
+     * 更难排查。所以这里让异常穿出去，由兜底 handler 变成 500。
+     *
+     * <h2>为什么 UPDATE 命中 0 行还要回查</h2>
+     * {@code touch} 带 {@code idle_expires_at < ?} 守卫，0 行有两种含义：并发请求已经推得更晚
+     * （正常，返回库里那个更晚的值即可），或会话在认证与续期之间被撤销（应报 401）。回查一次
+     * 才能区分，而不是把两者都当成成功。
+     *
+     * @param session 已通过 {@link SessionAuthenticator#requireWithoutRenewing} 的会话快照
+     * @return 续期后生效的空闲期限与不变的绝对期限
+     * @throws ApiException 会话在续期过程中被撤销或已到绝对期限（401 {@code AUTH_SESSION_EXPIRED}）
+     */
+    @Transactional
+    public RenewedSession renew(AuthenticatedSession session) {
+        if (session == null) {
+            throw new IllegalArgumentException("session 不能为空");
+        }
+        OffsetDateTime now = Instants.nowUtc();
+        Optional<OffsetDateTime> candidate = SessionRenewal.nextIdle(
+                now, properties.getIdleTtl(), session.idleExpiresAt(), session.absoluteExpiresAt());
+
+        if (candidate.isEmpty()) {
+            // 空闲期限已经顶到绝对期限（nextIdle 会截到 absolute）。此时"续期成功但一点都不晚"
+            // 是正常结果，不是失败：用户确实还在绝对有效期内，只是没有余量可推了。
+            log.debug("会话续期无余量 sessionId={} idleExpiresAt={}", session.sessionId(), session.idleExpiresAt());
+            return new RenewedSession(session.idleExpiresAt(), session.absoluteExpiresAt());
+        }
+
+        if (sessionRepository.touch(session.sessionId(), candidate.get()) == 1) {
+            log.info("会话已续期 sessionId={} idleExpiresAt={} absoluteExpiresAt={}",
+                    session.sessionId(), candidate.get(), session.absoluteExpiresAt());
+            return new RenewedSession(candidate.get(), session.absoluteExpiresAt());
+        }
+
+        UserSessionRepository.SessionRow current = sessionRepository.findById(session.sessionId())
+                .orElseThrow(SessionService::sessionGone);
+        if (current.revokedAt() != null || !current.absoluteExpiresAt().isAfter(now)
+                || !current.idleExpiresAt().isAfter(now)) {
+            log.debug("续期时会话已失效 sessionId={}", session.sessionId());
+            throw sessionGone();
+        }
+        // 并发续期赢了：库里已经是更晚的值，按它回给前端。
+        return new RenewedSession(current.idleExpiresAt(), current.absoluteExpiresAt());
+    }
+
+    /**
+     * 会话已经不可续：对外与认证层的过期分支完全一致。
+     *
+     * <p>不用 404：客户端手里拿的是自己的会话，不存在"别人的资源"这回事，404 只会让前端
+     * 以为是路径写错。
+     */
+    private static ApiException sessionGone() {
+        return new ApiException(ErrorCode.AUTH_SESSION_EXPIRED, "会话已失效，请重新登录");
+    }
+
+    /**
      * 刚签发成功的会话。
      *
      * @param sidValue           SID 原文——**只在这里出现一次**，写进 Set-Cookie 后不再保留
@@ -203,5 +273,14 @@ public class SessionService {
      */
     public record IssuedSession(String sidValue, UUID sessionId,
                                 OffsetDateTime idleExpiresAt, OffsetDateTime absoluteExpiresAt) {
+    }
+
+    /**
+     * 一次显式续期的结果。
+     *
+     * @param idleExpiresAt     续期后生效的空闲期限
+     * @param absoluteExpiresAt 绝对期限（续期**永远不会**推后它）
+     */
+    public record RenewedSession(OffsetDateTime idleExpiresAt, OffsetDateTime absoluteExpiresAt) {
     }
 }

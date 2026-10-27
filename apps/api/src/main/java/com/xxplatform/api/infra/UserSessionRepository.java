@@ -41,6 +41,19 @@ public class UserSessionRepository {
             """;
 
     /**
+     * 按会话行 id 取会话（显式续期用：{@code POST /auth/session/renew}）。
+     *
+     * <p>续期只需要"这一行现在是什么状态"，不需要 SID 原文，所以按 id 查比再算一次摘要直接。
+     * 与 {@link #findBySidHash} 一样**不过滤**撤销与过期：调用方要能区分"被并发撤销"与
+     * "已经过期"，过滤掉就只剩"查不到"一种信息。
+     */
+    private static final String SELECT_BY_ID = """
+            SELECT id, user_id, revoked_at, idle_expires_at, absolute_expires_at
+              FROM auth.user_session
+             WHERE id = ?
+            """;
+
+    /**
      * 按会话行 id 撤销（任务 11：{@code POST /auth/logout}）。
      *
      * <p>为什么按 {@code id} 而不是像登录轮换那样按 {@code sid_hash} 撤销：退出时
@@ -182,5 +195,25 @@ public class UserSessionRepository {
             OffsetDateTime revokedAt,
             OffsetDateTime idleExpiresAt,
             OffsetDateTime absoluteExpiresAt) {
+    }
+
+    /**
+     * 按会话行 id 取会话（显式续期用）。
+     *
+     * <p>给 {@code POST /auth/session/renew} 在"UPDATE 命中 0 行"之后复核用：那条 SQL 带
+     * {@code idle_expires_at < ?} 守卫，返回 0 行既可能是并发请求已经推得更晚，也可能是
+     * 会话刚被撤销。重新读一次就能把这两种情况分开，而不是靠猜。
+     */
+    public Optional<SessionRow> findById(UUID sessionId) {
+        if (sessionId == null) {
+            throw new IllegalArgumentException("sessionId 不能为空");
+        }
+        List<SessionRow> rows = jdbc.query(SELECT_BY_ID, (rs, rowNum) -> new SessionRow(
+                rs.getObject("id", UUID.class),
+                rs.getObject("user_id", UUID.class),
+                rs.getObject("revoked_at", OffsetDateTime.class),
+                rs.getObject("idle_expires_at", OffsetDateTime.class),
+                rs.getObject("absolute_expires_at", OffsetDateTime.class)), sessionId);
+        return rows.stream().findFirst();
     }
 }

@@ -71,11 +71,26 @@ public class SessionAuthenticator {
     }
 
     /**
-     * 解析并校验当前请求的会话。
+     * 解析并校验当前请求的会话，顺带推进空闲期。
      *
      * @throws ApiException 任一步失败；{@code code} 见类注释的表格
      */
     public AuthenticatedSession require(HttpServletRequest request) {
+        return authenticate(request, true);
+    }
+
+    /**
+     * 解析并校验当前请求的会话，但**不**推进空闲期。
+     *
+     * <p>给 {@code POST /auth/session/renew} 用：那个端点自己要在事务里严格续期（写库失败必须
+     * 报 500，不能像常规请求那样"续不上就算了"），所以认证阶段只做判定，不顺手改库。若这里也
+     * 推一次，续期端点会对同一行做两次 UPDATE，第二次必然命中 0 行，反而要额外解释。
+     */
+    public AuthenticatedSession requireWithoutRenewing(HttpServletRequest request) {
+        return authenticate(request, false);
+    }
+
+    private AuthenticatedSession authenticate(HttpServletRequest request, boolean renewIdle) {
         String sid = RequestCookies.value(request, SessionService.COOKIE_NAME);
         if (sid == null || sid.isBlank()) {
             throw new ApiException(ErrorCode.AUTH_REQUIRED, "未登录或会话已失效");
@@ -109,7 +124,9 @@ public class SessionAuthenticator {
             throw new ApiException(ErrorCode.AUTH_SESSION_EXPIRED, "账号不可用，请重新登录");
         }
 
-        OffsetDateTime idleExpiresAt = renewIfActiveRequest(request, session, now);
+        OffsetDateTime idleExpiresAt = renewIdle
+                ? renewIfActiveRequest(request, session, now)
+                : session.idleExpiresAt();
 
         return new AuthenticatedSession(session.userId(), session.id(), idleExpiresAt,
                 session.absoluteExpiresAt(), user);
