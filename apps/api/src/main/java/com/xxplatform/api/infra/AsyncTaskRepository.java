@@ -1,10 +1,12 @@
 package com.xxplatform.api.infra;
 
 import com.xxplatform.api.service.task.TaskCommand;
+import com.xxplatform.api.service.task.TaskSortBy;
 import com.xxplatform.api.service.task.TaskStatus;
 import com.xxplatform.api.service.task.TaskType;
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -50,10 +52,16 @@ public class AsyncTaskRepository {
             VALUES (?, ?, ?, ?, 'PENDING', COALESCE(?, 5), ?, ?::jsonb, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
-    private static final String SELECT_BY_ID = "SELECT " + COLUMNS + " FROM analysis.async_task WHERE id = ?";
+    /** 软删除的任务对外一律视为不存在：读取、取消、重试都不应该再触达它。 */
+    private static final String SELECT_BY_ID = "SELECT " + COLUMNS
+            + " FROM analysis.async_task WHERE id = ? AND deleted = false";
 
     private static final String SELECT_BY_IDEMPOTENCY_KEY = "SELECT " + COLUMNS
             + " FROM analysis.async_task WHERE owner_user_id = ? AND task_type = ? AND idempotency_key = ?";
+
+    private static final String SELECT_BY_OWNER = "SELECT " + COLUMNS + " FROM analysis.async_task";
+
+    private static final String COUNT_BY_OWNER = "SELECT count(*) FROM analysis.async_task";
 
     /**
      * 把最早的一条 {@code PENDING} 提升为 {@code QUEUED}。
@@ -291,6 +299,87 @@ public class AsyncTaskRepository {
         }
         return jdbc.query(SELECT_BY_IDEMPOTENCY_KEY, ROW_MAPPER,
                 ownerUserId, taskType.name(), idempotencyKey).stream().findFirst();
+    }
+
+    /**
+     * 某用户的一页任务（{@code GET /tasks}）。
+     *
+     * <p><b>只按 {@code owner_user_id} 过滤</b>：当前任务没有任何"领域/数据范围"字段，B-05 的可见性
+     * 就是"自己的任务"。契约里的"领域权限/数据范围内"要等任务类型各自带上资源归属之后再叠加，
+     * 现在假装有范围过滤反而会藏起用户自己的任务。
+     *
+     * <p><b>为什么 {@code task_type IN (?,...)} 是动态拼占位符而不是拼值</b>：占位符数量随筛选值个数
+     * 变化，值本身仍然全部走参数绑定。直接拼值（哪怕是枚举名）会把"动态 SQL"变成注入面，而且
+     * 一旦以后允许自由字符串就立刻失守。
+     *
+     * <p><b>为什么排序固定追加 {@code id}</b>：{@code created_at} 精确到微秒仍可能撞上
+     * （批量导入、同一事务里连建几条），只按时间排序时同值行的顺序由数据库决定，翻页会出现
+     * "第 2 页又看到第 1 页某条"。追加主键让排序成为全序，分页才稳定。
+     */
+    public List<TaskRow> findPageByOwner(UUID ownerUserId, List<TaskType> taskTypes, TaskStatus status,
+                                         OffsetDateTime createdFrom, OffsetDateTime createdTo,
+                                         TaskSortBy sortBy, boolean descending, int limit, long offset) {
+        if (ownerUserId == null || sortBy == null) {
+            throw new IllegalArgumentException("ownerUserId/sortBy 不能为空");
+        }
+        if (limit <= 0 || offset < 0) {
+            throw new IllegalArgumentException("limit 必须为正，offset 不能为负");
+        }
+        Where where = where(ownerUserId, taskTypes, status, createdFrom, createdTo);
+        List<Object> args = new ArrayList<>(where.args());
+        args.add(limit);
+        args.add(offset);
+        return jdbc.query(SELECT_BY_OWNER + where.sql() + orderBy(sortBy, descending) + " LIMIT ? OFFSET ?",
+                ROW_MAPPER, args.toArray());
+    }
+
+    /** 与 {@link #findPageByOwner} 同一组筛选条件的总数；两次查询必须用同一个 WHERE，否则总页数会漂。 */
+    public long countByOwner(UUID ownerUserId, List<TaskType> taskTypes, TaskStatus status,
+                             OffsetDateTime createdFrom, OffsetDateTime createdTo) {
+        if (ownerUserId == null) {
+            throw new IllegalArgumentException("ownerUserId 不能为空");
+        }
+        Where where = where(ownerUserId, taskTypes, status, createdFrom, createdTo);
+        Long total = jdbc.queryForObject(COUNT_BY_OWNER + where.sql(), Long.class, where.args().toArray());
+        return total == null ? 0L : total;
+    }
+
+    private static Where where(UUID ownerUserId, List<TaskType> taskTypes, TaskStatus status,
+                               OffsetDateTime createdFrom, OffsetDateTime createdTo) {
+        StringBuilder sql = new StringBuilder(" WHERE owner_user_id = ? AND deleted = false");
+        List<Object> args = new ArrayList<>();
+        args.add(ownerUserId);
+        if (taskTypes != null && !taskTypes.isEmpty()) {
+            sql.append(" AND task_type IN (");
+            for (int i = 0; i < taskTypes.size(); i++) {
+                sql.append(i == 0 ? "?" : ", ?");
+                args.add(taskTypes.get(i).name());
+            }
+            sql.append(')');
+        }
+        if (status != null) {
+            sql.append(" AND status = ?");
+            args.add(status.name());
+        }
+        if (createdFrom != null) {
+            sql.append(" AND created_at >= ?");
+            args.add(createdFrom);
+        }
+        if (createdTo != null) {
+            sql.append(" AND created_at <= ?");
+            args.add(createdTo);
+        }
+        return new Where(sql.toString(), args);
+    }
+
+    private static String orderBy(TaskSortBy sortBy, boolean descending) {
+        String column = sortBy == TaskSortBy.STATUS ? "status" : "created_at";
+        String direction = descending ? " DESC" : " ASC";
+        return " ORDER BY " + column + direction + ", id" + direction;
+    }
+
+    /** 拼好的 WHERE 与它的参数，按同一顺序交给 JDBC。 */
+    private record Where(String sql, List<Object> args) {
     }
 
     /** 把最早一条到期的 {@code PENDING} 任务提升为 {@code QUEUED}；没有可提升的返回 {@code empty}。 */

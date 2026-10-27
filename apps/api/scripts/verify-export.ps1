@@ -326,8 +326,10 @@ $conflict = Post-Export $session $session.Csrf $key1 (Body $plateContext 'CSV')
 Report ($conflict.Code -eq 409) 'same key with a different body -> 409' "HTTP $($conflict.Code) body: $($conflict.Body)"
 Report ((Get-EnvelopeCode $conflict) -eq 'IDEMPOTENCY_CONFLICT') 'conflict uses IDEMPOTENCY_CONFLICT' "code: $(Get-EnvelopeCode $conflict)"
 
-$rowsForContext = Query-Scalar "select count(*) from analysis.async_task where owner_user_id = '$userId' and task_type = 'EXPORT'"
-Report ($rowsForContext -eq '3') 'exactly three EXPORT tasks exist for the caller (XLSX + CSV + ZIP, replays excluded)' "rows: $rowsForContext"
+# Other scripts and earlier runs also create EXPORT tasks in this database, so
+# assert on the three ids this run created instead of on a global count.
+$createdTasks = Query-Scalar "select count(distinct id) from analysis.async_task where id in ('$taskId', '$csvTask', '$zipTask') and task_type = 'EXPORT'"
+Report ($createdTasks -eq '3') 'the three accepted exports are three distinct EXPORT tasks' "rows: $createdTasks"
 
 # ---------------------------------------------------------------------- result
 foreach ($f in $script:files) { Remove-Item $f -ErrorAction SilentlyContinue }
