@@ -15,7 +15,14 @@
          second works, and the account has exactly one live session row;
       2. two logins fired concurrently: both may succeed, but exactly one live session
          survives - which is what the row lock is for. Without the lock both inserts
-         see no rows to revoke and both sessions stay live.
+         see no rows to revoke and both sessions stay live;
+      3. a normal authenticated request moves idle_expires_at later, but never past
+         absolute_expires_at;
+      4. health probes carrying the SID cookie do not renew: polling must not keep a
+         session alive forever (a load balancer hits /health every few seconds);
+      5. if the transaction fails after the revocations (a trigger makes the insert
+         throw), the previous session is still alive - the revocations rolled back
+         with it instead of logging the user out on a server error.
 
     Requires: API running with the db profile, psql on PATH, DB credentials, seed password.
 
@@ -162,8 +169,18 @@ $dbName = $Matches[3]
 
 function Invoke-Sql([string]$sql) {
     $env:PGPASSWORD = $DB_PASSWORD
-    $out = & $psql.Source -h $dbHost -p $dbPort -U $DB_USER -d $dbName -v ON_ERROR_STOP=1 -tA -c $sql 2>&1
-    if ($LASTEXITCODE -ne 0) { throw "psql failed: $($out -join ' ')" }
+    # psql writes NOTICE lines to stderr; with $ErrorActionPreference='Stop' the redirection below
+    # would turn the first NOTICE into a terminating error. Keep this function on 'Continue' and
+    # judge success by the exit code only.
+    $previous = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $out = & $psql.Source -h $dbHost -p $dbPort -U $DB_USER -d $dbName -v ON_ERROR_STOP=1 -tA -c $sql 2>&1
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previous
+    }
+    if ($code -ne 0) { throw "psql failed: $($out -join ' ')" }
     return ($out | Out-String).Trim()
 }
 
@@ -221,7 +238,78 @@ try {
     $working = @(($okA, $sidA), ($okB, $sidB)) | Where-Object { $_[0] } | ForEach-Object { $_[1] }
     Report ($working.Count -eq 1) 'exactly one of the two concurrent SIDs survives' "SID A works=$okA, SID B works=$okB"
 
-    Show-Step '3) cleanup'
+    function Get-SessionDeadlines {
+        $row = Invoke-Sql @"
+SELECT s.idle_expires_at::text || '|' || s.absolute_expires_at::text
+  FROM auth.user_session s
+  JOIN auth.app_user u ON u.id = s.user_id
+ WHERE u.login_name = '$loginNameSql'
+   AND s.revoked_at IS NULL;
+"@
+        if (-not $row) { return $null }
+        $parts = $row -split '\|'
+        return [pscustomobject]@{
+            Idle     = [datetimeoffset]::Parse($parts[0])
+            Absolute = [datetimeoffset]::Parse($parts[1])
+        }
+    }
+
+    Show-Step '3) a normal request pushes the idle deadline forward'
+    $third = New-Login (New-CsrfPair)
+    $sid3 = Get-CookieValue $third.Headers 'SID'
+    Report ($third.Code -eq 200 -and $sid3) 'login for the renewal round succeeds' "HTTP $($third.Code)"
+    $before = Get-SessionDeadlines
+    Start-Sleep -Seconds 2
+    $meCode = Get-MeStatus $sid3
+    $after = Get-SessionDeadlines
+    Report ($meCode -eq 200) 'GET /me with the new SID succeeds' "HTTP $meCode"
+    Report ($null -ne $before -and $null -ne $after -and $after.Idle -gt $before.Idle) 'idle_expires_at moved later after GET /me' "before=$($before.Idle.ToString('o')) after=$($after.Idle.ToString('o'))"
+    Report ($null -ne $after -and $after.Idle -le $after.Absolute) 'the renewal never passes absolute_expires_at' "idle=$($after.Idle.ToString('o')) absolute=$($after.Absolute.ToString('o'))"
+
+    Show-Step '4) probes do not renew (polling must not keep a session alive forever)'
+    $before = Get-SessionDeadlines
+    $probeCodes = @()
+    for ($i = 0; $i -lt 3; $i++) {
+        $probe = Invoke-Curl @('--max-time', '10', '-b', "SID=$sid3", "$BaseUrl/health")
+        $probeCodes += $probe.Code
+        Start-Sleep -Seconds 1
+    }
+    $after = Get-SessionDeadlines
+    Report (($probeCodes | Where-Object { $_ -ne 200 }).Count -eq 0) 'GET /health stays reachable with a SID cookie' "codes=$($probeCodes -join ',')"
+    Report ($null -ne $before -and $null -ne $after -and $after.Idle -eq $before.Idle) 'three probes left idle_expires_at unchanged' "before=$($before.Idle.ToString('o')) after=$($after.Idle.ToString('o'))"
+
+    Show-Step '5) a failure inside the login transaction rolls the revocation back'
+    # Inject a failure at the very last write of the transaction (the session insert). A renamed
+    # table would not do: the CSRF lookup fails before the transaction starts, so it would prove
+    # nothing about rollback.
+    Invoke-Sql @'
+CREATE OR REPLACE FUNCTION auth.a02_selftest_fail_insert() RETURNS trigger AS $fn$
+BEGIN
+    RAISE EXCEPTION 'A02 self-test: refusing to insert a session';
+END;
+$fn$ LANGUAGE plpgsql;
+DROP TRIGGER IF EXISTS a02_selftest_fail_insert ON auth.user_session;
+CREATE TRIGGER a02_selftest_fail_insert BEFORE INSERT ON auth.user_session
+    FOR EACH ROW EXECUTE FUNCTION auth.a02_selftest_fail_insert();
+'@ | Out-Null
+    try {
+        $failedLogin = New-Login (New-CsrfPair)
+        Report ($failedLogin.Code -ge 500) 'the login fails while the trigger is installed' "HTTP $($failedLogin.Code)"
+        $live = Get-LiveSessionCount
+        Report ($live -eq 1) 'the previous session was not revoked (the transaction rolled back)' "live=$live"
+        Report ((Get-MeStatus $sid3) -eq 200) 'the previous SID still works after the failed login' "GET /me -> $((Get-MeStatus $sid3))"
+    } finally {
+        Invoke-Sql @'
+DROP TRIGGER IF EXISTS a02_selftest_fail_insert ON auth.user_session;
+DROP FUNCTION IF EXISTS auth.a02_selftest_fail_insert();
+'@ | Out-Null
+    }
+    $recovered = New-Login (New-CsrfPair)
+    $sid5 = Get-CookieValue $recovered.Headers 'SID'
+    Report ($recovered.Code -eq 200 -and $sid5) 'login works again once the trigger is gone' "HTTP $($recovered.Code)"
+    Report ((Get-LiveSessionCount) -eq 1) 'the recovered login leaves exactly one live session' ''
+
+    Show-Step '6) cleanup'
     Invoke-Sql "UPDATE auth.user_session SET revoked_at = now() WHERE revoked_at IS NULL AND user_id = (SELECT id FROM auth.app_user WHERE login_name = '$loginNameSql');" | Out-Null
     Report ((Get-LiveSessionCount) -eq 0) 'test account left with no live session' ''
 } catch {

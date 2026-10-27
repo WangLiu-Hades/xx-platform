@@ -251,7 +251,14 @@ Report ($data.session.userId -eq $data.user.userId) 'session.userId equals user.
 Report ($data.session.idleExpiresAt -match '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$') 'session.idleExpiresAt is ISO8601 UTC (Z)' "got: $($data.session.idleExpiresAt)"
 Report ($data.session.absoluteExpiresAt -match '^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$') 'session.absoluteExpiresAt is ISO8601 UTC (Z)' "got: $($data.session.absoluteExpiresAt)"
 if ($admin.Json) {
-    Report ($data.session.idleExpiresAt -eq $admin.Json.data.idleExpiresAt) 'session.idleExpiresAt equals the login response' "me: $($data.session.idleExpiresAt) login: $($admin.Json.data.idleExpiresAt)"
+    # Since A02 a normal authenticated request pushes the idle deadline forward, so this call
+    # legitimately reports a later value than the login response. What must still hold: it never
+    # goes backwards, and it never passes the absolute deadline.
+    $meIdle = [datetimeoffset]::Parse($data.session.idleExpiresAt)
+    $loginIdle = [datetimeoffset]::Parse($admin.Json.data.idleExpiresAt)
+    $meAbsolute = [datetimeoffset]::Parse($data.session.absoluteExpiresAt)
+    Report ($meIdle -ge $loginIdle) 'session.idleExpiresAt is not earlier than the login response' "me: $($data.session.idleExpiresAt) login: $($admin.Json.data.idleExpiresAt)"
+    Report ($meIdle -le $meAbsolute) 'session.idleExpiresAt does not pass absoluteExpiresAt' "idle: $($data.session.idleExpiresAt) absolute: $($data.session.absoluteExpiresAt)"
     Report ($data.session.absoluteExpiresAt -eq $admin.Json.data.absoluteExpiresAt) 'session.absoluteExpiresAt equals the login response' ''
 }
 

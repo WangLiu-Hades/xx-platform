@@ -24,7 +24,10 @@
         powershell -File apps/api/scripts/verify-migration-parity.ps1 -Port 55433
         & "$bin\pg_ctl.exe" -D ..\pg-scratch\data stop
 
-    Exit code 0 = parity, 1 = drift, 2 = environment problem.
+    Exit code 0 = parity, 1 = drift, 2 = environment problem (including a refused name collision),
+    3 = the run itself finished but cleanup of its own throwaway databases failed (a session was
+    still connected). Exit code 3 is never reported as a pass: a leftover database is exactly the
+    kind of state A05 asks this script not to leave behind.
 
 .PARAMETER PgBin
     PostgreSQL 16 bin directory. Detected from PATH or C:\Program Files\PostgreSQL\*\bin when omitted.
@@ -142,6 +145,8 @@ foreach ($database in @($dbMig, $dbRef)) {
     }
 }
 
+$cleanupFailed = $false
+
 try {
     foreach ($database in @($dbMig, $dbRef)) {
         $r = Invoke-Tool $psql ($conn + @('-d', 'postgres', '-q', '-v', 'ON_ERROR_STOP=1', '-c', "CREATE DATABASE $database;"))
@@ -223,8 +228,21 @@ finally {
     if ($createdDbs.Count -gt 0) {
         $dropArgs = @('-d', 'postgres', '-q')
         foreach ($database in $createdDbs) { $dropArgs += @('-c', "DROP DATABASE IF EXISTS $database;") }
-        $null = Invoke-Tool $psql ($conn + $dropArgs)
-        Write-Host "cleaned up $($createdDbs -join ', ') (only databases this run created)"
+        $dropResult = Invoke-Tool $psql ($conn + $dropArgs)
+        # psql can exit 0 even when a DROP failed (the error is reported but the batch continues), so
+        # ask the catalogue instead of trusting the exit code: what matters is whether the databases
+        # are actually gone.
+        $leftovers = @($createdDbs | Where-Object { Test-DatabaseExists $_ })
+        if ($leftovers.Count -gt 0) {
+            $cleanupFailed = $true
+            Write-Host ""
+            Write-Host "ERROR  cleanup failed; still present: $($leftovers -join ', ')" -ForegroundColor Red
+            Write-Host "       a session was probably still connected to the throwaway database. Drop it by hand once the session ends:"
+            foreach ($database in $leftovers) { Write-Host "         DROP DATABASE IF EXISTS $database;" }
+            Write-Host "       ($($dropResult.Output -join ' '))"
+        } else {
+            Write-Host "cleaned up $($createdDbs -join ', ') (only databases this run created)"
+        }
     } else {
         Write-Host "nothing to clean up: no throwaway database was created by this run"
     }
@@ -233,6 +251,10 @@ finally {
     } else {
         Remove-Item -Recurse -Force $workDir -ErrorAction SilentlyContinue
     }
+}
+
+if ($cleanupFailed) {
+    exit 3
 }
 
 exit $exitCode

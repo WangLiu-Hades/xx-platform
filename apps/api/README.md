@@ -108,9 +108,11 @@ apps/api/
 │   ├── verify-skeleton.ps1    共享层验收 25 条
 │   ├── verify-csrf.ps1        CSRF 验收 34 条
 │   ├── verify-login.ps1       登录验收 65 条
-│   ├── verify-me.ps1          /me 验收 94 条
+│   ├── verify-me.ps1          /me 验收 95 条
 │   ├── verify-scope-tuples.ps1 数据范围元组验收 15 条（A01 交叉扩权反例）
-│   ├── verify-session-singleton.ps1 单账号单会话验收 13 条（A02 含并发登录）
+│   ├── verify-session-singleton.ps1 单账号单会话验收 24 条（A02 含并发、续期、探针、回滚）
+│   ├── verify-migration-parity.ps1 迁移与契约结构比对（唯一库名，见 §8.7）
+│   ├── verify-migration-parity-selftest.ps1 上面这个脚本的负例自测 18 条（A05）
 │   ├── verify-client-config.ps1  前端配置验收 53 条
 │   ├── verify-health.ps1      探针验收 47 条
 │   └── verify-logout.ps1      退出登录验收 41 条
@@ -208,13 +210,15 @@ apps/api/
 | 验证 | 结果 |
 | --- | --- |
 | `mvn -o -B clean compile` | BUILD SUCCESS |
-| `mvn -o -B test` | 58 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 38、`migration.*` 5；A01 把 `ScopeCalculatorTests` 由 8 条扩到 13 条，A02 新增 `SessionServiceBeginTests` 5 条） |
+| `mvn -o -B test` | 64 例全绿（`ApiApplicationTests` 1、`infra.*` 14、`service.*` 44、`migration.*` 5；A01 把 `ScopeCalculatorTests` 由 8 条扩到 13 条，A02 新增 `SessionServiceBeginTests` 5 条与 `SessionRenewalTests` 6 条） |
 | `verify-skeleton.ps1` | 25 passed, 0 failed |
 | `verify-csrf.ps1` | 34 passed, 0 failed |
 | `verify-login.ps1` | 65 passed, 0 failed |
-| `verify-me.ps1` | 94 passed, 0 failed |
+| `verify-me.ps1` | 95 passed, 0 failed |
 | `verify-scope-tuples.ps1` | 15 passed, 0 failed（A01：造 PLATE@A + FACE@B 两个角色，断言 `/me` 无交叉） |
-| `verify-session-singleton.ps1` | 13 passed, 0 failed（A02：连续两次登录 + 并发两次登录，库里始终只有 1 条有效会话） |
+| `verify-session-singleton.ps1` | 24 passed, 0 failed（A02：连续两次登录 + 并发两次登录，库里始终只有 1 条有效会话；外加续期、探针不续期、事务中途失败回滚三段） |
+| `verify-migration-parity.ps1` | `PASS structure is identical: 3033 fingerprints match (165 tables)` |
+| `verify-migration-parity-selftest.ps1` | 18 passed, 0 failed（A05：名字冲突拒绝、正常清理、迁移失败、drift、清理失败） |
 | `verify-client-config.ps1` | 53 passed, 0 failed |
 | `verify-health.ps1` | 47 passed, 0 failed |
 | `verify-logout.ps1` | 41 passed, 0 failed |
@@ -500,8 +504,20 @@ HTTP 200  X-Trace-Id: 6d34...  Set-Cookie: SID=<43字符>; Path=/api/v1; Max-Age
 别改成 `AUTH_SESSION_EXPIRED`：这条路径根本没有会话可过期，而且文案一改就等于告诉攻击者"账号存在但被停用"。
 
 验收：单测 `SessionServiceBeginTests` 钉住调用顺序（无 SID 也必须 `revokeAllForUser`、且发生在 `insert` 之前；
-停用/软删的账号 401 且不插入）；端到端 `scripts/verify-session-singleton.ps1` 13 条，
-包含**并发两次登录后库里只剩 1 条有效会话**——这条没有行锁就会变成 2 条。
+停用/软删的账号 401 且不插入）；`SessionRenewalTests` 钉住续期算术（新值更晚才返回、绝不过绝对期限）；
+端到端 `scripts/verify-session-singleton.ps1` 24 条，包含**并发两次登录后库里只剩 1 条有效会话**——这条没有行锁就会变成 2 条，
+另外三段分别验续期、探针不续期、以及事务中途失败时撤销被回滚（旧会话仍然有效）。
+
+#### 空闲期什么时候往前推（续期）
+
+"空闲 15 分钟"是**滑动**的：认证通过的常规请求把 `idle_expires_at` 推到 `min(now + 15m, absolute_expires_at)`，
+所以连续工作的人不会被第 15 分钟踢掉，而绝对 8 小时到点仍然失效。两条实现约束：
+
+- 探针 `/api/v1/health`、`/api/v1/ready` **不续期**（`SessionAuthenticator` 里的 `PROBE_PATHS`）。没有这条，
+  负载均衡每 5 秒轮询一次就等于把用户永久登录——空闲超时形同虚设。
+- 续期的算术在 `service/SessionRenewal.nextIdle(...)` 一个纯函数里（可单测），写库时 SQL 再兜一层
+  `LEAST(?, absolute_expires_at)` 与 `idle_expires_at < ?`，多实例并发也不会把期限推过绝对上限；
+  写库失败只记 warn、不打断已经通过认证的请求。
 
 **已知限制（有意为之，不要"顺手修"）**：`login_name` **大小写精确匹配**。数据库唯一索引是大小写敏感的，
 若服务层容忍大小写，就会出现两个仅大小写不同的账号互相歧义的情况。
@@ -592,9 +608,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-login.p
 `csrf_session.session_id` 已绑定、`last_login_at` 已写）、登录轮换 SID 且旧会话被撤销、
 频控 10 次 401 后 429 且 `Retry-After >= 1`、以及未知字段/超长/缺字段/405/跨源。
 
-"单账号单会话"另由 `scripts/verify-session-singleton.ps1` 单独验（13 条，A02）：两次都不带 SID 的登录
+"单账号单会话"另由 `scripts/verify-session-singleton.ps1` 单独验（24 条，A02）：两次都不带 SID 的登录
 之后，旧 SID 必须 401、库里该账号只剩 1 条 `revoked_at IS NULL`；再用两个 runspace 同时发起登录，
 断言并发结束后同样只剩 1 条。**后者是行锁的直接证据**——没有 `FOR UPDATE` 时两次插入互不可见，会留下 2 条。
+同一脚本还验续期（`/me` 之后 `idle_expires_at` 变晚且不超过绝对期限）、探针不续期（带 SID 连打三次
+`/health` 后期限不变），以及事务中途失败时撤销被回滚（临时给 `auth.user_session` 挂一个 `BEFORE INSERT`
+触发器抛异常 → 登录 500，但旧会话仍然可用）。
 
 ---
 
@@ -1277,11 +1296,11 @@ $bin = 'C:\Program Files\PostgreSQL\16\bin'
 
 | 评审项 | 改了什么 | 提交 | 怎么验的 |
 | --- | --- | --- | --- |
-| A01（P0） | 数据范围从"扁平维度取交集"改为按 `(dataType, siteScope, ownOnly)` **元组求并集**；`/me.dataScope.scopeGrants` 是权威字段，旧五字段降级为 UI 投影 | `3734bf6` | `ScopeCalculatorTests` 13 例、`verify-scope-tuples.ps1` 15 条、`verify-me.ps1` 94 条 |
-| A02（P0） | 登录时锁 `auth.app_user` 行 → 复核状态 → 撤销该账号**全部**旧会话 → 签发新 SID（不靠进程内锁） | `318497f` | `SessionServiceBeginTests` 5 例、`verify-session-singleton.ps1` 13 条（含并发登录） |
+| A01（P0） | 数据范围从"扁平维度取交集"改为按 `(dataType, siteScope, ownOnly)` **元组求并集**；`/me.dataScope.scopeGrants` 是权威字段，旧五字段降级为 UI 投影 | `3734bf6` | `ScopeCalculatorTests` 13 例、`verify-scope-tuples.ps1` 15 条、`verify-me.ps1` 95 条 |
+| A02（P0） | 登录时锁 `auth.app_user` 行 → 复核状态 → 撤销该账号**全部**旧会话 → 签发新 SID（不靠进程内锁）；另补空闲期续期，探针不续期 | `318497f` + 本提交 | `SessionServiceBeginTests` 5 例、`SessionRenewalTests` 6 例、`verify-session-singleton.ps1` 24 条（并发、续期、探针、回滚） |
 | A03（P0） | 把 #4 的 `V3` 增量并回骨架分支；`V1` 冻结、守卫改为结构比对而不是逐字节相等 | `0498373`（#4 已 fast-forward 合入） | `migration.*` 5 例、`verify-migration-parity.ps1`（3033 指纹 / 165 表） |
 | A04（P1） | 空闲 15 分钟 / 绝对 8 小时 / `maxOnlineWindowDays` 31；改配置**新增 `V4` 增量**，不动已执行过的 `V2` | `f301122` | `verify-login.ps1` 65 条、`verify-client-config.ps1` 53 条、`V4` 在临时库上的重复执行与"运维覆盖"用例 |
-| A05（P2） | `verify-migration-parity.ps1` 每次运行自带唯一库名、名字冲突即拒、只清理本次自建的库 | `9a26419` | 四条自测：冲突退出 2 且他人库仍在 / 正常 `PASS` / 中途失败仍清理 / 默认命名 |
+| A05（P2） | `verify-migration-parity.ps1` 每次运行自带唯一库名、名字冲突即拒、只清理本次自建的库；清理失败按退出码 3 报告而不是假称已清理 | `9a26419` + 本提交 | `verify-migration-parity-selftest.ps1` 18 条：冲突退出 2 且他人库仍在 / 正常 `PASS` / 迁移失败仍清理 / drift 退出 1 / 清理失败退出 3 |
 | §2.6 | 契约文案 `IdempotencyKey.description` 里 `409 TASK_CONFLICT` → `409 IDEMPOTENCY_CONFLICT`（只改这一处，其余 6 处 `TASK_CONFLICT` 是任务/资源状态语义，不动） | 本提交 | `npm run generate:api` 后 `git diff --exit-code -- apps/web/src/api` 干净；`typecheck`、`vitest` 294 例、`build` 均通过 |
 
 改契约的连带规则（本轮实测）：`contracts/api/openapi.yaml` 一动，`apps/web/src/api/schema.ts` 的每个带 `Idempotency-Key` 的 operation 都会内联这行描述，所以生成物的 diff 是 85 行而不是 1 行；CI 只校验 `apps/web/src/api`，`apps/web/audit/vue-migration/*` 这两个审计快照**不同批刷新**（它们带生成时间和本机绝对路径，刷新只会制造噪声，且 `tools/layout/verify_layout.py` 会跳过 `/audit/` 路径）。

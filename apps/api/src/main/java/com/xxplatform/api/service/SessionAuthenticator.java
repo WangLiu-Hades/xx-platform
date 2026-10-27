@@ -5,11 +5,13 @@ import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
 import com.xxplatform.api.common.RequestCookies;
 import com.xxplatform.api.common.Sha256;
+import com.xxplatform.api.config.SessionProperties;
 import com.xxplatform.api.infra.UserAccountRepository;
 import com.xxplatform.api.infra.UserSessionRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -47,12 +49,25 @@ public class SessionAuthenticator {
 
     private static final Logger log = LoggerFactory.getLogger(SessionAuthenticator.class);
 
+    /**
+     * 不续空闲期的探针路径（相对 context path）。
+     *
+     * <p>健康检查/就绪检查是给负载均衡和监控轮询用的：客户端拿着 Cookie 去打它，
+     * 不该把用户的空闲期限一直续下去。这两个端点在 {@code WebConfiguration} 里本来就是
+     * {@code permitAll}，走不到这里；把名单留在这里是防御性的——哪天它们被改成需要登录，
+     * 轮询也不会变成"永不超时"。
+     */
+    private static final Set<String> PROBE_PATHS = Set.of("/health", "/ready");
+
     private final UserSessionRepository sessions;
     private final UserAccountRepository users;
+    private final SessionProperties properties;
 
-    public SessionAuthenticator(UserSessionRepository sessions, UserAccountRepository users) {
+    public SessionAuthenticator(UserSessionRepository sessions, UserAccountRepository users,
+            SessionProperties properties) {
         this.sessions = sessions;
         this.users = users;
+        this.properties = properties;
     }
 
     /**
@@ -94,8 +109,47 @@ public class SessionAuthenticator {
             throw new ApiException(ErrorCode.AUTH_SESSION_EXPIRED, "账号不可用，请重新登录");
         }
 
-        return new AuthenticatedSession(session.userId(), session.id(), session.idleExpiresAt(),
+        OffsetDateTime idleExpiresAt = renewIfActiveRequest(request, session, now);
+
+        return new AuthenticatedSession(session.userId(), session.id(), idleExpiresAt,
                 session.absoluteExpiresAt(), user);
+    }
+
+    /**
+     * 常规主动请求把空闲期限往前推；探针与轮询不推（A02）。
+     *
+     * <p>续期上限由 SQL 的 {@code LEAST(?, absolute_expires_at)} 与这里的
+     * {@link SessionRenewal#nextIdle} 双重保证，绝对期限不会被推后。写库失败只记 warn、
+     * 不影响本次请求：续期是"让用户少登录一次"的优化，不该把已经通过认证的请求变成 500。
+     *
+     * @return 本请求生效的空闲期限（续期成功取新值，否则取原值）
+     */
+    private OffsetDateTime renewIfActiveRequest(
+            HttpServletRequest request, UserSessionRepository.SessionRow session, OffsetDateTime now) {
+        if (isProbe(request)) {
+            return session.idleExpiresAt();
+        }
+        Optional<OffsetDateTime> next = SessionRenewal.nextIdle(
+                now, properties.getIdleTtl(), session.idleExpiresAt(), session.absoluteExpiresAt());
+        if (next.isEmpty()) {
+            return session.idleExpiresAt();
+        }
+        try {
+            sessions.touch(session.id(), next.get());
+        } catch (RuntimeException e) {
+            log.warn("会话续期失败，本次请求按原空闲期限继续 sessionId={} error={}", session.id(), e.toString());
+            return session.idleExpiresAt();
+        }
+        return next.get();
+    }
+
+    private boolean isProbe(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        if (uri == null) {
+            return false;
+        }
+        String path = uri.startsWith(request.getContextPath()) ? uri.substring(request.getContextPath().length()) : uri;
+        return PROBE_PATHS.contains(path);
     }
 
     /**

@@ -63,6 +63,25 @@ public class UserSessionRepository {
     private static final String REVOKE_ALL_FOR_USER =
             "UPDATE auth.user_session SET revoked_at = now() WHERE user_id = ? AND revoked_at IS NULL";
 
+    /**
+     * 把空闲期限往前推（A02：常规业务请求续空闲期）。
+     *
+     * <p>三条约束都写进 SQL，而不是交给调用方自觉：
+     * <ul>
+     *   <li>{@code LEAST(?, absolute_expires_at)}：续期最多推到绝对期限，绝对期限永远不被延长；</li>
+     *   <li>{@code revoked_at IS NULL}：已撤销的会话不会被一次迟到的请求复活；</li>
+     *   <li>{@code idle_expires_at < ?}：新值没有更晚就不写，避免每个请求都产生一次无效 UPDATE
+     *       （同一秒内的连点、并发请求都会命中这条）。</li>
+     * </ul>
+     *
+     * <p>返回 0 行是正常情况（没被推动，或会话刚好被撤销），不是错误。
+     */
+    private static final String TOUCH = """
+            UPDATE auth.user_session
+               SET last_seen_at = now(), idle_expires_at = LEAST(?, absolute_expires_at)
+             WHERE id = ? AND revoked_at IS NULL AND idle_expires_at < ?
+            """;
+
     private final JdbcTemplate jdbc;
 
     public UserSessionRepository(JdbcTemplate jdbc) {
@@ -125,6 +144,21 @@ public class UserSessionRepository {
             throw new IllegalArgumentException("userId 不能为空");
         }
         return jdbc.update(REVOKE_ALL_FOR_USER, userId);
+    }
+
+    /**
+     * 续期：把 {@code idle_expires_at} 推到 {@code newIdle}，但不超过 {@code absolute_expires_at}。
+     *
+     * <p>返回受影响行数；0 表示"没有变化"（新值不更晚、会话已撤销或不存在）。
+     */
+    public int touch(UUID sessionId, OffsetDateTime newIdle) {
+        if (sessionId == null) {
+            throw new IllegalArgumentException("sessionId 不能为空");
+        }
+        if (newIdle == null) {
+            throw new IllegalArgumentException("newIdle 不能为空");
+        }
+        return jdbc.update(TOUCH, newIdle, sessionId, newIdle);
     }
 
     /** 按 SID 摘要取会话（含已撤销/已过期的，好让调用方区分失败原因）。 */
