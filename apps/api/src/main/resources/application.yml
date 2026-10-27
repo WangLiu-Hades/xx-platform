@@ -86,6 +86,21 @@ xx:
     # 否则浏览器不回传 Secure Cookie，登录后下一个请求就是未认证。
     secure-cookie: false
 
+  # 任务底座 B-05（见 service/task/TaskProperties）
+  #
+  # 租约：worker 领取后持有的时间。超过它任务会被 reaper 收回重排——这是"worker 崩溃
+  # 不丢任务"的兜底，所以必须显著大于单次任务的最长正常耗时，又不能长到让故障恢复变慢。
+  task:
+    lease: 2m
+    # 同一 taskId 最多执行几次（每次领取 attemptNo+1）。用尽后 reaper 把任务改判 FAILED。
+    max-attempts: 3
+    # 被收回的任务延后多久再被领取，避免"刚收回就被同一个饥饿队列立刻重跑"。
+    retry-delay: 30s
+    reaper-batch-size: 50
+    # 默认关闭：单测与骨架启动不起后台线程。只有 db profile 打开（见 application-db.yml）。
+    reaper-enabled: false
+    reaper-interval: 30s
+
   # 认证策略（任务 5：POST /auth/login）
   auth:
     # 登录失败频控。计数在进程内，多实例部署时实际阈值 = 实例数 × max-failures，

@@ -48,3 +48,9 @@ spring:
     # clean 在生产是灾难操作，必须禁用（与 Maven 插件里的 cleanDisabled 一致）
     clean-disabled: true
     validate-on-migrate: true
+
+# 任务底座（B-05）：只有连了库的 profile 才需要后台回收租约。
+# 多实例部署时每个实例都会跑 reaper，靠 expireLeases 的 FOR UPDATE SKIP LOCKED 互不重复。
+xx:
+  task:
+    reaper-enabled: true
