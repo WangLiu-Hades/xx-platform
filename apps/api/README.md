@@ -1172,6 +1172,19 @@ powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/db-migrate.
   其中大索引要 `CREATE INDEX CONCURRENTLY` 且在事务块外单独执行。
 - `baselineOnMigrate=true` + `baselineVersion=0`：允许在已有内容的库上以基线方式接管，
   但**不代表旧库已迁移成功**——那是增量迁移的责任。
+- **升级前先识别库的来源**，不同来源不能套同一条命令：
+
+  | 库的来源 | 处理方式 |
+  | --- | --- |
+  | 空库 | 直接 `flyway:migrate`（V1→V4） |
+  | 已有 Flyway V1/V2 的库 | `flyway:migrate` 追加 V3/V4，不动历史表 |
+  | 直接执行过 `schema.sql` 的库 | 结构已是 165 表但**没有迁移历史**：先盘点结构与 `flyway_schema_history`，再决定 baseline 还是补增量，不能直接 `migrate` |
+  | 手工跑过 `contracts/database/migrations/PD_20261018_approval.sql` 的库 | 表已存在、V3 未记录：必须先在结构层面确认与 V3 等价，再走 `baseline`/`repair` 的受审方案 |
+  | 其它历史库 | 按 [migration-plan.md](../../contracts/database/migration-plan.md) 生成增量迁移 |
+
+  `V3__approval_aggregate_and_policy_v1.sql` 头部注释里"否则请重建该库"只适用于**明确可丢弃的
+  隔离测试库**；共享库、有数据的库一律不允许重建，只能按上表盘点后走增量。重建会丢数据，
+  也不能作为"让迁移跑通"的手段。
 
 ### 8.6 守卫测试
 
