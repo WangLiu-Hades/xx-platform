@@ -34,6 +34,15 @@ spring:
     problemdetails:
       # 关闭 RFC 7807，避免与契约错误壳（code/message/data/traceId/details）混用两套错误格式
       enabled: false
+  servlet:
+    multipart:
+      # 容器层的硬闸门：没有它，Spring 会在解析 multipart 时把超大文件读进临时目录，
+      # 业务层的 413 判断（xx.file.max-bytes）就永远轮不到。这里比业务上限略宽 2 MiB，
+      # 让"刚好超业务上限"的文件仍由业务层返回契约壳 413，而不是容器错误页。
+      max-file-size: 10MB
+      max-request-size: 12MB
+      # 超限时不静默截断，直接抛 MaxUploadSizeExceededException（见 ApiExceptionHandler → 413）
+      resolve-lazily: false
 
 # 日志：traceId 由 common/RequestIdFilter 写入 MDC，这里把它打进每一行，
 # 便于联调时"浏览器请求 → 服务端日志"对齐同一个 traceId（H06 验收要求）。
@@ -46,3 +55,112 @@ logging:
 
 # 契约自带 GET /health 与 GET /ready（M15，PUBLIC），
 # 因此不启用 actuator，避免出现第二套健康端点造成语义重复。如需运维端点再单独评估。
+
+# traceId 策略（见 common/RequestIdFilter）
+# 默认 false：traceId 一律由服务端生成，客户端传入的 X-Trace-Id 被忽略。
+# 只有当前面确实部署了可信网关/链路追踪代理、需要跨系统串联时，才改成 true；
+# 即使为 true，也只有符合 xx.trace 形状约束的值会被采用。
+xx:
+  trace:
+    accept-client-trace-id: false
+
+  # CSRF / Cookie 策略（见 common/CsrfProperties 与 docs：OPENAPI_PENDING P-001）
+  #
+  # ⚠ 这里的默认值**不代表业务已签认**，只是让链路可运行的保守初值。
+  #   P-001 待签认的是：空闲/绝对超时、并发登录、跨域部署边界。
+  #   签认后只改本文件，不要改代码。
+  csrf:
+    # CSRF 会话存活时长（auth.csrf_session.expires_at）
+    ttl: 2h
+    # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试须为 false，
+    # 否则浏览器不回传 Secure Cookie，整条链路无法联调。
+    secure-cookie: false
+    # 契约固定值，改了前端就失联
+    cookie-name: CSRFID
+    cookie-path: /api/v1
+
+  # 会话策略（见 auth/SessionProperties 与 PD-2026-10-19.v1 暂定政策）
+  #
+  # ⚠ 与 csrf 一节同理：SessionData 在契约里标着 x-design-status=provisional，
+  #   取值仍待甲方确认。签认后只改本文件。
+  #   下列 15m / 8h 与 docs/project-governance/provisional-policy.json 的
+  #   settings.auth.idleSeconds=900、absoluteSeconds=28800 一致。
+  session:
+    # 空闲超时：每次请求刷新（renew 只延长它）
+    idle-ttl: 15m
+    # 绝对超时：从登录时刻起算，任何活动都不延长
+    absolute-ttl: 8h
+    cookie-path: /api/v1
+    # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试为 false，
+    # 否则浏览器不回传 Secure Cookie，登录后下一个请求就是未认证。
+    secure-cookie: false
+
+  # 任务底座 B-05（见 service/task/TaskProperties）
+  #
+  # 租约：worker 领取后持有的时间。超过它任务会被 reaper 收回重排——这是"worker 崩溃
+  # 不丢任务"的兜底，所以必须显著大于单次任务的最长正常耗时，又不能长到让故障恢复变慢。
+  task:
+    lease: 2m
+    # 同一 taskId 最多执行几次（每次领取 attemptNo+1）。用尽后 reaper 把任务改判 FAILED。
+    max-attempts: 3
+    # 被收回的任务延后多久再被领取，避免"刚收回就被同一个饥饿队列立刻重跑"。
+    retry-delay: 30s
+    reaper-batch-size: 50
+    # 默认关闭：单测与骨架启动不起后台线程。只有 db profile 打开（见 application-db.yml）。
+    reaper-enabled: false
+    reaper-interval: 30s
+
+  # 受控文件（见 service/file/FileService 与 config/FileProperties）
+  #
+  # ⚠ client-config.maxUploadBytes 与这里的 max-bytes 是同一个甲方口径（10 MiB）：
+  #   前者给前端做预校验，后者是服务端硬闸门。改一个就要同步改另一个。
+  file:
+    # 内容根目录；生产挂持久卷，本地默认在用户目录下（可用 XX_FILE_STORAGE_ROOT 覆盖）
+    storage-root: ${user.home}/.xx-platform/files
+    max-bytes: 10485760
+
+  # 敏感动作审批（见 service/approval/ApprovalService 与 config/ApprovalProperties）
+  #
+  # 时间口径来自 PD-2026-10-19.v1（暂定）：申请 24 小时过期；批准后的执行许可 10 分钟，
+  # 解密类 5 分钟，且一律不超过申请本身的 expiresAt。
+  #
+  # payload-key 是冻结快照的 AES-256 密钥（base64，32 字节）。默认留空表示"未配置"——
+  # 此时创建/读取审批返回 503，而不是退化成明文落库。生产由部署 secret 注入；
+  # 本地 db profile 在 application-db.yml 里放了一个仅限开发的默认值。
+  approval:
+    payload-key: ${XX_APPROVAL_PAYLOAD_KEY:}
+    key-id: local-dev-v1
+    ttl: 24h
+    grant-ttl: 10m
+    decryption-grant-ttl: 5m
+    policy-version: PD-2026-10-19.v1
+    page-size-default: 20
+    page-size-max: 100
+
+  # 认证策略（任务 5：POST /auth/login）
+  auth:
+    # 登录失败频控。计数在进程内，多实例部署时实际阈值 = 实例数 × max-failures，
+    # 上多实例前必须换成共享存储（见 auth/LoginThrottleProperties 的类注释）。
+    throttle:
+      max-failures: 10
+      window: 15m
+      lockout: 15m
+    # 开发种子账号：三重闸门（profile=db + enabled + 外部提供口令）。
+    # 口令**不写在这里**（本文件要提交），用环境变量 XX_AUTH_DEVSEED_PASSWORD 提供。
+    #
+    # 三个账号共用同一口令、各自绑一个角色，用来验证 GET /me 的范围与权限差异：
+    #   demo.admin    -> SUPER_ADMIN  全 58 码、全场所、ownOnly=false、四种数据类型
+    #   demo.operator -> OPERATOR     13 个只读码、全场所、ownOnly=true、仅 FENCE/PLATE
+    #   demo.classified -> CLASSIFIED 操作员 + capture:decrypt/audit:read、四种数据类型
+    dev-seed:
+      enabled: false
+      login-name: demo.admin
+      operator-login-name: demo.operator
+      classified-login-name: demo.classified
+      display-name: 演示管理员
+      # 账号已存在时是否把口令重置为当前 XX_AUTH_DEVSEED_PASSWORD 并撤销其会话。
+      # 默认 false（正常重启不冲掉手工改过的口令）；换口令时显式打开一次再关掉，
+      # 否则会出现"新账号用新口令、老账号还是旧口令"的口令漂移。
+      reset-password: false
+
+

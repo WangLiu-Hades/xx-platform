@@ -17299,7 +17299,7 @@ components:
         type: "string"
         minLength: 16
         maxLength: 160
-      description: "同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。"
+      description: "同用户+资源类型+键防重；同键不同参数返回 409 IDEMPOTENCY_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。"
     CsrfToken:
       name: "X-CSRF-Token"
       in: "header"

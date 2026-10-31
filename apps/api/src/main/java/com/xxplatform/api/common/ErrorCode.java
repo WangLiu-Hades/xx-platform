@@ -10,13 +10,25 @@ package com.xxplatform.api.common;
  *   <li>批量接口的 200 不代表逐项成功，逐项失败复用这里的取值。</li>
  * </ul>
  *
- * <p>TODO(阶段 2)：与 {@code GlobalExceptionHandler} 一起完善到全 34 项的实际使用点；
+ * <p>TODO(阶段 2)：与 {@code ApiExceptionHandler} 一起完善到全 34 项的实际使用点；
  * 当前枚举已按契约补全，避免后续再改一遍字面量。
  */
 public enum ErrorCode {
 
     /** 400 字段/格式/范围或跨字段非法；details.field 给 camelCase 路径。 */
     VALIDATION_ERROR(400),
+    /**
+     * 405 请求方法不被该路由支持。
+     *
+     * <p><b>这一项是契约需要补充的</b>：{@code openapi.yaml} 当前每个操作只声明了
+     * 400/401/403/500，没有 405。但把一个 GET-only 路由用 POST 命中时，
+     * 强行报成 500 {@code SYSTEM_INTERNAL} 会把"客户端错误"错误地表达成"服务故障"
+     * （综合测试报告 2026-10-16 已实测确认），语义与日志都会失真。
+     *
+     * <p>因此骨架按 HTTP 标准语义返回 405，并已提报在契约通用响应中补 405 声明。
+     * 在契约补声明之前，本码是"实现比契约多一个状态码"的唯一例外，不要据此再扩展其他码。
+     */
+    METHOD_NOT_ALLOWED(405),
     /** 401 未建立会话。 */
     AUTH_REQUIRED(401),
     /** 401 凭据不正确。 */

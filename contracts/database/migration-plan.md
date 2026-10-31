@@ -4,6 +4,28 @@
 
 schema.sql是空库基线，不能作为43表旧库的直接升级脚本。本次只修改设计文件和隔离验证环境；没有读取或迁移生产业务库。
 
+## 从哪种库升级：先识别来源，再选路径（2026-10-26 补充）
+
+`apps/api/src/main/resources/db/migration/` 现在有四条版本化迁移：V1 基线（163 表的历史快照，已冻结）、V2 客户端配置种子、
+V3 审批聚合与 PD-2026-10-18.v1 策略文案、V4 在线查询窗口参数（纯数据修正）。**同一套命令不能套到所有库上**，先按下表判断来源：
+
+| 库的来源 | 判定方法 | 该走的路径 |
+| --- | --- | --- |
+| 空库 | `flyway_schema_history` 不存在，`pg_tables` 里也没有 `auth.app_user` | 由应用启动让 Flyway 跑 V1→V4；或者对空库直接 `schema.sql`。两条路**不要叠加**在同一库上 |
+| 已有 Flyway V1/V2 的库 | `flyway_schema_history` 里有 1 条或 1、2 条 `success = true` 记录 | 继续由 Flyway 向前补 V3/V4；先 `flyway validate` 确认既有 checksum 没被改过 |
+| 按完整 `schema.sql` 建的库（无迁移历史） | 165 表齐全，但没有 `flyway_schema_history` | 不要直接启动 Flyway（V1 会撞已存在对象）：先盘点结构与字典版本，再决定是 `baseline` 到当前版本，还是在隔离库重放并比对指纹 |
+| 手工执行过 `contracts/database/migrations/PD_20261018_approval.sql` 的库 | `to_regclass('operation.action_approval')` 非空，但历史里没有 V3 | 结构与 V3 目标重叠：**禁止**直接跑 V3，也不要改 V3 的 DDL 绕开；先盘点结构/历史/数据，另写受审查的迁移 |
+| 其他历史库（DB-DESIGN-1 或更早） | 表数、列、字典与 R08 对不上 | 按本文件后文第 1–5 节做递增迁移与回填，不套用空库脚本 |
+
+三条硬规则：
+
+1. 新迁移不写 `IF NOT EXISTS`、不用 `DO` 块兜底、不靠 `baseline`/`repair` 掩盖漂移、不删 `flyway_schema_history` 让检查变绿——
+   这些都会让各环境结构悄悄分叉（V1 里的 `CREATE SCHEMA IF NOT EXISTS` 是契约快照自带，不是新迁移的写法）。
+2. 空库的 `schema.sql` 与审批增量脚本不可对同一库先后叠加；判定依据是 `to_regclass('operation.action_approval')` 加迁移历史，
+   不是"看起来能跑通"。
+3. **"重建该库"只适用于明确可丢弃的隔离测试库。** 共享环境、有数据的环境必须走"盘点 → 方案 → 评审 → 执行"，
+   重建既不是通用建议，也不能当作让校验变绿的手段；迁移失败一律向前修复（见第 5 节）。
+
 ## 顺序
 
 1. 固定旧DDL/API/字典版本与数据hash，备份数据库、文件、密钥；测试恢复后生成Flyway/Liquibase递增迁移，owner与app/Worker账号隔离。
