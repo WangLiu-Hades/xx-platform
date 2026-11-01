@@ -1,4 +1,4 @@
-> **本轮修复（M01–M21 + E01）**：代码提交 `34556f7`，分支头 `9e61c17`（`34556f7` 之后仅改 `reports/pr3-fix/` 下的文档、脚本与证据，不改代码）；目标 `main@aca438eb`；结论：**具备进入合并审查条件**。全量真库测试 391 用例 0 失败 0 错误 0 跳过，逐项依据与证据见 [`reports/pr3-fix/issue-matrix.md`](issue-matrix.md)，就绪度评估见 [`merge-readiness.md`](merge-readiness.md)。
+> **本轮修复（M01–M21 + E01）**：代码提交 `34556f7`（此后分支上的提交只修改 `reports/pr3-fix/` 下的文档、脚本与证据，不改 `apps/`、`contracts/`、`docs/`）；目标 `main@aca438eb`；结论：**具备进入合并审查条件**。全量真库测试 391 用例 0 失败 0 错误 0 跳过，逐项依据与证据见 [`reports/pr3-fix/issue-matrix.md`](issue-matrix.md)，就绪度评估见 [`merge-readiness.md`](merge-readiness.md)。
 
 ## 任务与角色
 
