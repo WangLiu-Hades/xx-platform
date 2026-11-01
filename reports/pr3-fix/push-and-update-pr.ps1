@@ -24,12 +24,14 @@ if ($dirty) { throw "工作区不干净，先提交或清理：`n$dirty" }
 $localHead = (& git -C $repoRoot rev-parse HEAD).Trim()
 Write-Output "本地 HEAD：$localHead"
 
-# 用 http.extraHeader 传 token，避免写进 remote URL 或 git 配置
+# 用 http.extraHeader 传 token，避免写进 remote URL 或 git 配置。
+# GitHub 的 git 传输只认 Basic（用户名 x-access-token、密码为 PAT），Bearer 仅适用于 REST API。
+$basic = [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes("x-access-token:$Token"))
 Write-Output "推送 $Branch 到 origin ..."
-& git -C $repoRoot -c "http.extraHeader=AUTHORIZATION: Bearer $Token" push origin $Branch
+& git -C $repoRoot -c "http.extraHeader=AUTHORIZATION: basic $basic" push origin $Branch
 if ($LASTEXITCODE -ne 0) { throw "git push 失败，退出码 $LASTEXITCODE" }
 
-$remoteLine = (& git -C $repoRoot ls-remote origin "refs/heads/$Branch" | Out-String).Trim()
+$remoteLine = (& git -C $repoRoot -c "http.extraHeader=AUTHORIZATION: basic $basic" ls-remote origin "refs/heads/$Branch" | Out-String).Trim()
 $remoteHead = ($remoteLine -split "`t")[0]
 Write-Output "远端 HEAD：$remoteHead"
 if ($remoteHead -ne $localHead) { throw "远端 HEAD 与本地不一致，PR 可能未指向新提交" }
