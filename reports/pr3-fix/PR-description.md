@@ -1,3 +1,5 @@
+> **本轮修复（M01–M21 + E01）**：代码提交 `34556f7`，分支头 `8099cc4`（其后提交只改 `reports/pr3-fix/` 下的文档与证据，不改代码）；目标 `main@aca438eb`；结论：**具备进入合并审查条件**。全量真库测试 391 用例 0 失败 0 错误 0 跳过，逐项依据与证据见 [`reports/pr3-fix/issue-matrix.md`](issue-matrix.md)，就绪度评估见 [`merge-readiness.md`](merge-readiness.md)。
+
 ## 任务与角色
 
 - 实际作者 / DEV角色：DEV-01（后端 API 骨架）共同作者；本轮修复由 DEV-01 与协助 agent 完成，审查人待指定
