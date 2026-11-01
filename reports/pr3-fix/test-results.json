@@ -1,17 +1,17 @@
 {
     "schemaVersion":  1,
-    "label":  "final-with-real-db",
-    "startedAtUtc":  "2026-11-01T17:23:51Z",
-    "finishedAtUtc":  "2026-11-01T17:25:30Z",
-    "durationSeconds":  99.4,
+    "label":  "final-post-commit",
+    "startedAtUtc":  "2026-11-01T17:40:04Z",
+    "finishedAtUtc":  "2026-11-01T17:41:42Z",
+    "durationSeconds":  97.7,
     "command":  "mvn -B clean test",
     "workingDirectory":  "apps/api",
     "exitCode":  0,
-    "logFile":  "reports/pr3-fix/logs/final-with-real-db.log",
+    "logFile":  "reports/pr3-fix/logs/final-post-commit.log",
     "database":  {
-                     "url":  "jdbc:postgresql://127.0.0.1:55433/xx_it_final3",
+                     "url":  "jdbc:postgresql://127.0.0.1:55433/xx_it_final5",
                      "user":  "postgres",
-                     "password":  "锛堢┖锛涙湰鍦颁俊浠昏璇侊級",
+                     "password":  "（空；本地信任认证）",
                      "realDbTestsRan":  true,
                      "skippedDueToDb":  0
                  },
@@ -21,7 +21,7 @@
                         "maven":  "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)\r",
                         "node":  "v24.21.0",
                         "psql":  "psql (PostgreSQL) 16.15",
-                        "gitHead":  "1cbcb00933bb09a93e7e988de3f0d83a6dda3ad7",
+                        "gitHead":  "0b01354623c4fde983b876ea5ae5bc29888e5cb5",
                         "gitBranch":  "codex/dev01-heyifan-api-skeleton"
                     },
     "totals":  {
@@ -31,7 +31,7 @@
                    "skipped":  0,
                    "suites":  40
                },
-    "workingTree":  "M apps/api/README.md\r\n M apps/api/scripts/verify-migration-parity.ps1\r\n M apps/api/src/main/java/com/xxplatform/api/api/ApprovalController.java\r\n M apps/api/src/main/java/com/xxplatform/api/api/AuthController.java\r\n M apps/api/src/main/java/com/xxplatform/api/api/ExportController.java\r\n M apps/api/src/main/java/com/xxplatform/api/api/FileController.java\r\n M apps/api/src/main/java/com/xxplatform/api/api/TaskController.java\r\n M apps/api/src/main/java/com/xxplatform/api/config/ApprovalProperties.java\r\n M apps/api/src/main/java/com/xxplatform/api/config/FileProperties.java\r\n M apps/api/src/main/java/com/xxplatform/api/config/SessionProperties.java\r\n M apps/api/src/main/java/com/xxplatform/api/config/TaskProperties.java\r\n M apps/api/src/main/java/com/xxplatform/api/config/WebConfiguration.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/ActionApprovalRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/AsyncTaskRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/CsrfSessionRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/FileAssetRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/UserAccountRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/infra/UserSessionRepository.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/ClientConfigService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/CsrfTokenService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/ExportService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/LoginService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/SessionAuthenticator.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/approval/ApprovalProposals.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/approval/ApprovalService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/file/FileService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/file/UploadPolicyCatalog.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/task/TaskReaper.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/task/TaskService.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/task/TaskViewMapper.java\r\n M apps/api/src/main/java/com/xxplatform/api/service/task/TaskWriteService.java\r\n M apps/api/src/main/resources/application-db.yml\r\n M apps/api/src/main/resources/application.yml\r\n M apps/api/src/test/java/com/xxplatform/api/service/ExportServiceTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/approval/ApprovalProposalsTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/approval/ApprovalServiceTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/file/FileServiceTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/file/UploadPolicyCatalogTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/task/TaskBaseIntegrationTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/task/TaskDomainTests.java\r\n M apps/api/src/test/java/com/xxplatform/api/service/task/TaskServiceTests.java\r\n?? apps/api/src/main/java/com/xxplatform/api/api/PasswordController.java\r\n?? apps/api/src/main/java/com/xxplatform/api/common/ClientNetworks.java\r\n?? apps/api/src/main/java/com/xxplatform/api/infra/AuditEventRepository.java\r\n?? apps/api/src/main/java/com/xxplatform/api/infra/IdempotencyRequestRepository.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/AuditService.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/FailureAudit.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/PasswordService.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/approval/ApprovalEnvelope.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/approval/ApprovalTargetResolver.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/file/ContentValidator.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/file/FileRetention.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/file/UploadPolicyProvider.java\r\n?? apps/api/src/main/java/com/xxplatform/api/service/task/TaskScopeGuard.java\r\n?? apps/api/src/main/resources/db/migration/V5__backfill_file_asset_retention.sql\r\n?? apps/api/src/main/resources/db/migration/V6__upload_policy_alignment.sql\r\n?? apps/api/src/test/java/com/xxplatform/api/api/CorsContractTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/api/FileHttpIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/auth/\r\n?? apps/api/src/test/java/com/xxplatform/api/common/ClientNetworksTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/AuditRollbackIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/PasswordServiceTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/approval/ApprovalCryptoConfigurationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/approval/ApprovalExportIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/file/FilePolicyIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/file/FileRetentionTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskIdempotencyIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskIntegrationTestSupport.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskPublishGuardIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskQuotaIntegrationTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskResultReferenceTests.java\r\n?? apps/api/src/test/java/com/xxplatform/api/service/task/TaskSideEffectOutcomeTests.java\r\n?? apps/api/src/test/resources/\r\n?? reports/pr3-fix/",
+    "workingTree":  "M reports/pr3-fix/collect-test-results.ps1\r\n M reports/pr3-fix/test-results.json",
     "suites":  [
                    {
                        "className":  "com.xxplatform.api.api.CorsContractTests",
@@ -39,30 +39,30 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  10.331,
+                       "time":  9.791,
                        "cases":  [
                                      {
                                          "name":  "sameOriginRequestWithoutOriginHeaderPasses",
                                          "status":  "passed",
-                                         "duration":  0.319,
+                                         "duration":  0.303,
                                          "message":  null
                                      },
                                      {
                                          "name":  "preflightFromUntrustedOriginIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.036,
+                                         "duration":  0.037,
                                          "message":  null
                                      },
                                      {
                                          "name":  "actualRequestEchoesTrustedOriginWithoutWildcard",
                                          "status":  "passed",
-                                         "duration":  0.01,
+                                         "duration":  0.016,
                                          "message":  null
                                      },
                                      {
                                          "name":  "preflightFromTrustedOriginAllowsContractHeaders",
                                          "status":  "passed",
-                                         "duration":  0.006,
+                                         "duration":  0.007,
                                          "message":  null
                                      },
                                      {
@@ -79,12 +79,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.004,
+                       "time":  0.006,
                        "cases":  [
                                      {
                                          "name":  "attachmentHeaderFallsBackForMissingName",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -107,72 +107,72 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  3.241,
+                       "time":  2.985,
                        "cases":  [
                                      {
                                          "name":  "csvQuotedNewlinesAreAcceptedAndColumnMismatchIsQuarantined",
                                          "status":  "passed",
-                                         "duration":  0.945,
+                                         "duration":  0.833,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredFileCannotBeReadOrDownloaded",
                                          "status":  "passed",
-                                         "duration":  0.159,
+                                         "duration":  0.165,
                                          "message":  null
                                      },
                                      {
                                          "name":  "validJsonBecomesActive",
                                          "status":  "passed",
-                                         "duration":  0.046,
+                                         "duration":  0.039,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadPngIsActiveAndDetailAndDownloadWork",
                                          "status":  "passed",
-                                         "duration":  0.129,
+                                         "duration":  0.112,
                                          "message":  null
                                      },
                                      {
                                          "name":  "xlsxIsParsedForRealAndTruncatedXlsxIsQuarantined",
                                          "status":  "passed",
-                                         "duration":  0.104,
+                                         "duration":  0.105,
                                          "message":  null
                                      },
                                      {
                                          "name":  "processingAndForeignAssetsAreHidden",
                                          "status":  "passed",
-                                         "duration":  0.039,
+                                         "duration":  0.041,
                                          "message":  null
                                      },
                                      {
                                          "name":  "oversizeAndUnsupportedTypeAreRejectedAndAudited",
                                          "status":  "passed",
-                                         "duration":  0.118,
+                                         "duration":  0.123,
                                          "message":  null
                                      },
                                      {
                                          "name":  "disabledPolicyRejectsUploadAndIsAudited",
                                          "status":  "passed",
-                                         "duration":  0.031,
+                                         "duration":  0.033,
                                          "message":  null
                                      },
                                      {
                                          "name":  "downloadRequiresFileDownloadAndRevocationInvalidatesTheOldUrl",
                                          "status":  "passed",
-                                         "duration":  0.046,
+                                         "duration":  0.048,
                                          "message":  null
                                      },
                                      {
                                          "name":  "idempotentReplayReturnsSameAssetAndDoesNotDuplicateRows",
                                          "status":  "passed",
-                                         "duration":  0.075,
+                                         "duration":  0.076,
                                          "message":  null
                                      },
                                      {
                                          "name":  "invalidJsonIsQuarantinedAndCannotBeDownloaded",
                                          "status":  "passed",
-                                         "duration":  0.045,
+                                         "duration":  0.046,
                                          "message":  null
                                      }
                                  ]
@@ -183,12 +183,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.949,
+                       "time":  0.884,
                        "cases":  [
                                      {
                                          "name":  "unknownRouteReturnsContractErrorEnvelope",
                                          "status":  "passed",
-                                         "duration":  0.947,
+                                         "duration":  0.883,
                                          "message":  null
                                      }
                                  ]
@@ -199,78 +199,78 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  26.631,
+                       "time":  26.181,
                        "cases":  [
                                      {
                                          "name":  "renewIsClampedToTheAbsoluteDeadlineAndKeepsSidAndCsrf",
                                          "status":  "passed",
-                                         "duration":  1.865,
+                                         "duration":  1.81,
                                          "message":  null
                                      },
                                      {
                                          "name":  "originIsCheckedBothWaysOnReadAndWrite",
                                          "status":  "passed",
-                                         "duration":  0.027,
+                                         "duration":  0.023,
                                          "message":  null
                                      },
                                      {
                                          "name":  "passwordChangeRotatesCredentialsAndEnforcesIdempotency",
                                          "status":  "passed",
-                                         "duration":  2.853,
+                                         "duration":  2.754,
                                          "message":  null
                                      },
                                      {
                                          "name":  "initialPasswordUserIsGatedAndUnblockedByChangingPassword",
                                          "status":  "passed",
-                                         "duration":  4.803,
+                                         "duration":  4.816,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredSessionCannotBeRevivedEvenWhenLastSeenIsFresh",
                                          "status":  "passed",
-                                         "duration":  0.711,
+                                         "duration":  0.75,
                                          "message":  null
                                      },
                                      {
                                          "name":  "userAgentChangeRequiresReloginAndIsAudited",
                                          "status":  "passed",
-                                         "duration":  0.73,
+                                         "duration":  0.731,
                                          "message":  null
                                      },
                                      {
                                          "name":  "idleSlidesOnActiveRequestsButNotOnPollingPathsOrBackgroundHeader",
                                          "status":  "passed",
-                                         "duration":  6.787,
+                                         "duration":  6.782,
                                          "message":  null
                                      },
                                      {
                                          "name":  "loginOutsideConfiguredCidrIsRejectedAndAudited",
                                          "status":  "passed",
-                                         "duration":  0.736,
+                                         "duration":  0.716,
                                          "message":  null
                                      },
                                      {
                                          "name":  "csrfIssuedBeforeLoginIsRevokedByLoginAndRotatedValueWorks",
                                          "status":  "passed",
-                                         "duration":  0.686,
+                                         "duration":  0.679,
                                          "message":  null
                                      },
                                      {
                                          "name":  "loginLogoutAndPasswordChangeLeaveAuditEvents",
                                          "status":  "passed",
-                                         "duration":  4.933,
+                                         "duration":  4.793,
                                          "message":  null
                                      },
                                      {
                                          "name":  "credentialResponsesAreNotCacheable",
                                          "status":  "passed",
-                                         "duration":  0.686,
+                                         "duration":  0.71,
                                          "message":  null
                                      },
                                      {
                                          "name":  "clientIpChangeRequiresReloginAndIsAudited",
                                          "status":  "passed",
-                                         "duration":  0.711,
+                                         "duration":  0.714,
                                          "message":  null
                                      }
                                  ]
@@ -281,7 +281,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.014,
+                       "time":  0.015,
                        "cases":  [
                                      {
                                          "name":  "malformedHopStopsResolution",
@@ -298,13 +298,13 @@
                                      {
                                          "name":  "forgedForwardedHeaderCannotBypassLoginCidr",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "allowedFollowsCidrAndDefaultsToDeny",
                                          "status":  "passed",
-                                         "duration":  0.006,
+                                         "duration":  0.01,
                                          "message":  null
                                      },
                                      {
@@ -316,7 +316,7 @@
                                      {
                                          "name":  "sameAddressComparesBytes",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -327,36 +327,36 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.1,
+                       "time":  0.094,
                        "cases":  [
                                      {
                                          "name":  "loginFromForeignOriginIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.007,
                                          "message":  null
                                      },
                                      {
                                          "name":  "nonBrowserStillNeedsToken",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.005,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectionCarriesRequestTraceId",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "refererFallsBackWhenOriginIsAbsent",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "everyWriteMethodIsGated(String)[1]",
                                          "status":  "passed",
-                                         "duration":  0.011,
+                                         "duration":  0.01,
                                          "message":  null
                                      },
                                      {
@@ -368,7 +368,7 @@
                                      {
                                          "name":  "everyWriteMethodIsGated(String)[3]",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -380,13 +380,13 @@
                                      {
                                          "name":  "foreignOriginIsRejectedEvenWithValidToken",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "loginIsTokenExempt",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -410,13 +410,13 @@
                                      {
                                          "name":  "postWithValidTokenPairPasses",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "readRequestsAreNotGated",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -427,24 +427,24 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.006,
+                       "time":  0.007,
                        "cases":  [
                                      {
                                          "name":  "rejectsBlankKey",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsKeyAboveMaximum",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsKeyBelowMinimum",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -456,7 +456,7 @@
                                      {
                                          "name":  "acceptsBoundaryLengthsAndTrims",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -467,12 +467,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.016,
+                       "time":  0.012,
                        "cases":  [
                                      {
                                          "name":  "differentIpHasSeparateBucket",
                                          "status":  "passed",
-                                         "duration":  0.006,
+                                         "duration":  0.005,
                                          "message":  null
                                      },
                                      {
@@ -484,13 +484,13 @@
                                      {
                                          "name":  "clearResetsHistory",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "loginNameIsCaseSensitive",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -508,13 +508,13 @@
                                      {
                                          "name":  "failuresOutsideWindowArePruned",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "allowsBelowThreshold",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -525,42 +525,42 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  10.528,
+                       "time":  10.833,
                        "cases":  [
                                      {
                                          "name":  "malformedStoredValueIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "saltIsRandomPerHash",
                                          "status":  "passed",
-                                         "duration":  2.619,
+                                         "duration":  2.842,
                                          "message":  null
                                      },
                                      {
                                          "name":  "hashThenVerify",
                                          "status":  "passed",
-                                         "duration":  1.334,
+                                         "duration":  1.366,
                                          "message":  null
                                      },
                                      {
                                          "name":  "longPasswordNotTruncatedAt72Bytes",
                                          "status":  "passed",
-                                         "duration":  1.965,
+                                         "duration":  2.024,
                                          "message":  null
                                      },
                                      {
                                          "name":  "wrongPasswordRejected",
                                          "status":  "passed",
-                                         "duration":  2.609,
+                                         "duration":  2.61,
                                          "message":  null
                                      },
                                      {
                                          "name":  "nonAsciiPasswordRoundTrip",
                                          "status":  "passed",
-                                         "duration":  1.995,
+                                         "duration":  1.987,
                                          "message":  null
                                      }
                                  ]
@@ -571,36 +571,36 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.29,
+                       "time":  0.262,
                        "cases":  [
                                      {
                                          "name":  "baselineCoversAllSchemasAndGuards",
                                          "status":  "passed",
-                                         "duration":  0.028,
+                                         "duration":  0.027,
                                          "message":  null
                                      },
                                      {
                                          "name":  "contractSchemaHashIsUnchanged",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "baselineStaysFrozen",
                                          "status":  "passed",
-                                         "duration":  0.123,
+                                         "duration":  0.107,
                                          "message":  null
                                      },
                                      {
                                          "name":  "migrationsCoverContractStructure",
                                          "status":  "passed",
-                                         "duration":  0.126,
+                                         "duration":  0.119,
                                          "message":  null
                                      },
                                      {
                                          "name":  "migrationDirectoryFollowsNamingConvention",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.003,
                                          "message":  null
                                      }
                                  ]
@@ -611,7 +611,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.023,
+                       "time":  0.022,
                        "cases":  [
                                      {
                                          "name":  "truncatedCiphertextIsRejected",
@@ -634,13 +634,13 @@
                                      {
                                          "name":  "malformedKeyFailsFastAtStartup",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.003,
                                          "message":  null
                                      },
                                      {
                                          "name":  "tamperedCiphertextAndWrongKeyCannotDecrypt",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.003,
                                          "message":  null
                                      },
                                      {
@@ -652,7 +652,7 @@
                                      {
                                          "name":  "everySealUsesAFreshNonceAndRoundTrips",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.003,
                                          "message":  null
                                      }
                                  ]
@@ -663,7 +663,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  13.126,
+                       "time":  13.289,
                        "cases":  [
                                      {
                                          "name":  "staleContextPermissionVersionIsRejected",
@@ -674,25 +674,25 @@
                                      {
                                          "name":  "duplicateVoteBySameReviewerIsNotCountedTwice",
                                          "status":  "passed",
-                                         "duration":  2.202,
+                                         "duration":  2.129,
                                          "message":  null
                                      },
                                      {
                                          "name":  "failedExportLeavesApprovalUnconsumed",
                                          "status":  "passed",
-                                         "duration":  0.688,
+                                         "duration":  0.727,
                                          "message":  null
                                      },
                                      {
                                          "name":  "tamperedCiphertextAndWrongKeyFailClosed",
                                          "status":  "passed",
-                                         "duration":  0.018,
+                                         "duration":  0.015,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredExecutionGrantIsGone",
                                          "status":  "passed",
-                                         "duration":  0.688,
+                                         "duration":  0.693,
                                          "message":  null
                                      },
                                      {
@@ -710,79 +710,79 @@
                                      {
                                          "name":  "executionIsRejectedAfterTargetVersionChanges",
                                          "status":  "passed",
-                                         "duration":  0.688,
+                                         "duration":  0.703,
                                          "message":  null
                                      },
                                      {
                                          "name":  "requesterAndExecutorCannotApproveTheirOwnRequest",
                                          "status":  "passed",
-                                         "duration":  0.014,
+                                         "duration":  0.015,
                                          "message":  null
                                      },
                                      {
                                          "name":  "deviceGroupIsResolvedServerSideAndDrivesTwoVoteRequirement",
                                          "status":  "passed",
-                                         "duration":  0.012,
+                                         "duration":  0.013,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectionAuditSurvivesBusinessRollback",
                                          "status":  "passed",
-                                         "duration":  0.028,
+                                         "duration":  0.03,
                                          "message":  null
                                      },
                                      {
                                          "name":  "approvalDecisionIsIdempotentPerKeyAndStillCountsOneVotePerApprover",
                                          "status":  "passed",
-                                         "duration":  1.304,
+                                         "duration":  1.339,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rolledBackExportTransactionLeavesApprovalUnconsumedAndNoTask",
                                          "status":  "passed",
-                                         "duration":  0.724,
+                                         "duration":  0.727,
                                          "message":  null
                                      },
                                      {
                                          "name":  "exportRequiresApprovalAndConsumesItExactlyOnce",
                                          "status":  "passed",
-                                         "duration":  0.712,
+                                         "duration":  0.71,
                                          "message":  null
                                      },
                                      {
                                          "name":  "concurrentConsumptionAllowsExactlyOneSuccess",
                                          "status":  "passed",
-                                         "duration":  0.705,
+                                         "duration":  0.755,
                                          "message":  null
                                      },
                                      {
                                          "name":  "approvalsAndExportRejectionsAreAudited",
                                          "status":  "passed",
-                                         "duration":  1.33,
+                                         "duration":  1.396,
                                          "message":  null
                                      },
                                      {
                                          "name":  "contextDataTypeOutsideCurrentScopeIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.675,
+                                         "duration":  0.691,
                                          "message":  null
                                      },
                                      {
                                          "name":  "unknownTargetDeviceCannotBeFrozenIntoAnApproval",
                                          "status":  "passed",
-                                         "duration":  0.009,
+                                         "duration":  0.01,
                                          "message":  null
                                      },
                                      {
                                          "name":  "idempotencyKeyIsScopedToActor",
                                          "status":  "passed",
-                                         "duration":  0.673,
+                                         "duration":  0.691,
                                          "message":  null
                                      },
                                      {
                                          "name":  "actionPermissionAloneIsNotEnoughToVote",
                                          "status":  "passed",
-                                         "duration":  0.666,
+                                         "duration":  0.683,
                                          "message":  null
                                      },
                                      {
@@ -794,7 +794,7 @@
                                      {
                                          "name":  "reviewItemsMaskNestedSecretsAndCiphertextCarriesNoPlaintext",
                                          "status":  "passed",
-                                         "duration":  0.011,
+                                         "duration":  0.013,
                                          "message":  null
                                      }
                                  ]
@@ -805,7 +805,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.006,
+                       "time":  0.004,
                        "cases":  [
                                      {
                                          "name":  "exportOperationsAllRequireCaptureExport",
@@ -816,13 +816,13 @@
                                      {
                                          "name":  "deviceBatchesNeedTwoApprovalsOnlyAtTenDevices",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "everyOperationCarriesAPermission",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -834,7 +834,7 @@
                                      {
                                          "name":  "nonDeviceOperationsStayAtOneApprovalEvenWithManyItems",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -846,7 +846,7 @@
                                      {
                                          "name":  "decryptionAlwaysNeedsTwoApprovals",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -857,12 +857,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.135,
+                       "time":  0.165,
                        "cases":  [
                                      {
                                          "name":  "rejectsInvalidBusinessBodyEvenWhenKeysAreAllowed",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -874,7 +874,7 @@
                                      {
                                          "name":  "digestChangesWhenContentChanges",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -886,7 +886,7 @@
                                      {
                                          "name":  "digestIsStableAcrossKeyOrder",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -898,43 +898,43 @@
                                      {
                                          "name":  "rejectsPathParametersThatDoNotMatchThePathTemplate",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "pathParametersProposalWorksForDecryptionReview",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "reviewItemsCanBeRebuiltFromCanonicalJson",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsUnknownKeys",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsRequestBodyKeysOutsideTheOperationSchema",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsProposalsWhoseReviewItemsExceedTheCap",
                                          "status":  "passed",
-                                         "duration":  0.108,
+                                         "duration":  0.121,
                                          "message":  null
                                      },
                                      {
                                          "name":  "everyApprovalOperationHasAProposalSpec",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -964,31 +964,31 @@
                                      {
                                          "name":  "expandsDeviceIdsIntoOneReviewItemPerDevice",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsIfMatchOfWrongShape",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "masksSensitiveValuesInReviewItems",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsUnknownOperation",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "updateDeviceParametersRequiresIfMatch",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -999,18 +999,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  10.429,
+                       "time":  10.773,
                        "cases":  [
                                      {
                                          "name":  "createFailsClosedWhenNoPayloadKeyIsConfigured",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeRejectsPendingApproval",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.016,
                                          "message":  null
                                      },
                                      {
@@ -1022,7 +1022,7 @@
                                      {
                                          "name":  "createRejectsShortReason",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1040,73 +1040,73 @@
                                      {
                                          "name":  "pageSizeOutOfRangeIsValidationError",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "repeatingTheSameDecisionIsIdempotent",
                                          "status":  "passed",
-                                         "duration":  1.309,
+                                         "duration":  1.298,
                                          "message":  null
                                      },
                                      {
                                          "name":  "wrongCurrentPasswordIsRejectedWithoutRecordingDecision",
                                          "status":  "passed",
-                                         "duration":  0.645,
+                                         "duration":  0.642,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeRejectsExpiredExecutionGrant",
                                          "status":  "passed",
-                                         "duration":  0.638,
+                                         "duration":  0.684,
                                          "message":  null
                                      },
                                      {
                                          "name":  "twoApprovalsAreCollectedThenGranted",
                                          "status":  "passed",
-                                         "duration":  1.303,
+                                         "duration":  1.361,
                                          "message":  null
                                      },
                                      {
                                          "name":  "requesterCannotApproveOwnRequest",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeRejectsDigestMismatchAndKeepsGrantUsable",
                                          "status":  "passed",
-                                         "duration":  0.657,
+                                         "duration":  0.655,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeRejectsOperationMismatch",
                                          "status":  "passed",
-                                         "duration":  0.64,
+                                         "duration":  0.685,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRequiresTheOperationPermission",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredPendingApprovalIsMarkedAndRejected",
                                          "status":  "passed",
-                                         "duration":  0.649,
+                                         "duration":  0.665,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeRejectsExecutorOtherThanTheDesignatedOne",
                                          "status":  "passed",
-                                         "duration":  0.644,
+                                         "duration":  0.692,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listReturnsOwnApplicationAndReviewableItemsWithCursor",
                                          "status":  "passed",
-                                         "duration":  0.008,
+                                         "duration":  0.007,
                                          "message":  null
                                      },
                                      {
@@ -1118,37 +1118,37 @@
                                      {
                                          "name":  "approvingACompletedApprovalIsConflict",
                                          "status":  "passed",
-                                         "duration":  1.318,
+                                         "duration":  1.302,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createFreezesProposalWithDigestAndPendingStatus",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "versionConflictOnConcurrentDecisionIsReported",
                                          "status":  "passed",
-                                         "duration":  0.64,
+                                         "duration":  0.71,
                                          "message":  null
                                      },
                                      {
                                          "name":  "consumeMarksApprovalConsumedAndIsSingleUse",
                                          "status":  "passed",
-                                         "duration":  0.638,
+                                         "duration":  0.704,
                                          "message":  null
                                      },
                                      {
                                          "name":  "strangerCannotReadApproval",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectionEndsTheApprovalImmediately",
                                          "status":  "passed",
-                                         "duration":  0.649,
+                                         "duration":  0.673,
                                          "message":  null
                                      }
                                  ]
@@ -1159,7 +1159,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  1.028,
+                       "time":  0.948,
                        "cases":  [
                                      {
                                          "name":  "failureAuditSurvivesBusinessRollback",
@@ -1170,19 +1170,19 @@
                                      {
                                          "name":  "successAuditIsWrittenOnceOnCommit",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.005,
                                          "message":  null
                                      },
                                      {
                                          "name":  "auditWithoutOuterTransactionIsWritten",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.003,
                                          "message":  null
                                      },
                                      {
                                          "name":  "auditRowIsAppendOnly",
                                          "status":  "passed",
-                                         "duration":  0.007,
+                                         "duration":  0.01,
                                          "message":  null
                                      }
                                  ]
@@ -1193,7 +1193,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.014,
+                       "time":  0.012,
                        "cases":  [
                                      {
                                          "name":  "missingKeyNamesTheKey",
@@ -1204,7 +1204,7 @@
                                      {
                                          "name":  "oversizedUploadLimitIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -1216,37 +1216,37 @@
                                      {
                                          "name":  "zeroIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "foreignTimeZoneIsRejected",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "foreignCoordinateSystemIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "wrongTypeIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "nonObjectIsRejected",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "unknownKeysAreTolerated",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -1257,18 +1257,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.03,
+                       "time":  0.031,
                        "cases":  [
                                      {
                                          "name":  "createRejectsEmptyColumnList",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createFreezesTaskAndExportJobForPlateExport",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
@@ -1286,37 +1286,37 @@
                                      {
                                          "name":  "createStoresFrozenLimitsInTaskParameters",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsUnknownContext",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createKeepsRequestedColumnOrderAndDeduplicates",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsMissingPermission",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsSameKeyWithDifferentParameters",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsUnboundedGeneralRange",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1328,25 +1328,25 @@
                                      {
                                          "name":  "createRejectsUnsupportedContextType",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createReplaysSameKeyWithSameParameters",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsUnknownColumn",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createHidesContextOwnedBySomeoneElse",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      }
                                  ]
@@ -1357,18 +1357,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  1.403,
+                       "time":  1.496,
                        "cases":  [
                                      {
                                          "name":  "importRowLimitIsEnforced",
                                          "status":  "passed",
-                                         "duration":  0.162,
+                                         "duration":  0.301,
                                          "message":  null
                                      },
                                      {
                                          "name":  "disabledPolicyRejectsUploadAndIsVisibleDownstream",
                                          "status":  "passed",
-                                         "duration":  0.07,
+                                         "duration":  0.061,
                                          "message":  null
                                      },
                                      {
@@ -1380,25 +1380,25 @@
                                      {
                                          "name":  "effectiveLimitIsTheSmallerOfGlobalAndCategory",
                                          "status":  "passed",
-                                         "duration":  0.016,
+                                         "duration":  0.015,
                                          "message":  null
                                      },
                                      {
                                          "name":  "elevenMiBImportIsAcceptedAndGetsTwelveMonthExpiry",
                                          "status":  "passed",
-                                         "duration":  0.256,
+                                         "duration":  0.211,
                                          "message":  null
                                      },
                                      {
                                          "name":  "v5BackfillIsIdempotentAndUsesNaturalMonths",
                                          "status":  "passed",
-                                         "duration":  0.016,
+                                         "duration":  0.014,
                                          "message":  null
                                      },
                                      {
                                          "name":  "seededPoliciesAreTheSameSourceForServerAndClientConfig",
                                          "status":  "passed",
-                                         "duration":  0.022,
+                                         "duration":  0.019,
                                          "message":  null
                                      }
                                  ]
@@ -1414,19 +1414,19 @@
                                      {
                                          "name":  "usesShanghaiCalendarEvenWhenUtcIsPreviousDay",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "addsTwelveCalendarMonths",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "clampsToLastDayOfMonthWhenDayDoesNotExist",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1443,7 +1443,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.224,
+                       "time":  0.191,
                        "cases":  [
                                      {
                                          "name":  "downloadReturnsBytesForActiveOwnAsset",
@@ -1454,7 +1454,7 @@
                                      {
                                          "name":  "uploadQuarantinesCsvThatContainsNulBytes",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1472,13 +1472,13 @@
                                      {
                                          "name":  "uploadAcceptsCsvWhoseRowsMatchTheHeaderColumnCount",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadAllowsElevenMiBImportWhenImageLimitWouldRejectIt",
                                          "status":  "passed",
-                                         "duration":  0.183,
+                                         "duration":  0.153,
                                          "message":  null
                                      },
                                      {
@@ -1496,13 +1496,13 @@
                                      {
                                          "name":  "getHidesForeignAndUnknownAssets",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadRejectsServerGeneratedCategory",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1520,19 +1520,19 @@
                                      {
                                          "name":  "downloadRejectsExpiredAsset",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadQuarantinesInvalidJsonContent",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "downloadRejectsNonActiveAsset",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1544,25 +1544,25 @@
                                      {
                                          "name":  "uploadRejectsExtensionOutsideCategoryWhitelist",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadInsertsProcessingThenActivatesWhenMagicMatches",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.004,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadAcceptsValidJsonContent",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "downloadHidesForeignAssetEvenWithPermissions",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1574,13 +1574,13 @@
                                      {
                                          "name":  "getRejectsExpiredAsset",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "uploadQuarantinesWhenMagicDisagreesWithDeclaredType",
                                          "status":  "passed",
-                                         "duration":  0.003,
+                                         "duration":  0.002,
                                          "message":  null
                                      }
                                  ]
@@ -1591,12 +1591,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.008,
+                       "time":  0.009,
                        "cases":  [
                                      {
                                          "name":  "extensionsAreLowercasedAndDefaultToEmpty",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1608,7 +1608,7 @@
                                      {
                                          "name":  "categoryParsingIsCaseInsensitiveAndRejectsUnknown",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1620,7 +1620,7 @@
                                      {
                                          "name":  "importCategoriesAcceptXlsxCsvJsonOnly",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1632,13 +1632,13 @@
                                      {
                                          "name":  "imageAndImportLimitsAreIndependent",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "contentTypesAreNormalizedBeforeComparison",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -1654,7 +1654,7 @@
                                      {
                                          "name":  "readinessWithFailedMigration",
                                          "status":  "passed",
-                                         "duration":  0.005,
+                                         "duration":  0.003,
                                          "message":  null
                                      },
                                      {
@@ -1666,13 +1666,13 @@
                                      {
                                          "name":  "readinessWithEmptyMigrationHistory",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "readinessDoesNotLeakDatabaseErrors",
                                          "status":  "passed",
-                                         "duration":  0.006,
+                                         "duration":  0.007,
                                          "message":  null
                                      },
                                      {
@@ -1684,13 +1684,13 @@
                                      {
                                          "name":  "readinessWhenEverythingIsHealthy",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "readinessWithoutDataSourceIsNotReady",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -1712,13 +1712,13 @@
                                      {
                                          "name":  "rejectsNewPasswordEqualToCurrentOne",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "changesPasswordAndRotatesSessionAndCsrf",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1730,13 +1730,13 @@
                                      {
                                          "name":  "replayedKeyReturnsAcceptedWithoutSideEffects",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "missingIdempotencyKeyIsAValidationError",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -1748,25 +1748,25 @@
                                      {
                                          "name":  "sameKeyWithDifferentContentIsRejectedAsConflict",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsWeakPasswordThatContainsTheLoginName",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsWrongCurrentPasswordWith401NotValidationError",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectsNewPasswordLongerThan128Characters",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0.001,
                                          "message":  null
                                      }
                                  ]
@@ -1777,7 +1777,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.015,
+                       "time":  0.013,
                        "cases":  [
                                      {
                                          "name":  "singleRoleProducesOneGrantPerType",
@@ -1788,19 +1788,19 @@
                                      {
                                          "name":  "siteKindsDoNotLeak",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rolesDoNotCrossMultiply",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "accountScopeAllSites",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1812,25 +1812,25 @@
                                      {
                                          "name":  "duplicateGrantsAreCollapsed",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "accountScopeIsAdditive",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "dataTypesAreOrderedStably",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "ownOnlyStaysPerTuple",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1842,13 +1842,13 @@
                                      {
                                          "name":  "accountSitesAreUnioned",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "roleAllSitesForcesEmptySiteList",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1865,12 +1865,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.007,
+                       "time":  0.006,
                        "cases":  [
                                      {
                                          "name":  "staysAtTheAbsoluteDeadlineOnceReached",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1888,7 +1888,7 @@
                                      {
                                          "name":  "renewsWhenTheNewValueIsLater",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1900,7 +1900,7 @@
                                      {
                                          "name":  "doesNotWriteWhenTheValueWouldNotMove",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -1911,12 +1911,12 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.005,
+                       "time":  0.006,
                        "cases":  [
                                      {
                                          "name":  "beginUsesConfiguredTtls",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1928,7 +1928,7 @@
                                      {
                                          "name":  "beginRevokesPresentedSidEvenIfItBelongsToAnotherAccount",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -1951,18 +1951,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.002,
+                       "time":  0.003,
                        "cases":  [
                                      {
                                          "name":  "endReportsFalseWhenTheSessionWasAlreadyRevoked",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "realRepositoryRejectsNullSessionId",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -1985,7 +1985,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.008,
+                       "time":  0.006,
                        "cases":  [
                                      {
                                          "name":  "realRepositoryRejectsNullSessionId",
@@ -2008,7 +2008,7 @@
                                      {
                                          "name":  "renewIsNoOpWhenAlreadyAtAbsolute",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2020,7 +2020,7 @@
                                      {
                                          "name":  "renewAdvancesIdleAndKeepsAbsolute",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2037,42 +2037,42 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  1.324,
+                       "time":  1.297,
                        "cases":  [
                                      {
                                          "name":  "cancelAndRetryFollowTheContractSemantics",
                                          "status":  "passed",
-                                         "duration":  0.14,
+                                         "duration":  0.119,
                                          "message":  null
                                      },
                                      {
                                          "name":  "reaperReclaimsExpiredLeaseAndClosesTheAttempt",
                                          "status":  "passed",
-                                         "duration":  0.083,
+                                         "duration":  0.078,
                                          "message":  null
                                      },
                                      {
                                          "name":  "duplicateIdempotencyKeyCreatesOneTaskAndDifferentPayloadConflicts",
                                          "status":  "passed",
-                                         "duration":  0.022,
+                                         "duration":  0.019,
                                          "message":  null
                                      },
                                      {
                                          "name":  "finishedTaskCannotBeClaimedAgain",
                                          "status":  "passed",
-                                         "duration":  0.027,
+                                         "duration":  0.025,
                                          "message":  null
                                      },
                                      {
                                          "name":  "reaperFailsTaskOnceAttemptsAreExhausted",
                                          "status":  "passed",
-                                         "duration":  0.036,
+                                         "duration":  0.033,
                                          "message":  null
                                      },
                                      {
                                          "name":  "claimAndFinishDriveTheTriggerBackedStateMachine",
                                          "status":  "passed",
-                                         "duration":  0.039,
+                                         "duration":  0.038,
                                          "message":  null
                                      }
                                  ]
@@ -2083,18 +2083,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.018,
+                       "time":  0.013,
                        "cases":  [
                                      {
                                          "name":  "hashAllowsNullParameterValues",
                                          "status":  "passed",
-                                         "duration":  0.004,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "transitionTableMatchesTheDatabaseTriggerForEveryPair",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2118,13 +2118,13 @@
                                      {
                                          "name":  "canonicalJsonSortsKeysSoInsertionOrderDoesNotMatter",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "leaseIsExpiredAtTheExactBoundary",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2148,7 +2148,7 @@
                                      {
                                          "name":  "sideEffectTaskTypesAreExactlyTheOnesThatCannotBeRetriedBlindly",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -2160,7 +2160,7 @@
                                      {
                                          "name":  "onlyRunningTasksWithExpiredLeasesNeedReaping",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2177,42 +2177,42 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  1.409,
+                       "time":  1.401,
                        "cases":  [
                                      {
                                          "name":  "retryWithSameKeyReplaysAndDoesNotRetryTwice",
                                          "status":  "passed",
-                                         "duration":  0.241,
+                                         "duration":  0.207,
                                          "message":  null
                                      },
                                      {
                                          "name":  "concurrentCreateWithSameKeyYieldsOneTaskForEveryCaller",
                                          "status":  "passed",
-                                         "duration":  0.041,
+                                         "duration":  0.045,
                                          "message":  null
                                      },
                                      {
                                          "name":  "idempotencyScopeIsActorAndOperation",
                                          "status":  "passed",
-                                         "duration":  0.067,
+                                         "duration":  0.073,
                                          "message":  null
                                      },
                                      {
                                          "name":  "concurrentCreateWithDifferentPayloadsHasExactlyOneWinner",
                                          "status":  "passed",
-                                         "duration":  0.034,
+                                         "duration":  0.042,
                                          "message":  null
                                      },
                                      {
                                          "name":  "sameKeyDifferentTaskConflictsWith409",
                                          "status":  "passed",
-                                         "duration":  0.054,
+                                         "duration":  0.059,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelWithSameKeyReplaysOriginalResponseWithoutSecondSideEffect",
                                          "status":  "passed",
-                                         "duration":  0.045,
+                                         "duration":  0.05,
                                          "message":  null
                                      },
                                      {
@@ -2229,102 +2229,102 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.539,
+                       "time":  0.499,
                        "cases":  [
                                      {
                                          "name":  "dataScopeShrinkAfterClaimBlocksPublish",
                                          "status":  "passed",
-                                         "duration":  0.052,
+                                         "duration":  0.049,
                                          "message":  null
                                      },
                                      {
                                          "name":  "staleGenerationAfterReclaimCannotPublish",
                                          "status":  "passed",
-                                         "duration":  0.054,
+                                         "duration":  0.051,
                                          "message":  null
                                      },
                                      {
                                          "name":  "concurrentCancelAndFinishNeverProduceTwoTerminalOutcomes",
                                          "status":  "passed",
-                                         "duration":  0.05,
+                                         "duration":  0.043,
                                          "message":  null
                                      },
                                      {
                                          "name":  "shrunkContextCannotBeUsedToSubmit",
                                          "status":  "passed",
-                                         "duration":  0.023,
+                                         "duration":  0.021,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredContextCannotBeUsedToSubmit",
                                          "status":  "passed",
-                                         "duration":  0.013,
+                                         "duration":  0.014,
                                          "message":  null
                                      },
                                      {
                                          "name":  "exportResultMustBelongToCurrentOwner",
                                          "status":  "passed",
-                                         "duration":  0.036,
+                                         "duration":  0.033,
                                          "message":  null
                                      },
                                      {
                                          "name":  "rejectedPublishLeavesConsistentAttemptEventAndPointerState",
                                          "status":  "passed",
-                                         "duration":  0.042,
+                                         "duration":  0.034,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelRequestIsNotACompletedCancellation",
                                          "status":  "passed",
-                                         "duration":  0.046,
+                                         "duration":  0.043,
                                          "message":  null
                                      },
                                      {
                                          "name":  "exportedFileMustBeActiveAtPublishTime",
                                          "status":  "passed",
-                                         "duration":  0.036,
+                                         "duration":  0.03,
                                          "message":  null
                                      },
                                      {
                                          "name":  "taskTypeNarrowedByPermissionCannotBeSubmitted",
                                          "status":  "passed",
-                                         "duration":  0.014,
+                                         "duration":  0.015,
                                          "message":  null
                                      },
                                      {
                                          "name":  "permissionRevokedAfterClaimBlocksPublishAndFailsAttempt",
                                          "status":  "passed",
-                                         "duration":  0.03,
+                                         "duration":  0.026,
                                          "message":  null
                                      },
                                      {
                                          "name":  "foreignContextIsHiddenBehind404",
                                          "status":  "passed",
-                                         "duration":  0.026,
+                                         "duration":  0.023,
                                          "message":  null
                                      },
                                      {
                                          "name":  "validLeaseAndScopePublishesSuccess",
                                          "status":  "passed",
-                                         "duration":  0.028,
+                                         "duration":  0.029,
                                          "message":  null
                                      },
                                      {
                                          "name":  "leaseMustStillBeValidAtPublishAndHeartbeatExtendsIt",
                                          "status":  "passed",
-                                         "duration":  0.03,
+                                         "duration":  0.029,
                                          "message":  null
                                      },
                                      {
                                          "name":  "expiredLeaseCannotPublish",
                                          "status":  "passed",
-                                         "duration":  0.028,
+                                         "duration":  0.024,
                                          "message":  null
                                      },
                                      {
                                          "name":  "wrongOwnerCannotPublishEvenWithRightGeneration",
                                          "status":  "passed",
-                                         "duration":  0.027,
+                                         "duration":  0.025,
                                          "message":  null
                                      }
                                  ]
@@ -2335,54 +2335,54 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.877,
+                       "time":  0.846,
                        "cases":  [
                                      {
                                          "name":  "queueDeadlineFailsTasksThatWaitedTooLong",
                                          "status":  "passed",
-                                         "duration":  0.026,
+                                         "duration":  0.027,
                                          "message":  null
                                      },
                                      {
                                          "name":  "queuedTasksPerOwnerAreCappedAtFive",
                                          "status":  "passed",
-                                         "duration":  0.074,
+                                         "duration":  0.078,
                                          "message":  null
                                      },
                                      {
                                          "name":  "claimOrderFollowsPriorityThenSubmittedAtThenId",
                                          "status":  "passed",
-                                         "duration":  0.073,
+                                         "duration":  0.075,
                                          "message":  null
                                      },
                                      {
                                          "name":  "globalQueueCapIsEnforced",
                                          "status":  "passed",
-                                         "duration":  0.057,
+                                         "duration":  0.065,
                                          "message":  null
                                      },
                                      {
                                          "name":  "heartbeatExtendsLeaseByLeaseDuration",
                                          "status":  "passed",
-                                         "duration":  0.287,
+                                         "duration":  0.298,
                                          "message":  null
                                      },
                                      {
                                          "name":  "executionDeadlineRequestsCancellation",
                                          "status":  "passed",
-                                         "duration":  0.031,
+                                         "duration":  0.032,
                                          "message":  null
                                      },
                                      {
                                          "name":  "concurrentClaimsNeverHandOutTheSameTaskTwice",
                                          "status":  "passed",
-                                         "duration":  0.274,
+                                         "duration":  0.227,
                                          "message":  null
                                      },
                                      {
                                          "name":  "workerOnlyClaimsSupportedTypesWithinLimit",
                                          "status":  "passed",
-                                         "duration":  0.048,
+                                         "duration":  0.043,
                                          "message":  null
                                      }
                                  ]
@@ -2393,7 +2393,7 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.023,
+                       "time":  0.02,
                        "cases":  [
                                      {
                                          "name":  "attemptsReturnRowsInAttemptOrderWithNullableFinish",
@@ -2404,19 +2404,19 @@
                                      {
                                          "name":  "listMapsFailedTaskToContractErrorCode",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listRequiresTaskReadPermission",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listAddsResultReferenceWhenResultAssetExists",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2440,7 +2440,7 @@
                                      {
                                          "name":  "getUnknownTaskIsNotFound",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2452,49 +2452,49 @@
                                      {
                                          "name":  "listRejectsInvertedCreatedWindow",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "attemptsRequireTaskReadPermission",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listRejectsPageBelowOne",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listRejectsPageSizeAboveHundred",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "getRequiresPermissionBeforeTouchingRows",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "listReturnsContractPageShape",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "getHidesAnotherUsersTaskAsNotFound",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "attemptsHideAnotherUsersTaskAsNotFound",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2511,24 +2511,24 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.386,
+                       "time":  0.349,
                        "cases":  [
                                      {
                                          "name":  "httpResponseExposesTheTypedReference",
                                          "status":  "passed",
-                                         "duration":  0.08,
+                                         "duration":  0.067,
                                          "message":  null
                                      },
                                      {
                                          "name":  "everyTaskTypePublishesTheContractShape",
                                          "status":  "passed",
-                                         "duration":  0.189,
+                                         "duration":  0.174,
                                          "message":  null
                                      },
                                      {
                                          "name":  "missingDomainRowBlocksPublish",
                                          "status":  "passed",
-                                         "duration":  0.111,
+                                         "duration":  0.106,
                                          "message":  null
                                      }
                                  ]
@@ -2539,18 +2539,18 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.022,
+                       "time":  0.021,
                        "cases":  [
                                      {
                                          "name":  "createFailsWithConflictWhenIgnoredInsertWinnerCannotBeRead",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "claimNextPromotesPendingTaskAndRecordsBothTransitions",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2568,7 +2568,7 @@
                                      {
                                          "name":  "createReplaysExistingTaskWhenParametersMatch",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
@@ -2586,7 +2586,7 @@
                                      {
                                          "name":  "claimNextReturnsEmptyWhenQueueIsEmpty",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2598,13 +2598,13 @@
                                      {
                                          "name":  "reapFailsTaskWhenAttemptsAreExhausted",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelRunningTaskOnlyRecordsRequest",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
@@ -2634,13 +2634,13 @@
                                      {
                                          "name":  "claimNextWritesAttemptAndRunningEvent",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createPersistsPendingTaskAndCreationEvent",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2652,13 +2652,13 @@
                                      {
                                          "name":  "cancelTerminalTaskIsRejected",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "createRejectsSameKeyWithDifferentParameters",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2670,13 +2670,13 @@
                                      {
                                          "name":  "getHidesForeignTaskBehindNotFound",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "reapRequeuesExpiredLeaseAndClosesAttempt",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      }
                                  ]
@@ -2687,24 +2687,24 @@
                        "failures":  0,
                        "errors":  0,
                        "skipped":  0,
-                       "time":  0.099,
+                       "time":  0.097,
                        "cases":  [
                                      {
                                          "name":  "pureComputeIsRequeuedWhileSideEffectGoesUnknown",
                                          "status":  "passed",
-                                         "duration":  0.042,
+                                         "duration":  0.041,
                                          "message":  null
                                      },
                                      {
                                          "name":  "resetCommandThatLostItsLeaseEndsUnknownAndIsNeverRedispatched",
                                          "status":  "passed",
-                                         "duration":  0.03,
+                                         "duration":  0.031,
                                          "message":  null
                                      },
                                      {
                                          "name":  "deviceCommandTtlCapsLeaseAt120SecondsFromStart",
                                          "status":  "passed",
-                                         "duration":  0.026,
+                                         "duration":  0.024,
                                          "message":  null
                                      }
                                  ]
@@ -2720,25 +2720,25 @@
                                      {
                                          "name":  "cancelOfRunningTaskOnlyRegistersRequest",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "retryRequiresTaskManagePermission",
                                          "status":  "passed",
-                                         "duration":  0.002,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelOfQueuedTaskBecomesCancelledImmediately",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "retryOfFailedTaskRequeuesSameTaskAndKeepsSnapshot",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
@@ -2750,31 +2750,31 @@
                                      {
                                          "name":  "cancelOfRunningTaskWhoseStateChangedReportsConflict",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.001,
                                          "message":  null
                                      },
                                      {
                                          "name":  "retryOfNonFailedTaskIsRejected",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelOfTerminalTaskIsRejected",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelRequiresTaskManagePermission",
                                          "status":  "passed",
-                                         "duration":  0.001,
+                                         "duration":  0,
                                          "message":  null
                                      },
                                      {
                                          "name":  "cancelOfCancelledTaskIsIdempotent",
                                          "status":  "passed",
-                                         "duration":  0,
+                                         "duration":  0.002,
                                          "message":  null
                                      }
                                  ]

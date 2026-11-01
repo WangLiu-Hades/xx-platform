@@ -1,4 +1,4 @@
-# 运行后端测试并把结果整理为 reports/pr3-fix/test-results.json
+﻿# 运行后端测试并把结果整理为 reports/pr3-fix/test-results.json
 #
 # 只做两件事：真实执行 `mvn -B clean test`（真库用例通过环境变量真正执行），
 # 然后把 Surefire XML 汇总成机读结果，避免手工誊抄通过/失败数。
@@ -94,7 +94,9 @@ $dbGatedSkipped = 0
 foreach ($s in $suites) { $dbGatedSkipped += @($s.cases | Where-Object { $_.status -eq 'skipped' -and $_.message -match 'XX_TASK_IT_DB_URL' }).Count }
 
 $mvnVersion = (Get-CommandOutput 'mvn' @('-v')) -split "`n" | Select-Object -First 1
-$javaVersion = (Get-CommandOutput 'java' @('-version')) -split "`n" | Select-Object -First 1
+# PowerShell 把原生命令的 stderr 包成错误记录，行首会带 "java.exe : " 前缀，这里只去掉包装不丢内容
+$javaVersion = ((Get-CommandOutput 'java' @('-version')) -split "`n" | Select-Object -First 1) `
+    -replace '^\s*java(\.exe)?\s*:\s*', ''
 $psqlVersion = Get-CommandOutput 'psql' @('--version')
 $nodeVersion = Get-CommandOutput 'node' @('--version')
 $gitHead = (& git -C $RepoRoot rev-parse HEAD).Trim()

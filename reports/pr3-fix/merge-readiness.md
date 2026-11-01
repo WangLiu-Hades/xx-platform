@@ -2,7 +2,8 @@
 
 - 结论：**具备进入合并审查条件**
 - 修复分支：`codex/dev01-heyifan-api-skeleton`
-- 最终提交：`34556f7`（父提交 `1cbcb00`，即 PR #3 原 head）
+- 代码提交：`34556f7`（父提交 `1cbcb00`，即 PR #3 原 head）；其后提交只改 `reports/pr3-fix/` 下的文档与证据，不改代码
+- 证据提交状态：`test-results.json` 由提交后工作区复跑生成（`gitHead = 0b01354`，工作区仅 `reports/pr3-fix/` 下证据文件有改动）
 - 目标分支：`main`（评估基线 `aca438ebfb218d40350b60ff933d2251bed50500`）
 
 ## 1. 为什么可以进入合并审查
