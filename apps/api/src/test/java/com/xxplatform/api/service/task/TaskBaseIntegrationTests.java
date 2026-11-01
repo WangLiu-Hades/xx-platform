@@ -64,9 +64,41 @@ class TaskBaseIntegrationTests {
         jdbc = context.getBean(JdbcTemplate.class);
         // async_task.owner_user_id 有指向 auth.app_user 的外键：任务归属必须是一个真实账号。
         jdbc.update("""
-                INSERT INTO auth.app_user (id, user_code, login_name, display_name, password_hash)
-                VALUES (?, 'IT-TASK', 'it.task', '任务底座集成测试', 'x')
+                INSERT INTO auth.app_user
+                    (id, user_code, login_name, display_name, password_hash, password_changed_at)
+                VALUES (?, 'IT-TASK', 'it.task', '任务底座集成测试', 'x', now())
                 ON CONFLICT (id) DO NOTHING
+                """, OWNER);
+        // M05/M14 之后提交/发布要复核"当前授权"：底座用例的账号也必须是真的有权账号，
+        // 否则这条基线测的就不是状态机而是权限门。授权是夹具，不是断言。
+        jdbc.update("""
+                INSERT INTO auth.permission
+                    (code, name, module_code, description, risk_level, assignable)
+                VALUES ('task:manage', 'task:manage', 'task', '集成测试授权 task:manage', 'HIGH', false)
+                ON CONFLICT (code) DO NOTHING
+                """);
+        jdbc.update("""
+                INSERT INTO auth.role (id, role_code, name, management_all_sites, data_all_sites,
+                                       own_only, scope_policy_version)
+                VALUES ('0192f000-0000-7000-8000-00000000b002', 'IT-TASK-ROLE', '任务底座集成测试角色',
+                        false, false, false, 'v1')
+                ON CONFLICT (id) DO NOTHING
+                """);
+        jdbc.update("""
+                INSERT INTO auth.role_permission (role_id, permission_code)
+                VALUES ('0192f000-0000-7000-8000-00000000b002', 'task:manage')
+                ON CONFLICT DO NOTHING
+                """);
+        jdbc.update("""
+                INSERT INTO auth.user_role (user_id, role_id)
+                VALUES (?, '0192f000-0000-7000-8000-00000000b002')
+                ON CONFLICT DO NOTHING
+                """, OWNER);
+        jdbc.update("""
+                INSERT INTO auth.user_scope (user_id, management_all_sites, data_all_sites, own_only,
+                                             scope_version, policy_version)
+                VALUES (?, false, false, false, 1, 'v1')
+                ON CONFLICT (user_id) DO NOTHING
                 """, OWNER);
     }
 
@@ -85,7 +117,21 @@ class TaskBaseIntegrationTests {
     void cleanQueue() {
         jdbc.update("DELETE FROM analysis.task_event");
         jdbc.update("DELETE FROM analysis.task_attempt");
+        // 领域子表有 task_id 外键指向 async_task；async_task.result_asset_id 又指向 file_asset。
+        // 顺子清：子表 -> async_task -> file_asset。只删 async_task 会被 fk_analysis_export_job_task_id 挡住。
+        jdbc.update("DELETE FROM analysis.export_job");
+        jdbc.update("DELETE FROM analysis.import_job");
+        jdbc.update("DELETE FROM analysis.analysis_job");
+        jdbc.update("DELETE FROM analysis.set_job");
+        jdbc.update("DELETE FROM analysis.face_search_job");
+        jdbc.update("DELETE FROM analysis.model_execution");
+        jdbc.update("DELETE FROM analysis.profile_revision_member");
+        jdbc.update("DELETE FROM analysis.profile_revision");
+        jdbc.update("DELETE FROM operation.report_job");
+        jdbc.update("DELETE FROM capture.ingestion_batch");
         jdbc.update("DELETE FROM analysis.async_task");
+        jdbc.update("DELETE FROM core.file_asset");
+        jdbc.update("DELETE FROM core.idempotency_request");
     }
 
     @Test
@@ -114,8 +160,12 @@ class TaskBaseIntegrationTests {
         assertEquals(1L, claimed.task().currentAttemptNo());
         assertTrue(claimed.task().leaseUntil().isAfter(OffsetDateTime.now(ZoneOffset.UTC)));
 
+        // M08：EXPORT 的成功结果必须挂 fileAssetId。这里补的是"任务真的产出了一个文件"这个
+        // 领域事实（夹具），断言本身没有变——没有产物的 EXPORT 不允许发布 SUCCESS。
+        UUID assetId = attachExportArtifact(created.id(), OWNER);
+
         TaskRow finished = service.finish(created.id(), "it-worker-1", claimed.task().leaseGeneration(),
-                TaskStatus.SUCCESS, null, null, null);
+                TaskStatus.SUCCESS, null, null, assetId);
 
         assertEquals(TaskStatus.SUCCESS, finished.status());
         assertEquals(100, finished.progress());
@@ -210,5 +260,29 @@ class TaskBaseIntegrationTests {
                 "SELECT count(*) FROM analysis.task_attempt WHERE task_id = ? AND result = ?",
                 Integer.class, taskId, result);
         return count == null ? 0 : count;
+    }
+
+    /**
+     * 给 EXPORT 任务补一条"真实产出"：领域行 {@code analysis.export_job} 指向一个 ACTIVE 的
+     * {@code core.file_asset}。M08 要求 EXPORT 的公开结果必须带 fileAssetId，所以状态机用例
+     * 也得有这份产物，否则测到的只是"发布被复核拦下"。
+     */
+    private static UUID attachExportArtifact(UUID taskId, UUID owner) {
+        UUID assetId = UUID.randomUUID();
+        jdbc.update("""
+                INSERT INTO core.file_asset
+                    (id, storage_key, file_name, category, mime_type, byte_size, sha256,
+                     owner_user_id, security_class, status, expires_at, trace_id)
+                VALUES (?, ?, 'export.csv', 'EXPORT', 'text/csv', 1, repeat('a', 64),
+                        ?, 'L3', 'ACTIVE', now() + interval '1 day', 'it-trace')
+                """, assetId, "it-export-" + assetId, owner);
+        jdbc.update("""
+                INSERT INTO analysis.export_job
+                    (task_id, source_type, source_schema_version, source_snapshot, format,
+                     export_scope, output_file_id)
+                VALUES (?, 'FILESET', '1', '{}'::jsonb, 'CSV', 'ALL', ?)
+                ON CONFLICT (task_id) DO NOTHING
+                """, taskId, assetId);
+        return assetId;
     }
 }

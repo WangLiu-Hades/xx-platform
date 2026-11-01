@@ -14,6 +14,7 @@ import com.xxplatform.api.service.TaskCreatedView;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,14 +38,17 @@ import org.springframework.web.bind.annotation.RestController;
  * 重复校验——真正需要控制层做的是三件 Filter 看不到的事：会话（401）、
  * {@code Idempotency-Key} 的形状（400）、以及把请求体翻译成服务层命令。
  *
- * <p><b>X-Approval-Id</b>：契约要求高风险导出携带审批 id，审批服务属 W2 第 12–13 行，
- * 尚未实现；本端点不强制、也不解析该头，避免"带任意 id 即可通过"的假安全。补齐时在
- * {@code ExportService} 里校验绑定与一次性消费（Filter 看不到反序列化后的请求体摘要）。
+ * <p><b>X-Approval-Id</b>：敏感导出必须携带审批 id；本端点只负责解析 header 并形状校验，
+ * 绑定关系（operationId/摘要/执行人）与一次性消费在 {@link ExportService} 内完成——Filter
+ * 看不到反序列化之后的请求体，算不出摘要。
  */
 @RestController
 public class ExportController {
 
     private static final Logger log = LoggerFactory.getLogger(ExportController.class);
+
+    /** 契约里的审批头名。 */
+    static final String APPROVAL_HEADER = "X-Approval-Id";
 
     private final SessionAuthenticator sessionAuthenticator;
     private final ExportService exportService;
@@ -64,19 +68,40 @@ public class ExportController {
     @PostMapping("/exports")
     public ResponseEntity<ApiResponses> create(
             @RequestHeader(value = IdempotencyKeyHeader.NAME, required = false) String idempotencyKey,
+            @RequestHeader(value = APPROVAL_HEADER, required = false) String approvalIdHeader,
             @Valid @RequestBody ExportRequest body,
             HttpServletRequest request) {
 
         AuthenticatedSession session = sessionAuthenticator.require(request);
         String key = IdempotencyKeyHeader.require(idempotencyKey);
         ExportFormat format = requireFormat(body.format());
+        UUID approvalId = parseApprovalId(approvalIdHeader);
         String traceId = RequestIdFilter.currentTraceIdOrFallback();
 
         TaskCreatedView created = exportService.create(session, new ExportService.ExportCommand(
-                body.contextId(), format, body.columns(), body.purpose(), key, traceId));
+                body.contextId(), format, body.columns(), body.purpose(), key, traceId, approvalId));
 
-        log.info("导出已受理 traceId={} taskId={} format={}", traceId, created.taskId(), format);
+        log.info("导出已受理 traceId={} taskId={} format={} approvalId={}",
+                traceId, created.taskId(), format, approvalId);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponses.success(created, traceId));
+    }
+
+    /**
+     * 解析 {@code X-Approval-Id}。
+     *
+     * <p>缺省返回 null（由服务层统一判"敏感导出需要审批"并回 403）——这里不提前拒绝，是为了
+     * 让"缺审批"与"审批 id 写错"在服务层有同一处判定口径。格式非法则直接 400：那说明客户端
+     * 拼错了 URL，早点告诉它，而不是拿一个必然查不到的 id 去 409。
+     */
+    private static UUID parseApprovalId(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return null;
+        }
+        try {
+            return UUID.fromString(raw.trim());
+        } catch (IllegalArgumentException e) {
+            throw validationError(APPROVAL_HEADER, "X-Approval-Id 必须是 UUID");
+        }
     }
 
     private static ExportFormat requireFormat(String raw) {

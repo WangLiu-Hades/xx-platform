@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.infra.ClientConfigRepository;
+import com.xxplatform.api.service.file.UploadPolicyProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -56,17 +57,8 @@ public class ClientConfigService {
             "REPORT_GENERATION",
             "RAW_INGESTION");
 
-    /** 契约 {@code UploadPolicy.category} 的 9 个合法值。 */
-    static final Set<String> UPLOAD_CATEGORIES = Set.of(
-            "FACE_SEARCH",
-            "DATASET_IMPORT",
-            "DEVICE_IMPORT",
-            "PERSON_LIBRARY_IMPORT",
-            "PROFILE_PORTRAIT",
-            "REPORT",
-            "EXPORT",
-            "CAPTURE_IMAGE",
-            "RAW_INGESTION");
+    // 契约 UploadPolicy.category 的 9 个合法值由 FileCategory 枚举承担；其中 REPORT/EXPORT/
+    // CAPTURE_IMAGE 由服务端生成，不参与 multipart 上传，策略下发也只覆盖 6 个可上传分类。
 
     /** 契约 {@code CatalogBinding.fieldKey} 的 4 个合法值。 */
     static final Set<String> CATALOG_FIELD_KEYS = Set.of(
@@ -77,10 +69,13 @@ public class ClientConfigService {
 
     private final ClientConfigRepository repository;
     private final ObjectMapper objectMapper;
+    private final UploadPolicyProvider policyProvider;
 
-    public ClientConfigService(ClientConfigRepository repository, ObjectMapper objectMapper) {
+    public ClientConfigService(ClientConfigRepository repository, ObjectMapper objectMapper,
+                               UploadPolicyProvider policyProvider) {
         this.repository = repository;
         this.objectMapper = objectMapper;
+        this.policyProvider = policyProvider;
     }
 
     /**
@@ -168,29 +163,23 @@ public class ClientConfigService {
     }
 
     /**
-     * 上传策略：跳过不符合契约的行。
+     * 上传策略：与上传端点<b>同源同值</b>（{@link UploadPolicyProvider}）。
      *
-     * <p>两类跳过都对应一处契约-DDL 不一致（见 README 的 D7/D8 记录）：
-     * <ul>
-     *   <li>{@code max_bytes = 0}：DDL 允许，但契约 {@code maxBytes} 是 {@code minimum: 1}，
-     *       发出去前端会把它当成"该分类不能上传"的合法策略，语义就变了；</li>
-     *   <li>{@code category} 不在 9 值枚举内：契约表达不了，界面上也没有落点。</li>
-     * </ul>
+     * <p>修复前这里只投影 {@code core.upload_policy}：基线没有种子行，于是下发恒为
+     * {@code []}，而上传端用的是代码常量——同一件事两套规则。现在两者都走
+     * {@code UploadPolicyProvider}：有配置行用配置行，没有则回落到契约口径默认值，
+     * 因此下发永不为空，且 {@code enabled=false} 的行会原样下发（上传端同步拒绝）。
+     *
+     * <p>{@code maxBytes} 保持"该分类自身的上限"：契约规定前端实际可用值是
+     * {@code min(全局 maxUploadBytes, 本值)}，服务端执行同一取小规则，数值一致。
      */
     private List<ClientConfigView.UploadPolicyView> uploadPolicies() {
-        List<ClientConfigRepository.UploadPolicyRow> rows = repository.uploadPolicies();
-        List<ClientConfigView.UploadPolicyView> views = new ArrayList<>(rows.size());
-        for (ClientConfigRepository.UploadPolicyRow row : rows) {
-            if (!UPLOAD_CATEGORIES.contains(row.category())) {
-                log.warn("跳过契约枚举外的上传分类：category={}", row.category());
-                continue;
-            }
-            if (row.maxBytes() < 1) {
-                log.warn("跳过上限制为 0 的上传策略（契约要求 maxBytes >= 1）：category={}", row.category());
-                continue;
-            }
+        List<UploadPolicyProvider.CategoryPolicy> policies = policyProvider.policies();
+        List<ClientConfigView.UploadPolicyView> views = new ArrayList<>(policies.size());
+        for (UploadPolicyProvider.CategoryPolicy policy : policies) {
             views.add(new ClientConfigView.UploadPolicyView(
-                    row.category(), row.mimeTypes(), row.extensions(), row.maxBytes(), row.enabled()));
+                    policy.category(), policy.mimeTypes(), policy.extensions(),
+                    policy.maxBytes(), policy.enabled()));
         }
         return List.copyOf(views);
     }

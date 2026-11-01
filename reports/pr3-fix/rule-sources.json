@@ -1,0 +1,676 @@
+{
+    "schemaVersion":  1,
+    "generatedAt":  "2026-11-01T16:07:29Z",
+    "generatedBy":  "reports/pr3-fix/gen-rule-sources.ps1",
+    "repository":  "https://github.com/WangLiu-Hades/xx-platform",
+    "ruleCommit":  "aca438ebfb218d40350b60ff933d2251bed50500",
+    "ruleCommitFull":  "aca438ebfb218d40350b60ff933d2251bed50500",
+    "reviewStartCommit":  "1cbcb00933bb09a93e7e988de3f0d83a6dda3ad7",
+    "targetBranch":  "main",
+    "fixBranch":  "codex/dev01-heyifan-api-skeleton",
+    "sourceDiscipline":  [
+                             "规则文本一律由 git show \u003cruleCommit\u003e:\u003cpath\u003e 从远程主分支对象逐行取出，不使用工作区副本、PR 分支自己修改的契约或本机旧报告。",
+                             "blobId 由 git rev-parse \u003cruleCommit\u003e:\u003cpath\u003e 取得，permalink 指向该固定提交的 GitHub 原文，可直接复核字节。",
+                             "暂定规则（暂定规则明细.md 等）保留其\"暂定/USER_CONFIRMED\"状态，未冒充生产批准。"
+                         ],
+    "entries":  [
+                    {
+                        "item":  "M01",
+                        "title":  "后台轮询仍然延长登录时间",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L14",
+                                                "clause":  "P-001-02 会话续期/绝对期限/轮换/60秒节流",
+                                                "lineRange":  "L14-L14",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-001-02 | 空闲超时和绝对有效期用户均已单独答复待确认，本轮不重复追问。哪些请求触发滑动续期、客户端调用既有续期接口的时机、续期SID/CSRF轮换细则仍未明确。续期不延长绝对过期已定义，不重复确认。 | 服务端SID Cookie Session沿用；空闲暂定15分钟、绝对8小时。用户主动业务请求/显式renew可更新空闲期，后台轮询/探针不续命，renew不得越过绝对期限；常规续期不轮换SID/CSRF，登录/改密/权限提升轮换并撤销旧值。服务端lastSeen写入节流60秒但过期判定不延后。 | USER_CONFIRMED,EXISTING_CONTRACT,S01,S02 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L125",
+                                                "clause":  "会话：主动请求才滑动空闲期，探针/轮询不续期",
+                                                "lineRange":  "L125-L125",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "并发登录必须锁定账号行后，在同事务撤销旧会话并签发新会话，防止并发成功后留下两个有效SID。常规业务主动请求才滑动空闲期；探针/轮询/资源预加载不续期。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M02",
+                        "title":  "登录来源约束缺失",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L15",
+                                                "clause":  "P-001-03 登录来源内网CIDR/IP、UA变化重新登录",
+                                                "lineRange":  "L15-L15",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-001-03 | 同账号暂限一个有效会话，新登录成功使原会话失效已确认。异地额外限制/二次验证用户已答复待确认，本轮不重复询问；判定条件、验证方式及例外均未定，不默认启用或关闭。 | 同账号1有效会话、新登录成功撤销旧会话沿用。登录来源仅允许部署方配置的内网CIDR；IP/UA改变记录告警并要求重新登录，不做公网地理定位；普通登录暂不新增MFA，敏感审批要求重新验证密码及不同审批人。 | USER_CONFIRMED,EXISTING_CONTRACT,S01,S02 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M03",
+                        "title":  "登录后旧CSRF凭据仍有效，取令牌响应可被缓存",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L14",
+                                                "clause":  "P-001-02 登录/改密/提权轮换并撤销旧值",
+                                                "lineRange":  "L14-L14",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-001-02 | 空闲超时和绝对有效期用户均已单独答复待确认，本轮不重复追问。哪些请求触发滑动续期、客户端调用既有续期接口的时机、续期SID/CSRF轮换细则仍未明确。续期不延长绝对过期已定义，不重复确认。 | 服务端SID Cookie Session沿用；空闲暂定15分钟、绝对8小时。用户主动业务请求/显式renew可更新空闲期，后台轮询/探针不续命，renew不得越过绝对期限；常规续期不轮换SID/CSRF，登录/改密/权限提升轮换并撤销旧值。服务端lastSeen写入节流60秒但过期判定不延后。 | USER_CONFIRMED,EXISTING_CONTRACT,S01,S02 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L158-L161",
+                                                "clause":  "GET /auth/csrf：同源校验、SID轮换后重新获取、禁止缓存",
+                                                "lineRange":  "L158-L161",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "      tags:\n        - \"Auth\"\n      summary: \"获取 CSRF 令牌\"\n      description: \"匿名/已登录均可。同源且Origin/Referer校验，设置HttpOnly Secure SameSite=Lax Path=/api/v1 CSRFID随机Cookie，将绑定的同步器token返回body。CSRFID不是身份。写请求同时携带Cookie与X-CSRF-Token；登录SID轮换后重新获取，退出清理。禁止缓存或跨域通配。\""
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M04",
+                        "title":  "初始密码可直接办理业务，本人改密入口缺失",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L67",
+                                                "clause":  "P-021-01 密码策略/初始密码首次登录只放行改密",
+                                                "lineRange":  "L67-L67",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-021-01 | 密码长度/复杂度、过期、历史重复、存储方案；初始密码交付及首次登录强改策略是什么？ | 新设/重置密码15至128个Unicode字符，NFC，离线弱密码清单校验；不强制字符组合、不固定90天改密，泄露/重置则强制更新。既有PBKDF2暂统一HMAC-SHA256/600000次/独立16字节盐并记录算法版本，不声称FIPS认证；初始密码由管理员请求指定、响应不回显，首次登录只放行本人改密/退出等必要接口。本人改密需currentPassword并撤销其他会话，管理员重置reason必填并撤销该用户全部会话。 | USER_CONFIRMED,EXISTING_CONTRACT,S03,S04,S06,S19 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L51",
+                                                "clause":  "本人改密须currentPassword并撤销其他会话",
+                                                "lineRange":  "L51-L51",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 本人改密/me/password须currentPassword；管理员重置不收currentPassword，reason必填并撤销该用户会话。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M05",
+                        "title":  "过期或已经请求取消的任务仍能提交成功",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L16",
+                                                "clause":  "heartbeat：每10秒，延长至now+60秒，0行为LEASE_LOST",
+                                                "lineRange":  "L16-L16",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| heartbeat | Lease | 每10秒；有效且未过期generation匹配时延长至当前时刻+60秒；返回cancelRequestedAt；0行即LEASE_LOST |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L18",
+                                                "clause":  "finish：同事务校验租约/取消/当前授权/结果引用",
+                                                "lineRange":  "L18-L18",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| finish | Lease, typed resultManifest | 同事务锁task、校验租约未过期/无取消/当前授权及结果引用，挂发布指针并更新终态/attempt/event/outbox；失败不得公开部分结果 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L23",
+                                                "clause":  "Lease固定字段与写操作条件（taskId/owner/generation/leaseUntil\u003enow）",
+                                                "lineRange":  "L23-L23",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "Lease固定字段：taskId UUID、attemptNo int64、leaseOwner string、leaseGeneration int64、leaseUntil RFC3339；所有写操作条件都含taskId/owner/generation/leaseUntil\u003enow。公开任务保留六态，不增加CLAIMED状态。数据库已有lease_generation，不能只凭workerId回写。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M06",
+                        "title":  "任务分配、预算和时限没有按协议统一",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L15",
+                                                "clause":  "claim：priority高值优先、submittedAt/id升序、SKIP LOCKED、supportedTypes/limit",
+                                                "lineRange":  "L15-L15",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| claim | workerId, supportedTypes, limit | 按priority高值优先、submittedAt/id升序；FOR UPDATE SKIP LOCKED；领取并发预算内任务，attempt+1/generation+1，建task_attempt；返回Lease+固定输入 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L22",
+                                                "clause":  "P-003-01 排队5/15分钟与执行时限从RUNNING开始",
+                                                "lineRange":  "L22-L22",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-003-01 | 历史≥100万、日增≥5万、≥50人同时研判分析及最低硬件已有附件二。任务时限从实际执行开始、不含排队已确认；排队时限另定，普通/复杂分类用户已答复待确认，本轮不再追问。峰值写入速率、数据分布、查询负载组合及其他性能测量口径仍需补齐。 | 沿用已确认验收下限和2秒/2秒/3秒/5秒、30分钟/2小时指标。验收50用户持续30分钟，普通请求/人像/地图/首页抽样逐次检查时限，同时报告P95/P99和失败率，不用P95替代原时限；时延从浏览器发起到首屏可用，首页新入库水位至可见\u003c=5秒。合成日增5万与100条/秒短峰只是暂定压测工况，不代表真实峰值。Task类型全量分类见配置；普通排队\u003c=5分钟、复杂\u003c=15分钟，执行时限从实际RUNNING开始，超时告警并发起取消，未响应租约到期后终止发布。 | USER_CONFIRMED,EXISTING_CONTRACT,S07,S09 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L23",
+                                                "clause":  "P-003-02 每用户2重任务/5排队、重计算2并发、I/O2并发（1槽保留）",
+                                                "lineRange":  "L23-L23",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-003-02 | 上传分类大小、单批接入量、查询扫描/时间窗口、Worker任务并发、查询QPS、导出频率/总行数/文件大小仍缺。50并发用户不是Worker并发数，日增5万不是导出限额；已提供的响应/完成时限不能直接作为执行硬超时。 | 图片10MiB、普通导入100MiB/10万行；接入批默认1000条/上限1万；普通检索31天/分页20默认100上限，SQL硬超时5秒/锁等待1秒；每用户2个重任务+最多5个排队，系统重计算2并发、I/O2并发，其中1个I/O槽保留给通知/命令；导出异步最多100万行或1GiB，5万行分片，超限422 DATA_QUERY_TOO_BROAD，排队满429并给Retry-After。 | USER_CONFIRMED,EXISTING_CONTRACT,S07,S09 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M07",
+                        "title":  "外部动作失去租约后会被直接重排",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L20",
+                                                "clause":  "retry：仅FAILED且同输入快照；UNKNOWN副作用先对账",
+                                                "lineRange":  "L20-L20",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| retry | taskId, actorId, idempotencyKey | 仅FAILED且同输入快照，重新QUEUED；领取时递增attempt；UNKNOWN外部副作用先对账，不能直接重试 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+                                                "blobId":  "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md#L27",
+                                                "clause":  "租约失效由reaper递增generation；外部动作UNKNOWN不自动重发",
+                                                "lineRange":  "L27-L27",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "租约失效由reaper锁定后递增generation。纯计算可按统一预算重新排队；外部动作处于UNKNOWN时先交对账器，不自动重发。取消/超时后同样禁止旧generation发布。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L60",
+                                                "clause":  "P-018-02 RESET不自动重试、命令TTL120秒转UNKNOWN",
+                                                "lineRange":  "L60-L60",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-018-02 | 下发、回执、超时、失败重试、批量逐台结果、RESET含义及免重复能力如何定？实际超时不能直接取30秒。 | RESET平台语义暂定安全重启，不默认为恢复出厂；实际厂商RESET仅支持清空时禁止自动映射。命令TTL120秒，超时UNKNOWN并先回读/对账；RESET不自动重试，参数写入仅明确可重试且有幂等能力时最多1次自动重试。每设备命令ID/尝试/回执独立，成功设备不再执行，批次成功不代表逐台成功。 | USER_CONFIRMED,EXISTING_CONTRACT,S15,S05 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M08",
+                        "title":  "通用任务结果引用不完整",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L19020-L19036",
+                                                "clause":  "TaskResultReference schema（resultType枚举与各类型引用字段）",
+                                                "lineRange":  "L19020-L19036",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "    TaskResultReference:\n      type: \"object\"\n      properties:\n        resultType:\n          type: \"string\"\n          enum:\n            - \"ANALYSIS\"\n            - \"SET_OPERATION\"\n            - \"FACE_SEARCH\"\n            - \"EXPORT\"\n            - \"REPORT\"\n            - \"DEVICE_COMMAND\"\n            - \"MODEL_RUN\"\n            - \"DATASET_IMPORT\"\n            - \"PERSON_LIBRARY_IMPORT\"\n            - \"DEVICE_IMPORT\"\n            - \"PROFILE_MERGE\""
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L82",
+                                                "clause":  "按任务类型的 resultReference 对照表",
+                                                "lineRange":  "L82-L82",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  " - TaskResultReference：ANALYSIS resultId=analysisTaskId；SET_OPERATION=setTaskId并由领域详情取resultDatasetId；FACE_SEARCH=taskId；REPORT=reportId；DEVICE_COMMAND=taskId；MODEL_RUN=taskId，modelId必须返回，结果按modelId和taskId筛选；INGESTION=batchId；NOTIFICATION=notificationTaskId；EXPORT必须fileAssetId。IMPORT调用tasks/id/import-result；合并拆分profileIds。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M09",
+                        "title":  "审批资格和人数不能只按操作权限判断",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L8",
+                                                "clause":  "审批人=部署配置+动作权限+当前范围；申请/执行人不得审批；1名/2名",
+                                                "lineRange":  "L8-L8",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 一般高风险1名独立审批人；解密/密钥/批量≥10台2名。审批人需在部署审批人配置中、具备目标操作权限及当前范围；申请人、执行人均不能担任该审批的审批人。服务端先排除自身提权和授予上界冲突，再受理审批；缺足够独立审批人则禁用该动作。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L63",
+                                                "clause":  "P-019-02 审批人数、自审限制、24小时/10分钟/5分钟时限",
+                                                "lineRange":  "L63-L63",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-019-02 | 审批/二次确认的级数、审批人、自审限制、有效期、生效时机、单次或批次授权范围和拒绝后重提规则是什么？ | 普通高风险由1名独立审批人复核，解密/密钥/批量\u003e=10台需2名不同审批人；审批人具备动作权限及配置审批资格，申请人/执行人均不得审批，不能越过自身范围。审批申请24小时可决策，批准后10分钟内一次执行，解密展示许可5分钟，均不超过申请截止；内容/目标集合/版本/用途变更即作废。REJECTED保留意见，新申请另建ID。 | USER_CONFIRMED,EXISTING_CONTRACT,S05,S02 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M10",
+                        "title":  "审批提案缺少严格校验和服务器冻结",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L9",
+                                                "clause":  "提案仅收operationId/路径/body/If-Match；服务端冻结并对快照算SHA-256",
+                                                "lineRange":  "L9-L9",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 提案仅接收强类型operationId联合及对应路径、完整请求体、If-Match；服务端补执行人/解析后的设备集合/资源version/授权版本/policyVersion并冻结。对规范化UTF-8快照计算SHA-256；客户端不能自报摘要或缩减目标。新建无既有resourceId时以操作、完整body及生成前目标绑定。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L15",
+                                                "clause":  "requestDecryption冻结context/采集集合/recipient",
+                                                "lineRange":  "L15-L15",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "`requestDecryption`冻结context/采集集合和recipient，同事务自动创建readDecryptionResult审批，响应approvalId。普通capture:read申请人可转交；执行人固定为当前具有capture:decrypt及范围的recipient；普通申请人不得自己读结果。getDecryptionRequest/审批详情仅申请人、recipient或被配置且满足范围的审批人可见，不能枚举全平台申请。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L17",
+                                                "clause":  "createActionApproval复用有效审批，不制造多份许可",
+                                                "lineRange":  "L17-L17",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "createActionApproval对已有解密request仅返回/复用当前有效审批，不制造多份同时有效许可；原申请过期/审批拒绝需重新申请。批准后同步原request为APPROVED并建grant。GET仅元数据；POST result在事务消费grant后即时解密，返回no-store，不落明文文件/缓存/日志。HTTP断开仍视为已消费，需新申请，不通过幂等缓存重放明文。审批过期/拒绝同步request状态；已查看后request可保持APPROVED但resultAvailable=false。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L38330-L38350",
+                                                "clause":  "UpdateDeviceParametersApprovalProposal：严格Schema/pattern/additionalProperties=false",
+                                                "lineRange":  "L38330-L38350",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "    UpdateDeviceParametersApprovalProposal:\n      type: object\n      additionalProperties: false\n      properties:\n        operationId:\n          type: string\n          pattern: ^updateDeviceParameters$\n          x-const-value: updateDeviceParameters\n        pathParameters:\n          type: object\n          additionalProperties: false\n          properties:\n            deviceId:\n              type: string\n              format: uuid\n          required:\n            - deviceId\n        requestBody:\n          $ref: \"#/components/schemas/DeviceParameterUpdateInput\"\n        ifMatch:\n          type: string"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M11",
+                        "title":  "审批清单泄露嵌套敏感值并允许截断",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L34",
+                                                "clause":  "reviewItems完整显示目标/版本/范围/用途；敏感值掩码；不允许截断后批准",
+                                                "lineRange":  "L34-L34",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "审批详情的reviewItems由服务端从冻结快照生成，必须完整显示目标集合/版本/授权范围/用途等重要字段；密码、密钥、敏感标识掩码。summary只是摘要，不足以替代完整reviewItems；超过显示/接口预算要求拆分申请，不允许截断后批准。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L39326-L39348",
+                                                "clause":  "ActionApproval 列表/详情分页 schema（items/nextCursor/pageSize）",
+                                                "lineRange":  "L39326-L39348",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "      x-decision-ids:\n        - P-008\n        - P-019\n    ActionApprovalPage:\n      type: object\n      additionalProperties: false\n      properties:\n        items:\n          type: array\n          items:\n            $ref: \"#/components/schemas/ActionApprovalDetail\"\n        nextCursor:\n          type: string\n          nullable: true\n        pageSize:\n          type: integer\n          minimum: 1\n          maximum: 100\n      required:\n        - items\n        - nextCursor\n        - pageSize\n      x-design-status: provisional"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M12",
+                        "title":  "通用数据库配置会自动启用仓库固定审批密钥",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L21",
+                                                "clause":  "action_approval：部署密钥认证加密、随机nonce、禁止明文落JSONB",
+                                                "lineRange":  "L21-L21",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- operation.action_approval：申请/执行人、operationId、policyVersion、SHA-256摘要、加密冻结快照/密钥版本、脱敏summary、状态、所需票数、时限、consumedAt/version。快照用部署密钥认证加密；随机nonce随密文封装，禁止密码/标识明文落JSONB。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L36",
+                                                "clause":  "P-008-02 密钥由部署方注入，禁止仓库存储",
+                                                "lineRange":  "L36-L36",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-008-02 | 密钥/证书由谁提供并托管；明文通过页面、流式下载还是临时文件交付，是否一次性及允许再次查看仍缺规则。实际获准保存的数据采用统一暂定一个月的保存期限；本规则不批准保存明文，不决定明文查看授权有效期。 | 密钥由部署方以独立secret文件/内网密钥服务注入，禁止仓库存储。批准后仅指定recipient通过受控POST result查看一次，授权窗口5分钟，响应Cache-Control:no-store；明文只即时解密并传输，不形成可复用明文文件/URL，不写日志。申请/审批/审计元数据保存一年（12个自然月），申请24小时过期；再次查看重新授权。实际密钥、审批人和合法用途由甲方提供。 | USER_CONFIRMED,EXISTING_CONTRACT,S05,S06,S22 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M13",
+                        "title":  "敏感导出没有验证和消费审批许可",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L7",
+                                                "clause":  "需审批的动作清单（含敏感批量导出定义）",
+                                                "lineRange":  "L7-L7",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 全部RESET、网络/密钥等敏感参数、批量≥10台、角色/范围授权与撤回、禁用/启用他人、管理员重置、回放/补数、档案合并拆分、涉密结果、敏感批量导出需审批。敏感批量导出暂定义为任何个人标识/档案/审计/SMS投递导出；纯聚合指标导出可无审批，但仍鉴权。用户/角色仅名称修改且不影响授权可不审批；所有授权赋值入口（含create/update user）均不得绕过。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L11",
+                                                "clause":  "X-Approval-Id：同事务锁审批/复核/消费/写领域动作；过期410、冲突409",
+                                                "lineRange":  "L11-L11",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 执行原API时携带X-Approval-Id；同数据库事务锁审批、复核当前双方权限/版本/digest、消费许可并写领域动作/outbox/审计。原请求幂等回放先鉴权并返回原结果，不能因许可已消费再次执行；不同幂等键复用已消费许可409。审批许可过期410，内容/版本冲突409，无权限403，对象不可见404。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L843-L860",
+                                                "clause":  "createExport：请求头与响应/错误码",
+                                                "lineRange":  "L843-L860",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "      summary: \"创建异步导出\"\n      description: \"创建异步导出；成功数据见具体响应Schema；空集合返回空数组。除PUBLIC外强制当前会话、所需权限、数据/场所范围；越权对象按404 DATA_NOT_FOUND隐藏存在性。\"\n      operationId: \"createExport\"\n      x-module: \"M01\"\n      x-owner: \"DEV-01/DEV-02\"\n      x-permission: \"capture:export\"\n      security:\n        - sessionCookie: []\n      parameters:\n        - $ref: \"#/components/parameters/CsrfToken\"\n        - $ref: \"#/components/parameters/IdempotencyKey\"\n        - $ref: \"#/components/parameters/ApprovalId\"\n      requestBody:\n        required: true\n        content:\n          \"application/json\":\n            schema:\n              \"$ref\": \"#/components/schemas/ExportRequest\""
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M14",
+                        "title":  "导出、发布和下载没有完整复核当前数据范围",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L20",
+                                                "clause":  "P-002-05 缩权立即生效、发布与下载复核当前权限",
+                                                "lineRange":  "L20-L20",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-002-05 | 缩权/禁用后在途任务应继续、取消还是仅拒绝结果；服务端旧文件访问如何撤权、离线已下载文件如何管理？现有7天可查建议未签。 | 缩权/禁用立即撤销相关会话并更新授权版本；在途任务写取消请求，发布与下载复核当前权限，旧context不越权，服务器旧下载许可即时失效。已完成的外部动作/已离线下载文件不声称能追回，保留审计和受控处置记录，不采用7天继续可见例外。 | USER_CONFIRMED,EXISTING_CONTRACT,S02,S05 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L38",
+                                                "clause":  "P-009-01 Context TTL30分钟、每次消费重校权限",
+                                                "lineRange":  "L38-L38",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-009-01 | Context暂存数据保存期限统一暂定一个月；访问有效期TTL、起算事件、固定/滑动、显式续期和复用重置策略仍未定，不由保存期限代答。 | Context访问TTL30分钟，按创建时间固定、不显式续期/不因复用重置；到期410 CONTEXT_EXPIRED，物理元数据按一年（12个自然月）保存。每次消费重校权限，缩权403；游标15分钟签名并绑定条件/水位/授权版本，不能将预览100个target当全集。 | USER_CONFIRMED,EXISTING_CONTRACT,S07,S09 |"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L40",
+                                                "clause":  "P-009-03 导出异步上限与短时下载5分钟每次重鉴权",
+                                                "lineRange":  "L40-L40",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-009-03 | 异步导出总行数/大小、超限分片或拒绝、重试策略是什么；如要新增同步导出，须单独确认契约变更。 | 导出全异步，格式XLSX/CSV/ZIP沿用；上限100万行/1GiB，5万行分片，超限直接拒绝不静默截断。短时下载5分钟且每次重鉴权，物理文件一年（12个自然月）；临时文件失败即不可公开，临时传输故障最多重试1次且同任务attempt+1，输入快照不变。 | USER_CONFIRMED,EXISTING_CONTRACT,S07,S09 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L50",
+                                                "clause":  "列表/详情/Context/任务/导出/文件每次重校范围",
+                                                "lineRange":  "L50-L50",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 列表/详情/Context/任务/导出/文件每次重校范围；操作无权403，单对象不可见404隐藏存在性；Context收缩403 PERMISSION_DATA_SCOPE。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M15",
+                        "title":  "多个写接口丢弃幂等键",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L57",
+                                                "clause":  "Idempotency-Key 16–160字符、作用域账号+operationId+键、同输入返原响应",
+                                                "lineRange":  "L57-L57",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 创建/导入/导出/任务/命令等重复风险用Idempotency-Key（16–160字符），作用域账号+operationId+键，比较规范化body与领域ID。相同输入返回原响应，不同输入409 IDEMPOTENCY_CONFLICT。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+                                                "blobId":  "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md#L10",
+                                                "clause":  "审批时限与重复票：相同Idempotency-Key返回原决定",
+                                                "lineRange":  "L10-L10",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 申请24小时过期；最终APPROVED后10分钟执行许可，解密5分钟；REJECT任一票终结，所有批准凑齐才APPROVED。每名审批人一票，重复用相同Idempotency-Key返回原决定。内容、目标集合、版本、授权或策略版本改变即拒绝执行并要求新申请。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L17294-L17302",
+                                                "clause":  "IdempotencyKey 头定义（16–160）",
+                                                "lineRange":  "L17294-L17302",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "    IdempotencyKey:\n      name: \"Idempotency-Key\"\n      in: \"header\"\n      required: true\n      schema:\n        type: \"string\"\n        minLength: 16\n        maxLength: 160\n      description: \"同用户+资源类型+键防重；同键不同参数返回 409 TASK_CONFLICT。；键至少在任务/资源存活期间保留，已清理返回409 RESOURCE_CONFLICT，不把旧键当新提交；失败重试使用任务重试入口。\""
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M16",
+                        "title":  "同时创建同键任务时一个请求失败",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L57",
+                                                "clause":  "相同输入返回原响应、不同输入409",
+                                                "lineRange":  "L57-L57",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 创建/导入/导出/任务/命令等重复风险用Idempotency-Key（16–160字符），作用域账号+operationId+键，比较规范化body与领域ID。相同输入返回原响应，不同输入409 IDEMPOTENCY_CONFLICT。"
+                                            },
+                                            {
+                                                "path":  "contracts/database/data-dictionary.md",
+                                                "blobId":  "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/data-dictionary.md#L829",
+                                                "clause":  "唯一约束 (owner_user_id,task_type,idempotency_key)",
+                                                "lineRange":  "L829-L829",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "唯一约束：`(owner_user_id,task_type,idempotency_key)`。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M17",
+                        "title":  "上传策略与下发规则不一致，普通导入被限成10MiB",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L23",
+                                                "clause":  "P-003-02 图片10MiB、普通导入100MiB/10万行",
+                                                "lineRange":  "L23-L23",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-003-02 | 上传分类大小、单批接入量、查询扫描/时间窗口、Worker任务并发、查询QPS、导出频率/总行数/文件大小仍缺。50并发用户不是Worker并发数，日增5万不是导出限额；已提供的响应/完成时限不能直接作为执行硬超时。 | 图片10MiB、普通导入100MiB/10万行；接入批默认1000条/上限1万；普通检索31天/分页20默认100上限，SQL硬超时5秒/锁等待1秒；每用户2个重任务+最多5个排队，系统重计算2并发、I/O2并发，其中1个I/O槽保留给通知/命令；导出异步最多100万行或1GiB，5万行分片，超限422 DATA_QUERY_TOO_BROAD，排队满429并给Retry-After。 | USER_CONFIRMED,EXISTING_CONTRACT,S07,S09 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L53",
+                                                "clause":  "uploadPolicies按category返回限制，实际取全局与分类较小值",
+                                                "lineRange":  "L53-L53",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- client-config.catalogBindings提供字段对应的dictionaryCode；设备/人员库category、gender、ethnicity使用该绑定读取字典，不猜目录名。uploadPolicies按category返回限制；旧maxUploadBytes仅全局上限，实际限制取全局与分类maxBytes的较小值。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L100",
+                                                "clause":  "multipart 必填category、读uploadPolicies、服务端不信扩展名",
+                                                "lineRange":  "L100-L100",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- multipart file+category必填，实际内容校验；先读uploadPolicies(mimeTypes/extensions/maxBytes/enabled)，服务端不信扩展名。FACE_SEARCH/PROFILE_PORTRAIT只JPEG/PNG，导入CSV/XLSX/JSON，RAW_INGESTION按已批准mapping。"
+                                            },
+                                            {
+                                                "path":  "contracts/database/data-dictionary.md",
+                                                "blobId":  "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/data-dictionary.md#L334-L336",
+                                                "clause":  "core.upload_policy 上传白名单",
+                                                "lineRange":  "L334-L336",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "## core.upload_policy — 上传白名单\n\n模块：M01。主键：`category`。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M18",
+                        "title":  "无效内容被当成合格文件开放",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L100",
+                                                "clause":  "实际内容校验（非扩展名）",
+                                                "lineRange":  "L100-L100",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- multipart file+category必填，实际内容校验；先读uploadPolicies(mimeTypes/extensions/maxBytes/enabled)，服务端不信扩展名。FACE_SEARCH/PROFILE_PORTRAIT只JPEG/PNG，导入CSV/XLSX/JSON，RAW_INGESTION按已批准mapping。"
+                                            },
+                                            {
+                                                "path":  "contracts/api/api-conventions.md",
+                                                "blobId":  "fa2981593c837c61119e8e86adcc74e6c23aa986",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md#L101",
+                                                "clause":  "413/415；PROCESSING→ACTIVE/QUARANTINED；只有ACTIVE可引用",
+                                                "lineRange":  "L101-L101",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "- 413 FILE_TOO_LARGE、415 FILE_MEDIA_UNSUPPORTED；202文件PROCESSING，GET至ACTIVE/QUARANTINED，只有ACTIVE可引用。上传成功不等于导入成功。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M19",
+                        "title":  "文件未设置到期时间，详情还漏返必填字段",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/project-governance/RETENTION_POLICY.md",
+                                                "blobId":  "112576e648d22f52e8097e6f6ed6d90c309cd5ce",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/RETENTION_POLICY.md#L7",
+                                                "clause":  "12个自然月，目标月无同日取月末，不按365天",
+                                                "lineRange":  "L7-L7",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "默认物理保存期限为一年，即12个自然月，按Asia/Shanghai从起算时刻计算，到期时刻以UTC存储；目标月份没有同一日时取该月最后一日，例如2024-02-29至2025-02-28，不固定换算365天。"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/RETENTION_POLICY.md",
+                                                "blobId":  "112576e648d22f52e8097e6f6ed6d90c309cd5ce",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/RETENTION_POLICY.md#L11",
+                                                "clause":  "文件按自身ACTIVE时间计算12个自然月",
+                                                "lineRange":  "L11-L11",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| 采集事实、原图及受控附件 | 采集capturedAt；文件按自身ACTIVE时间 | 12个自然月 |"
+                                            },
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L18707-L18760",
+                                                "clause":  "FileAsset schema（expiresAt 必填/可空）",
+                                                "lineRange":  "L18707-L18760",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "    FileAsset:\n      type: \"object\"\n      properties:\n        fileAssetId:\n          type: \"string\"\n          format: \"uuid\"\n          description: \"平台内部唯一UUID，不能使用业务号码代替。\"\n        category:\n          type: \"string\"\n          enum:\n            - \"FACE_SEARCH\"\n            - \"DATASET_IMPORT\"\n            - \"DEVICE_IMPORT\"\n            - \"PERSON_LIBRARY_IMPORT\"\n            - \"PROFILE_PORTRAIT\"\n            - \"REPORT\"\n            - \"EXPORT\"\n            - \"CAPTURE_IMAGE\"\n            - \"RAW_INGESTION\"\n          description: \"可选字段省略表示未提供；仅nullable字段允许null。\"\n        fileName:\n          type: \"string\"\n          description: \"可选字段省略表示未提供；仅nullable字段允许null。\"\n        mimeType:\n          type: \"string\"\n          description: \"可选字段省略表示未提供；仅nullable字段允许null。\"\n        byteSize:\n          type: \"integer\"\n          minimum: 0\n          description: \"可选字段省略表示未提供；仅nullable字段允许null。\"\n        status:\n          \"$ref\": \"#/components/schemas/FileStatus\"\n        createdAt:\n          type: \"string\"\n          format: \"date-time\"\n          description: \"RFC 3339，必须带时区偏移；服务端按 UTC 存储。\"\n        expiresAt:\n          type: \"string\"\n          format: \"date-time\"\n          nullable: true\n          description: \"ISO8601带时区，服务端UTC、前端Asia/Shanghai显示。\"\n        errorCode:\n          \"$ref\": \"#/components/schemas/ErrorCode\"\n      additionalProperties: false\n      required:\n        - \"fileAssetId\"\n        - \"category\"\n        - \"fileName\"\n        - \"mimeType\"\n        - \"byteSize\"\n        - \"status\"\n        - \"createdAt\"\n        - \"expiresAt\"\n      description: \"接口模型 FileAsset；具体业务范围以使用它的操作为准。\""
+                                            },
+                                            {
+                                                "path":  "contracts/database/data-dictionary.md",
+                                                "blobId":  "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/data-dictionary.md#L604-L606",
+                                                "clause":  "core.file_asset 受控文件元数据",
+                                                "lineRange":  "L604-L606",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "## core.file_asset — 受控文件元数据；内容不入库\n\n模块：M01。主键：`id`。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M20",
+                        "title":  "关键业务操作没有正式审计记录",
+                        "category":  "明确规则下的实现问题",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/requirements/source/平台功能设计（原始）.pdf",
+                                                "blobId":  "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/requirements/source/%E5%B9%B3%E5%8F%B0%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1%EF%BC%88%E5%8E%9F%E5%A7%8B%EF%BC%89.pdf#page=25",
+                                                "clause":  "原始功能要求：操作审计（PDF第25页）",
+                                                "lineRange":  "p.25",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "（PDF 二进制，blob 大小 409774 字节；条款位于第 25 页，本轮操作审计以 P-021-04 与 audit.audit_event 结构为可逐字核对的补充来源）"
+                                            },
+                                            {
+                                                "path":  "docs/project-governance/暂定规则明细.md",
+                                                "blobId":  "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md#L70",
+                                                "clause":  "P-021-04 必须服务端审计的事件清单与拒绝/失败",
+                                                "lineRange":  "L70-L70",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "| P-021-04 | “每次操作记日志”是否包括导航、复制、弹窗等纯UI动作，哪些事件必须服务端审计，谁负责出不可遗漏清单？ | 必须服务端审计登录/退出/改密/授权、资源写入/删除、查询执行/导出/下载、解密/审批、设备命令、布控/通知、导入/回放、档案修订/合并拆分及拒绝/失败。纯UI导航/弹窗/缩放不进业务审计；客户端复制/查看事件只作非可信遥测且不包含敏感值，不能声称捕获所有系统剪贴板动作。超管可查全部用户操作日志、其他人本人；Audit OWN_ALL和SMS SELECTED_PAGE导出语义沿用。 | USER_CONFIRMED,EXISTING_CONTRACT,S03,S04,S06,S19 |"
+                                            },
+                                            {
+                                                "path":  "contracts/database/data-dictionary.md",
+                                                "blobId":  "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/data-dictionary.md#L3265-L3269",
+                                                "clause":  "audit.audit_event 审计表",
+                                                "lineRange":  "L3265-L3269",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "## audit.audit_event — 操作/安全审计，主体快照保留\n\n模块：M14。主键：`id`。\n\n| 字段 | SQL类型 | 可空 | 默认值 | 说明 |"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "M21",
+                        "title":  "开发跨源配置不允许审批请求头",
+                        "category":  "开发联调方式的待完善事项",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "contracts/api/openapi.yaml",
+                                                "blobId":  "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml#L17321-L17325",
+                                                "clause":  "X-Approval-Id 请求头定义",
+                                                "lineRange":  "L17321-L17325",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "      name: X-Approval-Id\n      in: header\n      required: false\n      schema:\n        type: string"
+                                            },
+                                            {
+                                                "path":  "contracts/api/FRONTEND_INTEGRATION.md",
+                                                "blobId":  "95d7a585d1381c5e734e203245a66d9208fdbc38",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/FRONTEND_INTEGRATION.md#L1-L12",
+                                                "clause":  "默认前端代理联调路径与端口",
+                                                "lineRange":  "L1-L12",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "\u003e 2026-10-18修订：当前暂定开发规则及分工以[PD-2026-10-19.v1](../../docs/project-governance/暂定方案与修改记录.md)为准。下文旧pending/NO/签认门禁和人员编号保留作历史追踪；本轮不声称后端或生产验收通过。\n\n# 当前 Vue 前端与后端对接说明\n\n核对日期：2026-10-09。范围：现有前端原型与公共 Web API 的联调，不包含真实后端、算法或设备/消息服务的实现。\n\n## 1. 当前保留情况\n\n- 唯一机器契约为本目录 `openapi.yaml`，版本 `1.0.0-dev.2`，Base URL 为 `/api/v1`。\n- YAML 与前端生成目录均包含 193 个操作、581 个 Schema。193 是契约目录数量，不代表 193 个操作均有独立界面入口或已通过真实后端联调。\n- 其中 65 个操作在操作级标记 `x-design-status: pending`；字段级及项目级未决事项还须查 `OPENAPI_PENDING.md`。其余操作未带该标记，也不等于已完成生产验收。\n- 当前页面已有 HTTP 适配：认证/权限、首页、检索、人像任务、库与档案、地图、分析、数据集、布控、模型、场所/设备、配置、报表、通知、日志与任务中心。"
+                                            }
+                                        ]
+                    },
+                    {
+                        "item":  "E01",
+                        "title":  "迁移验证脚本会把查询失败报告成清理成功",
+                        "category":  "已复现的工程脚本错误",
+                        "ruleSources":  [
+                                            {
+                                                "path":  "docs/system-design/10_开发联调与集成方案.md",
+                                                "blobId":  "51cd0882c35691ee02d3daaa7053b3032918bfe5",
+                                                "permalink":  "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/10_%E5%BC%80%E5%8F%91%E8%81%94%E8%B0%83%E4%B8%8E%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88.md#L50",
+                                                "clause":  "合并门禁：迁移空库/升级库必须可验证",
+                                                "lineRange":  "L50-L50",
+                                                "status":  "已确认规则（主分支原文；暂定条目保留其 USER_CONFIRMED/暂定状态）",
+                                                "excerpt":  "每次合并跑静态检查、单测、OpenAPI 语法/契约、SQL migration 空库与升级库、关键 API 集成测试；每日 E2E 走登录→检索→地图→研判→布控→通知，以及设备→运维→报表。UAT 前补安全、容量和恢复演练。测试数据必须合成或经批准脱敏，不能把真实人像/IMSI放入仓库。每个版本有镜像摘要、迁移版本、回滚条件和环境差异清单。"
+                                            }
+                                        ]
+                    }
+                ]
+}

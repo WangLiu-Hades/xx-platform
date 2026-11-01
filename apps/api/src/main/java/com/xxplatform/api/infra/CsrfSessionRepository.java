@@ -101,6 +101,11 @@ public class CsrfSessionRepository {
         return jdbc.update("DELETE FROM auth.csrf_session WHERE cookie_hash = ?", cookieHash);
     }
 
+    /** 按行 id 删除（登录成功后撤销"用于登录的那一对"凭据，M03）。 */
+    public int deleteById(UUID csrfId) {
+        return jdbc.update("DELETE FROM auth.csrf_session WHERE id = ?", csrfId);
+    }
+
     /**
      * 清理已过期记录。
      *

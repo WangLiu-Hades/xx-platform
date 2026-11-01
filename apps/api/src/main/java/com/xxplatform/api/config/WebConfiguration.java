@@ -69,9 +69,10 @@ public class WebConfiguration {
         config.setAllowedOrigins(java.util.List.of("http://127.0.0.1:5180", "http://localhost:5180"));
         config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(java.util.List.of(
-                "Content-Type", "X-CSRF-Token", "Idempotency-Key", "If-Match", "X-Trace-Id"));
+                "Content-Type", "X-CSRF-Token", "Idempotency-Key", "If-Match", "X-Trace-Id",
+                "X-Approval-Id"));
         config.setExposedHeaders(java.util.List.of(
-                "X-Trace-Id", "ETag", "Retry-After", "Content-Disposition"));
+                "X-Trace-Id", "ETag", "Retry-After", "Content-Disposition", "X-CSRF-Token"));
         config.setAllowCredentials(true);
         config.setMaxAge(600L);
 

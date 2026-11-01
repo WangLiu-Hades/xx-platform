@@ -15,19 +15,21 @@ import org.junit.jupiter.api.Test;
  */
 class UploadPolicyCatalogTests {
 
-    private static final long MAX = 10 * 1024 * 1024L;
+    private static final long IMAGE_MAX = 10 * 1024 * 1024L;
+    private static final long IMPORT_MAX = 100 * 1024 * 1024L;
 
     @Test
     void faceAndPortraitOnlyAcceptJpegAndPng() {
         for (FileCategory category : new FileCategory[]{FileCategory.FACE_SEARCH, FileCategory.PROFILE_PORTRAIT}) {
-            UploadPolicyCatalog.UploadPolicy policy = UploadPolicyCatalog.policyFor(category, MAX);
+            UploadPolicyCatalog.UploadPolicy policy = UploadPolicyCatalog.policyFor(category, IMAGE_MAX, IMPORT_MAX);
             assertTrue(policy.allowsMime("image/jpeg"));
             assertTrue(policy.allowsMime("image/png"));
             assertFalse(policy.allowsMime("application/json"));
             assertTrue(policy.allowsExtension(".jpg"));
             assertTrue(policy.allowsExtension(".png"));
             assertFalse(policy.allowsExtension(".csv"));
-            assertEquals(MAX, policy.maxBytes());
+            assertEquals(IMAGE_MAX, policy.maxBytes(), "图片必须走 10 MiB 档，不能借用 100 MiB 导入档");
+            assertEquals(UploadPolicyCatalog.NO_ROW_LIMIT, policy.maxRows());
         }
     }
 
@@ -36,13 +38,25 @@ class UploadPolicyCatalogTests {
         for (FileCategory category : new FileCategory[]{
                 FileCategory.DATASET_IMPORT, FileCategory.DEVICE_IMPORT,
                 FileCategory.PERSON_LIBRARY_IMPORT, FileCategory.RAW_INGESTION}) {
-            UploadPolicyCatalog.UploadPolicy policy = UploadPolicyCatalog.policyFor(category, MAX);
+            UploadPolicyCatalog.UploadPolicy policy = UploadPolicyCatalog.policyFor(category, IMAGE_MAX, IMPORT_MAX);
             assertTrue(policy.allowsExtension(".xlsx"));
             assertTrue(policy.allowsExtension(".csv"));
             assertTrue(policy.allowsExtension(".json"));
             assertFalse(policy.allowsMime("image/png"));
             assertFalse(policy.allowsExtension(".zip"));
+            assertEquals(IMPORT_MAX, policy.maxBytes(), "导入必须走 100 MiB 档");
+            assertEquals(100_000, policy.maxRows(), "P-003-02：普通导入 10 万行");
         }
+    }
+
+    @Test
+    void imageAndImportLimitsAreIndependent() {
+        assertEquals(1L, UploadPolicyCatalog.policyFor(FileCategory.FACE_SEARCH, 1L, 2L).maxBytes());
+        assertEquals(2L, UploadPolicyCatalog.policyFor(FileCategory.DATASET_IMPORT, 1L, 2L).maxBytes());
+        assertThrows(IllegalArgumentException.class,
+                () -> UploadPolicyCatalog.policyFor(FileCategory.FACE_SEARCH, 0L, 2L));
+        assertThrows(IllegalArgumentException.class,
+                () -> UploadPolicyCatalog.policyFor(FileCategory.DATASET_IMPORT, 1L, 0L));
     }
 
     @Test
@@ -51,7 +65,7 @@ class UploadPolicyCatalogTests {
                 FileCategory.REPORT, FileCategory.EXPORT, FileCategory.CAPTURE_IMAGE}) {
             assertFalse(category.uploadable());
             assertThrows(IllegalArgumentException.class,
-                    () -> UploadPolicyCatalog.policyFor(category, MAX));
+                    () -> UploadPolicyCatalog.policyFor(category, IMAGE_MAX, IMPORT_MAX));
         }
     }
 

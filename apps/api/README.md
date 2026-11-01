@@ -89,6 +89,13 @@ npm run dev -- --port 5180 --strictPort
 
 代理**保留路径**，后端必须自己带 `/api/v1` 前缀（已配好）。注意：`API_PROXY_TARGET` 必须作为环境变量传入，只写进 `.env.local` 当前配置读不到。
 
+**这是默认且推荐的联调方式：同源，不需要 CORS**（M21）。浏览器看到的是 `http://127.0.0.1:5180/api/v1/...`，
+`Origin` 与后端自身同源，`X-Approval-Id` 之类的契约头也不会触发预检。`WebConfiguration#developmentCorsFilter`
+只服务于"绕过代理直连 8080"的调试场景，白名单是写死的两个本机 Origin——**不要**为了图省事把前端改成跨源直连，
+也不要把这个白名单放成 `*`（契约禁止通配凭据 CORS）。如果确实需要跨源，先用 `scripts/verify-csrf.ps1` 之外的方式
+验证预检：`api/CorsContractTests` 会发真实 `OPTIONS`，断言允许头里含 `X-Approval-Id`、`Access-Control-Allow-Credentials: true`、
+非受信 Origin 403。文档与本文件、`apps/web/vite.config.ts` 三者必须一致。
+
 ---
 
 ## 2. 目录结构与分层
@@ -296,16 +303,16 @@ nameMappings           = setTaskId=setOperationId   ← 注意：是插件 mojo 
 | traceId 链路 | `common/RequestIdFilter` | 写 MDC、回写 `X-Trace-Id` 响应头；**默认由服务端生成**，保证头与体内一致 |
 | 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/未知字段/**方法不支持**/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
 | JSON 口径 | `config/WebConfiguration` | **未知字段拒绝**（`failOnUnknownProperties=true`，对齐 `additionalProperties:false`）；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
-| 开发期 CORS | `config/WebConfiguration`、`config/ContractCorsProcessor` | 自定义 `CorsFilter`（映射必须写 `/**`，见下）；仅 `127.0.0.1:5180`/`localhost:5180`，带凭据；**拒绝时返回契约错误壳**而不是纯文本；生产必须换真实 Origin 白名单 |
+| 开发期 CORS | `config/WebConfiguration`、`config/ContractCorsProcessor` | **默认不需要 CORS**：前端用 `apps/web/vite.config.ts` 的 `/api` 代理联调（同源，见 §1"前端联调怎么接"）。仅当有人直连后端端口时才用到这里的 `CorsFilter`（映射必须写 `/**`，见下）；白名单固定 `127.0.0.1:5180`/`localhost:5180`，带凭据，允许头包含契约用到的 `X-Approval-Id`/`X-CSRF-Token`/`Idempotency-Key`/`If-Match`；**拒绝时返回契约错误壳**而不是纯文本。生产必须换真实 Origin 白名单。用例 `api/CorsContractTests`（真实 OPTIONS 预检）钉住"允许头含 `X-Approval-Id`、非受信 Origin 403、无通配 `*`" |
 | 数据库接入 | `application-db.yml` | 数据源配置**只在 `db` profile 下**；但仓储层从任务 4 起就依赖 `JdbcTemplate`，所以**启动必须带数据库**（`mvn compile`/`mvn test` 仍可离线无库运行，见 §1） |
 | Flyway 启动迁移 | `application-db.yml`（`spring.flyway`） | `db` profile 启动时先 `validate` 再 `migrate`；校验和漂移会让进程**启动失败**而不是带病服务 |
 | CSRF 令牌 | `api/AuthController`、`service/CsrfTokenService`、`infra/CsrfSessionRepository` | `GET /auth/csrf`：签发 `CSRFID` Cookie + 同步器 token，落 `auth.csrf_session`（只存 SHA-256） |
-| 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService`、`infra/UserAccountRepository#lockById` | `POST /auth/login`：校验 CSRF → 口令 → **锁 `auth.app_user` 行并复核状态** → 撤销呈递的旧 SID + 该账号**全部**其他会话（单账号单会话）→ 写 `auth.user_session`（只存 SID 的 SHA-256）并签发新 SID → 回填 `csrf_session.session_id` |
+| 登录会话 | `api/AuthController#login`、`service/LoginService`、`service/SessionService`、`infra/UserAccountRepository#lockById` | `POST /auth/login`：来源网段（`xx.session.allowed-networks`，可按 `xx.session.trusted-proxies` 解析 XFF）→ 校验 CSRF → 口令 → **锁 `auth.app_user` 行并复核状态** → 撤销呈递的旧 SID + 该账号**全部**其他会话（单账号单会话）→ 写 `auth.user_session`（只存 SID 的 SHA-256，`client_label` 记 `UA|ip=`）并签发新 SID → 轮换并绑定 `csrf_session.session_id` |
 | 口令哈希 | `infra/PasswordHasher` | **PBKDF2-HMAC-SHA256，600000 迭代**，自描述前缀 `pbkdf2-sha256$迭代$盐$摘要`；零第三方依赖（见下"为什么不用 BCrypt"） |
 | 登录频控 | `infra/LoginThrottle` | 进程内滑动窗口，键 = `登录名|来源IP`，默认 10 次/15 分钟 → 429 `RATE_LIMITED` + `Retry-After`；多实例时阈值按实例数放大 |
 | 开发种子账号 | `infra/DevUserSeeder` | **仅 `db` profile + 双闸门**（`xx.auth.dev-seed.enabled=true` 且给了口令）：创建 `demo.admin`/`demo.operator`/`demo.classified` 三个账号与三个角色；口令只从环境变量读；`reset-password` 可显式重置 |
 | 当前用户 | `api/AuthController#getMe`、`service/MeService`、`service/SessionAuthenticator`、`infra/RbacRepository`、`service/ScopeCalculator` | `GET /me`：会话校验 → 角色/权限/菜单/数据范围/场所范围/会话七块；**数据范围按 `(类型, 场所, ownOnly)` 元组求并集**，`scopeGrants` 是权威集合、旧五字段只是 UI 投影（见下） |
-| 退出登录 | `api/AuthController#logout`、`service/SessionService#end`、`infra/UserSessionRepository#revokeById` | `POST /auth/logout`：先认证（401）→ 校验 CSRF（403）→ 撤销当前会话行（**只写 `revoked_at`，不删行**）→ 用 `Max-Age=0` 清掉 `SID` 与 `CSRFID` → 200 `{accepted:true}`（见下） |
+| 退出登录 | `api/AuthController#logout`、`service/SessionService#end`、`infra/UserSessionRepository#revokeById` | `POST /auth/logout`：先认证（401）→ 校验 CSRF（403）→ 撤销当前会话行（**只写 `revoked_at`，不删行**）→ 删除该 CSRF 行 → 用 `Max-Age=0` 清掉 `SID` 与 `CSRFID` → 200 `{accepted:true}`；成功/失败都写 `auth.logout` 审计（见下） |
 | 前端配置 | `api/ClientConfigController`、`service/ClientConfigService`、`service/ClientConfigScalars`、`infra/ClientConfigRepository` | `GET /client-config`：12 个 required 字段；数值读 `core.config_item`（**改阈值不用发版**），能力开关读 `core.feature_config`；两个 deprecated 字段按"投影/全局上限"规则下发（见下） |
 | 运维探针 | `api/SystemController`、`service/HealthService`、`service/HealthView` | `GET /health`（存活）永远 200 + `UP`，不查依赖；`GET /ready`（就绪）查 `database`/`schema`/`deployment-config` 三项，任一不就绪 → **503 + `Retry-After: 5`**、`details` 指出是哪个依赖（见下） |
 | 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体（**手工起应用、不用 `@SpringBootTest`**，见 §9 Mockito 那条） |
@@ -513,11 +520,71 @@ HTTP 200  X-Trace-Id: 6d34...  Set-Cookie: SID=<43字符>; Path=/api/v1; Max-Age
 "空闲 15 分钟"是**滑动**的：认证通过的常规请求把 `idle_expires_at` 推到 `min(now + 15m, absolute_expires_at)`，
 所以连续工作的人不会被第 15 分钟踢掉，而绝对 8 小时到点仍然失效。两条实现约束：
 
-- 探针 `/api/v1/health`、`/api/v1/ready` **不续期**（`SessionAuthenticator` 里的 `PROBE_PATHS`）。没有这条，
-  负载均衡每 5 秒轮询一次就等于把用户永久登录——空闲超时形同虚设。
+- 探针与轮询**不续期**。判定有三条，全部在服务端（客户端自报的头只能"收紧"，不能作为唯一依据）：
+  1. `SessionAuthenticator.PROBE_PATHS`：`/health`、`/ready`；
+  2. `xx.session.non-renewing-paths`（默认 `/client-config`、`/tasks`、`/tasks/*`、`/tasks/*/attempts`）——
+     任务列表页/详情页会自动轮询，不挡掉就等于无人值守的页面把会话续到绝对期限；
+  3. 请求头 `X-Background-Request: true`，或 `X-Purpose`/`Sec-Purpose` 含 `prefetch`/`preload`
+     （浏览器预加载）。这一类只做补充：攻击者可以不发，所以真正的白名单是第 1、2 条。
+  没有这条，负载均衡每 5 秒轮询一次就等于把用户永久登录——空闲超时形同虚设。
 - 续期的算术在 `service/SessionRenewal.nextIdle(...)` 一个纯函数里（可单测），写库时 SQL 再兜一层
   `LEAST(?, absolute_expires_at)` 与 `idle_expires_at < ?`，多实例并发也不会把期限推过绝对上限；
   写库失败只记 warn、不打断已经通过认证的请求。
+- `last_seen_at` 的写入有 **60 秒节流**（`UserSessionRepository#touch` 只在 `last_seen_at` 早于 60 秒前时更新），
+  但**过期判定读的是 `idle_expires_at`/`absolute_expires_at`，不读 `last_seen_at`**，所以节流只会让
+  "最后活动时间"这个展示字段变粗，不会让严格到期延后。真库用例
+  `AuthSessionIntegrationTests#expiredSessionCannotBeRevivedEvenWhenLastSeenIsFresh` 钉的就是这一点。
+
+#### 会话与客户端绑定（M02）
+
+登录时把 `User-Agent|ip=<解析后的客户端地址>` 写进 `auth.user_session.client_label`，之后每个请求比对：
+
+- UA 变了 → `401 AUTH_SESSION_EXPIRED`，`audit.audit_event` 写 `auth.session_rejected`（`after_summary.reason=USER_AGENT_MISMATCH`）；
+- IP 变了 → 同上，`reason=CLIENT_IP_MISMATCH`。
+
+**为什么把 IP 拼进 `client_label` 而不是加一列**：`MigrationBaselineTests#migrationsCoverContractStructure` 要求
+迁移后的表/列/索引/约束/触发器与 `contracts/database/schema.sql` **完全相等**，而契约里 `auth.user_session`
+没有 `client_ip` 列，契约目录又不能改。加列会让迁移基线与契约不一致（实测 `V6__add_session_client_ip.sql`
+直接让该用例失败），所以复用已有的 `client_label`（varchar(200)，只在服务端使用，任何接口都不回显）。
+历史行的 `client_label` 没有 `|ip=` 后缀，只比对 UA——升级不能把所有人踢下线。
+
+客户端地址解析见 `common/ClientNetworks#resolveClientIp`：**默认不信任 `X-Forwarded-For`**，只有
+`request.getRemoteAddr()` 落在 `xx.session.trusted-proxies` 里才从右往左跳过可信代理取第一个不可信地址。
+伪造 XFF 既骗不过登录来源 CIDR，也骗不过会话 IP 绑定。
+
+#### 初始密码闸门与本人改密（M04）
+
+`auth.app_user.password_changed_at IS NULL` 的账号登录成功后，**只有**下列入口放行，其余一律
+`403 PERMISSION_DENIED "首次登录必须先修改初始密码"`（并记 `auth.initial_password_blocked` 审计）：
+
+```
+GET  /me                 POST /me/password
+POST /auth/logout        POST /auth/session/renew
+GET  /auth/csrf
+```
+
+`POST /me/password`（`PasswordController`）按契约实现：`currentPassword` 错 → **401 `AUTH_INVALID_CREDENTIALS`**
+（不是 400，见 `openapi.yaml:16381`）；成功 → `200 {"accepted":true}`（`ActionResult`），撤销该用户**其他**会话、
+**轮换** SID 与 CSRF 并撤销旧值、`password_changed_at` 置为当前时间；`Idempotency-Key` 必填（16–160 字符），
+按 `(actor, operation, key)` 落 `core.idempotency_request` 账本：同 key 同内容重放返回原结果且不再产生副作用，
+同 key 不同内容 → `409 IDEMPOTENCY_CONFLICT`。失败改密不解除闸门、不撤销会话（用例
+`AuthSessionIntegrationTests#initialPasswordUserIsGatedAndUnblockedByChangingPassword`）。
+
+#### CSRF：签发、轮换与缓存
+
+`GET /auth/csrf` 成功响应带 `Cache-Control: no-store, max-age=0` 与 `Pragma: no-cache`（登录响应同样带）。
+登录成功会**轮换** CSRF 并把旧行作废；登录前拿到的那一对在新会话里不能再用。改密同样轮换。
+常规续期（`POST /auth/session/renew`）**不轮换** SID/CSRF。退出时删除 CSRF 行并清 Cookie。
+
+#### 认证相关审计（M20）
+
+`login`（成功/失败）、`logout`、`session_rejected`、`initial_password_blocked`、`password_change`（成功/失败）都写
+`audit.audit_event`，字段含 actor 快照、`result`、`failure_code`（**契约错误码名**，如 `AUTH_INVALID_CREDENTIALS`
+`PERMISSION_DENIED`）、`source_ip`、`trace_id`。`after_summary.reason` 区分具体拒绝路径
+（`BAD_PASSWORD`/`UNKNOWN_ACCOUNT`/`ACCOUNT_DISABLED`/`SOURCE_NETWORK_DENIED`/`THROTTLED`/
+`USER_AGENT_MISMATCH`/`CLIENT_IP_MISMATCH`/`CURRENT_PASSWORD_MISMATCH`/`NEW_PASSWORD_LENGTH`/…），
+便于超管回答"到底是被什么挡下的"。失败事件在业务事务之外写（`PasswordService`/`LoginService` 用
+`TransactionTemplate` 包住主事务、在 catch 里写审计再抛），否则随回滚一起消失。
 
 **已知限制（有意为之，不要"顺手修"）**：`login_name` **大小写精确匹配**。数据库唯一索引是大小写敏感的，
 若服务层容忍大小写，就会出现两个仅大小写不同的账号互相歧义的情况。

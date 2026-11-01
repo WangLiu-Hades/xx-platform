@@ -39,7 +39,7 @@ public class FileAssetRepository {
 
     private static final String MARK_STATUS = """
             UPDATE core.file_asset
-               SET status = ?, error_code = ?
+               SET status = ?, error_code = ?, expires_at = COALESCE(?, expires_at)
              WHERE id = ? AND status = 'PROCESSING'
             """;
 
@@ -91,12 +91,19 @@ public class FileAssetRepository {
     /**
      * 扫描结论落库，只允许从 PROCESSING 出发。
      *
+     * @param expiresAt 仅 ACTIVE 时给出（12 个自然月保留期）；null 表示保留行上原值，
+     *                  对 QUARANTINED 而言就是"没有到期时间"，因为它永远不会被下载
      * @return 影响行数；0 表示行不存在或已不在 PROCESSING（调用方按并发处置处理）
      */
-    public int markStatus(UUID id, String status, String errorCode) {
+    public int markStatus(UUID id, String status, String errorCode, OffsetDateTime expiresAt) {
         requireNonNull(id, "id");
         requireNonNull(status, "status");
-        return jdbc.update(MARK_STATUS, status, errorCode, id);
+        return jdbc.update(MARK_STATUS, status, errorCode, expiresAt, id);
+    }
+
+    /** 兼容只有状态与错误码的调用点（不设置到期时间）。 */
+    public int markStatus(UUID id, String status, String errorCode) {
+        return markStatus(id, status, errorCode, null);
     }
 
     private static void requireNonNull(Object value, String name) {

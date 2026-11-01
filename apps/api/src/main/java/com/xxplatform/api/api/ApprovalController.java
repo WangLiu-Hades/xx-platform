@@ -65,7 +65,14 @@ public class ApprovalController {
                                                @RequestBody ActionApprovalRequest body) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
         IdempotencyKeyHeader.require(idempotencyKey);
-        Map<String, Object> data = approvals.create(session, body.proposal(), body.reason());
+        // 并发同 key 的第二个请求会撞账本唯一约束并整体回滚（审批行也不落库），
+        // 重试一次即可读到赢家写入的账本行，按重放返回首次响应。
+        Map<String, Object> data;
+        try {
+            data = approvals.create(session, body.proposal(), body.reason(), idempotencyKey);
+        } catch (org.springframework.dao.DuplicateKeyException race) {
+            data = approvals.create(session, body.proposal(), body.reason(), idempotencyKey);
+        }
         log.info("审批申请已创建 approvalId={} requester={}", data.get("approvalId"), session.userId());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
@@ -86,8 +93,14 @@ public class ApprovalController {
                                @RequestBody ActionApprovalDecisionRequest body) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
         IdempotencyKeyHeader.require(idempotencyKey);
-        Map<String, Object> data = approvals.decide(session, approvalId, body.decision(),
-                body.reason(), body.currentPassword());
+        Map<String, Object> data;
+        try {
+            data = approvals.decide(session, approvalId, body.decision(), body.reason(),
+                    body.currentPassword(), idempotencyKey);
+        } catch (org.springframework.dao.DuplicateKeyException race) {
+            data = approvals.decide(session, approvalId, body.decision(), body.reason(),
+                    body.currentPassword(), idempotencyKey);
+        }
         log.info("审批决定已提交 approvalId={} reviewer={} status={}",
                 approvalId, session.userId(), data.get("status"));
         return ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback());

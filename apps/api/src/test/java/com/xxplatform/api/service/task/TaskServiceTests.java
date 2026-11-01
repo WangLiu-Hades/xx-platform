@@ -13,6 +13,7 @@ import com.xxplatform.api.infra.AsyncTaskRepository;
 import com.xxplatform.api.infra.AsyncTaskRepository.ClaimedTask;
 import com.xxplatform.api.infra.AsyncTaskRepository.ExpiredLease;
 import com.xxplatform.api.infra.AsyncTaskRepository.TaskRow;
+import com.xxplatform.api.infra.AsyncTaskRepository.TimedOutTask;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -23,10 +24,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -91,10 +92,10 @@ class TaskServiceTests {
     }
 
     @Test
-    void createRecoversFromConcurrentInsertByReadingTheWinner() {
+    void createTreatsIgnoredConflictAsIdempotentReplay() {
         TaskCommand command = command(Map.of("format", "csv"));
-        tasks.insertFailure = new DuplicateKeyException("duplicate key");
-        // 第一次查不到、插入撞唯一键、第二次查到赢家：这正是并发重复提交的真实轨迹。
+        // 并发赢家：第一次查不到、插入被 ON CONFLICT DO NOTHING 降成 0 行、回读命中同一份参数。
+        tasks.insertResult = 0;
         tasks.idempotentResponses.add(Optional.empty());
         tasks.idempotentResponses.add(Optional.of(row(TaskStatus.PENDING, 0, command.parameterHash())));
 
@@ -102,12 +103,39 @@ class TaskServiceTests {
 
         assertEquals(OWNER, created.ownerUserId());
         assertEquals(1, tasks.insertCalls);
+        assertEquals(0, tasks.events.size(), "幂等重放不应再写创建事件");
+    }
+
+    @Test
+    void createRejectsConflictWhenStoredParametersDiffer() {
+        // 同一幂等键、不同参数：0 行回读到的赢家指纹对不上，必须 409 而不是把旧任务当结果。
+        tasks.insertResult = 0;
+        tasks.idempotentResponses.add(Optional.empty());
+        tasks.idempotentResponses.add(Optional.of(row(TaskStatus.PENDING, 0, "0".repeat(64))));
+
+        ApiException failure = assertThrows(ApiException.class,
+                () -> service.create(command(Map.of("format", "csv"))));
+
+        assertEquals(ErrorCode.IDEMPOTENCY_CONFLICT, failure.code());
+    }
+
+    @Test
+    void createFailsWithConflictWhenIgnoredInsertWinnerCannotBeRead() {
+        tasks.insertResult = 0;
+        tasks.idempotentResponses.add(Optional.empty());
+        tasks.idempotentResponses.add(Optional.empty());
+
+        ApiException failure = assertThrows(ApiException.class,
+                () -> service.create(command(Map.of("format", "csv"))));
+
+        assertEquals(ErrorCode.RESOURCE_CONFLICT, failure.code(),
+                "插入被忽略又读不到既有任务时不能假装成功");
     }
 
     @Test
     void claimNextWritesAttemptAndRunningEvent() {
         TaskRow running = row(TaskStatus.RUNNING, 1, "h1");
-        tasks.claimed = Optional.of(new ClaimedTask(running, TaskStatus.PENDING));
+        tasks.claimed = List.of(new ClaimedTask(running, TaskStatus.PENDING));
 
         Optional<ClaimedTask> claimed = service.claimNext("worker-1");
 
@@ -125,7 +153,7 @@ class TaskServiceTests {
         TaskRow pending = row(TaskStatus.PENDING, 0, "h1");
         tasks.byId = Optional.of(pending);
         tasks.promoteResult = Optional.of(pending.id());
-        tasks.claimed = Optional.of(new ClaimedTask(row(TaskStatus.RUNNING, 1, "h1"), TaskStatus.QUEUED));
+        tasks.claimed = List.of(new ClaimedTask(row(TaskStatus.RUNNING, 1, "h1"), TaskStatus.QUEUED));
 
         service.claimNext("worker-1");
 
@@ -135,10 +163,27 @@ class TaskServiceTests {
     }
 
     @Test
-    void claimNextReturnsEmptyWhenQueueIsEmpty() {        tasks.claimed = Optional.empty();
+    void claimNextReturnsEmptyWhenQueueIsEmpty() {
+        tasks.claimed = List.of();
 
         assertTrue(service.claimNext("worker-1").isEmpty());
         assertEquals(0, tasks.attempts.size());
+    }
+
+    @Test
+    void claimNextPassesWorkerCapabilitiesAndLimitToRepository() {
+        TaskRow running = row(TaskStatus.RUNNING, 1, "h1");
+        tasks.claimed = List.of(new ClaimedTask(running, TaskStatus.QUEUED));
+
+        List<ClaimedTask> claimed = service.claimNext("worker-1",
+                List.of(TaskType.EXPORT, TaskType.ANALYSIS), 3);
+
+        assertEquals(1, claimed.size());
+        assertEquals(List.of(TaskType.EXPORT, TaskType.ANALYSIS), tasks.lastSupportedTypes,
+                "worker 声明的类型必须原样下推到领取 SQL");
+        assertEquals(3, tasks.lastClaimLimit, "本轮上限必须下推，不能由仓储自行决定");
+        assertEquals(1, tasks.attempts.size());
+        assertEquals(1, tasks.events.size());
     }
 
     @Test
@@ -234,7 +279,7 @@ class TaskServiceTests {
     @Test
     void reapRequeuesExpiredLeaseAndClosesAttempt() {
         UUID taskId = UUID.randomUUID();
-        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.QUEUED, 1L));
+        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.QUEUED, 1L, false));
         tasks.byId = Optional.of(row(taskId, TaskStatus.QUEUED, 1, "h1"));
 
         int reaped = service.reapExpiredLeases(OffsetDateTime.now(ZoneOffset.UTC));
@@ -249,7 +294,7 @@ class TaskServiceTests {
     @Test
     void reapFailsTaskWhenAttemptsAreExhausted() {
         UUID taskId = UUID.randomUUID();
-        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.QUEUED, 3L));
+        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.QUEUED, 3L, false));
         tasks.byId = Optional.of(row(taskId, TaskStatus.QUEUED, 3, "h1"));
 
         service.reapExpiredLeases(OffsetDateTime.now(ZoneOffset.UTC));
@@ -262,13 +307,30 @@ class TaskServiceTests {
     @Test
     void reapCancelsTaskWhoseCancellationWasRequested() {
         UUID taskId = UUID.randomUUID();
-        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.CANCELLED, 1L));
+        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.CANCELLED, 1L, false));
         tasks.byId = Optional.of(row(taskId, TaskStatus.CANCELLED, 1, "h1"));
 
         service.reapExpiredLeases(OffsetDateTime.now(ZoneOffset.UTC));
 
         assertEquals(TaskStatus.CANCELLED, tasks.closedAttempts.get(0).result());
         assertEquals(0, tasks.failExhaustedCalls);
+    }
+
+    @Test
+    void reapFailsSideEffectTaskWithUnknownOutcomeAndDoesNotRetry() {
+        UUID taskId = UUID.randomUUID();
+        // DEVICE_COMMAND 这类任务租约到期时可能已经发出了命令：SQL 已置 FAILED，服务层不得再重排。
+        tasks.expired = List.of(new ExpiredLease(taskId, TaskStatus.FAILED, 2L, true));
+        tasks.byId = Optional.of(row(taskId, TaskStatus.FAILED, 2, "h1"));
+
+        int reaped = service.reapExpiredLeases(OffsetDateTime.now(ZoneOffset.UTC));
+
+        assertEquals(1, reaped);
+        assertEquals(TaskStatus.FAILED, tasks.closedAttempts.get(0).result());
+        assertEquals(TaskService.OUTCOME_UNKNOWN, tasks.closedAttempts.get(0).errorCode(),
+                "attempt 必须记成结果未知，而不是普通租约过期");
+        assertEquals(TaskStatus.FAILED, tasks.events.get(0).status(), "事件必须反映 FAILED 终态");
+        assertEquals(0, tasks.failExhaustedCalls, "结果未知不能再按尝试次数走重排/改判");
     }
 
     @Test
@@ -313,10 +375,12 @@ class TaskServiceTests {
     static final class StubTasks extends AsyncTaskRepository {
 
         int insertCalls;
-        DuplicateKeyException insertFailure;
+        int insertResult = 1;
         Optional<TaskRow> idempotent = Optional.empty();
         Optional<TaskRow> byId = Optional.empty();
-        Optional<ClaimedTask> claimed = Optional.empty();
+        List<ClaimedTask> claimed = List.of();
+        List<TaskType> lastSupportedTypes = List.of();
+        int lastClaimLimit;
         Optional<UUID> promoteResult = Optional.empty();
         TaskRow afterCancel;
         TaskRow afterRetry;
@@ -342,13 +406,14 @@ class TaskServiceTests {
         }
 
         @Override
-        public void insert(UUID id, TaskCommand command, OffsetDateTime now) {
+        public int insert(UUID id, TaskCommand command, OffsetDateTime now) {
             insertCalls++;
-            if (insertFailure != null) {
-                throw insertFailure;
+            if (insertResult == 0) {
+                return 0;
             }
             inserted = true;
             byId = Optional.of(TaskServiceTests.row(id, TaskStatus.PENDING, 0, command.parameterHash()));
+            return 1;
         }
 
         @Override
@@ -368,7 +433,10 @@ class TaskServiceTests {
         }
 
         @Override
-        public Optional<ClaimedTask> claimNext(String workerId, OffsetDateTime now, Duration lease) {
+        public List<ClaimedTask> claimNext(String workerId, OffsetDateTime now, Duration lease,
+                                           List<TaskType> supportedTypes, int limit) {
+            lastSupportedTypes = List.copyOf(supportedTypes);
+            lastClaimLimit = limit;
             return claimed;
         }
 
@@ -378,7 +446,8 @@ class TaskServiceTests {
         }
 
         @Override
-        public int renewLease(UUID taskId, String workerId, long generation, OffsetDateTime leaseUntil) {
+        public int renewLease(UUID taskId, String workerId, long generation,
+                              OffsetDateTime now, OffsetDateTime leaseUntil) {
             return renewResult;
         }
 
@@ -444,6 +513,40 @@ class TaskServiceTests {
         public void insertEvent(UUID id, UUID taskId, long attemptNo, TaskStatus previousStatus,
                                 TaskStatus status, OffsetDateTime occurredAt, String reason, String traceId) {
             events.add(new EventWrite(taskId, previousStatus, status));
+        }
+
+        // 以下六个是 M06 配额/时限/心跳新增的仓储入口。单测只用内存队列验编排，
+        // 用默认实现即可——不能让基类打到没有 DataSource 的 JdbcTemplate 上。
+
+        @Override
+        public void lockOwnerAdmission(UUID ownerUserId) {
+        }
+
+        @Override
+        public long countActiveGlobal() {
+            return 0;
+        }
+
+        @Override
+        public long countQueuedByOwner(UUID ownerUserId) {
+            return 0;
+        }
+
+        @Override
+        public List<TimedOutTask> failQueueTimeouts(Set<TaskType> taskTypes, OffsetDateTime submittedBefore,
+                                                    OffsetDateTime now, int batchSize) {
+            return List.of();
+        }
+
+        @Override
+        public List<TimedOutTask> requestExecutionTimeouts(Set<TaskType> taskTypes, OffsetDateTime startedBefore,
+                                                           OffsetDateTime now, int batchSize) {
+            return List.of();
+        }
+
+        @Override
+        public List<UUID> renewLocalLeases(Set<String> workerIds, OffsetDateTime now, OffsetDateTime leaseUntil) {
+            return List.of();
         }
     }
 

@@ -55,9 +55,8 @@ xx:
   task:
     reaper-enabled: true
 
-  # 审批冻结载荷的开发密钥（AES-256，base64 编码的 32 字节）。
-  # ⚠ 仅限本地联调：生产必须通过 XX_APPROVAL_PAYLOAD_KEY 注入真实密钥，并把 key-id 一起升级，
-  #   否则历史密文无法区分是用哪把钥匙封的。写在这里是为了本地起库即可跑审批，
-  #   不写则创建审批会返回 503（密钥未配置）。
+  # 审批冻结载荷密钥（AES-256，base64 编码的 32 字节）由部署方注入，仓库里不保存任何默认值。
+  # 未注入时创建审批返回 503（SYSTEM_UNAVAILABLE），不会用"大家都知道的钥匙"静默封存密文。
+  # 本地联调请先设置 $env:XX_APPROVAL_PAYLOAD_KEY，再启动应用；隔离测试用一次性测试密钥。
   approval:
-    payload-key: BzUuA/4dt8MHLLyD2CTrGyPQpFFwP3oNHwD2YKH1L48=
+    payload-key: ${XX_APPROVAL_PAYLOAD_KEY:}

@@ -4,11 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xxplatform.api.common.ErrorCode;
 import com.xxplatform.api.common.Instants;
+import com.xxplatform.api.infra.AsyncTaskRepository;
 import com.xxplatform.api.infra.AsyncTaskRepository.AttemptRow;
 import com.xxplatform.api.infra.AsyncTaskRepository.TaskRow;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,8 +40,19 @@ public class TaskViewMapper {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * 结果引用的领域查询（M08）。setter 注入：单测只关心 JSON 形状时不必构造数据库。
+     * 缺失时退化为"只用任务行上已有的列"，不凭空编 id。
+     */
+    private AsyncTaskRepository tasks;
+
     public TaskViewMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    public void setTasks(AsyncTaskRepository tasks) {
+        this.tasks = tasks;
     }
 
     /** 单个任务的契约形状；可选字段为 {@code null} 时省略（契约允许省略，但不允许显式 null）。 */
@@ -136,13 +149,128 @@ public class TaskViewMapper {
         }
     }
 
+    /**
+     * 契约 {@code Task.resultReference}：按任务类型给出"结果在哪里"（M08）。
+     *
+     * <p><b>为什么必须按类型分派</b>：契约 {@code TaskResultReference} 是
+     * {@code additionalProperties:false} 的封闭对象，而 {@code resultType} 的枚举恰好就是
+     * 15 个任务类型名。以前"只要有 {@code result_asset_id} 就给 resultType + fileAssetId"
+     * 只对 EXPORT 成立；对 ANALYSIS/MODEL_RUN 这类结果不是文件的类型，它会指向错误的对象
+     * （或根本没有文件），前端按它导航必然落空。
+     *
+     * <p><b>结果 id 来自领域作业行，不来自任务行的猜测</b>：契约把
+     * {@code ANALYSIS.resultId} 定义为 {@code analysisTaskId}、{@code SET_OPERATION} 为
+     * {@code setTaskId}、{@code REPORT} 为 {@code reportId}、{@code INGESTION} 为
+     * {@code batchId}、{@code MODEL_RUN.modelId} 必须是模型 id。这些 id 只在各自的作业表里，
+     * 任务行上没有；所以这里按 {@code task_id} 反查作业行，查不到就省略整个
+     * {@code resultReference}——给一个"任务 id 冒充结果 id"的引用比不给更糟：前端会拿它去
+     * 查一个不存在的资源，而 404 无法区分"还没生成"与"引用错了"。
+     *
+     * <p><b>为什么 {@code PROFILE_MERGE}/{@code PROFILE_SPLIT} 用 {@code profileIds}</b>：
+     * 契约原文是"合并拆分 profileIds"。这些 id 存在 {@code analysis.profile_revision_member}
+     * （{@code direction=SOURCE/RESULT}），按 {@code profile_revision.task_id} 关联到任务。
+     *
+     * <p>只有 {@code SUCCESS} 才给 resultReference：契约注释是"SUCCESS 时按 resultType 导航"。
+     * 未成功（含 FAILED/CANCELLED）时结果不存在或不可信，提前给导航会让前端打开半成品。
+     */
     private Map<String, Object> resultReference(TaskRow row) {
-        if (row.resultAssetId() == null) {
+        if (row.status() != TaskStatus.SUCCESS) {
             return null;
         }
+        return switch (row.taskType()) {
+            case EXPORT -> {
+                UUID fileId = row.resultAssetId() != null ? row.resultAssetId() : exportOutputFile(row.id());
+                yield fileId == null ? null : reference("EXPORT", Map.of("fileAssetId", fileId.toString()));
+            }
+            case ANALYSIS -> build("ANALYSIS", firstNonNull(analysisJob(row.id()), row.resourceId(), row.id()));
+            case SET_OPERATION -> build("SET_OPERATION",
+                    firstNonNull(setJob(row.id()), row.resourceId(), row.id()));
+            case REPORT -> build("REPORT", firstNonNull(reportJob(row.id()), row.resourceId(), row.id()));
+            case MODEL_RUN -> modelRunReference(row);
+            case INGESTION, BACKFILL -> {
+                UUID batchId = ingestionBatch(row.id());
+                yield batchId == null ? null : build(row.taskType().name(), batchId);
+            }
+            case PROFILE_MERGE, PROFILE_SPLIT -> profileReference(row);
+            // 其余类型的契约 resultId 就是任务自身 id（FACE_SEARCH/DEVICE_COMMAND/
+            // NOTIFICATION 与三个 IMPORT 的领域详情入口）。
+            case FACE_SEARCH, DEVICE_COMMAND, NOTIFICATION, DATASET_IMPORT,
+                 PERSON_LIBRARY_IMPORT, DEVICE_IMPORT -> build(row.taskType().name(), row.id());
+        };
+    }
+
+    /**
+     * {@code MODEL_RUN}：{@code resultId}=执行 taskId，且 {@code modelId} 必须有。
+     *
+     * <p>没有 {@code modelId} 时返回 {@code null}：契约要求"MODEL_RUN 必须返回 modelId"，
+     * 只给 resultId 的引用是不合法的形状；发布侧（{@link TaskScopeGuard}）也会拒绝这类发布。
+     */
+    private Map<String, Object> modelRunReference(TaskRow row) {
+        UUID modelId = modelId(row.id());
+        if (modelId == null) {
+            return null;
+        }
+        Map<String, Object> ids = new LinkedHashMap<>();
+        ids.put("resultId", row.id().toString());
+        ids.put("modelId", modelId.toString());
+        return reference("MODEL_RUN", ids);
+    }
+
+    /** 合并/拆分：返回去重后的 {@code profileIds}；没有谱系行时省略引用。 */
+    private Map<String, Object> profileReference(TaskRow row) {
+        if (tasks == null) {
+            return null;
+        }
+        List<String> profileIds = tasks.profileIdsForTask(row.id()).stream()
+                .distinct().map(UUID::toString).toList();
+        if (profileIds.isEmpty()) {
+            return null;
+        }
+        return reference(row.taskType().name(),
+                Map.of("resultId", row.id().toString(), "profileIds", profileIds));
+    }
+
+    private Map<String, Object> build(String resultType, UUID resultId) {
+        return resultId == null ? null : reference(resultType, Map.of("resultId", resultId.toString()));
+    }
+
+    private static UUID firstNonNull(UUID... candidates) {
+        for (UUID candidate : candidates) {
+            if (candidate != null) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    private UUID analysisJob(UUID taskId) {
+        return tasks == null ? null : tasks.analysisJobId(taskId).orElse(null);
+    }
+
+    private UUID setJob(UUID taskId) {
+        return tasks == null ? null : tasks.setJobId(taskId).orElse(null);
+    }
+
+    private UUID reportJob(UUID taskId) {
+        return tasks == null ? null : tasks.reportJobId(taskId).orElse(null);
+    }
+
+    private UUID ingestionBatch(UUID taskId) {
+        return tasks == null ? null : tasks.ingestionBatchId(taskId).orElse(null);
+    }
+
+    private UUID modelId(UUID taskId) {
+        return tasks == null ? null : tasks.modelIdForTask(taskId).orElse(null);
+    }
+
+    private UUID exportOutputFile(UUID taskId) {
+        return tasks == null ? null : tasks.exportOutputFileId(taskId).orElse(null);
+    }
+
+    private static Map<String, Object> reference(String resultType, Map<String, Object> ids) {
         Map<String, Object> reference = new LinkedHashMap<>();
-        reference.put("resultType", row.taskType().name());
-        reference.put("fileAssetId", row.resultAssetId().toString());
+        reference.put("resultType", resultType);
+        reference.putAll(ids);
         return reference;
     }
 

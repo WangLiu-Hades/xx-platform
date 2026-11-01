@@ -283,10 +283,32 @@ class ExportServiceTests {
         }
 
         @Override
-        public void insert(UUID id, TaskCommand command, OffsetDateTime now) {
+        public void lockOwnerAdmission(UUID ownerUserId) {
+            // 桩没有 DataSource：配额相关的 SQL 在这里一律不执行（本类只验证导出快照，不验证配额）。
+        }
+
+        @Override
+        public long countActiveByOwner(UUID ownerUserId) {
+            return 0;
+        }
+
+        @Override
+        public long countActiveGlobal() {
+            return 0;
+        }
+
+        @Override
+        public long countQueuedByOwner(UUID ownerUserId) {
+            return 0;
+        }
+
+        @Override
+        public int insert(UUID id, TaskCommand command, OffsetDateTime now) {
             insertCalls++;
             insertedCommand = command;
             byId = Optional.of(row(id, TaskStatus.PENDING, command));
+            // M13 期间 AsyncTaskRepository.insert 改成返回受影响行数；桩只需报告"插入成功"。
+            return 1;
         }
 
         @Override

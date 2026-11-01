@@ -124,8 +124,8 @@ public class TaskController {
             @RequestHeader(value = IdempotencyKeyHeader.NAME, required = false) String idempotencyKey,
             HttpServletRequest request) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
-        IdempotencyKeyHeader.require(idempotencyKey);
-        Map<String, Object> task = taskWriteService.cancel(session, taskId);
+        String key = IdempotencyKeyHeader.require(idempotencyKey);
+        Map<String, Object> task = taskWriteService.cancel(session, taskId, key);
         String traceId = RequestIdFilter.currentTraceIdOrFallback();
         log.info("任务取消已受理 traceId={} taskId={} status={}", traceId, taskId, task.get("status"));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponses.success(task, traceId));
@@ -138,8 +138,8 @@ public class TaskController {
             @RequestHeader(value = IdempotencyKeyHeader.NAME, required = false) String idempotencyKey,
             HttpServletRequest request) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
-        IdempotencyKeyHeader.require(idempotencyKey);
-        Map<String, Object> task = taskWriteService.retry(session, taskId);
+        String key = IdempotencyKeyHeader.require(idempotencyKey);
+        Map<String, Object> task = taskWriteService.retry(session, taskId, key);
         String traceId = RequestIdFilter.currentTraceIdOrFallback();
         log.info("任务重试已受理 traceId={} taskId={} status={}", traceId, taskId, task.get("status"));
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiResponses.success(task, traceId));

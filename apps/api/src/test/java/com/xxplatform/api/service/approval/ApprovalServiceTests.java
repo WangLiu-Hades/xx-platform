@@ -280,10 +280,121 @@ class ApprovalServiceTests {
         assertEquals(ErrorCode.RESOURCE_VERSION_CONFLICT, error.code());
     }
 
+    // ---- M09：审批人数量 ----
+
+    @Test
+    void createRejectsWhenTooFewEligibleApprovers() {
+        // readDecryptionResult 需要 2 票；部署里只有 1 个合格复核人时必须立刻拒，而不是挂到过期。
+        requesterPermissions.add("capture:decrypt");
+        reviewerPermissions.add("capture:decrypt");
+        approvals.eligibleApprovers = 1;
+
+        ApiException error = assertThrows(ApiException.class, () -> createApproval("readDecryptionResult",
+                Map.of("pathParameters", Map.of("requestId", "00000000-0000-4000-8000-000000000009"))));
+        assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
+        assertEquals("审批人不足", error.getMessage());
+        assertTrue(approvals.inserted.isEmpty());
+    }
+
+    @Test
+    void createAllowsSingleApproverOperationWhenDeploymentHasOneApprover() {
+        // createExport 只要 1 票，1 个复核人就够；不足判定不能误伤单票操作。
+        approvals.eligibleApprovers = 1;
+        assertNotNull(createApproval());
+    }
+
+    // ---- M13：消费审批 ----
+
+    @Test
+    void consumeMarksApprovalConsumedAndIsSingleUse() {
+        UUID approvalId = approvedExportApproval();
+
+        service.consume(approvalId, requesterId, "createExport", digestOf(approvalId), "trace-1");
+        assertEquals("CONSUMED", approvals.rows.get(approvalId).status());
+        assertNotNull(approvals.rows.get(approvalId).consumedAt());
+
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, requesterId, "createExport", digestOf(approvalId), "trace-1"));
+        assertEquals(ErrorCode.RESOURCE_CONFLICT, error.code());
+    }
+
+    @Test
+    void consumeRejectsDigestMismatchAndKeepsGrantUsable() {
+        UUID approvalId = approvedExportApproval();
+
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, requesterId, "createExport", "0".repeat(64), "trace-1"));
+        assertEquals(ErrorCode.RESOURCE_CONFLICT, error.code());
+        assertEquals("APPROVED", approvals.rows.get(approvalId).status());
+    }
+
+    @Test
+    void consumeRejectsOperationMismatch() {
+        UUID approvalId = approvedExportApproval();
+
+        // 拿"导出"的批文去执行"解密"：最典型的越权路径。
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, requesterId, "readDecryptionResult", digestOf(approvalId), "trace-1"));
+        assertEquals(ErrorCode.RESOURCE_CONFLICT, error.code());
+        assertEquals("APPROVED", approvals.rows.get(approvalId).status());
+    }
+
+    @Test
+    void consumeRejectsExecutorOtherThanTheDesignatedOne() {
+        UUID approvalId = approvedExportApproval();
+
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, strangerId, "createExport", digestOf(approvalId), "trace-1"));
+        assertEquals(ErrorCode.PERMISSION_DENIED, error.code());
+    }
+
+    @Test
+    void consumeRejectsExpiredExecutionGrant() {
+        UUID approvalId = approvedExportApproval();
+        ApprovalRow row = approvals.rows.get(approvalId);
+        approvals.rows.put(approvalId, new ApprovalRow(row.id(), row.requesterUserId(), row.executorUserId(),
+                row.operationId(), row.policyVersion(), row.payloadDigest(), row.ciphertext(),
+                row.encryptionKeyId(), row.summary(), row.status(), row.requiredApprovals(),
+                row.createdAt(), row.expiresAt(), OffsetDateTime.now().minusMinutes(1), row.consumedAt(),
+                row.version()));
+
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, requesterId, "createExport", digestOf(approvalId), "trace-1"));
+        // 规则：许可过期 = 410（这段授权窗口已经不存在），不是"稍后重试"的 409。
+        assertEquals(ErrorCode.CONTEXT_EXPIRED, error.code());
+    }
+
+    @Test
+    void consumeRejectsPendingApproval() {
+        UUID approvalId = createApproval();
+
+        ApiException error = assertThrows(ApiException.class, () -> service.consume(
+                approvalId, requesterId, "createExport", digestOf(approvalId), "trace-1"));
+        assertEquals(ErrorCode.RESOURCE_CONFLICT, error.code());
+    }
+
     // ---- helpers ----
 
+    /** 走完"创建 → 单人批准"，返回一张 APPROVED 的批文 id。 */
+    private UUID approvedExportApproval() {
+        UUID approvalId = createApproval();
+        service.decide(session(reviewerId), approvalId, "APPROVE",
+                "复核人同意该导出申请并记录理由", PASSWORD);
+        return approvalId;
+    }
+
+    /** 冻结的载荷摘要（真实链路里由服务端重算，测试里直接取桩记录的那份）。 */
+    private String digestOf(UUID approvalId) {
+        return approvals.inserted.stream()
+                .filter(inserted -> inserted.id().equals(approvalId))
+                .findFirst()
+                .orElseThrow()
+                .payloadDigest();
+    }
+
     private UUID createApproval() {
-        return createApproval("createExport", Map.of("requestBody", Map.of("format", "XLSX", "contextId", "ctx-1")));
+        return createApproval("createExport", Map.of("requestBody",
+                Map.of("format", "XLSX", "contextId", "00000000-0000-4000-8000-000000000001")));
     }
 
     private UUID createApproval(String operationId, Map<String, Object> payload) {
@@ -371,6 +482,7 @@ class ApprovalServiceTests {
         private int requiredApprovals = 1;
         private boolean failNextUpdate;
         private long clock = 0;
+        private long eligibleApprovers = 10;
 
         StubApprovals() {
             super(new JdbcTemplate());
@@ -478,6 +590,32 @@ class ApprovalServiceTests {
                     row.encryptionKeyId(), row.summary(), "EXPIRED", row.requiredApprovals(),
                     row.createdAt(), row.expiresAt(), null, row.consumedAt(), row.version() + 1));
             return true;
+        }
+
+        /**
+         * M13：与真实 SQL 同语义——只有 {@code APPROVED} 且版本匹配才更新成功。
+         *
+         * <p>测试里也要有"条件更新"这一步，否则"第二次核销"的用例会假通过。
+         */
+        @Override
+        public boolean markConsumed(UUID approvalId, OffsetDateTime consumedAt, long version) {
+            ApprovalRow row = rows.get(approvalId);
+            if (row == null || !"APPROVED".equals(row.status()) || row.version() != version) {
+                return false;
+            }
+            rows.put(approvalId, new ApprovalRow(row.id(), row.requesterUserId(), row.executorUserId(),
+                    row.operationId(), row.policyVersion(), row.payloadDigest(), row.ciphertext(),
+                    row.encryptionKeyId(), row.summary(), "CONSUMED", row.requiredApprovals(),
+                    row.createdAt(), row.expiresAt(), row.executionGrantExpiresAt(), consumedAt,
+                    row.version() + 1));
+            return true;
+        }
+
+        /** M09：默认"部署里够 10 个合格审批人"；需要不足场景时把 {@code eligibleApprovers} 调小。 */
+        @Override
+        public long countEligibleApprovers(String permissionCode, UUID requesterUserId, UUID executorUserId,
+                                           List<String> allowedLogins) {
+            return eligibleApprovers;
         }
     }
 }

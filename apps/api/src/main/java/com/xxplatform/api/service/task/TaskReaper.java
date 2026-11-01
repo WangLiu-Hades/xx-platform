@@ -33,13 +33,33 @@ public class TaskReaper {
         this.taskService = taskService;
     }
 
-    /** 间隔默认 30s：小于最短租约（2m）的一半，保证过期任务最多拖两轮就会被收回。 */
+    /** 间隔默认 30s：小于最短租约（60s）的一半，保证过期任务最多拖两轮就会被收回。 */
     @Scheduled(fixedDelayString = "${xx.task.reaper-interval:30s}")
     public void reap() {
         try {
             taskService.reapExpiredLeases(Instants.nowUtc());
         } catch (RuntimeException failure) {
             log.error("租约回收失败，本轮跳过", failure);
+        }
+    }
+
+    /**
+     * 同进程 worker 的租约心跳（M06：{@code INTERNAL_TASK_PROTOCOL.md:16} 每 10 秒延长到 now+60s）。
+     *
+     * <p>协议把 heartbeat 定义为"持有租约的 worker 调用 renew"，所以正常部署下这一步是 worker
+     * 进程自己的职责，本方法只是一个**可选**的兜底：当 worker 与 API 同进程、且运维显式配置了
+     * {@code xx.task.worker-ids} 时才续租。没有配置时不猜身份（宁可让租约自然到期，也不要替
+     * 一个可能已经死掉的 worker 续命）。
+     *
+     * <p>间隔用配置而不是常量：本地把它调到 2s 能更快复现"租约丢失"；默认 10s 来自
+     * {@link com.xxplatform.api.config.TaskProperties#HEARTBEAT_INTERVAL}，与 60 秒租约绑定。
+     */
+    @Scheduled(fixedDelayString = "${xx.task.heartbeat-interval:10s}")
+    public void heartbeat() {
+        try {
+            taskService.heartbeatLeases(Instants.nowUtc());
+        } catch (RuntimeException failure) {
+            log.error("租约心跳失败，本轮跳过", failure);
         }
     }
 }

@@ -13,6 +13,13 @@ import org.springframework.stereotype.Repository;
  * <p>库里存的是 {@code sid_hash}（SHA-256 摘要），不存 SID 原文：SID 是 256 位随机值、
  * 本身高熵，无盐 SHA-256 已足以让"拖库后直接拿值当 Cookie 用"失效。
  * 代价是**无法反查某个值对应哪条会话**，所以所有查询都从"客户端提交的值"出发算摘要。
+ *
+ * <p><b>{@code client_label} 现在参与认证（M02 会话绑定）</b>：登录时写入 User-Agent，
+ * 之后每个已认证请求都比对当前 UA 与库里的值，不一致即 {@code AUTH_SESSION_EXPIRED}。
+ * 之所以复用它而不是加一列：{@code auth.user_session} 没有 ip/ua 列，而本轮不允许改 schema
+ * （迁移 parity 契约）。限制是明确的：**只能绑 UA，绑不了 IP**——IP 在登录时用
+ * {@code xx.session.allowed-networks} 做过网段校验，但会话期间客户端换 IP 不会被发现。
+ * 若要逐请求绑 IP，需要新增列或把 IP 哈希拼进本字段，两者都得改表/改语义，留待正式迁移。
  */
 @Repository
 public class UserSessionRepository {
@@ -35,7 +42,7 @@ public class UserSessionRepository {
      * "空闲超时被清理"。条件判断统一放在 {@code SessionAuthenticator} 一处。
      */
     private static final String SELECT_BY_SID_HASH = """
-            SELECT id, user_id, revoked_at, idle_expires_at, absolute_expires_at
+            SELECT id, user_id, revoked_at, idle_expires_at, absolute_expires_at, client_label
               FROM auth.user_session
              WHERE sid_hash = ?
             """;
@@ -48,7 +55,7 @@ public class UserSessionRepository {
      * "已经过期"，过滤掉就只剩"查不到"一种信息。
      */
     private static final String SELECT_BY_ID = """
-            SELECT id, user_id, revoked_at, idle_expires_at, absolute_expires_at
+            SELECT id, user_id, revoked_at, idle_expires_at, absolute_expires_at, client_label
               FROM auth.user_session
              WHERE id = ?
             """;
@@ -91,7 +98,9 @@ public class UserSessionRepository {
      */
     private static final String TOUCH = """
             UPDATE auth.user_session
-               SET last_seen_at = now(), idle_expires_at = LEAST(?, absolute_expires_at)
+               SET last_seen_at = CASE WHEN last_seen_at < now() - INTERVAL '60 seconds'
+                                       THEN now() ELSE last_seen_at END,
+                   idle_expires_at = LEAST(?, absolute_expires_at)
              WHERE id = ? AND revoked_at IS NULL AND idle_expires_at < ?
             """;
 
@@ -151,6 +160,9 @@ public class UserSessionRepository {
      *
      * <p>返回行数是**被踢掉的旧会话条数**，正常为 0（首次登录）或 1（换设备登录）；
      * 不做"必须恰好 1 行"的断言——多行说明历史数据里本来就有并发会话，撤销它们正是目的。
+     *
+     * <p>改密走的也是这个方法（M04）：改密后所有会话（含当前）一起失效，
+     * 客户端必须用新口令重新登录。这样"旧口令签发的会话"不会在新口令生效后继续存活。
      */
     public int revokeAllForUser(UUID userId) {
         if (userId == null) {
@@ -184,17 +196,35 @@ public class UserSessionRepository {
                 rs.getObject("user_id", UUID.class),
                 rs.getObject("revoked_at", OffsetDateTime.class),
                 rs.getObject("idle_expires_at", OffsetDateTime.class),
-                rs.getObject("absolute_expires_at", OffsetDateTime.class)), (Object) sidHash);
+                rs.getObject("absolute_expires_at", OffsetDateTime.class),
+                rs.getString("client_label")), (Object) sidHash);
         return rows.stream().findFirst();
     }
 
-    /** 认证判定所需的会话列集；{@code revokedAt} 为 {@code null} 表示未撤销。 */
+    /**
+     * 认证判定所需的会话列集；{@code revokedAt} 为 {@code null} 表示未撤销。
+     *
+     * <p>{@code clientLabel} 是登录时的 User-Agent（M02 会话绑定），可能为 null
+     * （老数据、或客户端没带 UA）——null 时认证层跳过比对，不因此拒绝既有会话。
+     */
     public record SessionRow(
             UUID id,
             UUID userId,
             OffsetDateTime revokedAt,
             OffsetDateTime idleExpiresAt,
-            OffsetDateTime absoluteExpiresAt) {
+            OffsetDateTime absoluteExpiresAt,
+            String clientLabel) {
+
+        /**
+         * 兼容既有调用（不关心客户端绑定）。
+         *
+         * <p>保留它是为了让只读会话的工具/测试不必每次传一个无意义的 null；
+         * 绑定比对读的是完整构造出来的行，不会因此漏判。
+         */
+        public SessionRow(UUID id, UUID userId, OffsetDateTime revokedAt,
+                          OffsetDateTime idleExpiresAt, OffsetDateTime absoluteExpiresAt) {
+            this(id, userId, revokedAt, idleExpiresAt, absoluteExpiresAt, null);
+        }
     }
 
     /**
@@ -213,7 +243,8 @@ public class UserSessionRepository {
                 rs.getObject("user_id", UUID.class),
                 rs.getObject("revoked_at", OffsetDateTime.class),
                 rs.getObject("idle_expires_at", OffsetDateTime.class),
-                rs.getObject("absolute_expires_at", OffsetDateTime.class)), sessionId);
+                rs.getObject("absolute_expires_at", OffsetDateTime.class),
+                rs.getString("client_label")), sessionId);
         return rows.stream().findFirst();
     }
 }

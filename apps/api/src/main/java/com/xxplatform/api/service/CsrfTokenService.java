@@ -82,15 +82,16 @@ public class CsrfTokenService {
         String cookieValue = randomToken();
         String token = randomToken();
         OffsetDateTime expiresAt = OffsetDateTime.now(ZoneOffset.UTC).plus(properties.getTtl());
+        UUID csrfId = UUID.randomUUID();
 
         repository.insert(
-                UUID.randomUUID(),
+                csrfId,
                 null, // 登录成功后由 SessionService 绑定；当前阶段还没有会话
                 Sha256.of(cookieValue),
                 Sha256.of(token),
                 expiresAt);
 
-        return new IssuedCsrf(cookieValue, token, expiresAt);
+        return new IssuedCsrf(csrfId, cookieValue, token, expiresAt);
     }
 
     /**
@@ -130,6 +131,33 @@ public class CsrfTokenService {
         return resolve(cookieValue, token).isPresent();
     }
 
+    /**
+     * 把一条 CSRF 会话绑定到已登录的 SID 上（登录成功时调用）。
+     *
+     * @param csrfId    新签发的那一行
+     * @param sessionId 刚创建的会话 id
+     */
+    @Transactional
+    public void bind(UUID csrfId, UUID sessionId) {
+        if (csrfId == null || sessionId == null) {
+            throw new IllegalArgumentException("csrfId 与 sessionId 不能为空");
+        }
+        repository.bindSession(csrfId, sessionId);
+    }
+
+    /**
+     * 撤销一条 CSRF 凭据（登录轮换时删掉旧行，M03）。
+     *
+     * <p>删除而不是保留过期时间：登录已经证明持有者拿到了新的凭据，旧 token 再留着只是
+     * 一个可以继续使用的副本——这正是"登录后旧 CSRF 仍有效"这个缺陷的根因。
+     */
+    @Transactional
+    public void revoke(UUID csrfId) {
+        if (csrfId != null) {
+            repository.deleteById(csrfId);
+        }
+    }
+
     /** 契约固定：Cookie 名、Path、SameSite 由属性给出，头名由常量给出。 */
     public String headerName() {
         return HEADER_NAME;
@@ -155,11 +183,12 @@ public class CsrfTokenService {
     /**
      * 签发结果。
      *
+     * @param id           {@code auth.csrf_session.id}（登录后绑定会话、以及轮换撤销时用）
      * @param cookieValue 写回 {@code CSRFID} Cookie 的值（前端 JS 读不到，HttpOnly）
      * @param token        返回在响应体 {@code data.token} 里，前端存内存并放入请求头
      * @param expiresAt    该 CSRF 会话的过期时间
      */
-    public record IssuedCsrf(String cookieValue, String token, OffsetDateTime expiresAt) {
+    public record IssuedCsrf(UUID id, String cookieValue, String token, OffsetDateTime expiresAt) {
     }
 
     /**

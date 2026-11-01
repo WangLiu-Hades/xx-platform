@@ -9,6 +9,7 @@ import com.xxplatform.api.common.RequestIdFilter;
 import com.xxplatform.api.common.SameOriginVerifier;
 import com.xxplatform.api.config.CsrfProperties;
 import com.xxplatform.api.config.SessionProperties;
+import com.xxplatform.api.service.AuditService;
 import com.xxplatform.api.service.AuthenticatedSession;
 import com.xxplatform.api.service.CsrfTokenService;
 import com.xxplatform.api.service.LoginService;
@@ -61,19 +62,22 @@ public class AuthController {
     private final SessionAuthenticator sessionAuthenticator;
     private final MeService meService;
     private final SessionService sessionService;
+    private final AuditService audit;
 
     public AuthController(CsrfTokenService csrfTokenService,
                           LoginService loginService,
                           SessionProperties sessionProperties,
                           SessionAuthenticator sessionAuthenticator,
                           MeService meService,
-                          SessionService sessionService) {
+                          SessionService sessionService,
+                          AuditService audit) {
         this.csrfTokenService = csrfTokenService;
         this.loginService = loginService;
         this.sessionProperties = sessionProperties;
         this.sessionAuthenticator = sessionAuthenticator;
         this.meService = meService;
         this.sessionService = sessionService;
+        this.audit = audit;
     }
 
     /**
@@ -92,15 +96,13 @@ public class AuthController {
         CsrfTokenService.IssuedCsrf issued = csrfTokenService.issue();
         var props = csrfTokenService.properties();
 
-        ResponseCookie cookie = ResponseCookie.from(props.getCookieName(), issued.cookieValue())
-                .httpOnly(true)          // 契约：HttpOnly —— 前端 JS 读不到，才挡得住 XSS 窃取
-                .secure(props.isSecureCookie()) // 契约要求 Secure；本地 http 调试由配置放开，见 CsrfProperties
-                .sameSite("Lax")         // 契约：SameSite=Lax —— 跨站 POST 不带 Cookie
-                .path(props.getCookiePath()) // 契约：Path=/api/v1，不泄露给同域其他应用
-                .build();
         // 用 header 追加而不是 response.addCookie：ResponseCookie 才能精确控制 SameSite
         // （Servlet 的 Cookie API 至今没有 SameSite，需要容器私有 API，不可移植）
-        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        response.addHeader(HttpHeaders.SET_COOKIE, csrfCookie(issued.cookieValue()).toString());
+        // M03：凭据响应禁止任何中间层缓存。允许缓存会让同一个 token 被多个浏览器上下文复用，
+        // 也让"登录后轮换"失效。
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store, max-age=0");
+        response.setHeader(HttpHeaders.PRAGMA, "no-cache");
 
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("token", issued.token());
@@ -146,22 +148,38 @@ public class AuthController {
         CsrfTokenService.CsrfBinding binding = csrfTokenService.resolve(csrfCookieValue, csrfToken)
                 .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
 
+        // M02：客户端地址按可信代理规则解析（默认只信 remoteAddr），并把 UA+IP 一起写入会话绑定。
+        String clientIp = sessionAuthenticator.clientIp(request);
         LoginService.LoginResult result = loginService.login(
                 body.loginName(),
                 body.password(),
                 RequestCookies.value(request, SessionService.COOKIE_NAME),
                 binding.csrfId(),
-                clientIp(request),
-                LoginService.clientLabel(request.getHeader(HttpHeaders.USER_AGENT)),
+                clientIp,
+                LoginService.clientBinding(request.getHeader(HttpHeaders.USER_AGENT), clientIp),
                 RequestIdFilter.currentTraceIdOrFallback());
 
         SessionService.IssuedSession session = result.session();
         response.addHeader(HttpHeaders.SET_COOKIE, sidCookie(session).toString());
 
+        // M03：登录成功即轮换 CSRF —— 登录用掉的那一对必须作废，否则它在新会话里继续有效，
+        // 等于"凭证升级后仍可用旧钥匙开门"。新 token 通过响应头交给同源前端（响应体
+        // SessionData 是 additionalProperties:false，放不进去）。
+        CsrfTokenService.IssuedCsrf rotated = csrfTokenService.issue();
+        csrfTokenService.bind(rotated.id(), session.sessionId());
+        csrfTokenService.revoke(binding.csrfId());
+        response.addHeader(HttpHeaders.SET_COOKIE, csrfCookie(rotated.cookieValue()).toString());
+        response.addHeader(HEADER_NAME, rotated.token());
+
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("userId", result.userId().toString());
         data.put("idleExpiresAt", Instants.iso(session.idleExpiresAt()));
         data.put("absoluteExpiresAt", Instants.iso(session.absoluteExpiresAt()));
+
+        // M03：登录响应里有新的 CSRF token 与 Set-Cookie，同样禁止中间层缓存——
+        // 缓存一次登录响应等于让不同用户共用同一对凭据。
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store, max-age=0");
+        response.setHeader(HttpHeaders.PRAGMA, "no-cache");
 
         return ResponseEntity.ok(ApiResponses.success(data, RequestIdFilter.currentTraceIdOrFallback()));
     }
@@ -193,10 +211,36 @@ public class AuthController {
      */
     @PostMapping("/auth/logout")
     public ResponseEntity<ApiResponses> logout(HttpServletRequest request, HttpServletResponse response) {
-        AuthenticatedSession session = sessionAuthenticator.require(request);
-        requireCsrfPair(request);
+        String traceId = RequestIdFilter.currentTraceIdOrFallback();
+        String clientIp = sessionAuthenticator.clientIp(request);
+        AuthenticatedSession session;
+        try {
+            session = sessionAuthenticator.require(request);
+            requireCsrfPair(request);
+        } catch (ApiException rejected) {
+            // M20：退出被拒绝也要留痕（旧 SID 重放、缺 CSRF 对）。否则"用户以为已退出、
+            // 实际会话还在"这种情况在审计里完全看不到。审计写在业务之外（本方法无事务），
+            // 不会被随后的异常回滚吞掉。
+            audit.failure("auth.logout", "AUTH", "SESSION", null, AuditService.Actor.unknown(),
+                    clientIp, null, traceId, rejected.code().name(), Map.of("reason", "REJECTED"));
+            throw rejected;
+        }
 
-        sessionService.end(session.sessionId(), RequestIdFilter.currentTraceIdOrFallback());
+        CsrfTokenService.CsrfBinding binding = requireCsrfPair(request);
+        boolean ended = sessionService.end(session.sessionId(), traceId);
+        // M20：登录/退出是必审事件（P-021-04）。actor 用会话里的账号快照，
+        // 即使账号之后被删也能回答"谁在什么时候从哪里退出"。
+        Map<String, Object> detail = new LinkedHashMap<>();
+        detail.put("sessionId", session.sessionId());
+        detail.put("alreadyEnded", !ended);
+        audit.success("auth.logout", "AUTH", "SESSION", session.sessionId(),
+                new AuditService.Actor(session.user().id(), session.user().loginName(),
+                        session.user().displayName()),
+                clientIp, null, traceId, detail);
+
+        // M03：退出即作废这一对 CSRF。只清 Cookie 不够——服务端那条记录还在的话，
+        // 被截获的旧 token 在 TTL 内仍能通过校验（会话已撤销，但脏数据/重放面不该留着）。
+        csrfTokenService.revoke(binding.csrfId());
 
         CsrfProperties csrfProperties = csrfTokenService.properties();
         response.addHeader(HttpHeaders.SET_COOKIE, clearedCookie(
@@ -282,10 +326,26 @@ public class AuthController {
      * 换新只发生在 {@code GET /auth/csrf}。把它抽出来是因为 logout 与 renew 都要这一道，
      * 而两处各写一遍迟早会出现"一个校验了 Header、另一个忘了"。
      */
-    private void requireCsrfPair(HttpServletRequest request) {
+    private CsrfTokenService.CsrfBinding requireCsrfPair(HttpServletRequest request) {
         String cookieValue = RequestCookies.value(request, csrfTokenService.properties().getCookieName());
-        csrfTokenService.resolve(cookieValue, request.getHeader(HEADER_NAME))
+        return csrfTokenService.resolve(cookieValue, request.getHeader(HEADER_NAME))
                 .orElseThrow(() -> new ApiException(ErrorCode.AUTH_CSRF_INVALID, "请求来源不可信"));
+    }
+
+    /**
+     * 构造 CSRF Cookie（HttpOnly + SameSite=Lax + 配置的 Path）。
+     *
+     * <p>与 SID Cookie 分开写是因为 CSRF 的 Secure/Path 来自 {@code xx.csrf}，
+     * 与 {@code xx.session} 是两组独立配置；合并成一个方法就得在内部再分支。
+     */
+    private ResponseCookie csrfCookie(String cookieValue) {
+        CsrfProperties props = csrfTokenService.properties();
+        return ResponseCookie.from(props.getCookieName(), cookieValue)
+                .httpOnly(true)          // 契约：HttpOnly —— 前端 JS 读不到，才挡得住 XSS 窃取
+                .secure(props.isSecureCookie()) // 契约要求 Secure；本地 http 调试由配置放开，见 CsrfProperties
+                .sameSite("Lax")         // 契约：SameSite=Lax —— 跨站 POST 不带 Cookie
+                .path(props.getCookiePath()) // 契约：Path=/api/v1，不泄露给同域其他应用
+                .build();
     }
 
     /**
@@ -330,16 +390,11 @@ public class AuthController {
     }
 
     /**
-     * 来源 IP。
+     * 来源 IP 的取址规则已收敛到 {@link SessionAuthenticator#clientIp}（M02）。
      *
-     * <p>直接用 {@code getRemoteAddr()}，**不解析** {@code X-Forwarded-For}：那个头默认由客户端
-     * 随意伪造，信任它等于让攻击者随意绕过频控（每次换一个 IP 就是一个新桶）。
-     * 部署到反向代理之后，应通过容器级配置（如 Tomcat 的 {@code RemoteIpValve} /
-     * {@code server.forward-headers-strategy}）让容器自己把可信头解析进 {@code getRemoteAddr()}，
-     * 而不是在业务代码里猜。
+     * <p>这里不再自带一份 `getRemoteAddr()`：登录判定来源网段、会话绑定比对 IP、审计写
+     * {@code source_ip} 必须用同一个解析结果，否则会出现"登录按 10.x 判通过、绑定按
+     * 127.0.0.1 记录、审计记代理地址"这种三份不一致的地址。
      */
-    private static String clientIp(HttpServletRequest request) {
-        return request.getRemoteAddr();
-    }
 
 }

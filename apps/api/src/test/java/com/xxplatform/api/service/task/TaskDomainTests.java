@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.xxplatform.api.common.ApiException;
 import com.xxplatform.api.common.ErrorCode;
+import com.xxplatform.api.config.TaskProperties;
+import com.xxplatform.api.infra.AsyncTaskRepository;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -94,6 +96,36 @@ class TaskDomainTests {
         assertFalse(TaskLease.needsReaping(TaskStatus.RUNNING, NOW.plusSeconds(1), NOW));
         assertFalse(TaskLease.needsReaping(TaskStatus.QUEUED, NOW.minusSeconds(1), NOW));
         assertFalse(TaskLease.needsReaping(TaskStatus.SUCCESS, NOW.minusSeconds(1), NOW));
+    }
+
+    // ------------------------------------------------------------- 每用户配额（P-003-02）
+
+    @Test
+    void perUserQuotaConstantsMatchTheSignedPolicy() {
+        assertEquals(5, TaskProperties.MAX_QUEUED_TASKS_PER_OWNER, "P-003-02：每用户最多 5 个排队");
+        assertEquals(2, TaskProperties.MAX_RUNNING_HEAVY_TASKS_PER_OWNER, "P-003-02：每用户最多 2 个重任务");
+    }
+
+    @Test
+    void heavyTaskTypesMatchTheSignedList() {
+        // 这份清单会直接拼进领取 SQL 的 IN 列表：漏一个类型就等于给该类型开了超发名额。
+        assertEquals(Set.of(
+                        TaskType.EXPORT, TaskType.INGESTION, TaskType.BACKFILL, TaskType.ANALYSIS,
+                        TaskType.DATASET_IMPORT, TaskType.MODEL_RUN, TaskType.PROFILE_MERGE,
+                        TaskType.PROFILE_SPLIT, TaskType.SET_OPERATION, TaskType.REPORT),
+                AsyncTaskRepository.HEAVY_TASK_TYPES);
+        assertFalse(AsyncTaskRepository.HEAVY_TASK_TYPES.contains(TaskType.FACE_SEARCH),
+                "人脸检索是短任务，不该占用重型并发名额");
+    }
+
+    @Test
+    void sideEffectTaskTypesAreExactlyTheOnesThatCannotBeRetriedBlindly() {
+        // 租约到期后这些类型可能已经对外产生了不可撤回的动作（M07），必须转人工对账而不是重排。
+        assertEquals(Set.of(TaskType.DEVICE_COMMAND, TaskType.NOTIFICATION,
+                        TaskType.INGESTION, TaskType.BACKFILL),
+                AsyncTaskRepository.SIDE_EFFECT_TASK_TYPES);
+        assertFalse(AsyncTaskRepository.SIDE_EFFECT_TASK_TYPES.contains(TaskType.EXPORT),
+                "导出是纯计算/纯落盘，租约到期后可以安全重排");
     }
 
     // ------------------------------------------------------------- 参数指纹

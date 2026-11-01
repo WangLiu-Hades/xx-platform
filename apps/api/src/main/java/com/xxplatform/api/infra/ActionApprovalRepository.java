@@ -101,6 +101,53 @@ public class ActionApprovalRepository {
              WHERE id = ? AND status = 'PENDING'
             """;
 
+    /**
+     * 把已批准的申请标记为"已消费"（M13：一次性执行许可）。
+     *
+     * <p>条件里同时写 {@code status='APPROVED'} 与 {@code version=?}：
+     * <ul>
+     *   <li>{@code status} 是"只能核销一次"的业务闸门——第二次消费必须命中 0 行，调用方据此回
+     *       409，而不是把同一张许可用两次；</li>
+     *   <li>{@code version} 是并发闸门——两个请求同时拿同一张许可去执行时，只有一个能更新成功，
+     *       另一个拿到 0 行，不会出现"同一份许可被执行两次"的窗口。</li>
+     * </ul>
+     * 用一条 UPDATE 而不是"先读再写"：判断与写入在同一个原子语句里，不需要额外的行锁往返。
+     */
+    private static final String MARK_CONSUMED = """
+            UPDATE operation.action_approval
+               SET status = 'CONSUMED', consumed_at = ?, version = version + 1
+             WHERE id = ? AND version = ? AND status = 'APPROVED'
+            """;
+
+    /**
+     * 数一数"合格审批人"有多少（M09：创建审批时确认凑得够票）。
+     *
+     * <p>口径：
+     * <ul>
+     *   <li>账号未软删且 {@code status='ACTIVE'}——停用账号不能批；</li>
+     *   <li>通过未软删的角色持有该操作的权限码——与"复核人必须具备对应动作权限"一致；</li>
+     *   <li>排掉申请人本人与执行人本人——协议要求"两名独立审批人"，自己不能给自己投票；</li>
+     *   <li>{@code allowedLogins} 非空时只算白名单内的登录名（部署口径，见
+     *       {@code xx.approval.approver-logins}）。</li>
+     * </ul>
+     *
+     * <p>为什么用 {@code count(DISTINCT u.id)}：一个人可能有多个角色都带同一个权限码，
+     * 不去重会把 1 个人数成 3 个，凑票判断就形同虚设。
+     */
+    private static final String COUNT_ELIGIBLE_APPROVERS = """
+            SELECT count(DISTINCT u.id)
+              FROM auth.app_user u
+              JOIN auth.user_role ur ON ur.user_id = u.id
+              JOIN auth.role r ON r.id = ur.role_id AND r.deleted = false
+              JOIN auth.role_permission rp ON rp.role_id = ur.role_id
+             WHERE u.deleted = false
+               AND u.status = 'ACTIVE'
+               AND rp.permission_code = ?
+               AND u.id <> ?
+               AND u.id <> ?
+               AND (? = '' OR u.login_name = ANY (string_to_array(?, ',')::text[]))
+            """;
+
     private final JdbcTemplate jdbc;
 
     public ActionApprovalRepository(JdbcTemplate jdbc) {
@@ -210,6 +257,37 @@ public class ActionApprovalRepository {
     public boolean expireIfPending(UUID approvalId) {
         requireNonNull(approvalId, "approvalId");
         return jdbc.update(EXPIRE_PENDING, approvalId) == 1;
+    }
+
+    /**
+     * 原子地把审批标记为已消费；返回 false 表示"不是 APPROVED 状态或版本已被改过"。
+     *
+     * <p>调用方（{@code ApprovalService.consume}）在拿到 false 后必须回 409，
+     * **不要**再退化成"读一次看看状态"然后宽容放行——那正是"同一张许可用两次"的来源。
+     */
+    public boolean markConsumed(UUID approvalId, OffsetDateTime consumedAt, long version) {
+        requireNonNull(approvalId, "approvalId");
+        requireNonNull(consumedAt, "consumedAt");
+        return jdbc.update(MARK_CONSUMED, consumedAt, approvalId, version) == 1;
+    }
+
+    /**
+     * 统计合格审批人数（M09）。
+     *
+     * @param permissionCode 该操作的权限码（{@link com.xxplatform.api.service.approval.ApprovalOperation#permission()}）
+     * @param requesterUserId 申请人（排除）
+     * @param executorUserId  执行人（排除）
+     * @param allowedLogins  审批人白名单；空列表表示"按权限判定"
+     */
+    public long countEligibleApprovers(String permissionCode, UUID requesterUserId, UUID executorUserId,
+                                       List<String> allowedLogins) {
+        requireNonNull(permissionCode, "permissionCode");
+        requireNonNull(requesterUserId, "requesterUserId");
+        requireNonNull(executorUserId, "executorUserId");
+        String csv = allowedLogins == null || allowedLogins.isEmpty() ? "" : String.join(",", allowedLogins);
+        Long count = jdbc.queryForObject(COUNT_ELIGIBLE_APPROVERS, Long.class,
+                permissionCode, requesterUserId, executorUserId, csv, csv);
+        return count == null ? 0 : count;
     }
 
     private static void requireNonNull(Object value, String name) {

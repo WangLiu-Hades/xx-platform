@@ -75,7 +75,7 @@ public class FileController {
         }
         FileService.Uploaded uploaded = fileService.upload(session, category,
                 file.getOriginalFilename(), file.getContentType(), content,
-                RequestIdFilter.currentTraceIdOrFallback());
+                RequestIdFilter.currentTraceIdOrFallback(), idempotencyKey);
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("fileAssetId", uploaded.fileAssetId().toString());
         data.put("status", uploaded.status());
@@ -105,7 +105,12 @@ public class FileController {
         return new ResponseEntity<>(body, headers, HttpStatus.OK);
     }
 
-    /** 契约 FileAsset 视图（只暴露契约声明的字段）。 */
+    /**
+     * 契约 FileAsset 视图（只暴露契约声明的字段）。
+     *
+     * <p>{@code expiresAt} 是契约要求出现的字段（nullable）：缺省不写会让前端把"未过期"
+     * 与"服务端没给"混为一谈，也不会暴露"这个文件其实没有保留期"这种数据缺陷。
+     */
     private static Map<String, Object> view(FileAssetRow row) {
         Map<String, Object> data = new LinkedHashMap<>();
         data.put("fileAssetId", row.id().toString());
@@ -115,9 +120,7 @@ public class FileController {
         data.put("byteSize", row.byteSize());
         data.put("status", row.status());
         data.put("createdAt", Instants.iso(row.createdAt()));
-        if (row.expiresAt() != null) {
-            data.put("expiresAt", Instants.iso(row.expiresAt()));
-        }
+        data.put("expiresAt", row.expiresAt() == null ? null : Instants.iso(row.expiresAt()));
         return data;
     }
 

@@ -37,10 +37,11 @@ spring:
   servlet:
     multipart:
       # 容器层的硬闸门：没有它，Spring 会在解析 multipart 时把超大文件读进临时目录，
-      # 业务层的 413 判断（xx.file.max-bytes）就永远轮不到。这里比业务上限略宽 2 MiB，
-      # 让"刚好超业务上限"的文件仍由业务层返回契约壳 413，而不是容器错误页。
-      max-file-size: 10MB
-      max-request-size: 12MB
+      # 业务层的 413 判断（xx.file.*-max-bytes）就永远轮不到。这里按**最大的导入档**
+      # （100 MiB）再放宽 10 MiB，让"刚好超业务上限"的导入仍由业务层返回契约壳 413，
+      # 而不是容器错误页；图片档的 10 MiB 由业务层按分类收紧。
+      max-file-size: 110MB
+      max-request-size: 112MB
       # 超限时不静默截断，直接抛 MaxUploadSizeExceededException（见 ApiExceptionHandler → 413）
       resolve-lazily: false
 
@@ -94,6 +95,30 @@ xx:
     # 生产必须 true（SD06 要求 HTTPS）。本地 http 调试为 false，
     # 否则浏览器不回传 Secure Cookie，登录后下一个请求就是未认证。
     secure-cookie: false
+    # 允许登录的来源网段（M02）。默认只放回环 + RFC1918 私网：默认值必须"安全开箱"，
+    # 忘记配置时不能放行公网。
+    allowed-networks:
+      - 127.0.0.0/8
+      - ::1/128
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
+    # 可信反向代理（M02）。默认**空**：不采信任何 X-Forwarded-For，取址只用
+    # request.getRemoteAddr()。只有 remoteAddr 命中本列表时才解析 XFF，并从右往左
+    # 跳过可信代理取第一个不可信地址（防伪造）。部署到 nginx/网关后面时把代理所在
+    # 网段填在这里，否则所有请求都会被当成来自代理 IP。
+    trusted-proxies: []
+    # 服务端可判定的"不续期"路径（M01 后台轮询）。命中这些路径的请求不滑动空闲期：
+    # 探针（/health、/ready）、静态/配置客户端预加载（/client-config）、任务列表与
+    # 任务详情页的自动轮询。这里是白名单而不是"识别 X-Background-Request"——
+    # 客户端自报的头只能用于收紧，不能作为唯一依据（攻击者可以不发）。
+    non-renewing-paths:
+      - /health
+      - /ready
+      - /client-config
+      - /tasks
+      - /tasks/*
+      - /tasks/*/attempts
 
   # 任务底座 B-05（见 service/task/TaskProperties）
   #
@@ -112,12 +137,15 @@ xx:
 
   # 受控文件（见 service/file/FileService 与 config/FileProperties）
   #
-  # ⚠ client-config.maxUploadBytes 与这里的 max-bytes 是同一个甲方口径（10 MiB）：
-  #   前者给前端做预校验，后者是服务端硬闸门。改一个就要同步改另一个。
+  # ⚠ client-config.maxUploadBytes（10 MiB）只覆盖**图片类**上传，是前端预校验口径；
+  #   普通导入（XLSX/CSV/JSON）是 100 MiB / 10 万行，两者不同，不能用一个键同时表达。
   file:
     # 内容根目录；生产挂持久卷，本地默认在用户目录下（可用 XX_FILE_STORAGE_ROOT 覆盖）
     storage-root: ${user.home}/.xx-platform/files
-    max-bytes: 10485760
+    # 图片类（人像检索、档案头像）：10 MiB
+    image-max-bytes: 10485760
+    # 普通导入类（数据集/设备/人员库/原始接入）：100 MiB，行数上限 10 万
+    import-max-bytes: 104857600
 
   # 敏感动作审批（见 service/approval/ApprovalService 与 config/ApprovalProperties）
   #
@@ -136,6 +164,10 @@ xx:
     policy-version: PD-2026-10-19.v1
     page-size-default: 20
     page-size-max: 100
+    # 审批人白名单（M09）：空 = 按权限判定（持有该操作权限的人都是候选审批人）。
+    # 非空时，只有列在这里的登录名才算"合格审批人"，且创建审批时要先数一遍够不够
+    # required_approvals；不够直接 400「审批人不足」，不让人提交一个永远批不下来的申请。
+    approver-logins: []
 
   # 认证策略（任务 5：POST /auth/login）
   auth:

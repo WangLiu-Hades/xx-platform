@@ -1,6 +1,7 @@
 package com.xxplatform.api.config;
 
 import java.time.Duration;
+import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -14,8 +15,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * <p>{@code payloadKey} 是冻结快照的 AES-256 密钥（base64，32 字节）。库里的
  * {@code frozen_payload_ciphertext} 是 NOT NULL，所以没有密钥时审批**不可用**（503），
- * 而不是退化成明文落库。本地 {@code db} profile 在 {@code application-db.yml}
- * 写了一个仅限开发的默认值，生产必须由部署 secret 注入。
+ * 而不是退化成明文落库。仓库里不保存任何默认密钥：{@code application-db.yml} 只从
+ * 环境变量 {@code XX_APPROVAL_PAYLOAD_KEY} 取值，未注入时审批整体 fail closed
+ * （见 {@code config/ApprovalCryptoConfigurationTests}）。
  */
 @ConfigurationProperties(prefix = "xx.approval")
 public class ApprovalProperties {
@@ -43,6 +45,20 @@ public class ApprovalProperties {
 
     /** 列表页大小上限。 */
     private int pageSizeMax = 100;
+
+    /**
+     * 审批人白名单（登录名）。空列表 = 按权限判定：持有该操作权限码的可用账号都是候选审批人。
+     *
+     * <p><b>为什么需要这个开关</b>：协议只说"两名独立审批人"，没说是谁。真实部署里审批权
+     * 往往收窄到少数几个人（值班主管），而 RBAC 权限码是给"能调用这个接口的人"用的，两者
+     * 不是一回事。用配置表达部署口径，比在数据库里再造一张审批人表更轻，也不用改代码。
+     *
+     * <p><b>为什么要"白名单人数不足就直接拒"</b>：如果一个申请按规则需要 2 票，而部署里
+     * 只有 1 个合格审批人，那么这个申请会一直卡在 PENDING 直到 24h 过期——申请人以为
+     * 有人会批，审批人也以为不关自己的事。在创建时就 400「审批人不足」能把问题前移到
+     * 最显眼的位置。
+     */
+    private List<String> approverLogins = List.of();
 
     public String getPayloadKey() {
         return payloadKey;
@@ -106,5 +122,13 @@ public class ApprovalProperties {
 
     public void setPageSizeMax(int pageSizeMax) {
         this.pageSizeMax = pageSizeMax;
+    }
+
+    public List<String> getApproverLogins() {
+        return approverLogins;
+    }
+
+    public void setApproverLogins(List<String> approverLogins) {
+        this.approverLogins = approverLogins == null ? List.of() : List.copyOf(approverLogins);
     }
 }
