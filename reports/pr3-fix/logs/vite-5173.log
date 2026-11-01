@@ -1,0 +1,57 @@
+
+> multidimensional-platform-prototype@2.0.0 dev
+> vite --host 127.0.0.1
+
+node.exe : failed to load config from C:\Users\dev02\workspace\xx-platform\apps\web\vite.config.ts
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (failed to load ...\vite.config.ts:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+error when starting dev server:
+Error: Build failed with 1 error:
+
+[plugin externalize-deps]
+Error: spawn EPERM
+    at ChildProcess.spawn (node:internal/child_process:458:11)
+    at spawn (node:child_process:813:9)
+    at Object.execFile (node:child_process:349:17)
+    at exec (node:child_process:236:25)
+    at optimizeSafeRealPathSync (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chun
+ks/node.js:2481:2)
+    at windowsSafeRealPathSync (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunk
+s/node.js:2467:3)
+    at getRealPath (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks/node.js:29
+536:36)
+    at tryResolveRealFileOrType (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chun
+ks/node.js:29530:9)
+    at tryCleanFsResolve (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks/node
+.js:29279:21)
+    at tryFsResolve (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks/node.js:2
+9272:14)
+    at aggregateBindingErrorsIntoJsError (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/rolldown/d
+ist/shared/error-Dsqzw0Oa.mjs:49:18)
+    at unwrapBindingResult (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/rolldown/dist/shared/err
+or-Dsqzw0Oa.mjs:19:128)
+    at #build (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/rolldown/dist/shared/rolldown-D_vNlor
+D.mjs:133:34)
+    at async bundleConfigFile (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks
+/node.js:38037:12)
+    at async bundleAndLoadConfigFile (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node
+/chunks/node.js:37933:18)
+    at async loadConfigFromFile (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chun
+ks/node.js:37894:42)
+    at async resolveConfig (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks/no
+de.js:37495:22)
+    at async _createServer (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/chunks/no
+de.js:24798:65)
+    at async CAC.<anonymous> (file:///C:/Users/dev02/workspace/xx-platform/apps/web/node_modules/vite/dist/node/cli.js:
+712:18) {
+  errors: [Getter/Setter]
+}
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

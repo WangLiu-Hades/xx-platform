@@ -26,6 +26,7 @@
 **/~$*
 **/*.log
 !/reports/path-optimization/*.log
+!/reports/pr3-fix/logs/*.log
 **/__pycache__/
 **/*.pyc
 # 历史审查中的全文提取，原件另有正式入口

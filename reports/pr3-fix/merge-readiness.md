@@ -23,7 +23,8 @@
 | 证据 | 位置 |
 | --- | --- |
 | 机读测试报告（含每条用例名、耗时、环境版本、DB URL、是否真跑真库） | `reports/pr3-fix/test-results.json` |
-| 完整 Maven 日志 | `reports/pr3-fix/logs/final-with-real-db.log` |
+| 完整 Maven 日志（最终一次：提交后工作区、干净库 `xx_it_final5`） | `reports/pr3-fix/logs/final-post-commit.log` |
+| 其余过程日志（合并前基线、P/F 合入、空库迁移、提交前最终态） | `reports/pr3-fix/logs/`（`baseline-before-merge`、`merge-P`、`merge-F`、`fresh-db-before-T`、`final-with-real-db`、`checkpoint-after-M15`、`api-8081`、`vite-5173`） |
 | 22 项逐项矩阵（依据行号 → 修复前检查 → 实施修改 → 正/反验证 → 证据定位 → 状态） | `reports/pr3-fix/issue-matrix.md` |
 | 每条规则的主分支原文（提交、路径、blob ID、行区间、摘录、固定链接） | `reports/pr3-fix/rule-sources.json`（由 `gen-rule-sources.ps1` 从 `git show aca438eb:路径` 生成） |
 | 迁移脚本自测输出 | `reports/pr3-fix/logs/e01-selftest.log` |

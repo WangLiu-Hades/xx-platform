@@ -1,0 +1,34 @@
+[1/4] checking server 127.0.0.1:55433
+
+=== self-test: exists / missing / query-failed must stay distinguishable ===
+  [PASS] database already exists -> refuse instead of dropping (upgrade-cycle safety)
+         exit code: expected 2, got 2; required message 'already exists': True
+  [PASS] databases missing -> created -> parity compared, cleanup verified (happy path)
+         exit code: expected 0 or 3, got 3; required message 'structure is identical': True
+  [PASS] connection failure (wrong port) -> environment error, not a pass
+         exit code: expected 2, got 2; required message 'no PostgreSQL instance': True
+  [PASS] authentication/role failure -> "cannot inspect", never "does not exist"
+         exit code: expected 2, got 2; required message 'cannot inspect': True
+  [PASS] psql exits non-zero -> report failure, never a parity verdict
+         exit code: expected 2, got 2; required message 'fingerprint export': True
+  [PASS] cleanup cannot be verified -> exit 3, never "cleaned up"
+         exit code: expected 3, got 3; required message 'cleanup could not be verified': True
+
+  NOTE  the instance refused the drop, so these throwaway databases remain (not reported as cleaned):
+         parity_selftest_012548bis_mig
+         parity_selftest_012548clean_mig
+         parity_selftest_012548clean_ref
+         parity_selftest_012548fail_mig
+         parity_selftest_012548fail_ref
+         parity_selftest_012548run_mig
+         parity_selftest_012548run_ref
+        remove them once DROP DATABASE is permitted:
+         DROP DATABASE IF EXISTS parity_selftest_012548bis_mig;
+         DROP DATABASE IF EXISTS parity_selftest_012548clean_mig;
+         DROP DATABASE IF EXISTS parity_selftest_012548clean_ref;
+         DROP DATABASE IF EXISTS parity_selftest_012548fail_mig;
+         DROP DATABASE IF EXISTS parity_selftest_012548fail_ref;
+         DROP DATABASE IF EXISTS parity_selftest_012548run_mig;
+         DROP DATABASE IF EXISTS parity_selftest_012548run_ref;
+
+SELF-TEST PASSED: all 6 situations reported with the required exit code and message

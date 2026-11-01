@@ -1,0 +1,587 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.xxplatform:xx-platform-api >-------------------
+[INFO] Building xx-platform-api 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ xx-platform-api ---
+[INFO] Deleting C:\Users\dev02\workspace\xx-platform\apps\api\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ xx-platform-api ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ xx-platform-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 98 source files with javac [debug parameters release 17] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ xx-platform-api ---
+[INFO] skip non existing resourceDirectory C:\Users\dev02\workspace\xx-platform\apps\api\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ xx-platform-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 27 source files with javac [debug parameters release 17] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ xx-platform-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.xxplatform.api.api.FileControllerTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.121 s -- in com.xxplatform.api.api.FileControllerTests
+[INFO] Running com.xxplatform.api.ApiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 00:08:35.847 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 5044 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 00:08:35.853 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - No active profile set, falling back to 1 default profile: "default"
+2026-11-02 00:08:38.262 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 00:08:38.293 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 00:08:38.294 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 00:08:38.407 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 00:08:38.409 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2457 ms
+2026-11-02 00:08:38.744 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 00:08:38.744 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 00:08:39.579 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 53122 (http) with context path '/api/v1'
+2026-11-02 00:08:39.592 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 4.55 seconds (process running for 6.396)
+2026-11-02 00:08:39.953 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 00:08:39.953 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 00:08:39.955 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-11-02 00:08:40.243 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 00:08:40.319 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.807 s -- in com.xxplatform.api.ApiApplicationTests
+[INFO] Running com.xxplatform.api.common.CsrfFilterTests
+2026-11-02 00:08:40.363 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 00:08:40.366 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/auth/login origin=https://evil.example.com
+2026-11-02 00:08:40.383 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 00:08:40.390 DEBUG [455785a5-bc59-4dae-924e-3546141a3105] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 00:08:40.395 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 00:08:40.395 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/tasks origin=null
+2026-11-02 00:08:40.467 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 00:08:40.480 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 00:08:40.486 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 00:08:40.492 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 00:08:40.500 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 00:08:40.500 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/tasks origin=https://evil.example.com
+2026-11-02 00:08:40.508 ERROR [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF token У��ʧ�ܣ��� 500 �ܾ� path=/tasks
+java.lang.IllegalStateException: db down
+	at com.xxplatform.api.common.CsrfFilterTests.storageFailureFailsClosed(CsrfFilterTests.java:207)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-11-02 00:08:40.517 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in com.xxplatform.api.common.CsrfFilterTests
+[INFO] Running com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Running com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Running com.xxplatform.api.infra.PasswordHasherTests
+2026-11-02 00:08:40.566 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ��ʽ����ʶ��ǰ׺���������������У��ʧ�ܴ���
+2026-11-02 00:08:40.566 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ��ʽ����ʶ��ǰ׺���������������У��ʧ�ܴ���
+2026-11-02 00:08:40.566 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ������������������У��ʧ�ܴ���
+2026-11-02 00:08:40.566 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ�������Ƿ���0������У��ʧ�ܴ���
+2026-11-02 00:08:40.566 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ���λ�ժҪ���ǺϷ� base64url����У��ʧ�ܴ���
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.86 s -- in com.xxplatform.api.infra.PasswordHasherTests
+[INFO] Running com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.377 s -- in com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.109 s -- in com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalServiceTests
+2026-11-02 00:08:52.606 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=6418a1d3-2af1-4ad4-b17c-7bc09b0b517e operation=createExport requester=fb707b8d-b423-46a3-a990-19eb83cfc091 requiredApprovals=1
+2026-11-02 00:08:52.615 WARN  [no-trace] c.x.a.s.approval.ApprovalService - �����˲��� operation=readDecryptionResult required=2 eligible=1 allowlist=false
+2026-11-02 00:08:52.617 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=80c5014b-dfc1-40a6-b68f-296ae9148fd9 operation=createExport requester=1e8704c4-2c61-49c6-be3b-764ee24422c0 requiredApprovals=1
+2026-11-02 00:08:52.622 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=d48c5dba-cf4e-4420-8bd1-1fb5150c65d8 operation=createExport requester=38a26e6b-71af-4cdf-82e6-047df0ee0cf8 requiredApprovals=1
+2026-11-02 00:08:53.283 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=d48c5dba-cf4e-4420-8bd1-1fb5150c65d8 approveCount=1/1
+2026-11-02 00:08:53.965 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=b5ab9c0f-069f-4d74-8469-0b09648e18dd operation=createExport requester=86a8c088-b8a1-4a24-9870-8c39108ee58d requiredApprovals=1
+2026-11-02 00:08:54.660 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=657ae72d-a1a1-432d-b553-9656a5765385 operation=createExport requester=9766c280-5742-48fe-893a-7f95cabdb0b7 requiredApprovals=1
+2026-11-02 00:08:55.343 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=657ae72d-a1a1-432d-b553-9656a5765385 approveCount=1/1
+2026-11-02 00:08:55.347 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=a0df3693-f566-48bf-9fd7-4b0b33082728 operation=readDecryptionResult requester=7989df2c-6cff-43fe-b8ac-1b124e1c7565 requiredApprovals=2
+2026-11-02 00:08:56.722 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=a0df3693-f566-48bf-9fd7-4b0b33082728 approveCount=2/2
+2026-11-02 00:08:56.726 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=4821d2f7-a937-4943-85ee-41794e7728a9 operation=createExport requester=1643bd9e-2333-4c84-8a56-01c150380f16 requiredApprovals=1
+2026-11-02 00:08:56.730 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ae20e23b-2a31-4214-a5f8-096e06a30832 operation=createExport requester=f1d94a72-1be3-49a4-a8ee-c6cf4d86fd19 requiredApprovals=1
+2026-11-02 00:08:57.371 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=ae20e23b-2a31-4214-a5f8-096e06a30832 approveCount=1/1
+2026-11-02 00:08:57.375 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=3272a877-7bab-4bbc-9ba9-9664e35691bc operation=createExport requester=a389a157-1cd0-43b4-aa2a-72e0d033ead7 requiredApprovals=1
+2026-11-02 00:08:58.009 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=3272a877-7bab-4bbc-9ba9-9664e35691bc approveCount=1/1
+2026-11-02 00:08:58.015 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=4e634a4b-20bc-4a77-b92e-a66af4fdb3a3 operation=createExport requester=51d69f5c-cdbc-4d7c-aabd-3cd42aa4a5ac requiredApprovals=1
+2026-11-02 00:08:58.697 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=77af49cc-dfd4-4565-b9bc-b61b37e0bb92 operation=createExport requester=b9bc1a4b-28a7-4244-ba20-fedbb64326d1 requiredApprovals=1
+2026-11-02 00:08:59.377 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=77af49cc-dfd4-4565-b9bc-b61b37e0bb92 approveCount=1/1
+2026-11-02 00:08:59.381 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=625a012c-f576-41af-a4f4-4b302cdcaee3 operation=createExport requester=f1b1e151-b712-41c7-adfd-0d53365ac59b requiredApprovals=1
+2026-11-02 00:08:59.381 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=9c4cfc91-2915-4ae1-a83a-5af06bb8af33 operation=createExport requester=f1b1e151-b712-41c7-adfd-0d53365ac59b requiredApprovals=1
+2026-11-02 00:08:59.390 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=688cab79-155c-4922-aebc-6ec763a8607c operation=createExport requester=9b5e007a-eff5-4e8b-a0cd-bacb25f8adb3 requiredApprovals=1
+2026-11-02 00:08:59.394 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=8fe897cd-97fc-4896-82aa-d53ddef0fefd operation=createExport requester=a395be58-3f02-41f6-a9ce-21482f7a14e5 requiredApprovals=1
+2026-11-02 00:09:00.081 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ���������� approvalId=8fe897cd-97fc-4896-82aa-d53ddef0fefd reviewer=8f05ef38-b1c4-46e8-bdf8-540eb6d2b302
+2026-11-02 00:09:00.795 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=73933247-0db9-4428-b95e-2463e621705a operation=createExport requester=99c9a596-6872-49f1-8c7b-9e52407b91e8 requiredApprovals=1
+2026-11-02 00:09:00.797 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=5a27f7df-c626-4b07-b812-8365ee4bf02f operation=createExport requester=3792ec65-49a6-4d4a-bcf3-9813afc6ea4e requiredApprovals=1
+2026-11-02 00:09:01.746 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ce67205e-a624-43b3-a350-7f9b951132f8 operation=createExport requester=dc2f2b78-1a67-468b-9735-14443fda200d requiredApprovals=1
+2026-11-02 00:09:02.665 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=ce67205e-a624-43b3-a350-7f9b951132f8 approveCount=1/1
+2026-11-02 00:09:02.667 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=ce67205e-a624-43b3-a350-7f9b951132f8 operation=createExport executor=dc2f2b78-1a67-468b-9735-14443fda200d
+2026-11-02 00:09:02.671 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=a2acbd3b-a97b-417b-892a-45a0363f86d7 operation=createExport requester=aaf3ff67-3531-464c-8573-4f0442471aec requiredApprovals=1
+2026-11-02 00:09:02.676 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=b06f419c-1106-432b-92d4-4c8acdf1c9de operation=createExport requester=a3cda392-7c40-4aa6-8ebb-c6b37f33a44a requiredApprovals=1
+2026-11-02 00:09:03.522 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ���������� approvalId=b06f419c-1106-432b-92d4-4c8acdf1c9de reviewer=874b2f03-1a4b-4afb-b379-faef247ccfaf
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.59 s -- in com.xxplatform.api.service.approval.ApprovalServiceTests
+[INFO] Running com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Running com.xxplatform.api.service.ExportServiceTests
+2026-11-02 00:09:03.588 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=e678318d-ea78-4352-b91c-140f69128481 key=idem-key-000000000001
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.xxplatform.api.service.ExportServiceTests
+[INFO] Running com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Running com.xxplatform.api.service.file.FileServiceTests
+2026-11-02 00:09:03.690 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=e0debd82-6ad1-4e7f-94ab-9ac0f597f747 category=DATASET_IMPORT bytes=4 status=QUARANTINED
+2026-11-02 00:09:03.694 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=678ac6d0-ea78-4fad-b57d-5a8d1fab9a72 category=DATASET_IMPORT bytes=29 status=ACTIVE
+2026-11-02 00:09:03.823 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=d9a64318-8226-4b31-8f04-513ebff31b94 category=DATASET_IMPORT bytes=11534336 status=ACTIVE
+2026-11-02 00:09:03.829 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=0b484d43-6b1f-4f71-8824-a81fa92f2aee category=DATASET_IMPORT bytes=26 status=QUARANTINED
+2026-11-02 00:09:03.860 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=000df3e6-d53b-4d70-8f8f-46b8d171c2d4 category=DATASET_IMPORT bytes=11 status=QUARANTINED
+2026-11-02 00:09:03.864 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=839d651f-cd65-45b3-b726-e971ee81d4bd category=DATASET_IMPORT bytes=25 status=QUARANTINED
+2026-11-02 00:09:03.875 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=0f7dc82c-7e9c-4b39-8ca3-7d3837aef2f9 category=FACE_SEARCH bytes=69 status=ACTIVE
+2026-11-02 00:09:03.877 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=f5641990-0e0e-4f75-b634-a27fba109a83 category=DATASET_IMPORT bytes=27 status=ACTIVE
+2026-11-02 00:09:03.885 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=ed0a017c-9f67-4323-9294-5c212ae96967 category=FACE_SEARCH bytes=17 status=QUARANTINED
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.249 s -- in com.xxplatform.api.service.file.FileServiceTests
+[INFO] Running com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Running com.xxplatform.api.service.HealthServiceTests
+2026-11-02 00:09:03.905 WARN  [no-trace] c.x.api.service.HealthService - ��������� database ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73)
+	at com.xxplatform.api.service.HealthService.databaseFailure(HealthService.java:149)
+	at com.xxplatform.api.service.HealthService.lambda$readiness$0(HealthService.java:110)
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133)
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:110)
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-11-02 00:09:03.907 WARN  [no-trace] c.x.api.service.HealthService - ��������� schema ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73)
+	at com.xxplatform.api.service.HealthService.schemaFailure(HealthService.java:160)
+	at com.xxplatform.api.service.HealthService.lambda$readiness$1(HealthService.java:111)
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133)
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:111)
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+2026-11-02 00:09:03.909 WARN  [no-trace] c.x.api.service.HealthService - ��������� deployment-config ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73)
+	at com.xxplatform.api.service.HealthService.deploymentConfigFailure(HealthService.java:175)
+	at com.xxplatform.api.service.HealthService.lambda$readiness$2(HealthService.java:112)
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133)
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:112)
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60)
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.xxplatform.api.service.HealthServiceTests
+[INFO] Running com.xxplatform.api.service.PasswordServiceTests
+2026-11-02 00:09:03.927 WARN  [no-trace] c.x.api.service.PasswordService - ����ʱ�˺��Ѳ����� userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 00:09:03.929 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿����뵱ǰ������ͬ userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 00:09:03.931 INFO  [no-trace] c.x.api.service.PasswordService - ���ܳɹ�������ȫ���Ự userId=00000000-0000-4000-8000-0000000000a1 revoked=1
+2026-11-02 00:09:03.933 INFO  [no-trace] c.x.api.service.PasswordService - ���ܳɹ�������ȫ���Ự userId=00000000-0000-4000-8000-0000000000a1 revoked=1
+2026-11-02 00:09:03.934 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿���Ȳ��Ϲ� userId=00000000-0000-4000-8000-0000000000a1 length=11
+2026-11-02 00:09:03.936 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ���ǰ�����ȷ userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 00:09:03.937 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿���Ȳ��Ϲ� userId=00000000-0000-4000-8000-0000000000a1 length=129
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.xxplatform.api.service.PasswordServiceTests
+[INFO] Running com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.030 s -- in com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Running com.xxplatform.api.service.SessionRenewalTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.xxplatform.api.service.SessionRenewalTests
+[INFO] Running com.xxplatform.api.service.SessionServiceBeginTests
+2026-11-02 00:09:03.982 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 00:09:03.984 WARN  [no-trace] c.x.api.service.SessionService - ��¼��̬���Ựǩ��ǰ�˺��Ѳ����� status=DISABLED userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 00:09:03.984 INFO  [no-trace] c.x.api.service.SessionService - ��¼�ֻ��������ɻỰ 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 00:09:03.984 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 00:09:03.986 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in com.xxplatform.api.service.SessionServiceBeginTests
+[INFO] Running com.xxplatform.api.service.SessionServiceLogoutTests
+2026-11-02 00:09:03.990 DEBUG [no-trace] c.x.api.service.SessionService - �˳������ѳ����ĻỰ������ sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 00:09:03.994 INFO  [no-trace] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 00:09:03.996 INFO  [no-trace] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 00:09:03.996 DEBUG [no-trace] c.x.api.service.SessionService - �˳������ѳ����ĻỰ������ sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.xxplatform.api.service.SessionServiceLogoutTests
+[INFO] Running com.xxplatform.api.service.SessionServiceRenewTests
+2026-11-02 00:09:04.000 INFO  [no-trace] c.x.api.service.SessionService - �Ự������ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T16:11:04Z absoluteExpiresAt=2026-11-01T16:11:04Z
+2026-11-02 00:09:04.025 DEBUG [no-trace] c.x.api.service.SessionService - �Ự���������� sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T16:10:04Z
+2026-11-02 00:09:04.027 INFO  [no-trace] c.x.api.service.SessionService - �Ự������ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T16:24:04Z absoluteExpiresAt=2026-11-02T00:09:04Z
+2026-11-02 00:09:04.029 DEBUG [no-trace] c.x.api.service.SessionService - ����ʱ�Ự��ʧЧ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.xxplatform.api.service.SessionServiceRenewTests
+[INFO] Running com.xxplatform.api.service.task.TaskBaseIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 00:09:04.167 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 5044 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 00:09:04.167 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 00:09:05.039 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 00:09:05.039 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 00:09:05.041 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 00:09:05.130 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 00:09:05.130 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 960 ms
+2026-11-02 00:09:05.438 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 00:09:05.733 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@1870b9b8
+2026-11-02 00:09:05.735 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 00:09:05.784 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it (PostgreSQL 16.15)
+2026-11-02 00:09:05.913 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 5 migrations (execution time 00:00.093s)
+2026-11-02 00:09:05.987 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 5
+2026-11-02 00:09:05.989 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 00:09:06.015 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 00:09:06.015 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 00:09:06.206 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 53162 (http) with context path '/api/v1'
+2026-11-02 00:09:06.212 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 2.124 seconds (process running for 33.012)
+2026-11-02 00:09:06.214 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 00:09:06.402 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=45ebba19-2a22-4cc2-930f-588f123a87a1 attempt=1 worker=it-worker-5
+2026-11-02 00:09:06.443 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=e8659cfb-11d2-461d-af02-921b9cfd16e7 attempt=1 worker=it-worker-3
+2026-11-02 00:09:06.453 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 00:09:06.473 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=5f275061-73cf-40cd-a07b-abddf5ad07d3 key=it-idem-68911d7e-afa5-44ff-a06d-17caa1901414
+2026-11-02 00:09:06.495 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=96d1f719-f0bf-4f08-8267-13e98f3fe98d attempt=1 worker=it-worker-2
+2026-11-02 00:09:06.518 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=c273fbf9-7a42-4b5d-ad95-7ebe7ceb8bb5 attempt=1 worker=it-worker-4
+2026-11-02 00:09:06.529 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 00:09:06.548 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=efbe7d5e-a4b4-4e96-ba00-4c3d27fb8be5 attempt=1 worker=it-worker-1
+2026-11-02 00:09:06.557 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 00:09:06.707 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 00:09:06.716 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 00:09:06.719 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.684 s -- in com.xxplatform.api.service.task.TaskBaseIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Running com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.033 s -- in com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskServiceTests
+2026-11-02 00:09:06.789 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=f9a5e21d-6fe3-41c9-9702-4ea0a33343a9 attempt=1 worker=worker-1
+2026-11-02 00:09:06.792 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=d04a2013-0026-4960-acff-a74a6ab7bc3c key=idem-001
+2026-11-02 00:09:06.796 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=547b8e0d-41c6-4c7d-87fb-a2fe2b03511a key=idem-001
+2026-11-02 00:09:06.798 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=278ccdc8-97b3-4c97-92a2-5a1b758052d4 attempt=1 worker=worker-1
+2026-11-02 00:09:06.805 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 00:09:06.809 WARN  [no-trace] c.x.api.service.task.TaskService - ������Լ�����ҽ��δ֪�����˹����� taskId=4624b71e-3694-4dce-919f-f06ac54f8599 attempt=2
+2026-11-02 00:09:06.809 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 00:09:06.809 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 00:09:06.811 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=791db448-aa91-4ed5-a768-acebfa9fe37c attempt=1 worker=worker-1
+2026-11-02 00:09:06.821 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.037 s -- in com.xxplatform.api.service.task.TaskServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 272, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  44.311 s
+[INFO] Finished at: 2026-11-02T00:09:07+08:00
+[INFO] ------------------------------------------------------------------------
