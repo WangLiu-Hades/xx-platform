@@ -57,6 +57,7 @@ class ApprovalServiceTests {
     private StubRbac rbac;
     private StubUsers users;
     private ApprovalService service;
+    private ApprovalProperties policy;
 
     @BeforeAll
     static void hashOnce() {
@@ -79,7 +80,9 @@ class ApprovalServiceTests {
         users = new StubUsers();
         users.add(requesterId, passwordHash);
         users.add(reviewerId, passwordHash);
-        service = new ApprovalService(approvals, cipher(TEST_KEY), properties(), rbac, users,
+        policy = properties();
+        policy.setApproverLogins(List.of(requesterId.toString(), reviewerId.toString()));
+        service = new ApprovalService(approvals, cipher(TEST_KEY), policy, rbac, users,
                 new PasswordHasher());
     }
 
@@ -183,6 +186,7 @@ class ApprovalServiceTests {
         UUID secondReviewer = UUID.randomUUID();
         rbac.grant(secondReviewer, List.of("capture:decrypt"));
         users.add(secondReviewer, passwordHash);
+        policy.setApproverLogins(List.of(reviewerId.toString(), secondReviewer.toString()));
         UUID approvalId = createApproval("readDecryptionResult", Map.of(
                 "pathParameters", Map.of("requestId", "00000000-0000-4000-8000-000000000009")));
 
@@ -291,8 +295,8 @@ class ApprovalServiceTests {
 
         ApiException error = assertThrows(ApiException.class, () -> createApproval("readDecryptionResult",
                 Map.of("pathParameters", Map.of("requestId", "00000000-0000-4000-8000-000000000009"))));
-        assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
-        assertEquals("审批人不足", error.getMessage());
+        assertEquals(ErrorCode.SYSTEM_UNAVAILABLE, error.code());
+        assertTrue(error.getMessage().contains("审批人数不足"));
         assertTrue(approvals.inserted.isEmpty());
     }
 
@@ -465,7 +469,12 @@ class ApprovalServiceTests {
             if (hash == null) {
                 return Optional.empty();
             }
-            return Optional.of(new UserAccountRow(userId, "U", "login", "name", hash, "ACTIVE"));
+            return Optional.of(new UserAccountRow(userId, "U", userId.toString(), "name", hash, "ACTIVE"));
+        }
+
+        @Override
+        public Optional<UserAccountRow> findByLoginName(String login) {
+            return findById(UUID.fromString(login));
         }
     }
 

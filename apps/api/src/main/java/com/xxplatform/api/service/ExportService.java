@@ -520,6 +520,7 @@ public class ExportService {
     private Map<String, Object> taskParameters(ContextRow context, ExportCommand command,
                                                List<String> columns, JsonNode filter) {
         Map<String, Object> parameters = new LinkedHashMap<>();
+        parameters.put("operationId", "createExport");
         parameters.put("contextId", context.id().toString());
         parameters.put("format", command.format().name());
         parameters.put("columns", columns);

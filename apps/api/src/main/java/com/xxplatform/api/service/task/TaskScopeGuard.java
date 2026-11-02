@@ -20,23 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-/**
- * 任务侧的"当前授权/数据范围"复核（P-002-05 / M05 / M14）。
- *
- * <p><b>为什么需要独立一个守护类而不是塞进 {@link TaskService}</b>：复核要在两个时刻发生——
- * 提交（{@code create}/{@code import}）与发布（{@code finish} 的 SUCCESS），两处的失败语义不同
- * （提交是 4xx 拒绝；发布是"改判 FAILED + 写原因"，因为任务已经在跑，不能凭空撤销事务）。
- * 把"判定"与"如何收尾"拆开，{@link TaskService} 只决定收尾方式，判定规则只有一份。
- *
- * <p><b>为什么发布复核不能只查"现在还有没有权限码"</b>：任务提交时冻结的是当时的数据范围
- * （{@code analysis_context.permission_version}），缩权之后 {@code auth.user_scope.scope_version}
- * 会增长而冻结值不动——**冻结值落后于当前授权版本**才是"范围已收缩"的可靠信号。
- * 只比权限码会漏掉"权限码没变、但站点/数据类型范围被收窄"的情形。
- *
- * <p><b>为什么提交也要复核</b>：P-009-01 要求 Context 30 分钟 TTL 按创建时间固定、到期 410；
- * 若只在读取时判、提交时不判，调用方可以拿一个已经过期的 Context 继续派生任务，
- * 等于让"过期"只挡住了列表页。
- */
+/** Live business permission, typed Context scope and published-result checks. Submission and publication share the same current authorization rules. */
 @Component
 public class TaskScopeGuard {
 
@@ -65,6 +49,7 @@ public class TaskScopeGuard {
     private final AnalysisContextRepository contexts;
     private final AsyncTaskRepository tasks;
     private final ObjectMapper objectMapper;
+    private final com.xxplatform.api.service.CurrentDataScope liveScope;
 
     public TaskScopeGuard(JdbcTemplate jdbc, RbacRepository rbac, AnalysisContextRepository contexts,
                           AsyncTaskRepository tasks, ObjectMapper objectMapper) {
@@ -73,6 +58,7 @@ public class TaskScopeGuard {
         this.contexts = contexts;
         this.tasks = tasks;
         this.objectMapper = objectMapper;
+        this.liveScope = new com.xxplatform.api.service.CurrentDataScope(jdbc, rbac);
     }
 
     /**
@@ -98,8 +84,7 @@ public class TaskScopeGuard {
         if (!context.expiresAt().isAfter(now)) {
             throw new ApiException(ErrorCode.CONTEXT_EXPIRED, "上下文已过期（TTL 30 分钟按创建时间固定）");
         }
-        long current = currentScopeVersion(ownerUserId);
-        if (context.permissionVersion() < current) {
+        if (!liveScope.contextAllowed(ownerUserId, context)) {
             throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE,
                     "数据范围已收缩，请重新构建上下文后再提交");
         }
@@ -112,12 +97,13 @@ public class TaskScopeGuard {
      * 租约还在"，worker 会反复重试同一份越权结果。改判 FAILED 才是终局。
      */
     public String publishBlocker(TaskRow task, UUID resultAssetId, OffsetDateTime now) {
+        jdbc.queryForList("SELECT id FROM auth.app_user WHERE id=? FOR SHARE", task.ownerUserId());
         String accountBlocker = accountBlocker(task.ownerUserId());
         if (accountBlocker != null) {
             return accountBlocker;
         }
         // 授权被收窄到具体类型时，已跑完的旧类型同样不能再公开（M05「当前授权」）。
-        if (!allowedTaskTypes(task.ownerUserId()).contains(task.taskType())) {
+        if (!businessAllowed(task.ownerUserId(), task.taskType(), parseSnapshot(task.parameterSnapshot()))) {
             return PERMISSION_REVOKED;
         }
         UUID contextId = contextIdOf(parseSnapshot(task.parameterSnapshot()));
@@ -130,7 +116,7 @@ public class TaskScopeGuard {
             if (!context.get().expiresAt().isAfter(now)) {
                 return "TASK_CONTEXT_EXPIRED";
             }
-            if (context.get().permissionVersion() < currentScopeVersion(task.ownerUserId())) {
+            if (!liveScope.contextAllowed(task.ownerUserId(), context.get())) {
                 return SCOPE_SHRUNK;
             }
         }
@@ -163,7 +149,7 @@ public class TaskScopeGuard {
                         && !asset.get().ownerUserId().equals(task.ownerUserId())) {
                     return RESULT_REFERENCE_INVALID;
                 }
-                if (asset.get().expiresAt() != null && !asset.get().expiresAt().isAfter(now)) {
+                if (asset.get().expiresAt() == null || !asset.get().expiresAt().isAfter(now)) {
                     return RESULT_REFERENCE_INVALID;
                 }
             }
@@ -216,20 +202,10 @@ public class TaskScopeGuard {
         return null;
     }
 
-    /**
-     * 提交（create/import）时的类型与 Context 复核；返回 {@code null} 表示放行。
-     *
-     * <p><b>"当前授权"在提交时的含义</b>：不只是"有 {@code task:manage}"——收窄后的账号可能
-     * 只剩某些任务类型（{@code task:run:<TYPE>} 授权码），这时仍允许它提交已被收回的类型，
-     * 等于绕过了缩权。所以提交要按类型再判一次，且判定必须发生在插入任务行之前（不能先落库
-     * 再回滚，那样会消耗积分/占用队列配额，也会留下审计噪音）。
-     *
-     * <p>Context {@code permissionVersion} 落后于 {@code auth.user_scope.scope_version} 视为
-     * 范围已收缩（理由见 {@link #publishBlocker} 的类注释）。
-     */
+    /** Check the existing business permission and current typed Context scope before accepting work. */
     public String submissionBlocker(UUID ownerUserId, TaskType taskType, Map<String, Object> parameters,
                                     OffsetDateTime now) {
-        if (!allowedTaskTypes(ownerUserId).contains(taskType)) {
+        if (accountBlocker(ownerUserId) != null || !businessAllowed(ownerUserId, taskType, parameters)) {
             return PERMISSION_REVOKED;
         }
         UUID contextId = contextIdOf(parameters);
@@ -244,30 +220,55 @@ public class TaskScopeGuard {
         if (!context.get().expiresAt().isAfter(now)) {
             return CONTEXT_EXPIRED;
         }
-        if (context.get().permissionVersion() < currentScopeVersion(ownerUserId)) {
+        if (!liveScope.contextAllowed(ownerUserId, context.get())) {
             return SCOPE_SHRUNK;
         }
         return null;
     }
 
-    /**
-     * 当前账号可以提交/发布的任务类型。
-     *
-     * <p>{@code task:manage} 是全量授权（运维/管理员）；否则按 {@code task:run:<TYPE>} 授权码
-     * 逐类型判断。没有任何类型授权时返回空集——"什么都不能提交"，而不是"默认全开"。
-     */
+    /** Task types allowed by existing main OpenAPI business permissions; task management is not a domain permission exemption. */
     public java.util.Set<TaskType> allowedTaskTypes(UUID userId) {
         List<String> granted = rbac.permissionCodes(userId);
-        if (granted.contains(PERMISSION)) {
-            return java.util.EnumSet.allOf(TaskType.class);
-        }
         java.util.Set<TaskType> allowed = java.util.EnumSet.noneOf(TaskType.class);
         for (TaskType type : TaskType.values()) {
-            if (granted.contains("task:run:" + type.name())) {
+            if (granted.contains(permissionFor(type)) || type == TaskType.EXPORT
+                    && java.util.Arrays.stream(com.xxplatform.api.service.approval.ApprovalOperation.values())
+                    .filter(op -> op.name().contains("EXPORT")).anyMatch(op -> granted.contains(op.permission()))) {
                 allowed.add(type);
             }
         }
         return allowed;
+    }
+
+    private boolean businessAllowed(UUID userId, TaskType type, Map<String, Object> parameters) {
+        String permission = permissionFor(type);
+        if (type == TaskType.EXPORT && parameters != null && parameters.get("operationId") instanceof String id) {
+            var operation = com.xxplatform.api.service.approval.ApprovalOperation.parse(id)
+                    .filter(op -> op.name().contains("EXPORT"));
+            if (operation.isEmpty()) return false;
+            permission = operation.get().permission();
+        }
+        return rbac.permissionCodes(userId).contains(permission);
+    }
+
+    /** Existing business permissions from main's OpenAPI; task:manage controls task management only. */
+    public static String permissionFor(TaskType type) {
+        return switch (type) {
+            case INGESTION -> "ingestion:write";
+            case BACKFILL -> "ingestion:replay";
+            case EXPORT -> "capture:export";
+            case FACE_SEARCH -> "face:search";
+            case ANALYSIS -> "analysis:create";
+            case DATASET_IMPORT -> "dataset:write";
+            case SET_OPERATION -> "dataset:write";
+            case PROFILE_MERGE, PROFILE_SPLIT -> "profile:merge";
+            case MODEL_RUN -> "model:execute";
+            case DEVICE_COMMAND -> "device:command";
+            case REPORT -> "report:create";
+            case NOTIFICATION -> "notification:send";
+            case PERSON_LIBRARY_IMPORT -> "person-library:write";
+            case DEVICE_IMPORT -> "device:write";
+        };
     }
 
     /** 提交复核的失败码 → 4xx 语义（{@link TaskService} 用它决定状态码）。 */
@@ -295,10 +296,7 @@ public class TaskScopeGuard {
         if (status.isEmpty() || !"ACTIVE".equals(status.get(0))) {
             return PERMISSION_REVOKED;
         }
-        // 权限不在这一层判：{@code task:manage} 只是全量授权，收窄后的账号可以只剩
-        // {@code task:run:<TYPE>}。如果这里硬要求 task:manage，按类型授权的账号连"自己还有
-        // 权的那一类"都提交不了，等于把 M05 的"当前授权"退化成"全有或全无"。
-        // 类型级判定统一由 {@link #allowedTaskTypes(UUID)} 负责，本方法只管账号是否还活着。
+        // Business authorization is checked separately for the actual task operation.
         return null;
     }
 
@@ -309,9 +307,7 @@ public class TaskScopeGuard {
         }
     }
 
-    private long currentScopeVersion(UUID userId) {
-        return rbac.userScope(userId).map(RbacRepository.UserScopeRow::scopeVersion).orElse(0L);
-    }
+
 
     /** 冻结参数里的 {@code contextId}；没有就是"这条任务不依赖 Context"，不做范围复核。 */
     private UUID contextIdOf(Map<String, Object> parameters) {
@@ -328,8 +324,7 @@ public class TaskScopeGuard {
         try {
             return UUID.fromString(String.valueOf(raw));
         } catch (IllegalArgumentException ignored) {
-            // 参数里写了个非法 UUID：交给参数 schema 校验去拒绝，这里不重复报错。
-            return null;
+            throw new ApiException(ErrorCode.VALIDATION_ERROR, "contextId格式错误");
         }
     }
 
@@ -343,8 +338,7 @@ public class TaskScopeGuard {
             Map<String, Object> parsed = objectMapper.convertValue(node, Map.class);
             return parsed;
         } catch (RuntimeException | com.fasterxml.jackson.core.JsonProcessingException failure) {
-            log.warn("任务参数快照无法解析，跳过范围复核: {}", failure.getMessage());
-            return Map.of();
+            throw new IllegalStateException("任务参数快照无法解析，拒绝发布", failure);
         }
     }
 }

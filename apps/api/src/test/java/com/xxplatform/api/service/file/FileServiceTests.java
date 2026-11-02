@@ -245,6 +245,7 @@ class FileServiceTests {
 
     @Test
     void getRejectsExpiredAsset() {
+        rbac.codes = List.of(FileService.PERMISSION_DOWNLOAD);
         assets.byId.put(assetId(), row(OWNER, "ACTIVE", Instants.nowUtc().minusMinutes(1), null));
         assertEquals(ErrorCode.FILE_EXPIRED,
                 assertThrows(ApiException.class, () -> service.get(owner(), assetId())).code());
@@ -291,7 +292,7 @@ class FileServiceTests {
 
     @Test
     void downloadReturnsBytesForActiveOwnAsset() throws Exception {
-        assets.byId.put(assetId(), row(OWNER, "ACTIVE", null, "DATASET_IMPORT"));
+        assets.byId.put(assetId(), row(OWNER, "ACTIVE", Instants.nowUtc().plusMonths(12), "DATASET_IMPORT"));
         rbac.codes = List.of(FileService.PERMISSION_DOWNLOAD);
         FileService.Download download = service.download(owner(), assetId());
         assertNotNull(download.stream());

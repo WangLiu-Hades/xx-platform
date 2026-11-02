@@ -39,6 +39,37 @@ class TaskQuotaIntegrationTests extends TaskIntegrationTestSupport {
 
     private static final String WORKER = "it-worker-quota";
 
+    @Test
+    void pendingTasksCountTowardTheFiveWaitingTaskLimit() {
+        UUID owner = seedOwner("pending-budget");
+        for (int i = 0; i < 5; i++) taskService.create(command(owner, Map.of(), newKey("pending-budget")));
+        assertEquals(5, repository.countQueuedByOwner(owner));
+        assertCode(ErrorCode.RATE_LIMITED, () -> taskService.create(command(owner, Map.of(), newKey("pending-overflow"))));
+    }
+
+    @Test
+    void threeQueuedHeavyTasksStillAllowTheFirstTwoToBeClaimed() {
+        UUID owner = seedOwner("three-heavy");
+        for (int i = 0; i < 3; i++) taskService.create(command(owner, TaskType.ANALYSIS, Map.of(), newKey("three-heavy")));
+        new org.springframework.transaction.support.TransactionTemplate(context.getBean(org.springframework.transaction.PlatformTransactionManager.class))
+                .executeWithoutResult(status -> { for (int i = 0; i < 3; i++) repository.promoteNext(now()); });
+        assertEquals(2, taskService.claimNext("it-three-heavy", List.of(TaskType.ANALYSIS), 3).size());
+        assertEquals(1, queuedOf(owner));
+    }
+
+    @Test
+    void fullComputeBudgetDoesNotBlockAnAvailableNotificationSlot() {
+        UUID owner = seedOwner("mixed-slot");
+        for (int i = 0; i < 2; i++) taskService.create(command(owner, TaskType.ANALYSIS, Map.of(), newKey("mixed-compute"), 10));
+        taskService.create(command(owner, TaskType.NOTIFICATION, Map.of(), newKey("mixed-notification"), 1));
+        new org.springframework.transaction.support.TransactionTemplate(context.getBean(org.springframework.transaction.PlatformTransactionManager.class))
+                .executeWithoutResult(status -> { for (int i = 0; i < 3; i++) repository.promoteNext(now()); });
+        assertEquals(2, taskService.claimNext("it-fill-compute", List.of(TaskType.ANALYSIS), 2).size());
+        List<ClaimedTask> ready = taskService.claimNext("it-mixed-worker", List.of(TaskType.ANALYSIS, TaskType.NOTIFICATION), 1);
+        assertEquals(1, ready.size());
+        assertEquals(TaskType.NOTIFICATION, ready.get(0).task().taskType());
+    }
+
     @BeforeAll
     static void startContext() {
         boot();

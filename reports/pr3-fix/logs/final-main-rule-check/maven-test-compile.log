@@ -1,0 +1,3 @@
+注: C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api\src\main\java\com\xxplatform\api\service\approval\ApprovalProposals.java使用了未经检查或不安全的操作。
+注: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+REPAIRED_SOURCE_COMPILED=true

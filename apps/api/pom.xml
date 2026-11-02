@@ -32,6 +32,11 @@
   </properties>
 
   <dependencies>
+    <!-- Read the packaged, authoritative OpenAPI schemas rather than maintaining a second DTO rule set. -->
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+    </dependency>
     <!-- Web 层：REST 接口（统一响应壳、异常兜底、traceId 过滤都在这里落地） -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -112,6 +117,14 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource><directory>src/main/resources</directory></resource>
+      <resource>
+        <directory>${project.basedir}/../../contracts/api</directory>
+        <targetPath>contracts/api</targetPath>
+        <includes><include>openapi.yaml</include></includes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>

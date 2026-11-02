@@ -30,26 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * 受控文件的完整生命周期：上传 → 扫描 → ACTIVE/QUARANTINED → 读取/下载。
- *
- * <p><b>为什么状态机是"先 PROCESSING 再扫描"</b>：上传接口必须在 202 就返回 id，
- * 不能等扫描；而"是否可下载"又必须以扫描结论为准。所以行先落 PROCESSING，扫描在
- * 同一请求内同步完成，结论写回后再返回 status——调用方拿到的 ACTIVE/QUARANTINED
- * 已是最终状态。将来接入病毒扫描等慢速检查时，把这里换成异步消费者即可，状态机不用改。
- *
- * <p><b>为什么下载要"实时重校"</b>：契约没有下载许可 token 或签名 URL 参数，
- * "下载授权 5 分钟一次性"在这个端点上无法表达成一次性票据。实现取"每次下载都重新校验
- * 会话 + 权限 + 归属 + 状态 + 过期"，并回 {@code Cache-Control: no-store} 禁止中间层缓存；
- * 一次性短期 URL 属于 P1 待定（需要新增端点与票据表），不在本行伪造。
- *
- * <p><b>M17 策略同源</b>：上传上限与 GET /client-config 下发的 {@code uploadPolicies}
- * 都来自 {@link UploadPolicyProvider}，执行上限是 {@code min(全局 maxUploadBytes, 分类 maxBytes)}。
- *
- * <p><b>M15 幂等</b>：带 {@code Idempotency-Key} 的上传走 {@link IdempotencyRequestRepository}
- * 账本：同账号+同操作+同键且请求摘要一致时重放首次结果，不重复插入 {@code core.file_asset}；
- * 摘要不一致回 409 {@code IDEMPOTENCY_CONFLICT}。
- */
+/** Controlled upload, scan, metadata and download lifecycle. Downloads enforce source-domain scope, retention and a session-bound five-minute permit; no unsigned fallback. */
 @Service
 public class FileService {
 
@@ -83,12 +64,15 @@ public class FileService {
     private final AuditService audit;
     private final UploadPolicyProvider policyProvider;
     private final IdempotencyRequestRepository idempotency;
+    private final FileAccessPolicy accessPolicy;
+    private final DownloadPermits permits;
 
     /** 生产构造：策略与幂等都走真实依赖。 */
     @Autowired
     public FileService(FileAssetRepository assets, FileStorage storage, RbacRepository rbac,
                        FileProperties properties, ObjectMapper objectMapper, AuditService audit,
-                       UploadPolicyProvider policyProvider, IdempotencyRequestRepository idempotency) {
+                       UploadPolicyProvider policyProvider, IdempotencyRequestRepository idempotency,
+                       FileAccessPolicy accessPolicy, DownloadPermits permits) {
         this.assets = assets;
         this.storage = storage;
         this.rbac = rbac;
@@ -97,6 +81,14 @@ public class FileService {
         this.audit = audit;
         this.policyProvider = policyProvider;
         this.idempotency = idempotency;
+        this.accessPolicy = accessPolicy;
+        this.permits = permits;
+    }
+
+    public FileService(FileAssetRepository assets, FileStorage storage, RbacRepository rbac,
+                       FileProperties properties, ObjectMapper objectMapper, AuditService audit,
+                       UploadPolicyProvider policies, IdempotencyRequestRepository idempotency) {
+        this(assets, storage, rbac, properties, objectMapper, audit, policies, idempotency, null, null);
     }
 
     /**
@@ -351,6 +343,7 @@ public class FileService {
     /** 读元数据：非本人一律 404 隐藏存在性；过期 410。 */
     public FileAssetRow get(AuthenticatedSession session, UUID fileAssetId) {
         FileAssetRow row = visibleAsset(session, fileAssetId);
+        if (accessPolicy != null) accessPolicy.requireMetadata(session, row, rbac.permissionCodes(session.userId()));
         if (expired(row, Instants.nowUtc())) {
             throw new ApiException(ErrorCode.FILE_EXPIRED, "文件已过期");
         }
@@ -367,6 +360,21 @@ public class FileService {
      * 失败事件的 {@code failureCode} 用契约错误码名，摘要只放分类与字节数。
      */
     public Download download(AuthenticatedSession session, UUID fileAssetId) {
+        return download(session, fileAssetId, null);
+    }
+
+    public String issueDownloadPermit(AuthenticatedSession session, FileAssetRow row) {
+        if (!STATUS_ACTIVE.equals(row.status()) || row.expiresAt() == null || permits == null || !permits.available()) return null;
+        try { requireSourceAccess(session, row); }
+        catch (ApiException denied) {
+            if (denied.code() == ErrorCode.PERMISSION_DENIED || denied.code() == ErrorCode.PERMISSION_DATA_SCOPE
+                    || denied.code() == ErrorCode.SYSTEM_UNAVAILABLE) return null;
+            throw denied;
+        }
+        return permits.issue(session, row.id(), row.expiresAt());
+    }
+
+    public Download download(AuthenticatedSession session, UUID fileAssetId, String permit) {
         String traceId = RequestIdFilter.currentTraceIdOrFallback();
         List<String> permissions = rbac.permissionCodes(session.userId());
         if (!permissions.contains(PERMISSION_DOWNLOAD)) {
@@ -403,6 +411,14 @@ public class FileService {
                             "status", row.status()));
             throw new ApiException(ErrorCode.DATA_NOT_FOUND, "文件不可下载");
         }
+        try {
+            requireSourceAccess(session, row);
+            if (permits != null) permits.require(session, fileAssetId, permit);
+        } catch (ApiException rejected) {
+            audit.failure("file.download", "FILE", "FILE_ASSET", fileAssetId, actorOf(session), null,
+                    null, traceId, rejected.code().name(), Map.of("reason", "来源权限或下载许可无效", "category", row.category()));
+            throw rejected;
+        }
         audit.success("file.download", "FILE", "FILE_ASSET", fileAssetId, actorOf(session), null, null,
                 traceId,
                 Map.<String, Object>of("category", row.category(), "byteSize", row.byteSize()));
@@ -425,8 +441,15 @@ public class FileService {
                 || FileCategory.PROFILE_PORTRAIT.name().equals(category);
     }
 
+    private void requireSourceAccess(AuthenticatedSession session, FileAssetRow row) {
+        List<String> permissions = rbac.permissionCodes(session.userId());
+        if (!permissions.contains(PERMISSION_DOWNLOAD)) throw new ApiException(ErrorCode.PERMISSION_DENIED, "缺少下载权限");
+        if (accessPolicy != null) accessPolicy.require(session, row, permissions);
+    }
+
     static boolean expired(FileAssetRow row, OffsetDateTime now) {
-        return row.expiresAt() != null && !row.expiresAt().isAfter(now);
+        return (STATUS_ACTIVE.equals(row.status()) && row.expiresAt() == null)
+                || (row.expiresAt() != null && !row.expiresAt().isAfter(now));
     }
 
     private static FileCategory parseCategory(String raw) {

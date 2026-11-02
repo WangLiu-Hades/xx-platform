@@ -95,6 +95,10 @@ class TaskBaseIntegrationTests {
                 ON CONFLICT DO NOTHING
                 """, OWNER);
         jdbc.update("""
+                INSERT INTO auth.role_permission(role_id,permission_code)
+                 VALUES ('0192f000-0000-7000-8000-00000000b002','capture:export') ON CONFLICT DO NOTHING
+                """);
+        jdbc.update("""
                 INSERT INTO auth.user_scope (user_id, management_all_sites, data_all_sites, own_only,
                                              scope_version, policy_version)
                 VALUES (?, false, false, false, 1, 'v1')

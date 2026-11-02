@@ -1,0 +1,1154 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -------------------< com.xxplatform:xx-platform-api >-------------------
+[INFO] Building xx-platform-api 0.1.0-SNAPSHOT
+[INFO]   from .pr3-validation-pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ xx-platform-api ---
+[INFO] Copying 8 resources from src\main\resources to ..\..\..\pr3-rule-fix-evidence-20261102\maven-build-1793628898870288300\classes
+[INFO] Copying 1 resource from ..\..\contracts\api to ..\..\..\pr3-rule-fix-evidence-20261102\maven-build-1793628898870288300\classes\contracts\api
+[INFO]
+[INFO] --- compiler:3.14.1:compile (default-compile) @ xx-platform-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ xx-platform-api ---
+[INFO] Copying 1 resource from src\test\resources to ..\..\..\pr3-rule-fix-evidence-20261102\maven-build-1793628898870288300\test-classes
+[INFO]
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ xx-platform-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO]
+[INFO] --- surefire:3.5.6:test (default-test) @ xx-platform-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.xxplatform.api.api.CorsContractTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:15:28.223 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:15:28.229 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:15:38.776 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:15:38.797 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:15:38.798 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:15:38.874 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:15:38.876 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 10545 ms
+2026-11-02 22:15:39.459 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:15:39.714 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@25a290ee
+2026-11-02 22:15:39.717 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:15:39.769 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:15:39.851 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-02 22:15:39.857 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.053s)
+2026-11-02 22:15:39.885 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-02 22:15:39.979 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-11-02 22:15:40.283 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - baseline design 2"
+2026-11-02 22:15:40.295 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 22:15:44.202 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - seed deployment client config"
+2026-11-02 22:15:44.220 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "3 - approval aggregate and policy v1"
+2026-11-02 22:15:44.222 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 22:15:44.308 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "4 - policy parameters 20261019"
+2026-11-02 22:15:44.310 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 22:15:44.319 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "5 - backfill file asset retention"
+2026-11-02 22:15:44.332 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "6 - upload policy alignment"
+2026-11-02 22:15:44.334 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 22:15:44.351 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Successfully applied 6 migrations to schema "public", now at version v6 (execution time 00:03.979s)
+2026-11-02 22:15:44.497 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:15:44.498 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:15:45.391 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 62335 (http) with context path '/api/v1'
+2026-11-02 22:15:45.407 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 18.099 seconds (process running for 19.881)
+2026-11-02 22:15:45.419 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:15:45.778 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 22:15:45.779 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 22:15:45.780 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-11-02 22:15:46.081 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:15:46.151 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 22:15:46.158 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 22:15:46.161 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 19.23 s -- in com.xxplatform.api.api.CorsContractTests
+[INFO] Running com.xxplatform.api.api.FileControllerTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.api.FileControllerTests
+[INFO] Running com.xxplatform.api.api.FileHttpIntegrationTests
+2026-11-02 22:15:46.244 INFO  [no-trace] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.xxplatform.api.api.FileHttpIntegrationTests]: FileHttpIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-02 22:15:46.345 INFO  [no-trace] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.xxplatform.api.ApiApplication for test class com.xxplatform.api.api.FileHttpIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:15:46.453 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - Starting FileHttpIntegrationTests using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:15:46.455 DEBUG [no-trace] c.x.api.api.FileHttpIntegrationTests - Running with Spring Boot v3.5.16, Spring v6.2.19
+2026-11-02 22:15:46.455 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - The following 1 profile is active: "db"
+2026-11-02 22:15:47.049 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:15:47.138 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@e04b8a0
+2026-11-02 22:15:47.138 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:15:47.140 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:15:47.175 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.025s)
+2026-11-02 22:15:47.396 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:15:47.396 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:15:47.596 INFO  [no-trace] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-11-02 22:15:47.596 INFO  [no-trace] o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-11-02 22:15:47.597 INFO  [no-trace] o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+2026-11-02 22:15:47.613 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - Started FileHttpIntegrationTests in 1.22 seconds (process running for 22.087)
+2026-11-02 22:15:47.614 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:15:48.724 INFO  [it-http-a6da89b4-ee3f-4c3c-9843-a5d2c7628239] c.x.api.service.file.FileService - 文件上传完成 asset=9c01b773-1891-44b1-8816-ad6836472fef category=DATASET_IMPORT bytes=12 status=ACTIVE rows=1 detail=ok
+2026-11-02 22:15:48.889 INFO  [it-http-802ce655-b883-4158-8cc9-67b18dcdc777] c.x.api.service.file.FileService - 文件上传完成 asset=3656e50b-ba0d-4724-9728-9a46f6993bac category=DATASET_IMPORT bytes=6 status=QUARANTINED rows=0 detail=CSV 第 2 行列数为 1，表头为 2
+2026-11-02 22:15:48.994 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_EXPIRED message=文件已过期 traceId=unknown-trace
+2026-11-02 22:15:49.119 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_EXPIRED message=文件已过期 traceId=unknown-trace
+2026-11-02 22:15:49.128 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_EXPIRED message=文件已过期 traceId=unknown-trace
+2026-11-02 22:15:49.178 INFO  [it-http-ab4a3963-f74c-4c99-b4e3-b37d71ba8d12] c.x.api.service.file.FileService - 文件上传完成 asset=e735fd66-1b72-4120-b564-56d42ce98835 category=DATASET_IMPORT bytes=18 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:49.287 INFO  [it-http-d1dec64e-94a5-4b26-a2fd-2bee1d7b28b6] c.x.api.service.file.FileService - 文件上传完成 asset=3bd869cf-0624-430a-aa02-7471b77b38ad category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:49.482 INFO  [it-http-bf0063ae-6966-4c98-ab3d-daa118ff0573] c.x.api.service.file.FileService - 文件上传完成 asset=4ada2f93-7219-46af-8aa8-dc1f23f837d2 category=DATASET_IMPORT bytes=1188 status=ACTIVE rows=1 detail=ok
+2026-11-02 22:15:49.501 INFO  [it-http-9b789cd3-7f38-443f-ae83-eccdc3969ab3] c.x.api.service.file.FileService - 文件上传完成 asset=7ad3da81-d0a6-4767-9b94-ec306257b293 category=DATASET_IMPORT bytes=877 status=QUARANTINED rows=0 detail=sheet S 的目标缺失：xl/worksheets/sheet1.xml
+2026-11-02 22:15:49.538 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=DATA_NOT_FOUND message=文件不可下载 traceId=unknown-trace
+2026-11-02 22:15:49.548 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=DATA_NOT_FOUND message=文件不存在 traceId=unknown-trace
+2026-11-02 22:15:49.587 INFO  [it-http-5162cdaf-27d7-4029-bf43-a6264a005cda] c.x.api.service.file.FileService - 文件上传完成 asset=5d68fe86-57bd-45f4-b930-1a7409c3d4e0 category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:49.601 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=SYSTEM_UNAVAILABLE message=尚未绑定下载许可签名密钥 traceId=unknown-trace
+2026-11-02 22:15:49.641 INFO  [it-http-3ef3741e-ca4b-4d02-b450-45f41866703c] c.x.api.service.file.FileService - 文件上传完成 asset=23f3853d-5daf-45b4-a539-13a3adecad6c category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:49.656 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=缺少下载权限 traceId=unknown-trace
+2026-11-02 22:15:49.699 INFO  [it-http-15678c70-5bcf-405f-b1a3-a18b018928c9] c.x.api.service.file.FileService - 文件上传完成 asset=f1dc57e4-7356-40f6-b656-11fe5b93f9ed category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:49.711 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=下载许可缺失、已过期或授权已变化，请重新获取文件元数据 traceId=unknown-trace
+2026-11-02 22:15:49.847 DEBUG [it-http-d4e610f0-bde5-4d11-8598-4893435511cd] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_TOO_LARGE message=文件超过 10485760 字节上限（实际 10485761） traceId=it-http-d4e610f0-bde5-4d11-8598-4893435511cd
+2026-11-02 22:15:49.860 DEBUG [it-http-fc1de7d7-568a-4028-b68d-ce5871fd623d] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_MEDIA_UNSUPPORTED message=该分类只接受 image/jpeg/image/png，收到 image/gif traceId=it-http-fc1de7d7-568a-4028-b68d-ce5871fd623d
+2026-11-02 22:15:49.895 DEBUG [it-http-a3bd217b-63e7-4f97-a145-45726927bd8c] c.x.api.common.ApiExceptionHandler - 业务异常 code=FILE_MEDIA_UNSUPPORTED message=该分类未启用上传：DATASET_IMPORT traceId=it-http-a3bd217b-63e7-4f97-a145-45726927bd8c
+2026-11-02 22:15:49.934 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=缺少下载权限 traceId=unknown-trace
+2026-11-02 22:15:49.960 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=缺少下载权限 traceId=unknown-trace
+2026-11-02 22:15:49.996 INFO  [it-http-866ca052-31bc-44ae-82b6-37035f893f46] c.x.api.service.file.FileService - 文件上传完成 asset=0367a527-f6f5-441a-83fa-c7e2ec91567e category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:50.014 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=IDEMPOTENCY_CONFLICT message=同一 Idempotency-Key 已用于不同的上传内容 traceId=unknown-trace
+2026-11-02 22:15:50.026 INFO  [it-http-922a3312-9a56-44ce-b3ce-e23910371154] c.x.api.service.file.FileService - 文件上传完成 asset=500952df-6641-420c-9c75-0c06668c400e category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:15:50.034 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=VALIDATION_ERROR message=缺少 Idempotency-Key 请求头 traceId=unknown-trace
+2026-11-02 22:15:50.070 INFO  [it-http-f19b7abb-f346-4bc8-acd7-3004161ed791] c.x.api.service.file.FileService - 文件上传完成 asset=322191d3-3e6d-4300-9c25-9a3a9dfece64 category=DATASET_IMPORT bytes=16 status=QUARANTINED rows=0 detail=JSON 解析失败：Unrecognized token 'this': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1]
+2026-11-02 22:15:50.079 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - 业务异常 code=DATA_NOT_FOUND message=文件不可下载 traceId=unknown-trace
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.902 s -- in com.xxplatform.api.api.FileHttpIntegrationTests
+[INFO] Running com.xxplatform.api.ApiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:15:50.142 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:15:50.142 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - No active profile set, falling back to 1 default profile: "default"
+2026-11-02 22:15:50.863 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:15:50.865 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:15:50.865 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:15:50.939 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:15:50.939 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 794 ms
+2026-11-02 22:15:50.982 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:15:50.982 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:15:51.098 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 62345 (http) with context path '/api/v1'
+2026-11-02 22:15:51.103 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.998 seconds (process running for 25.577)
+2026-11-02 22:15:51.110 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 22:15:51.110 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 22:15:51.110 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-11-02 22:15:51.125 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:15:51.200 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.112 s -- in com.xxplatform.api.ApiApplicationTests
+[INFO] Running com.xxplatform.api.auth.AuthSessionIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:15:51.257 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:15:51.258 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:15:51.741 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:15:51.741 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:15:51.741 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:15:51.768 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:15:51.768 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 507 ms
+2026-11-02 22:15:51.809 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:15:51.875 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@599cf2cd
+2026-11-02 22:15:51.875 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:15:51.876 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:15:51.915 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.028s)
+2026-11-02 22:15:52.104 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:15:52.104 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:15:52.118 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:15:52.120 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:15:52.217 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 62351 (http) with context path '/api/v1'
+2026-11-02 22:15:52.222 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.997 seconds (process running for 26.695)
+2026-11-02 22:15:52.222 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:15:52.985 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 22:15:52.985 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 22:15:52.985 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-11-02 22:15:52.999 WARN  [dfc45924-7f33-4c80-8fcc-06284a6d7321] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:53.804 INFO  [0cf419fe-adb1-4d44-9e69-f29602816e96] c.x.api.service.LoginService - 登录成功 userId=7ac9f738-9703-4879-9a03-6657f762a7c8 loginName=it.auth.7ac9f73897 clientIp=127.0.0.1 sessionId=f4a2d5ae-b820-4e1d-8b82-134025219dd4
+2026-11-02 22:15:53.828 INFO  [4fdbe6d8-8998-4117-8a59-0652decf24ec] c.x.api.service.SessionService - 会话已续期 sessionId=f4a2d5ae-b820-4e1d-8b82-134025219dd4 idleExpiresAt=2026-11-02T14:18:53.820966Z absoluteExpiresAt=2026-11-02T14:18:53.820966Z
+2026-11-02 22:15:53.876 INFO  [0c7d7679-54f3-4c91-96d5-bda2b9391d35] c.x.api.service.SessionService - 会话已撤销 sessionId=f4a2d5ae-b820-4e1d-8b82-134025219dd4 traceId=0c7d7679-54f3-4c91-96d5-bda2b9391d35
+2026-11-02 22:15:53.891 WARN  [419ef606-3938-4699-a33d-d5324dc8cf00] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:54.546 INFO  [02296bb7-bfba-4bc8-ada7-c1428bc38448] c.x.api.service.LoginService - 登录成功 userId=260cc497-0c4f-4975-ac75-7e4564bbaed1 loginName=it.auth.260cc4970c clientIp=127.0.0.1 sessionId=46aeb67f-4716-4384-bd3e-173edb1f1b3e
+2026-11-02 22:15:54.563 WARN  [ed4e4c87-6658-4dc9-a1ef-3a737d49aa64] c.x.api.service.SessionAuthenticator - 会话客户端绑定不匹配 sessionId=46aeb67f-4716-4384-bd3e-173edb1f1b3e userId=260cc497-0c4f-4975-ac75-7e4564bbaed1 reason=CLIENT_BINDING_MISSING boundIp=null currentIp=127.0.0.1
+2026-11-02 22:15:54.567 DEBUG [ed4e4c87-6658-4dc9-a1ef-3a737d49aa64] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话绑定信息已变化，请重新登录 traceId=ed4e4c87-6658-4dc9-a1ef-3a737d49aa64
+2026-11-02 22:15:54.577 WARN  [b6664e94-0e56-4f7d-8356-941ada7940b8] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:55.260 INFO  [9d1b5a83-731d-4622-bfad-45f0c6c44889] c.x.api.service.SessionService - 单会话策略：撤销该账号其他有效会话 1 条 userId=260cc497-0c4f-4975-ac75-7e4564bbaed1 traceId=9d1b5a83-731d-4622-bfad-45f0c6c44889
+2026-11-02 22:15:55.262 INFO  [9d1b5a83-731d-4622-bfad-45f0c6c44889] c.x.api.service.LoginService - 登录成功 userId=260cc497-0c4f-4975-ac75-7e4564bbaed1 loginName=it.auth.260cc4970c clientIp=127.0.0.1 sessionId=34b21318-66dc-49cb-b7d7-13bf2eb70a64
+2026-11-02 22:15:55.278 WARN  [151a7973-07c0-4e85-9af4-7b024e4d8c91] c.x.api.service.SessionAuthenticator - 会话客户端绑定不匹配 sessionId=34b21318-66dc-49cb-b7d7-13bf2eb70a64 userId=260cc497-0c4f-4975-ac75-7e4564bbaed1 reason=CLIENT_BINDING_MISSING boundIp=null currentIp=127.0.0.1
+2026-11-02 22:15:55.281 DEBUG [151a7973-07c0-4e85-9af4-7b024e4d8c91] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话绑定信息已变化，请重新登录 traceId=151a7973-07c0-4e85-9af4-7b024e4d8c91
+2026-11-02 22:15:55.292 WARN  [a649a6e9-ea2c-45d1-9b96-92f5951269b4] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:55.300 WARN  [2e462090-4f23-4024-a22a-6422f713c6ee] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:55.311 WARN  [e5ba4b02-7668-4dce-a231-12aba7cbb95a] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:55.985 INFO  [92e2d517-0546-4627-9cb3-1364e81eee4f] c.x.api.service.LoginService - 登录成功 userId=8bc01ff4-260f-4087-8e2f-e56d0e1860c5 loginName=it.auth.8bc01ff426 clientIp=127.0.0.1 sessionId=db952514-330e-4f39-bb86-81a4ab151c42
+2026-11-02 22:15:57.984 INFO  [551f39ce-2c6c-4136-abc6-dc984031877a] c.x.api.service.SessionService - 登录轮换：撤销旧会话 1 条 userId=8bc01ff4-260f-4087-8e2f-e56d0e1860c5 traceId=551f39ce-2c6c-4136-abc6-dc984031877a
+2026-11-02 22:15:57.986 INFO  [551f39ce-2c6c-4136-abc6-dc984031877a] c.x.api.service.PasswordService - 改密成功并轮换凭据 userId=8bc01ff4-260f-4087-8e2f-e56d0e1860c5 sessionId=23c195da-c357-47a5-851b-1423fc9674b4 replayed=false
+2026-11-02 22:15:57.993 DEBUG [7973d16a-56c9-4406-bef9-4c28f0117ff5] c.x.api.service.SessionAuthenticator - 会话已撤销 sessionId=db952514-330e-4f39-bb86-81a4ab151c42
+2026-11-02 22:15:57.994 DEBUG [7973d16a-56c9-4406-bef9-4c28f0117ff5] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话已失效，请重新登录 traceId=7973d16a-56c9-4406-bef9-4c28f0117ff5
+2026-11-02 22:15:58.013 INFO  [e4f53c14-be3b-4d8d-afea-9af5c4d7e872] c.x.api.service.PasswordService - 改密重放（幂等命中） userId=8bc01ff4-260f-4087-8e2f-e56d0e1860c5
+2026-11-02 22:15:58.020 INFO  [bd7a4687-a977-47d6-a391-016c046f9a11] c.x.api.service.PasswordService - 改密被拒：同一 Idempotency-Key 的内容不同 userId=8bc01ff4-260f-4087-8e2f-e56d0e1860c5
+2026-11-02 22:15:58.025 DEBUG [bd7a4687-a977-47d6-a391-016c046f9a11] c.x.api.common.ApiExceptionHandler - 业务异常 code=IDEMPOTENCY_CONFLICT message=Idempotency-Key 已被不同的请求使用 traceId=bd7a4687-a977-47d6-a391-016c046f9a11
+2026-11-02 22:15:58.033 DEBUG [11581dd0-1f8a-4565-b585-9a7520276e66] c.x.api.common.ApiExceptionHandler - 业务异常 code=VALIDATION_ERROR message=缺少 Idempotency-Key 请求头 traceId=11581dd0-1f8a-4565-b585-9a7520276e66
+2026-11-02 22:15:58.049 WARN  [e4efecad-07f5-48bc-890a-01ee341a5d5a] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:15:58.721 INFO  [ecfa37be-8165-4b19-b9a4-d22970efb8b4] c.x.api.service.LoginService - 登录成功 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 loginName=it.auth.8aed07b411 clientIp=127.0.0.1 sessionId=47914974-4981-4faa-9d2c-83ef121d1240
+2026-11-02 22:15:58.743 INFO  [882573ba-714e-4654-ad44-3aa742d8468f] c.x.api.service.SessionAuthenticator - 初始口令访问业务端点被拒 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 target=GET /api/v1/tasks
+2026-11-02 22:15:58.745 DEBUG [882573ba-714e-4654-ad44-3aa742d8468f] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=首次登录必须先修改初始密码 traceId=882573ba-714e-4654-ad44-3aa742d8468f
+2026-11-02 22:15:59.429 INFO  [eb98f244-4cb2-4a8d-9151-2055119de16d] c.x.api.service.PasswordService - 改密失败：当前口令不正确 userId=8aed07b4-111c-4f03-bdb8-43c02d043269
+2026-11-02 22:15:59.432 DEBUG [eb98f244-4cb2-4a8d-9151-2055119de16d] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_INVALID_CREDENTIALS message=当前口令不正确 traceId=eb98f244-4cb2-4a8d-9151-2055119de16d
+2026-11-02 22:15:59.437 INFO  [fcb73606-e3ad-446e-a9ac-1173cbf470a5] c.x.api.service.SessionAuthenticator - 初始口令访问业务端点被拒 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 target=GET /api/v1/tasks
+2026-11-02 22:15:59.439 DEBUG [fcb73606-e3ad-446e-a9ac-1173cbf470a5] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=首次登录必须先修改初始密码 traceId=fcb73606-e3ad-446e-a9ac-1173cbf470a5
+2026-11-02 22:16:01.399 INFO  [a5bc8a8b-3bad-4c40-8d0a-abb5c0488e97] c.x.api.service.SessionService - 登录轮换：撤销旧会话 1 条 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 traceId=a5bc8a8b-3bad-4c40-8d0a-abb5c0488e97
+2026-11-02 22:16:01.401 INFO  [a5bc8a8b-3bad-4c40-8d0a-abb5c0488e97] c.x.api.service.PasswordService - 改密成功并轮换凭据 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 sessionId=8f4a81c2-1dd8-4310-a7e8-8f7a0fd92a9d replayed=false
+2026-11-02 22:16:01.408 DEBUG [bdceab5c-5388-44bb-bf93-3a8773580eb8] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/auth/logout
+2026-11-02 22:16:01.411 DEBUG [510f174e-a9ad-4e37-a488-09d1f1486410] c.x.api.service.SessionAuthenticator - 会话已撤销 sessionId=47914974-4981-4faa-9d2c-83ef121d1240
+2026-11-02 22:16:01.412 DEBUG [510f174e-a9ad-4e37-a488-09d1f1486410] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话已失效，请重新登录 traceId=510f174e-a9ad-4e37-a488-09d1f1486410
+2026-11-02 22:16:01.423 DEBUG [d373b78c-0ed5-4fac-a3ae-53c5601a0a48] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=无权查看任务（缺少 task:read） traceId=d373b78c-0ed5-4fac-a3ae-53c5601a0a48
+2026-11-02 22:16:01.430 WARN  [b570f794-cf8c-4d72-81fb-0e90729f4f92] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:02.099 INFO  [51c2a310-426f-4f91-b39b-17e47f87dbc4] c.x.api.service.SessionService - 单会话策略：撤销该账号其他有效会话 1 条 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 traceId=51c2a310-426f-4f91-b39b-17e47f87dbc4
+2026-11-02 22:16:02.101 INFO  [51c2a310-426f-4f91-b39b-17e47f87dbc4] c.x.api.service.LoginService - 登录成功 userId=8aed07b4-111c-4f03-bdb8-43c02d043269 loginName=it.auth.8aed07b411 clientIp=127.0.0.1 sessionId=ccec0e3f-f749-4af6-a658-a748214bad25
+2026-11-02 22:16:02.114 WARN  [7f951e6d-1f91-41ec-8409-7cf9cfe88137] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:02.783 INFO  [c3b60fb4-e13f-4bc7-8ccd-00df103fdc09] c.x.api.service.LoginService - 登录失败：口令不匹配 loginName=it.auth.8aed07b411 clientIp=127.0.0.1
+2026-11-02 22:16:02.785 DEBUG [c3b60fb4-e13f-4bc7-8ccd-00df103fdc09] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_INVALID_CREDENTIALS message=登录名或密码不正确 traceId=c3b60fb4-e13f-4bc7-8ccd-00df103fdc09
+2026-11-02 22:16:02.793 WARN  [8223ab83-2d61-4613-946d-f7c76fad763f] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:03.450 INFO  [4a7932c0-71e9-4332-a971-15b773bc80ac] c.x.api.service.LoginService - 登录成功 userId=5d5f5965-2231-4e8b-bec9-2632dec735c3 loginName=it.auth.5d5f596522 clientIp=127.0.0.1 sessionId=fb576152-cab3-4127-ac30-f4ccfd61d30d
+2026-11-02 22:16:03.463 DEBUG [9bf32e23-f734-44be-9f66-0f5369eec836] c.x.api.service.SessionAuthenticator - 会话空闲超时 sessionId=fb576152-cab3-4127-ac30-f4ccfd61d30d idleExpiresAt=2026-11-02T14:16:02.460660Z
+2026-11-02 22:16:03.464 DEBUG [9bf32e23-f734-44be-9f66-0f5369eec836] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话已过期，请重新登录 traceId=9bf32e23-f734-44be-9f66-0f5369eec836
+2026-11-02 22:16:03.469 DEBUG [58cabd7c-10c7-442d-b875-ddaf03bd2e72] c.x.api.service.SessionAuthenticator - 会话空闲超时 sessionId=fb576152-cab3-4127-ac30-f4ccfd61d30d idleExpiresAt=2026-11-02T14:16:02.460660Z
+2026-11-02 22:16:03.469 DEBUG [58cabd7c-10c7-442d-b875-ddaf03bd2e72] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话已过期，请重新登录 traceId=58cabd7c-10c7-442d-b875-ddaf03bd2e72
+2026-11-02 22:16:03.476 WARN  [162d46c4-0a2c-474b-a88e-1353add29918] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:04.136 INFO  [17ab8abe-b410-40f0-8e21-3d133320d4b7] c.x.api.service.LoginService - 登录成功 userId=bf64e7ea-0a2d-48e4-9c68-dc3646532156 loginName=it.auth.bf64e7ea0a clientIp=127.0.0.1 sessionId=35531d2a-2e6b-4dd9-a41a-8fb88bb11db6
+2026-11-02 22:16:04.158 WARN  [be0d580d-66f5-474c-ba2b-4c9f8aff2d63] c.x.api.service.SessionAuthenticator - 会话客户端绑定不匹配 sessionId=35531d2a-2e6b-4dd9-a41a-8fb88bb11db6 userId=bf64e7ea-0a2d-48e4-9c68-dc3646532156 reason=USER_AGENT_MISMATCH boundIp=127.0.0.1 currentIp=127.0.0.1
+2026-11-02 22:16:04.161 DEBUG [be0d580d-66f5-474c-ba2b-4c9f8aff2d63] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话绑定信息已变化，请重新登录 traceId=be0d580d-66f5-474c-ba2b-4c9f8aff2d63
+2026-11-02 22:16:04.183 WARN  [61f309cb-2cab-4f3c-9c5f-237fd5035aa7] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:04.851 INFO  [5c6190ab-2581-4d27-9518-cf33f0f8fa51] c.x.api.service.LoginService - 登录成功 userId=b39b7aed-6a2e-41a6-a308-1feaaedae85c loginName=it.auth.b39b7aed6a clientIp=127.0.0.1 sessionId=1b9a028c-16cb-45e1-92bf-cfaa6ac8242d
+2026-11-02 22:16:07.280 DEBUG [62d255ac-d591-481f-8bb0-a85ce69aca9a] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=无权查看任务（缺少 task:read） traceId=62d255ac-d591-481f-8bb0-a85ce69aca9a
+2026-11-02 22:16:10.931 WARN  [1d55dffa-f9d5-47c8-8d67-14eed0828f1e] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:10.935 WARN  [79f070a2-9ce3-4410-b422-d418345ea25d] c.x.api.service.LoginService - 登录被拒：来源不在允许网段 clientIp=8.8.8.8 loginName=it.auth.e56881d989
+2026-11-02 22:16:10.937 DEBUG [79f070a2-9ce3-4410-b422-d418345ea25d] c.x.api.common.ApiExceptionHandler - 业务异常 code=PERMISSION_DENIED message=登录来源不在允许的内网范围 traceId=79f070a2-9ce3-4410-b422-d418345ea25d
+2026-11-02 22:16:10.943 WARN  [a2aa1945-f9d7-4f14-a60b-1289de7eed9f] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:11.608 INFO  [41702ad1-75e8-461d-843f-8d11cf497029] c.x.api.service.LoginService - 登录成功 userId=e56881d9-89cd-4988-a168-9efe5a465655 loginName=it.auth.e56881d989 clientIp=10.1.2.3 sessionId=1c3b355d-ae34-4df2-bebe-b5494a3c4c8e
+2026-11-02 22:16:11.629 WARN  [25943a23-8689-43b4-8fc0-9d553e31c804] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:12.284 INFO  [6da37aed-1ac5-4972-978e-c632444bb59c] c.x.api.service.LoginService - 登录成功 userId=9e9d77ca-64a9-4c93-bf3a-e55109909e89 loginName=it.auth.9e9d77ca64 clientIp=127.0.0.1 sessionId=609c4bf4-a8e4-4991-977b-d3ca72dbd500
+2026-11-02 22:16:12.301 WARN  [1103c37a-aa05-42a1-a2a0-0f883448c234] c.x.api.service.SessionAuthenticator - 会话客户端绑定不匹配 sessionId=609c4bf4-a8e4-4991-977b-d3ca72dbd500 userId=9e9d77ca-64a9-4c93-bf3a-e55109909e89 reason=USER_AGENT_MISMATCH boundIp=127.0.0.1 currentIp=127.0.0.1
+2026-11-02 22:16:12.303 DEBUG [1103c37a-aa05-42a1-a2a0-0f883448c234] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话绑定信息已变化，请重新登录 traceId=1103c37a-aa05-42a1-a2a0-0f883448c234
+2026-11-02 22:16:12.320 WARN  [858f2359-2567-46ac-a879-73f6a80310a5] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:13.011 INFO  [c3ae35dc-5c4c-4353-b2d9-d73f752d9bcb] c.x.api.service.LoginService - 登录成功 userId=84eb6c57-131f-4ebf-97cc-98ecbdee09d1 loginName=it.auth.84eb6c5713 clientIp=127.0.0.1 sessionId=dcb42024-ed00-462b-a8ce-175c99bff394
+2026-11-02 22:16:13.021 DEBUG [8ffcb5e0-68de-4085-8684-8ff30d96a78f] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/auth/logout
+2026-11-02 22:16:13.027 INFO  [b90e1320-067a-4e86-b581-6ec017a4e68d] c.x.api.service.SessionService - 会话已撤销 sessionId=dcb42024-ed00-462b-a8ce-175c99bff394 traceId=b90e1320-067a-4e86-b581-6ec017a4e68d
+2026-11-02 22:16:13.049 WARN  [592dabaf-704e-4c50-9ae1-5263d44ea313] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:13.765 INFO  [5255723e-63ce-4561-bde4-b2121929b15c] c.x.api.service.LoginService - 登录失败：口令不匹配 loginName=it.auth.fcfefa739c clientIp=127.0.0.1
+2026-11-02 22:16:13.767 DEBUG [5255723e-63ce-4561-bde4-b2121929b15c] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_INVALID_CREDENTIALS message=登录名或密码不正确 traceId=5255723e-63ce-4561-bde4-b2121929b15c
+2026-11-02 22:16:13.775 WARN  [e29b42c5-853f-4288-9a2c-5640a622dbba] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:14.490 INFO  [3b9d6b5c-cf96-44fc-b11f-eff7835e4b45] c.x.api.service.LoginService - 登录成功 userId=fcfefa73-9c46-43dc-bbb1-b36d6bd9bdf4 loginName=it.auth.fcfefa739c clientIp=127.0.0.1 sessionId=4e0646c5-3eb5-412e-9911-110369775125
+2026-11-02 22:16:14.503 INFO  [039c4d49-8b38-4b6c-8d32-8e66bcf3d463] c.x.api.service.SessionService - 会话已撤销 sessionId=4e0646c5-3eb5-412e-9911-110369775125 traceId=039c4d49-8b38-4b6c-8d32-8e66bcf3d463
+2026-11-02 22:16:14.513 WARN  [de187ec1-3b10-44e8-a0ae-6e7a3f7b6add] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:15.179 INFO  [c00ef4cc-681e-47d0-8dc9-1a79f7c86027] c.x.api.service.LoginService - 登录成功 userId=fcfefa73-9c46-43dc-bbb1-b36d6bd9bdf4 loginName=it.auth.fcfefa739c clientIp=127.0.0.1 sessionId=aa1c7c8b-3a06-45d0-94e4-d1b5ca87f29b
+2026-11-02 22:16:15.852 INFO  [48ac5c2b-d4a5-436c-b99e-8fb4a81260b5] c.x.api.service.PasswordService - 改密失败：当前口令不正确 userId=fcfefa73-9c46-43dc-bbb1-b36d6bd9bdf4
+2026-11-02 22:16:15.855 DEBUG [48ac5c2b-d4a5-436c-b99e-8fb4a81260b5] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_INVALID_CREDENTIALS message=当前口令不正确 traceId=48ac5c2b-d4a5-436c-b99e-8fb4a81260b5
+2026-11-02 22:16:17.893 INFO  [00e1f071-8387-4156-ae55-6ec93c50c686] c.x.api.service.SessionService - 登录轮换：撤销旧会话 1 条 userId=fcfefa73-9c46-43dc-bbb1-b36d6bd9bdf4 traceId=00e1f071-8387-4156-ae55-6ec93c50c686
+2026-11-02 22:16:17.894 INFO  [00e1f071-8387-4156-ae55-6ec93c50c686] c.x.api.service.PasswordService - 改密成功并轮换凭据 userId=fcfefa73-9c46-43dc-bbb1-b36d6bd9bdf4 sessionId=1a547cc5-cf04-4ac3-85be-bcd759b60518 replayed=false
+2026-11-02 22:16:17.921 WARN  [0355f334-4008-4e5c-9084-e8cbb7af53ac] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:17.928 WARN  [7a53eb5f-77c7-45df-86df-584e0219af44] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:18.617 INFO  [9a7bbfbd-7020-49b4-9b38-07f20f311f1c] c.x.api.service.LoginService - 登录成功 userId=0b3296d5-917a-4391-8a45-e3dec58bdb69 loginName=it.auth.0b3296d591 clientIp=127.0.0.1 sessionId=d6eccfc9-6d63-48dc-8b59-47900bd685da
+2026-11-02 22:16:18.632 WARN  [67fc296e-f31f-4e4a-ab71-78b4df266dda] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:16:19.304 INFO  [08c87e5b-b1b0-474d-8369-af31bde03eea] c.x.api.service.LoginService - 登录成功 userId=0f6f294f-caf2-4fe2-a36e-327dbf385ec2 loginName=it.auth.0f6f294fca clientIp=10.1.2.3 sessionId=a4f4506a-f7c3-47bc-825d-533f3418f7de
+2026-11-02 22:16:19.316 WARN  [569db1b8-3b97-4e62-874b-a00231778517] c.x.api.service.SessionAuthenticator - 会话客户端绑定不匹配 sessionId=a4f4506a-f7c3-47bc-825d-533f3418f7de userId=0f6f294f-caf2-4fe2-a36e-327dbf385ec2 reason=CLIENT_IP_MISMATCH boundIp=10.1.2.3 currentIp=10.1.2.4
+2026-11-02 22:16:19.318 DEBUG [569db1b8-3b97-4e62-874b-a00231778517] c.x.api.common.ApiExceptionHandler - 业务异常 code=AUTH_SESSION_EXPIRED message=会话绑定信息已变化，请重新登录 traceId=569db1b8-3b97-4e62-874b-a00231778517
+2026-11-02 22:16:19.328 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:16:19.398 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 22:16:19.401 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 22:16:19.401 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.18 s -- in com.xxplatform.api.auth.AuthSessionIntegrationTests
+[INFO] Running com.xxplatform.api.common.ClientNetworksTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.xxplatform.api.common.ClientNetworksTests
+[INFO] Running com.xxplatform.api.common.CsrfFilterTests
+2026-11-02 22:16:19.423 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - 同源校验拒绝：Origin=https://evil.example.com 期望=http://127.0.0.1:8080
+2026-11-02 22:16:19.423 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：非可信来源 path=/auth/login origin=https://evil.example.com
+2026-11-02 22:16:19.427 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks
+2026-11-02 22:16:19.432 DEBUG [30243630-6088-4e7c-9225-c53791c913b4] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks
+2026-11-02 22:16:19.436 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - 同源校验拒绝：Origin=https://evil.example.com 期望=http://127.0.0.1:8080
+2026-11-02 22:16:19.436 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：非可信来源 path=/tasks origin=null
+2026-11-02 22:16:19.478 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks/t-1
+2026-11-02 22:16:19.484 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks/t-1
+2026-11-02 22:16:19.488 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks/t-1
+2026-11-02 22:16:19.490 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks
+2026-11-02 22:16:19.496 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - 同源校验拒绝：Origin=https://evil.example.com 期望=http://127.0.0.1:8080
+2026-11-02 22:16:19.496 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：非可信来源 path=/tasks origin=https://evil.example.com
+2026-11-02 22:16:19.500 ERROR [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF token 校验失败，按 500 拒绝 path=/tasks
+java.lang.IllegalStateException: db down
+	at com.xxplatform.api.common.CsrfFilterTests.storageFailureFailsClosed(CsrfFilterTests.java:207) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 22:16:19.511 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF 闸门拒绝：缺少或无效的 token path=/tasks
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.094 s -- in com.xxplatform.api.common.CsrfFilterTests
+[INFO] Running com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Running com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Running com.xxplatform.api.infra.PasswordHasherTests
+2026-11-02 22:16:19.537 WARN  [no-trace] c.x.api.infra.PasswordHasher - 口令哈希格式不可识别（前缀或段数不符），按校验失败处理
+2026-11-02 22:16:19.537 WARN  [no-trace] c.x.api.infra.PasswordHasher - 口令哈希格式不可识别（前缀或段数不符），按校验失败处理
+2026-11-02 22:16:19.538 WARN  [no-trace] c.x.api.infra.PasswordHasher - 口令哈希迭代数不是整数，按校验失败处理
+2026-11-02 22:16:19.538 WARN  [no-trace] c.x.api.infra.PasswordHasher - 口令哈希迭代数非法（0），按校验失败处理
+2026-11-02 22:16:19.538 WARN  [no-trace] c.x.api.infra.PasswordHasher - 口令哈希的盐或摘要不是合法 base64url，按校验失败处理
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.62 s -- in com.xxplatform.api.infra.PasswordHasherTests
+[INFO] Running com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.298 s -- in com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalExportIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:16:30.512 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:16:30.512 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:16:30.976 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:16:30.977 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:16:30.977 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:16:31.004 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:16:31.004 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 490 ms
+2026-11-02 22:16:31.044 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:16:31.112 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@33e19be9
+2026-11-02 22:16:31.114 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:16:31.114 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:16:31.149 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.024s)
+2026-11-02 22:16:31.223 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:16:31.223 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:16:31.238 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:16:31.238 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:16:31.337 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 63754 (http) with context path '/api/v1'
+2026-11-02 22:16:31.342 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.858 seconds (process running for 65.811)
+2026-11-02 22:16:31.342 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:16:32.661 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=31eadab0-54c9-43a4-bb64-d2a729e99e18 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:34.725 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=31eadab0-54c9-43a4-bb64-d2a729e99e18 approveCount=2/2
+2026-11-02 22:16:34.759 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=46d5673e-c536-4947-8f78-dbd94ebb5fdf operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:35.415 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=46d5673e-c536-4947-8f78-dbd94ebb5fdf approveCount=1/1
+2026-11-02 22:16:35.443 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=46d5673e-c536-4947-8f78-dbd94ebb5fdf operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:35.526 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=6202d17e-907f-44aa-98a8-fe732046bd8b operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:36.173 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=6202d17e-907f-44aa-98a8-fe732046bd8b approveCount=1/1
+2026-11-02 22:16:36.201 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=c34d86e0-594e-4072-b42c-d03eae5e439f operation=updateDeviceParameters requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:37.517 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=c34d86e0-594e-4072-b42c-d03eae5e439f approveCount=2/2
+2026-11-02 22:16:37.545 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=b016a3f2-54e3-4a0a-ba65-7ac5b54a890b operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:38.221 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=b016a3f2-54e3-4a0a-ba65-7ac5b54a890b approveCount=1/1
+2026-11-02 22:16:38.244 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=b016a3f2-54e3-4a0a-ba65-7ac5b54a890b operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:38.278 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=3eb62844-19e4-4bc5-8ab9-73d31a20099f attempt=1 worker=it-file-publisher
+2026-11-02 22:16:38.396 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=3ee8b8d8-81ae-4c59-9416-60406e19ecd1 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:38.438 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=4f5130bd-5d29-42ea-a679-e6a15f92c99f operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:38.490 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=ada98a5e-862f-4adb-8091-a433a39e7811 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:39.173 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=ada98a5e-862f-4adb-8091-a433a39e7811 approveCount=1/1
+2026-11-02 22:16:39.211 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=71b5e392-6dd2-4f3f-9306-371cea0c805f operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:39.225 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=6059872f-530f-4781-a444-c77ec63cdd8f
+2026-11-02 22:16:39.234 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等冲突：同一 Idempotency-Key 的内容不同
+2026-11-02 22:16:39.264 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=334e3239-a5a6-4e04-8b00-51b0386de2b3 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:40.628 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=334e3239-a5a6-4e04-8b00-51b0386de2b3 approveCount=2/2
+2026-11-02 22:16:40.659 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=c9454fe9-3fb9-4f1a-885b-a9080b1c2092 operation=updateDeviceParameters requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:41.325 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=c9454fe9-3fb9-4f1a-885b-a9080b1c2092 approveCount=1/1
+2026-11-02 22:16:41.363 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=94542cef-0e24-4d57-8233-10783a3b5e94 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:41.388 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=ab475396-29cc-474f-8a6e-73c45d6a32e0 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:41.445 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=27297b3b-e09b-4439-b38e-3a2ab268da33 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:43.429 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=e3e34e7e-d29b-4f81-a671-ac2c4ec049a9
+2026-11-02 22:16:44.733 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等冲突：同一 Idempotency-Key 的内容不同
+2026-11-02 22:16:46.079 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=5403274c-515d-4217-bbd5-830339921924 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:46.754 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=5403274c-515d-4217-bbd5-830339921924 approveCount=1/1
+2026-11-02 22:16:46.795 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=a6419675-47b8-4811-aad9-0b1771bbd633 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:47.449 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=a6419675-47b8-4811-aad9-0b1771bbd633 approveCount=1/1
+2026-11-02 22:16:47.465 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=a6419675-47b8-4811-aad9-0b1771bbd633 operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:47.506 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=678ce1ed-ab8d-48fe-8ab3-6f3916818b89 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:47.546 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=e3d1e94e-b7f7-4c85-bc95-5e1bbb0ca4e2 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:48.196 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=e3d1e94e-b7f7-4c85-bc95-5e1bbb0ca4e2 approveCount=1/1
+2026-11-02 22:16:48.213 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=e3d1e94e-b7f7-4c85-bc95-5e1bbb0ca4e2 operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:48.237 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=ababfbf7-f257-47bc-941f-116edc4a8337 key=it-export-36f67475-b000-4b94-b0e9-9fb2d8ef4529
+2026-11-02 22:16:48.266 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=8b37c4a3-b190-4906-9158-e88816077d1b operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:48.930 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=8b37c4a3-b190-4906-9158-e88816077d1b approveCount=1/1
+2026-11-02 22:16:48.948 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=8b37c4a3-b190-4906-9158-e88816077d1b operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:48.993 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=8776b4d1-a5f8-4455-8dd2-a13fb9b4428b operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:49.683 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=8776b4d1-a5f8-4455-8dd2-a13fb9b4428b approveCount=1/1
+2026-11-02 22:16:49.697 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=8776b4d1-a5f8-4455-8dd2-a13fb9b4428b operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:49.719 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=1a22fd0a-412b-4fa0-b76c-4ef9f7642662 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:50.371 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批被驳回 approvalId=1a22fd0a-412b-4fa0-b76c-4ef9f7642662 reviewer=0192f100-0000-7000-8000-00000000a002
+2026-11-02 22:16:50.438 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=c0fb5634-ecf5-4291-b6b8-d49780fd998b operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:50.458 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.463 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.468 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.472 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.504 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.509 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.514 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批幂等重放 ledgerId=fd2e5ed0-1f11-4606-acc8-23382ef8d94e
+2026-11-02 22:16:50.539 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=dfb547a3-9279-492b-9f68-37060bc32c5a operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 22:16:51.215 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=dfb547a3-9279-492b-9f68-37060bc32c5a approveCount=1/1
+2026-11-02 22:16:51.233 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=dfb547a3-9279-492b-9f68-37060bc32c5a operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 22:16:51.277 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=cd12cec6-1a7d-4af9-b7cd-cdb413f6d441 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:52.664 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=a84fd24a-0538-4850-be38-6113e7c2f844 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:53.386 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=65d9346c-d078-4002-9f3a-8b556ba13f83 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 22:16:53.394 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:16:53.463 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 22:16:53.465 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 22:16:53.467 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 33, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.99 s -- in com.xxplatform.api.service.approval.ApprovalExportIntegrationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.128 s -- in com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalServiceTests
+2026-11-02 22:16:54.278 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=5081d391-47c5-44d4-80fd-9af73364e980 operation=createExport requester=d6e59e36-4440-4ec4-af58-b30670fdd7f8 requiredApprovals=1
+2026-11-02 22:16:54.285 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=52e25dd9-c1cc-4f89-bf2c-53a20d5167cf operation=createExport requester=4ef8a5a0-5691-4f92-8f3d-f447d201b704 requiredApprovals=1
+2026-11-02 22:16:54.291 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=bba4cd8d-a4ad-4725-b8f9-b9fce623d8be operation=createExport requester=da01b49c-4207-4e63-bd7e-65f6a96ff81f requiredApprovals=1
+2026-11-02 22:16:54.956 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=bba4cd8d-a4ad-4725-b8f9-b9fce623d8be approveCount=1/1
+2026-11-02 22:16:55.646 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=93490904-e940-4b2c-8637-8a8e06e1fd86 operation=createExport requester=a7b8ea5b-046d-4491-904d-80d0f94a9f88 requiredApprovals=1
+2026-11-02 22:16:56.302 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=e3799128-8f56-4669-8ac1-7bba1ef31b2d operation=createExport requester=473a12f0-8833-451c-af76-d82436e7e591 requiredApprovals=1
+2026-11-02 22:16:56.949 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=e3799128-8f56-4669-8ac1-7bba1ef31b2d approveCount=1/1
+2026-11-02 22:16:56.952 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=1f2fa210-cd2f-49a8-af76-dafd079a9526 operation=readDecryptionResult requester=99114b30-d356-4f1a-b065-bdf945149885 requiredApprovals=2
+2026-11-02 22:16:58.260 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=1f2fa210-cd2f-49a8-af76-dafd079a9526 approveCount=2/2
+2026-11-02 22:16:58.263 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=2714cdd6-5203-44b4-82be-dde9b7d96089 operation=createExport requester=827b65ca-954c-4e5e-a378-1c2cd94ffa5a requiredApprovals=1
+2026-11-02 22:16:58.265 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=f2f4d265-bb19-4ae5-85e4-9f07ac09a489 operation=createExport requester=418772b0-0f87-43a9-b23d-6afd90411470 requiredApprovals=1
+2026-11-02 22:16:58.928 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=f2f4d265-bb19-4ae5-85e4-9f07ac09a489 approveCount=1/1
+2026-11-02 22:16:58.931 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=8ec707ed-dbae-4103-adab-3412c585a28e operation=createExport requester=1fa32255-04a7-4a4b-a33e-6fb48e4a21e5 requiredApprovals=1
+2026-11-02 22:16:59.581 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=8ec707ed-dbae-4103-adab-3412c585a28e approveCount=1/1
+2026-11-02 22:16:59.586 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=69072d4d-da7e-4a7b-96a4-ac437307b4f0 operation=createExport requester=8a45924b-dcfc-4ef3-b29c-a346defffae0 requiredApprovals=1
+2026-11-02 22:17:00.262 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=59c60e97-7572-447e-b049-abc32951ea51 operation=createExport requester=2d417280-ff35-497b-b244-53226c092d86 requiredApprovals=1
+2026-11-02 22:17:00.919 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=59c60e97-7572-447e-b049-abc32951ea51 approveCount=1/1
+2026-11-02 22:17:00.921 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=1863426c-8394-4500-b606-6d05e208a37c operation=createExport requester=978215ab-21e2-485a-9afd-565364b11628 requiredApprovals=1
+2026-11-02 22:17:00.922 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=aee0963c-ce10-447c-86c3-837f0bc4428b operation=createExport requester=978215ab-21e2-485a-9afd-565364b11628 requiredApprovals=1
+2026-11-02 22:17:00.927 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=49f28ddf-d6d0-4a6f-85fd-67784f5f5c0c operation=createExport requester=a0336cf0-26fe-46fe-ba2d-8432cc927e6f requiredApprovals=1
+2026-11-02 22:17:00.930 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=86acbb3b-f6ea-42ca-a8d7-f01fb9474e2b operation=createExport requester=44456135-6efa-4a06-a1c9-32fd3a753a4f requiredApprovals=1
+2026-11-02 22:17:01.568 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批被驳回 approvalId=86acbb3b-f6ea-42ca-a8d7-f01fb9474e2b reviewer=5b375354-7927-43d6-91a2-13ff869d392b
+2026-11-02 22:17:02.221 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=dbbae638-3d41-4196-9a03-abb9f70834d3 operation=createExport requester=97815dc5-4c71-4e1b-b636-4cf4cb0b7d5c requiredApprovals=1
+2026-11-02 22:17:02.224 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=d46de911-6aac-4884-9bcd-8b2e013d170d operation=createExport requester=4b2b68cf-50aa-4d34-b955-dda88f6f3c13 requiredApprovals=1
+2026-11-02 22:17:02.863 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=8fb4982c-914d-4b95-9f0c-f0c27e13bc98 operation=createExport requester=1d9152e8-5d59-4edd-9ad5-6b790ec1ac8e requiredApprovals=1
+2026-11-02 22:17:03.546 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批通过 approvalId=8fb4982c-914d-4b95-9f0c-f0c27e13bc98 approveCount=1/1
+2026-11-02 22:17:03.547 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 消费审批 approvalId=8fb4982c-914d-4b95-9f0c-f0c27e13bc98 operation=createExport executor=1d9152e8-5d59-4edd-9ad5-6b790ec1ac8e
+2026-11-02 22:17:03.549 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=347c316b-d9e8-4564-9574-f8151c916381 operation=createExport requester=1d1f49f3-8efb-442e-b91d-313403ca1c41 requiredApprovals=1
+2026-11-02 22:17:03.551 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 创建敏感动作审批 approvalId=002d9faf-ef83-431c-ae53-f852c40a913b operation=createExport requester=79a7efb8-7683-4bbd-a7ed-0cfbe35f79f0 requiredApprovals=1
+2026-11-02 22:17:04.267 INFO  [no-trace] c.x.a.s.approval.ApprovalService - 审批被驳回 approvalId=002d9faf-ef83-431c-ae53-f852c40a913b reviewer=27087b98-d69b-4e76-9d79-c2c9504f12b3
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.66 s -- in com.xxplatform.api.service.approval.ApprovalServiceTests
+[INFO] Running com.xxplatform.api.service.approval.AuthorizationBoundsTests
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.234 s -- in com.xxplatform.api.service.approval.AuthorizationBoundsTests
+[INFO] Running com.xxplatform.api.service.AuditRollbackIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:17:04.536 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:17:04.536 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:17:05.010 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:17:05.011 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:17:05.011 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:17:05.037 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:17:05.037 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 499 ms
+2026-11-02 22:17:05.088 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:17:05.153 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@3d794813
+2026-11-02 22:17:05.153 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:17:05.155 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:17:05.187 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.021s)
+2026-11-02 22:17:05.263 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:17:05.263 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:17:05.277 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:17:05.277 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:17:05.370 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 55810 (http) with context path '/api/v1'
+2026-11-02 22:17:05.374 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.865 seconds (process running for 99.84)
+2026-11-02 22:17:05.374 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:17:05.415 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:17:05.481 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 22:17:05.483 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 22:17:05.485 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.981 s -- in com.xxplatform.api.service.AuditRollbackIntegrationTests
+[INFO] Running com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Running com.xxplatform.api.service.ExportServiceTests
+2026-11-02 22:17:05.524 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=253452a2-13ea-4252-86fd-1f5e9a85bbbf key=idem-key-000000000001
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in com.xxplatform.api.service.ExportServiceTests
+[INFO] Running com.xxplatform.api.service.file.DownloadPermitsTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.xxplatform.api.service.file.DownloadPermitsTests
+[INFO] Running com.xxplatform.api.service.file.FilePolicyIntegrationTests
+2026-11-02 22:17:05.540 INFO  [no-trace] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.xxplatform.api.service.file.FilePolicyIntegrationTests]: FilePolicyIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-02 22:17:05.612 INFO  [no-trace] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.xxplatform.api.ApiApplication for test class com.xxplatform.api.service.file.FilePolicyIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:17:05.641 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Starting FilePolicyIntegrationTests using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:17:05.643 DEBUG [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Running with Spring Boot v3.5.16, Spring v6.2.19
+2026-11-02 22:17:05.643 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - The following 1 profile is active: "db"
+2026-11-02 22:17:06.107 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:17:06.172 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@47f75587
+2026-11-02 22:17:06.172 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:17:06.174 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:17:06.203 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.018s)
+2026-11-02 22:17:06.272 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:17:06.273 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:17:06.413 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Started FilePolicyIntegrationTests in 0.797 seconds (process running for 100.878)
+2026-11-02 22:17:06.413 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:17:06.658 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=4eabf69a-b46e-49b8-b756-4a42d56506de category=DATASET_IMPORT bytes=1177784 status=ACTIVE rows=100000 detail=ok
+2026-11-02 22:17:06.925 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=e729debd-f828-4abb-ac54-9a15609a3d88 category=DATASET_IMPORT bytes=11534337 status=ACTIVE rows=1 detail=ok
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.437 s -- in com.xxplatform.api.service.file.FilePolicyIntegrationTests
+[INFO] Running com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Running com.xxplatform.api.service.file.FileServiceTests
+2026-11-02 22:17:06.987 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=ead94091-1eda-4a65-add9-4da952ee2fb8 category=DATASET_IMPORT bytes=4 status=QUARANTINED rows=0 detail=CSV 含 NUL 字节
+2026-11-02 22:17:06.989 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=447128b8-7efc-443b-a2af-3092f64695fe category=DATASET_IMPORT bytes=29 status=ACTIVE rows=2 detail=ok
+2026-11-02 22:17:07.155 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=36ec778a-694d-4544-99b3-72b4a0119c52 category=DATASET_IMPORT bytes=11534336 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:17:07.159 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=9a152a70-9a9b-40f6-aa19-0f75f26ff3ff category=DATASET_IMPORT bytes=26 status=QUARANTINED rows=0 detail=CSV 第 3 行列数为 1，表头为 2
+2026-11-02 22:17:07.167 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=7fbe9b2d-3241-4b1c-b87f-3b352a4597a7 category=DATASET_IMPORT bytes=11 status=QUARANTINED rows=0 detail=JSON 解析失败：Unexpected end-of-input within/between Object entries
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 12]
+2026-11-02 22:17:07.169 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=cce4b6e6-0bda-44eb-a402-ef117e65ecda category=DATASET_IMPORT bytes=25 status=QUARANTINED rows=0 detail=XLSX 缺少 [Content_Types].xml
+2026-11-02 22:17:07.174 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=c6675c30-60d2-468a-96c9-e99af34a67d7 category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:17:07.175 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=629b263d-c4e7-49cd-85db-d77f60214edb category=DATASET_IMPORT bytes=27 status=ACTIVE rows=0 detail=ok
+2026-11-02 22:17:07.180 INFO  [no-trace] c.x.api.service.file.FileService - 文件上传完成 asset=05cef158-cc47-467c-a7ad-592c80c41941 category=FACE_SEARCH bytes=17 status=QUARANTINED rows=0 detail=没有可用的图片解码器
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.200 s -- in com.xxplatform.api.service.file.FileServiceTests
+[INFO] Running com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Running com.xxplatform.api.service.HealthServiceTests
+2026-11-02 22:17:07.196 WARN  [no-trace] c.x.api.service.HealthService - 就绪检查项 database 执行失败
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.databaseFailure(HealthService.java:149) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$0(HealthService.java:110) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:110) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 22:17:07.197 WARN  [no-trace] c.x.api.service.HealthService - 就绪检查项 schema 执行失败
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.schemaFailure(HealthService.java:160) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$1(HealthService.java:111) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:111) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 22:17:07.198 WARN  [no-trace] c.x.api.service.HealthService - 就绪检查项 deployment-config 执行失败
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.deploymentConfigFailure(HealthService.java:175) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$2(HealthService.java:112) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:112) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.xxplatform.api.service.HealthServiceTests
+[INFO] Running com.xxplatform.api.service.PasswordServiceTests
+2026-11-02 22:17:07.206 WARN  [no-trace] c.x.api.service.PasswordService - 改密时账号已不可用 userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.206 INFO  [no-trace] c.x.api.service.PasswordService - 改密失败：新口令与当前口令相同 userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.208 INFO  [no-trace] c.x.api.service.PasswordService - 改密成功并轮换凭据 userId=00000000-0000-4000-8000-0000000000a1 sessionId=00000000-0000-4000-8000-0000000000b2 replayed=false
+2026-11-02 22:17:07.210 INFO  [no-trace] c.x.api.service.PasswordService - 改密成功并轮换凭据 userId=00000000-0000-4000-8000-0000000000a1 sessionId=00000000-0000-4000-8000-0000000000b2 replayed=false
+2026-11-02 22:17:07.211 INFO  [no-trace] c.x.api.service.PasswordService - 改密重放（幂等命中） userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.212 INFO  [no-trace] c.x.api.service.PasswordService - 改密失败：新口令长度不合规 userId=00000000-0000-4000-8000-0000000000a1 length=11
+2026-11-02 22:17:07.214 INFO  [no-trace] c.x.api.service.PasswordService - 改密被拒：同一 Idempotency-Key 的内容不同 userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.216 INFO  [no-trace] c.x.api.service.PasswordService - 改密失败：新口令命中弱口令规则 userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.216 INFO  [no-trace] c.x.api.service.PasswordService - 改密失败：当前口令不正确 userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 22:17:07.218 INFO  [no-trace] c.x.api.service.PasswordService - 改密失败：新口令长度不合规 userId=00000000-0000-4000-8000-0000000000a1 length=129
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.xxplatform.api.service.PasswordServiceTests
+[INFO] Running com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Running com.xxplatform.api.service.SessionRenewalTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.xxplatform.api.service.SessionRenewalTests
+[INFO] Running com.xxplatform.api.service.SessionServiceBeginTests
+2026-11-02 22:17:07.247 INFO  [no-trace] c.x.api.service.SessionService - 单会话策略：撤销该账号其他有效会话 1 条 userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 22:17:07.249 WARN  [no-trace] c.x.api.service.SessionService - 登录竞态：会话签发前账号已不可用 status=DISABLED userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 22:17:07.250 INFO  [no-trace] c.x.api.service.SessionService - 登录轮换：撤销旧会话 1 条 userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 22:17:07.250 INFO  [no-trace] c.x.api.service.SessionService - 单会话策略：撤销该账号其他有效会话 1 条 userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 22:17:07.251 INFO  [no-trace] c.x.api.service.SessionService - 单会话策略：撤销该账号其他有效会话 1 条 userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.xxplatform.api.service.SessionServiceBeginTests
+[INFO] Running com.xxplatform.api.service.SessionServiceLogoutTests
+2026-11-02 22:17:07.254 DEBUG [no-trace] c.x.api.service.SessionService - 退出来自已撤销的会话，忽略 sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 22:17:07.255 INFO  [no-trace] c.x.api.service.SessionService - 会话已撤销 sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 22:17:07.257 INFO  [no-trace] c.x.api.service.SessionService - 会话已撤销 sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 22:17:07.257 DEBUG [no-trace] c.x.api.service.SessionService - 退出来自已撤销的会话，忽略 sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.xxplatform.api.service.SessionServiceLogoutTests
+[INFO] Running com.xxplatform.api.service.SessionServiceRenewTests
+2026-11-02 22:17:07.259 INFO  [no-trace] c.x.api.service.SessionService - 会话已续期 sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-02T14:19:07Z absoluteExpiresAt=2026-11-02T14:19:07Z
+2026-11-02 22:17:07.261 DEBUG [no-trace] c.x.api.service.SessionService - 会话续期无余量 sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-02T14:18:07Z
+2026-11-02 22:17:07.263 INFO  [no-trace] c.x.api.service.SessionService - 会话已续期 sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-02T14:32:07Z absoluteExpiresAt=2026-11-02T22:17:07Z
+2026-11-02 22:17:07.263 DEBUG [no-trace] c.x.api.service.SessionService - 续期时会话已失效 sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.SessionServiceRenewTests
+[INFO] Running com.xxplatform.api.service.task.TaskBaseIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:17:07.289 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:17:07.289 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:17:07.686 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:17:07.688 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:17:07.688 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:17:07.712 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:17:07.712 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 422 ms
+2026-11-02 22:17:07.749 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:17:07.973 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@7137cb1a
+2026-11-02 22:17:07.974 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:17:07.975 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:17:08.004 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.019s)
+2026-11-02 22:17:08.076 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:17:08.076 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:17:08.088 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:17:08.088 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:17:08.199 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 55817 (http) with context path '/api/v1'
+2026-11-02 22:17:08.203 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.935 seconds (process running for 102.669)
+2026-11-02 22:17:08.204 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:17:08.325 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=a996c5d5-781a-474d-bec0-b91c4e75980e attempt=1 worker=it-worker-5
+2026-11-02 22:17:08.397 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=22697b37-fc0b-41e7-ab70-80bba6ed2714 attempt=1 worker=it-worker-3
+2026-11-02 22:17:08.405 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:08.426 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=5656bde5-bd9a-42d1-a9e9-129277390801 key=it-idem-7043bc8a-e4ec-4316-b808-1f5a1b57b55d
+2026-11-02 22:17:08.446 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7117925c-54ef-4842-bd45-ac40e2ccd143 attempt=1 worker=it-worker-2
+2026-11-02 22:17:08.469 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=606c0467-6f59-40e4-8344-7e5ba5d50d29 attempt=1 worker=it-worker-4
+2026-11-02 22:17:08.477 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:08.503 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=8b51da8b-b4a3-4762-ad1a-5246ca4fac06 attempt=1 worker=it-worker-1
+2026-11-02 22:17:08.516 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 22:17:08.578 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 22:17:08.580 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 22:17:08.582 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.317 s -- in com.xxplatform.api.service.task.TaskBaseIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Running com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 22:17:08.624 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 21900 (started by Administrator in C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api)
+2026-11-02 22:17:08.624 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 22:17:09.018 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 22:17:09.020 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 22:17:09.020 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 22:17:09.040 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 22:17:09.040 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 415 ms
+2026-11-02 22:17:09.077 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 22:17:09.145 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@68fa52b1
+2026-11-02 22:17:09.145 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 22:17:09.147 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300 (PostgreSQL 16.15)
+2026-11-02 22:17:09.176 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.020s)
+2026-11-02 22:17:09.254 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 22:17:09.254 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 22:17:09.266 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 22:17:09.267 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 22:17:09.357 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 55821 (http) with context path '/api/v1'
+2026-11-02 22:17:09.360 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.758 seconds (process running for 103.826)
+2026-11-02 22:17:09.361 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - 开发种子账号未启用（xx.auth.dev-seed.enabled=false），跳过
+2026-11-02 22:17:09.533 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=444f6f9c-57b0-49f3-8d0c-fa7f3c6a4898 attempt=1 worker=it-idem-worker
+2026-11-02 22:17:09.548 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 22:17:09.548 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 22:17:09.548 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-11-02 22:17:09.555 WARN  [4c9a6979-1c95-4e8e-87f2-78e05006f08b] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.572 INFO  [b451e1f7-78db-4f4e-ba27-524358937012] c.xxplatform.api.api.TaskController - 任务重试已受理 traceId=b451e1f7-78db-4f4e-ba27-524358937012 taskId=444f6f9c-57b0-49f3-8d0c-fa7f3c6a4898 status=QUEUED
+2026-11-02 22:17:09.576 WARN  [863ddf88-f0b7-45aa-8d47-292ece270c03] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.584 INFO  [d934bd82-bd69-4109-a007-5d15b051e794] c.xxplatform.api.api.TaskController - 任务重试已受理 traceId=d934bd82-bd69-4109-a007-5d15b051e794 taskId=444f6f9c-57b0-49f3-8d0c-fa7f3c6a4898 status=QUEUED
+2026-11-02 22:17:09.629 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.631 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.633 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.635 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.636 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.638 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.641 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=b0fbc46e-f154-44e0-9140-adcd2d130d65 key=idem-concurrent-20b61413-4354-42a6-8c32-92ffefc750f8
+2026-11-02 22:17:09.716 WARN  [de5942bc-a5f6-42c2-8b98-12ed7586d319] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.726 INFO  [aaa1eb8b-a092-4e6a-ba6e-1d8bb8e54040] c.xxplatform.api.api.TaskController - 任务取消已受理 traceId=aaa1eb8b-a092-4e6a-ba6e-1d8bb8e54040 taskId=66586222-394e-43d3-9f30-4a7f42e16660 status=CANCELLED
+2026-11-02 22:17:09.733 WARN  [9a7c652c-74c5-4539-8f40-a40c807b19c9] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.742 INFO  [05e32088-84a4-4668-9c08-d62e88a470ef] c.xxplatform.api.api.TaskController - 任务取消已受理 traceId=05e32088-84a4-4668-9c08-d62e88a470ef taskId=c5567215-9d22-4d91-87cc-164af6e36b94 status=CANCELLED
+2026-11-02 22:17:09.789 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=3a4ceb5c-336d-4e97-a566-70d1d4300427 key=idem-race-12d6cf4f-f9f7-4c32-bae7-b88298e233cc
+2026-11-02 22:17:09.791 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=3a4ceb5c-336d-4e97-a566-70d1d4300427 key=idem-race-12d6cf4f-f9f7-4c32-bae7-b88298e233cc
+2026-11-02 22:17:09.792 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=3a4ceb5c-336d-4e97-a566-70d1d4300427 key=idem-race-12d6cf4f-f9f7-4c32-bae7-b88298e233cc
+2026-11-02 22:17:09.856 WARN  [fbf23c84-5037-4649-b924-ea06addbcff2] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.868 INFO  [79c445b6-df64-4099-93ba-58ea8f390f63] c.xxplatform.api.api.TaskController - 任务取消已受理 traceId=79c445b6-df64-4099-93ba-58ea8f390f63 taskId=c15a2e3e-4b0d-4728-b447-22d153adaf69 status=CANCELLED
+2026-11-02 22:17:09.874 WARN  [8a902340-760b-4b30-9a19-683a4515dcf0] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.880 DEBUG [dc8cd600-928d-4e25-aa9b-4b1fca454c29] c.x.api.common.ApiExceptionHandler - 业务异常 code=IDEMPOTENCY_CONFLICT message=同一 Idempotency-Key 对应了不同的任务或操作 traceId=dc8cd600-928d-4e25-aa9b-4b1fca454c29
+2026-11-02 22:17:09.931 WARN  [2ef5cebc-23e6-4791-ac78-d84a2dcfc391] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.940 INFO  [bbee4b16-a898-4964-83bc-c6d6aa92a45e] c.xxplatform.api.api.TaskController - 任务取消已受理 traceId=bbee4b16-a898-4964-83bc-c6d6aa92a45e taskId=4d7bd547-e71d-4758-a2d3-ffcb02644d0f status=CANCELLED
+2026-11-02 22:17:09.945 WARN  [fa7b024d-de70-463f-8529-7c31f82237ca] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:09.952 INFO  [0d43788b-6f0d-49a6-a215-c5e21429c33c] c.xxplatform.api.api.TaskController - 任务取消已受理 traceId=0d43788b-6f0d-49a6-a215-c5e21429c33c taskId=4d7bd547-e71d-4758-a2d3-ffcb02644d0f status=CANCELLED
+2026-11-02 22:17:09.998 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=23da2d35-0847-4949-bbdc-850db22ee956 attempt=1 worker=it-idem-unknown
+2026-11-02 22:17:10.001 WARN  [no-trace] c.x.api.service.task.TaskService - 任务租约到期且结果未知，需人工对账 taskId=23da2d35-0847-4949-bbdc-850db22ee956 attempt=1
+2026-11-02 22:17:10.003 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:10.013 WARN  [2bbd9853-b47a-4fb6-9697-b20e838f0f78] c.xxplatform.api.api.AuthController - CSRF Cookie 未带 Secure 属性（xx.csrf.secure-cookie=false）。生产环境必须开启 HTTPS 并设为 true。
+2026-11-02 22:17:10.019 DEBUG [7e4cdc73-413c-426b-8062-3a81af3107c4] c.x.api.common.ApiExceptionHandler - 业务异常 code=TASK_CONFLICT message=外部动作结果未知（TASK_OUTCOME_UNKNOWN），必须先对账，不能直接重试 traceId=7e4cdc73-413c-426b-8062-3a81af3107c4
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.424 s -- in com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests
+2026-11-02 22:17:10.101 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=6dde6566-bdb1-40aa-8ba4-2ffd06994b83 attempt=1 worker=it-guard-scope
+2026-11-02 22:17:10.112 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=6dde6566-bdb1-40aa-8ba4-2ffd06994b83 blocker=TASK_SCOPE_SHRUNK
+2026-11-02 22:17:10.163 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=6f29b5ca-1ee2-4547-86e9-8349976771b7 attempt=1 worker=it-gen-w1
+2026-11-02 22:17:10.168 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:10.179 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=6f29b5ca-1ee2-4547-86e9-8349976771b7 attempt=2 worker=it-gen-w2
+2026-11-02 22:17:10.302 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=fe91f0ab-b3ef-4f60-82ad-4c2f22132a17 attempt=1 worker=it-guard-race
+2026-11-02 22:17:10.573 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=01a32747-77ec-48fb-a871-fb7cbf2d343a attempt=1 worker=it-guard-asset
+2026-11-02 22:17:10.579 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=01a32747-77ec-48fb-a871-fb7cbf2d343a blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:10.625 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=a6f284e1-5a02-47de-9e7c-870b6b43d606 attempt=1 worker=it-guard-atomic
+2026-11-02 22:17:10.631 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=a6f284e1-5a02-47de-9e7c-870b6b43d606 blocker=TASK_PERMISSION_REVOKED
+2026-11-02 22:17:10.679 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=31e75181-b3e7-483e-b599-25f438171aa2 attempt=1 worker=it-guard-cancel
+2026-11-02 22:17:10.688 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:10.737 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=0270ac1a-c9e8-4629-94e1-b08b26d6a9cb attempt=1 worker=it-guard-asset-del
+2026-11-02 22:17:10.741 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=0270ac1a-c9e8-4629-94e1-b08b26d6a9cb blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:10.802 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=702d6a9f-c57f-4af5-b94a-c6a32e8b31de attempt=1 worker=it-guard-revoke
+2026-11-02 22:17:10.807 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=702d6a9f-c57f-4af5-b94a-c6a32e8b31de blocker=TASK_PERMISSION_REVOKED
+2026-11-02 22:17:10.911 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=c32fdee6-174c-4cbb-ba10-aff14b6104ca attempt=1 worker=it-null-expiry
+2026-11-02 22:17:10.917 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=c32fdee6-174c-4cbb-ba10-aff14b6104ca blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:10.957 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=784382d8-194c-4966-a6a6-d3a13a4a3aa3 attempt=1 worker=it-guard-ok
+2026-11-02 22:17:11.038 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=12fc99fc-8947-4606-ad1e-35ad1b567299 attempt=1 worker=it-guard-hb
+2026-11-02 22:17:11.100 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=24daf568-7adf-4a8d-b2cd-8b8a45975917 attempt=1 worker=it-expiry-w1
+2026-11-02 22:17:11.145 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7a16bbfc-5660-4109-b239-66e011e02006 attempt=1 worker=it-owner-w1
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.125 s -- in com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskQuotaIntegrationTests
+2026-11-02 22:17:11.269 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=228cf525-b01f-40e2-a097-0dea285407ed attempt=1 worker=it-fill-compute
+2026-11-02 22:17:11.269 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=84fc2806-3c78-482e-a6e6-d85844dba32a attempt=1 worker=it-fill-compute
+2026-11-02 22:17:11.275 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=c33a4f64-754a-4321-99c3-f1a42f21d610 attempt=1 worker=it-mixed-worker
+2026-11-02 22:17:11.322 WARN  [no-trace] c.x.api.service.task.TaskService - 排队超时终止 1 条任务
+2026-11-02 22:17:11.472 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=1bbbfd75-915d-44d2-ba0a-3faf7907b661 attempt=1 worker=it-worker-quota-order
+2026-11-02 22:17:11.478 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=324e68ff-051f-4217-bd5f-e7e799668fe6 attempt=1 worker=it-worker-quota-order
+2026-11-02 22:17:11.484 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=bb2ae2a6-493f-49b1-aee8-f87de834df9b attempt=1 worker=it-worker-quota-order
+2026-11-02 22:17:11.499 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=38ed301d-6b73-4572-9da3-0e8f788409ba attempt=1 worker=it-worker-quota-order
+2026-11-02 22:17:11.506 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=de0c8630-bd17-409e-9ef8-11ea46aa6326 attempt=1 worker=it-worker-quota-order
+2026-11-02 22:17:11.868 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=39e8411b-eaed-4d41-b22d-61982e6fa128 attempt=1 worker=it-worker-quota-heartbeat
+2026-11-02 22:17:11.879 DEBUG [no-trace] c.x.api.service.task.TaskService - 心跳续租 1 条任务
+2026-11-02 22:17:11.931 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=2fb016a6-e96d-4106-aabd-514f5b405162 attempt=1 worker=it-three-heavy
+2026-11-02 22:17:11.931 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=cfcc4e96-358d-4db8-ba2e-c7ab269a5bcc attempt=1 worker=it-three-heavy
+2026-11-02 22:17:11.971 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7ed29779-f1d8-426a-a4d3-2bc791315712 attempt=1 worker=it-worker-quota-exec
+2026-11-02 22:17:11.977 WARN  [no-trace] c.x.api.service.task.TaskService - 执行超时已发起取消 1 条任务
+2026-11-02 22:17:12.156 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=11a132fd-9f2b-4b3e-a53a-f821c85b227e attempt=1 worker=it-worker-quota-concurrent-6
+2026-11-02 22:17:12.175 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=1bc6796f-7dba-4222-aa66-e0a3ad0d80a7 attempt=1 worker=it-worker-quota-concurrent-0
+2026-11-02 22:17:12.334 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=edb98e5e-fa81-4365-a787-52197bf695f9 attempt=1 worker=it-worker-quota-export-only
+2026-11-02 22:17:12.348 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=48645c26-fb7f-4603-aa8c-fd85d57d8b42 attempt=1 worker=it-worker-quota-notify
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.202 s -- in com.xxplatform.api.service.task.TaskQuotaIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskResultReferenceTests
+2026-11-02 22:17:12.429 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7844ad48-a9c7-455b-97e2-56af1da8d871 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.462 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=db22fdde-c15b-43fe-957c-67108bd5f591 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.513 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=ca885f08-eb87-48b9-a28e-a41bb63b8286 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.529 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=bf7006e3-7ac2-437a-8270-6d9ac127e290 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.541 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=b408ff1d-7a93-46f8-b9d2-9a70e92292e3 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.555 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=045420bd-44f2-4e42-82f7-a6a595fc8422 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.569 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=c7016538-09b8-47a5-b7ab-33b7da66837c attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.588 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=1a5e15fc-1f3d-4052-939e-e04f51045611 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.603 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=c7b0829c-d5b6-462a-8ee3-4c8203116b1c attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.614 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=d54000fc-77e9-417a-9b98-352c488512c5 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.624 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=382fe781-ca33-4138-8860-74ff5015e448 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.644 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=153d7d29-465d-4e83-913f-d1bd47381b64 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.728 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=f0a0c80b-ca80-4bd5-87f5-e583b32e268e attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.730 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=f0a0c80b-ca80-4bd5-87f5-e583b32e268e blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:12.737 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=0d976236-04e6-4402-ac7f-06dc2abe71c6 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.740 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=0d976236-04e6-4402-ac7f-06dc2abe71c6 blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:12.745 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=8b06b462-7991-4251-9dfc-434ee0ba91ac attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.749 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=8b06b462-7991-4251-9dfc-434ee0ba91ac blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:12.756 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=401ec5a8-ac31-4137-99f3-4227c9ec97e2 attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.759 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=401ec5a8-ac31-4137-99f3-4227c9ec97e2 blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 22:17:12.765 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=bb78664a-f212-4161-8df7-e57452f8f17e attempt=1 worker=it-worker-ref
+2026-11-02 22:17:12.767 WARN  [no-trace] c.x.api.service.task.TaskService - 发布复核未通过，结果不公开 taskId=bb78664a-f212-4161-8df7-e57452f8f17e blocker=TASK_RESULT_REFERENCE_INVALID
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.394 s -- in com.xxplatform.api.service.task.TaskResultReferenceTests
+[INFO] Running com.xxplatform.api.service.task.TaskServiceTests
+2026-11-02 22:17:12.773 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=d16be683-b3b9-4ecd-8b61-f3c7125fb49e attempt=1 worker=worker-1
+2026-11-02 22:17:12.773 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=d66535e3-3121-4c90-97e1-5065a8a0192c key=idem-001
+2026-11-02 22:17:12.775 DEBUG [no-trace] c.x.api.service.task.TaskService - 幂等重放 taskId=53c40b4e-8946-49e8-8f58-9feab5505cad key=idem-001
+2026-11-02 22:17:12.777 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7fcecf26-ebb1-42ce-adaa-0ddfa7bb5897 attempt=1 worker=worker-1
+2026-11-02 22:17:12.779 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:12.781 WARN  [no-trace] c.x.api.service.task.TaskService - 任务租约到期且结果未知，需人工对账 taskId=db801cda-c74c-4ff0-85de-a1db7825a584 attempt=2
+2026-11-02 22:17:12.781 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:12.781 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:12.782 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=7a19a651-5584-4c16-8eb0-826931561a2b attempt=1 worker=worker-1
+2026-11-02 22:17:12.787 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.xxplatform.api.service.task.TaskServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskSideEffectOutcomeTests
+2026-11-02 22:17:12.834 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=0001a2f2-9f95-4d8b-bb13-62824f938721 attempt=1 worker=it-m07-worker
+2026-11-02 22:17:12.838 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=863f480b-3009-4863-9fac-8e77d3feea1b attempt=1 worker=it-m07-worker
+2026-11-02 22:17:12.844 WARN  [no-trace] c.x.api.service.task.TaskService - 任务租约到期且结果未知，需人工对账 taskId=863f480b-3009-4863-9fac-8e77d3feea1b attempt=1
+2026-11-02 22:17:12.844 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 2 条
+2026-11-02 22:17:12.885 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=75b3c042-06ac-44f7-a3de-f01e082543a6 attempt=1 worker=it-m07-worker
+2026-11-02 22:17:12.889 WARN  [no-trace] c.x.api.service.task.TaskService - 任务租约到期且结果未知，需人工对账 taskId=75b3c042-06ac-44f7-a3de-f01e082543a6 attempt=1
+2026-11-02 22:17:12.889 INFO  [no-trace] c.x.api.service.task.TaskService - reaper 收回过期租约 1 条
+2026-11-02 22:17:12.931 INFO  [no-trace] c.x.api.service.task.TaskService - 任务已领取 taskId=b66f5521-dda5-4035-bce6-a1d839f20766 attempt=1 worker=it-m07-worker
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.149 s -- in com.xxplatform.api.service.task.TaskSideEffectOutcomeTests
+[INFO] Running com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO]
+[INFO] Results:
+[INFO]
+[INFO] Tests run: 425, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO]
+[INFO] --- jar:3.4.2:jar (default-jar) @ xx-platform-api ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:58 min
+[INFO] Finished at: 2026-11-02T22:17:13+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar (default-jar) on project xx-platform-api: Execution default-jar of goal org.apache.maven.plugins:maven-jar-plugin:3.4.2:jar failed: Plugin org.apache.maven.plugins:maven-jar-plugin:3.4.2 or one of its dependencies could not be resolved:
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.apache.maven.shared:file-management:jar:3.1.0 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.apache.maven:maven-archiver:jar:3.6.2 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.codehaus.plexus:plexus-interpolation:jar:1.27 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.codehaus.plexus:plexus-archiver:jar:4.9.2 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.codehaus.plexus:plexus-io:jar:3.4.2 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.apache.commons:commons-compress:jar:1.26.1 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.apache.commons:commons-lang3:jar:3.14.0 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact commons-codec:commons-codec:jar:1.16.1 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.iq80.snappy:snappy:jar:0.4 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact org.tukaani:xz:jar:1.9 has not been downloaded from it before.
+[ERROR] 	Cannot access central (https://repo.maven.apache.org/maven2) in offline mode and the artifact com.github.luben:zstd-jni:jar:1.5.5-11 has not been downloaded from it before.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/PluginResolutionException

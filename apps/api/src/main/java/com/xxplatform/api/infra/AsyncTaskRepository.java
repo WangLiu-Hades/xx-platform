@@ -215,107 +215,50 @@ public class AsyncTaskRepository {
             RETURNING t.id
             """.formatted(TaskProperties.MAX_QUEUED_TASKS_PER_OWNER);
 
-    /**
-     * 领取下一条可执行任务：{@code priority} 数值大者优先（契约排序：priority DESC），
-     * 再按到期早、创建早、id 升序；全序保证并发下"谁先谁后"可复现。
-     *
-     * <p>{@code FOR UPDATE SKIP LOCKED} 是这里的核心：并发的 worker 不会排队等同一行，
-     * 抢不到的直接换下一条，吞吐随 worker 数线性增长，而不是串行化。
-     *
-     * <p>{@code current_attempt_no + 1} 与 {@code lease_generation + 1} 都在同一条 UPDATE 里完成，
-     * 返回的 {@code previous_status} 供调用方写 {@code task_event} 的"从哪来"。
-     *
-     * <p><b>为什么配额过滤写在 WHERE 里而不是先查计数再领取</b>：先查后领之间会有窗口，
-     * 并发 worker 可以同时看到"还没到上限"然后一起领走，配额形同虚设。子查询与 UPDATE
-     * 在同一条语句、同一快照里完成，计数与领取之间没有可乘之机。
-     *
-     * <p><b>为什么排队计数要排除候选自身</b>（{@code q.id <> t.id}）：候选行此刻还是
-     * {@code QUEUED}，若把自己算进去，排队数恰好等于 5 时每条都会看见"≥5 个排队"而被永久
-     * 跳过，队列再也无法被消化。排除自身后，5 条排队仍允许领取一条（领完剩 4 条），
-     * 真正的上限由 {@link #PROMOTE_PENDING} 把住。
-     *
-     * <p>{@code withTypeFilter} 只在 worker 声明了支持类型时加
-     * {@code task_type = ANY (string_to_array(?, ','))}：不声明就代表"什么都能干"，
-     * 拼一个空数组会让所有任务都匹配不上（{@code ANY('{}')} 恒假），worker 会永远空转。
-     */
+    /** Claim one eligible candidate per iteration under the shared quota lock. Apply each candidate's own resource class budget. */
     private static String claimSql(boolean withTypeFilter) {
+        // The quota lock serializes claims; each iteration rechecks the actual running counts.
         return """
-                WITH quota AS (
-                    SELECT GREATEST(%d - (SELECT count(*)
-                              FROM analysis.async_task c
-                             WHERE c.deleted = false AND c.status = 'RUNNING'
-                               AND c.task_type IN (%s)), 0) AS compute_left,
-                           GREATEST(%d - (SELECT count(*)
-                              FROM analysis.async_task c
-                             WHERE c.deleted = false AND c.status = 'RUNNING'
-                               AND c.task_type IN (%s)), 0) AS long_io_left,
-                           GREATEST(%d - (SELECT count(*)
-                              FROM analysis.async_task c
-                             WHERE c.deleted = false AND c.status = 'RUNNING'
-                               AND c.task_type IN (%s)), 0) AS io_left
-                ),
-                ranked AS (
-                    SELECT t.id,
-                           t.status AS previous_status,
-                           t.priority,
-                           t.submitted_at,
-                           (SELECT count(*)
-                              FROM analysis.async_task h
-                             WHERE h.owner_user_id = t.owner_user_id
-                               AND h.deleted = false
-                               AND h.status = 'RUNNING'
-                               AND h.task_type IN (%s)) AS owner_heavy_running,
-                           count(*) FILTER (WHERE t.task_type IN (%s))
-                               OVER (ORDER BY t.priority DESC, t.submitted_at ASC, t.id ASC) AS compute_rn,
-                           count(*) FILTER (WHERE t.task_type IN (%s))
-                               OVER (ORDER BY t.priority DESC, t.submitted_at ASC, t.id ASC) AS long_io_rn,
-                           count(*) FILTER (WHERE t.task_type IN (%s))
-                               OVER (ORDER BY t.priority DESC, t.submitted_at ASC, t.id ASC) AS io_rn,
-                           count(*) FILTER (WHERE t.task_type IN (%s))
-                               OVER (PARTITION BY t.owner_user_id) AS owner_heavy_rn
+                WITH picked AS (
+                    SELECT t.id, t.status AS previous_status
                       FROM analysis.async_task t
                      WHERE t.status = 'QUEUED' AND t.deleted = false AND t.next_run_at <= now()
                        %s
-                       AND (SELECT count(*)
-                              FROM analysis.async_task q
-                             WHERE q.owner_user_id = t.owner_user_id
-                               AND q.deleted = false
-                               AND q.status = 'QUEUED'
-                               AND q.id <> t.id) < %d
-                ),
-                picked AS (
-                    SELECT r.id, r.previous_status
-                      FROM ranked r, quota q
-                     WHERE r.compute_rn <= q.compute_left
-                       AND r.long_io_rn <= q.long_io_left
-                       AND r.io_rn <= q.io_left
-                       AND r.owner_heavy_running + r.owner_heavy_rn <= %d
-                     ORDER BY r.priority DESC, r.submitted_at ASC, r.id ASC
-                     LIMIT ?
+                       AND (t.task_type NOT IN (%s) OR
+                            (SELECT count(*) FROM analysis.async_task h
+                              WHERE h.owner_user_id = t.owner_user_id AND h.deleted = false
+                                AND h.status = 'RUNNING' AND h.task_type IN (%s)) < %d)
+                       AND (t.task_type NOT IN (%s) OR
+                            (SELECT count(*) FROM analysis.async_task c
+                              WHERE c.deleted = false AND c.status = 'RUNNING'
+                                AND c.task_type IN (%s)) < %d)
+                       AND (t.task_type NOT IN (%s) OR
+                            (SELECT count(*) FROM analysis.async_task c
+                              WHERE c.deleted = false AND c.status = 'RUNNING'
+                                AND c.task_type IN (%s)) < %d)
+                       AND (t.task_type NOT IN (%s) OR
+                            (SELECT count(*) FROM analysis.async_task c
+                              WHERE c.deleted = false AND c.status = 'RUNNING'
+                                AND c.task_type IN (%s)) < %d)
+                     ORDER BY t.priority DESC, t.submitted_at ASC, t.id ASC
+                     LIMIT 1 FOR UPDATE OF t SKIP LOCKED
                 )
                 UPDATE analysis.async_task t
-                   SET status = 'RUNNING',
-                       started_at = COALESCE(t.started_at, ?),
-                       lease_owner = ?,
-                       lease_until = ?,
+                   SET status = 'RUNNING', started_at = COALESCE(t.started_at, ?),
+                       lease_owner = ?, lease_until = ?,
                        lease_generation = t.lease_generation + 1,
-                       current_attempt_no = t.current_attempt_no + 1,
-                       version = t.version + 1
+                       current_attempt_no = t.current_attempt_no + 1, version = t.version + 1
                   FROM picked
                  WHERE t.id = picked.id AND t.status = 'QUEUED'
                 RETURNING t.*, picked.previous_status
                 """.formatted(
-                MAX_RUNNING_COMPUTE, COMPUTE_TASK_SQL,
-                MAX_RUNNING_LONG_IO, LONG_IO_TASK_SQL,
-                MAX_RUNNING_IO, ALL_IO_TASK_SQL,
-                HEAVY_TASK_SQL,
-                COMPUTE_TASK_SQL, LONG_IO_TASK_SQL, ALL_IO_TASK_SQL, HEAVY_TASK_SQL,
                 withTypeFilter ? "AND t.task_type = ANY (string_to_array(?, ','))" : "",
-                TaskProperties.MAX_QUEUED_TASKS_PER_OWNER,
-                TaskProperties.MAX_RUNNING_HEAVY_TASKS_PER_OWNER);
+                HEAVY_TASK_SQL, HEAVY_TASK_SQL, TaskProperties.MAX_RUNNING_HEAVY_TASKS_PER_OWNER,
+                COMPUTE_TASK_SQL, COMPUTE_TASK_SQL, MAX_RUNNING_COMPUTE,
+                LONG_IO_TASK_SQL, LONG_IO_TASK_SQL, MAX_RUNNING_LONG_IO,
+                ALL_IO_TASK_SQL, ALL_IO_TASK_SQL, MAX_RUNNING_IO);
     }
 
-    /** 不按 worker 支持类型过滤（声明"什么都能干"时用）。 */
     private static final String CLAIM_NEXT = claimSql(false);
 
     /** 只领取 {@code task_type} 在给定列表里的任务。 */
@@ -585,7 +528,7 @@ public class AsyncTaskRepository {
     /** 某用户当前排队任务数（{@code QUEUED}），提交入口的"每用户 5 个排队"判定用。 */
     private static final String COUNT_QUEUED_BY_OWNER = """
             SELECT count(*) FROM analysis.async_task
-             WHERE owner_user_id = ? AND deleted = false AND status = 'QUEUED'
+             WHERE owner_user_id = ? AND deleted = false AND status IN ('PENDING','QUEUED')
             """;
 
     private static final String CLOSE_ATTEMPT = """
@@ -861,13 +804,16 @@ public class AsyncTaskRepository {
         // 这里是事务级锁，因此要求调用方（TaskService#claimNext）在事务内执行。
         lockClaimQuota(now, CLAIM_QUOTA_OWNER_WINDOW);
         OffsetDateTime leaseUntil = now.plus(lease);
-        if (supportedTypes.isEmpty()) {
-            return jdbc.query(CLAIM_NEXT, CLAIM_MAPPER, limit, now, workerId, leaseUntil);
-        }
-        // 任务类型是枚举，逗号拼接后交给 string_to_array：值不来自用户输入，没有注入面。
         String typeFilter = supportedTypes.stream().map(TaskType::name).collect(Collectors.joining(","));
-        return jdbc.query(CLAIM_NEXT_FILTERED, CLAIM_MAPPER,
-                typeFilter, limit, now, workerId, leaseUntil);
+        List<ClaimedTask> claimed = new ArrayList<>();
+        for (int i = 0; i < limit; i++) {
+            List<ClaimedTask> next = supportedTypes.isEmpty()
+                    ? jdbc.query(CLAIM_NEXT, CLAIM_MAPPER, now, workerId, leaseUntil)
+                    : jdbc.query(CLAIM_NEXT_FILTERED, CLAIM_MAPPER, typeFilter, now, workerId, leaseUntil);
+            if (next.isEmpty()) break;
+            claimed.addAll(next);
+        }
+        return List.copyOf(claimed);
     }
 
     /**

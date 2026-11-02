@@ -6,16 +6,7 @@ import java.util.UUID;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/**
- * 幂等账本（{@code core.idempotency_request}）。
- *
- * <p>契约 api-conventions.md 要求创建/导入类的写请求按「账号 + operationId + 幂等键」去重：相同输入重放
- * 原响应，不同输入 409 {@code IDEMPOTENCY_CONFLICT}。表的唯一键 {@code (user_id, operation_id,
- * idempotency_key)} 是并发下的唯一裁决点，这里不做「先查后写」的乐观假设。
- *
- * <p>上传端用 {@link #insertProcessing} 抢坑：只有抢到的一方继续落盘，另一方拿不到坑位就按
- * 已存在记录处理，因此同一个键永远不会产生第二行 {@code core.file_asset}。
- */
+/** Transactional idempotency ledger. Approvals serialize each key before side effects; uploads atomically reserve PROCESSING records before storage writes. */
 @Repository
 public class IdempotencyRequestRepository {
 
@@ -28,6 +19,16 @@ public class IdempotencyRequestRepository {
 
     public IdempotencyRequestRepository(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
+    }
+
+    /** Serialize the key before any domain write; released together with the enclosing transaction. */
+    public void lockKey(UUID userId, String operationId, String key) {
+        if (!org.springframework.transaction.support.TransactionSynchronizationManager
+                .isActualTransactionActive()) {
+            throw new IllegalStateException("Idempotency locking requires a transaction");
+        }
+        jdbc.query("SELECT pg_advisory_xact_lock(hashtextextended(?, 0))",
+                rs -> { }, userId + ":" + operationId + ":" + key);
     }
 
     /** 账本行；{@code snapshot} 是首次响应的 JSON 文本（可为 null），重放直接回放它。 */

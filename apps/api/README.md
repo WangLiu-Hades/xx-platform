@@ -1,5 +1,17 @@
 > 当前基线：PD-2026-10-19.v1；后端个人模块按[当前分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。前端DEV-03、数据DEV-04、测试DEV-05。
 
+> 2026-11-02 更新：本轮规则取自主分支 `aca438ebfb218d40350b60ff933d2251bed50500` 的原件。当前修复、验证和能力边界见[合入复核记录](../../reports/pr3-fix/final-main-rule-verification.md)。下文旧阶段的用例数量、完成状态和遗留项只作历史记录。
+
+## 本轮配置与联调
+
+- 审批快照密钥通过 `XX_APPROVAL_PAYLOAD_KEY` 注入；审批人通过 `xx.approval.approver-logins` 配置。名单为空、当前合格独立审批人不足、目标资源无法完整核实时，动作不可用。名单中的账号还须满足实际操作权限和目标范围，申请人、执行人不能自批。
+- 下载许可密钥通过 `XX_FILE_DOWNLOAD_PERMIT_KEY` 注入，为至少32字节随机密钥的 Base64 编码，由部署密钥管理提供。浏览器先查询文件元数据取得绑定当前会话、文件和授权状态的5分钟 HttpOnly Cookie，再下载；前端已接入。上传者查询文件处理状态只要求认证及对象可见性；没有下载密钥不阻断状态查询，下载返回真实不可用原因。
+- 设备审批还要求部署绑定 `xx.approval.device-profiles`，包括型号、协议、序列号、命令能力和参数类别；参数同时须有数据库中的启用、可写定义。`KEY` 参数需两名独立审批人，值在复核清单中掩码。仓库不提供真实设备、甲方审批人或生产密钥的默认值。
+- 解密的真实请求、recipient、grant 事务，以及尚未接入的领域资源操作保持不可用；设备/用户/角色等审批流程的验证不代表相应真实外部业务已经交付。实际能力仍按主分支功能设计和 `client-config.features` 判断。
+- 新会话使用完整 UA 摘要和 IP 绑定；缺少完整绑定的旧 SID 需要重新登录。有效文件缺少到期依据时拒绝访问和结果发布。缩权后不能用旧审批、幂等响应或下载许可绕过当前检查。
+
+审批、文件和任务的具体要求仍以主分支[审批协议](../../docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md)、[API约定](../../contracts/api/api-conventions.md)、[任务协议](../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)和[保存策略](../../docs/project-governance/RETENTION_POLICY.md)为依据。本页描述实现和部署输入，不修改这些规则。
+
 # xx-platform 后端服务（`apps/api`）
 
 多维数据分析平台的**正式 HTTP API**。前端（Vue 原型）已经按契约写好，这里要把 198 个操作真正实现出来。

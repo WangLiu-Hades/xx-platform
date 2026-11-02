@@ -35,27 +35,7 @@ import com.xxplatform.api.service.AuditService;
 import com.xxplatform.api.service.AuthenticatedSession;
 import com.xxplatform.api.service.task.TaskParameters;
 
-/**
- * PD-2026-10-19.v1（暂定）的敏感动作审批：冻结申请、独立复核、按票数放行。
- *
- * <p>三条业务规则来自协议文档，而不是接口形状：
- *
- * <ul>
- *   <li><b>不能自批</b>：申请人自己就是 {@code requester_user_id}，所以任何申请人都不能裁决自己的
- *       申请；执行人也一样（当前实现里 {@code executor_user_id} 与申请人相同，属于临时口径，
- *       真正的"指定执行人"要等甲方确认）。</li>
- *   <li><b>复核人要真的有权限</b>：审批人必须持有该操作对应的权限码，否则"批了也执行不了"，
- *       只会制造一条无效审批。申请人同样要持有——自己都做不了的动作不该先申请。</li>
- *   <li><b>当前密码只做即时校验</b>：{@link #decide} 用 {@link PasswordHasher} 对当前用户口令做
- *       一次校验，明文不落库、不写日志、不回显；这是"二次确认"的最低成本实现。</li>
- * </ul>
- *
- * <p>幂等（M15）：创建申请与提交决定都走 {@code core.idempotency_request} 账本——
- * 同一个 {@code (actor, operationId, Idempotency-Key)} + 同一份请求内容只执行一次，
- * 重放直接返回首次响应快照；同一个 key 配不同内容返回 409 {@code IDEMPOTENCY_CONFLICT}。
- * 账本行与业务写入在同一事务提交：业务失败回滚时账本行随之消失（失败不产生副作用，也就无需幂等）；
- * 并发同 key 的第二个请求会撞唯一约束并回滚，由控制器重试一次、读到赢家的账本行后按重放返回。
- */
+/** Main SENSITIVE_ACTION_PROTOCOL: configured independent reviewers, frozen real targets, live reauthorization, transaction-bound single consumption and idempotency. */
 @Service
 public class ApprovalService {
 
@@ -143,13 +123,7 @@ public class ApprovalService {
         }
     }
 
-    /**
-     * 创建审批（带 {@code Idempotency-Key}，M15）。
-     *
-     * <p>先查账本：同 key + 同内容 → 返回首次响应快照；同 key + 不同内容 → 409。
-     * 否则执行业务，并在**同一事务**里把账本行写进去——业务回滚时账本一起消失，
-     * 并发同 key 的第二个请求会撞唯一约束并整体回滚，由调用方重试读到赢家后重放。
-     */
+    /** Lock the idempotency key, reauthorize, then replay or create within one transaction. */
     @Transactional
     public Map<String, Object> create(AuthenticatedSession session,
                                       Map<String, Object> proposal,
@@ -159,13 +133,15 @@ public class ApprovalService {
             return create(session, proposal, reason);
         }
         String key = IdempotencyKeyHeader.require(idempotencyKey);
+        idempotency.lockKey(session.userId(), CREATE_LEDGER_OPERATION, key);
+        authorizeCreate(session, proposal);
         Map<String, Object> identity = new LinkedHashMap<>();
         identity.put("operationId", CREATE_LEDGER_OPERATION);
         String digest = ledgerDigest(identity, proposal, reason);
         Optional<IdempotencyRequestRepository.LedgerRow> seen =
                 idempotency.find(session.userId(), CREATE_LEDGER_OPERATION, key);
         if (seen.isPresent()) {
-            return replay(seen.get(), digest);
+            return replayAuthorized(session, null, "approval.create", seen.get(), digest);
         }
         Map<String, Object> result = create(session, proposal, reason);
         idempotency.insertSucceeded(session.userId(), CREATE_LEDGER_OPERATION, key, digest, 201,
@@ -188,13 +164,13 @@ public class ApprovalService {
         int required = frozen.requiredApprovals();
         if (resolver != null) {
             resolved = resolver.freeze(frozen.operation(), frozen.pathParameters(),
-                    frozen.requestBody(), resolver.scopeOf(session.userId()), proposal.get("ifMatch"));
-            required = frozen.operation().requiredApprovals(resolved.deviceIds().size());
+                    frozen.requestBody(), resolver.scopeOf(session.userId()), proposal.get("ifMatch"), session.userId());
+            required = resolved.keyChange() ? 2 : frozen.operation().requiredApprovals(resolved.deviceIds().size());
         }
         OffsetDateTime now = Instants.nowUtc();
         OffsetDateTime expiresAt = now.plus(properties.getTtl());
-        requireEnoughApprovers(frozen.operation(), required, session.userId());
-        byte[] sealed = cipher.seal(sealPayload(frozen, resolved));
+        requireEnoughApprovers(frozen.operation(), required, session.userId(), resolved);
+        byte[] sealed = cipher.seal(sealPayload(frozen, resolved, session.userId()));
         UUID id = UUID.randomUUID();
         approvals.insert(id, session.userId(), session.userId(), frozen.operation().operationId(),
                 properties.getPolicyVersion(), frozen.digestHex(), sealed, cipher.keyId(),
@@ -217,36 +193,29 @@ public class ApprovalService {
     }
 
     /** 快照明文：有服务端解析结果时用信封（request + frozen），否则退回裸 canonicalJson。 */
-    private byte[] sealPayload(ApprovalProposals.Proposal frozen, ApprovalTargetResolver.Frozen resolved) {
+    private byte[] sealPayload(ApprovalProposals.Proposal frozen, ApprovalTargetResolver.Frozen resolved, UUID actorId) {
+        Map<String, Object> facts = resolved == null ? Map.of() : new LinkedHashMap<>(resolved.toMap());
+        if (resolver != null) facts.put("actorAuthorization", resolver.authorizationStamp(actorId));
         String plaintext = resolved == null
                 ? frozen.canonicalJson()
-                : ApprovalEnvelope.encode(frozen.canonicalJson(), resolved.toMap());
+                : ApprovalEnvelope.encode(frozen.canonicalJson(), facts);
         return plaintext.getBytes(StandardCharsets.UTF_8);
     }
 
-    /**
-     * 创建前数一数"够不够票"（M09）。
-     *
-     * <p>触发条件：需要 2 票的申请（解密、设备批量 ≥10 台），或部署配置了审批人白名单。
-     * 前者是协议硬要求；后者是因为白名单一旦收窄，"合格审批人"就变成一个可计算的小集合，
-     * 不够时应当立刻拒，而不是让申请挂 24 小时再过期。
-     *
-     * <p>为什么只数"申请人/执行人之外"的人：协议要求两名**独立**审批人，自己不能给自己
-     * 凑票。统计口径见 {@link ActionApprovalRepository#countEligibleApprovers}。
-     */
-    private void requireEnoughApprovers(ApprovalOperation operation, int required, UUID requesterId) {
-        boolean allowlistConfigured = properties.getApproverLogins() != null
-                && !properties.getApproverLogins().isEmpty();
-        if (required < 2 && !allowlistConfigured) {
-            return;
+    /** No configuration or too few currently qualified independent reviewers makes the action unavailable. */
+    private void requireEnoughApprovers(ApprovalOperation operation, int required, UUID requesterId,
+                                        ApprovalTargetResolver.Frozen resolved) {
+        List<String> configured = properties.getApproverLogins();
+        if (configured == null || configured.isEmpty()) {
+            throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "未配置审批人，该动作不可用");
         }
-        long eligible = approvals.countEligibleApprovers(operation.permission(), requesterId,
-                requesterId, properties.getApproverLogins());
+        long eligible = configured.stream().distinct().map(users::findByLoginName).flatMap(Optional::stream)
+                .filter(user -> user.isActive() && !requesterId.equals(user.id()))
+                .filter(user -> permissionsOf(user.id()).contains(operation.permission()))
+                .filter(user -> resolver == null || resolved != null && resolver.reviewerCovers(user.id(), operation, resolved.toMap()))
+                .map(UserAccountRepository.UserAccountRow::id).distinct().count();
         if (eligible < required) {
-            log.warn("审批人不足 operation={} required={} eligible={} allowlist={}",
-                    operation.operationId(), required, eligible, allowlistConfigured);
-            throw new ApiException(ErrorCode.VALIDATION_ERROR, "审批人不足",
-                    List.of(new ApiResponses.FieldErrorDetail("proposal", "审批人不足")), null);
+            throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "当前范围内的独立审批人数不足，该动作不可用");
         }
     }
 
@@ -268,8 +237,20 @@ public class ApprovalService {
         }
         Cursor decoded = Cursor.decode(cursor);
         List<String> reviewable = reviewableOperations(session.userId());
-        List<ApprovalRow> rows = approvals.listVisible(session.userId(), reviewable,
-                decoded.createdAt(), decoded.id(), size + 1);
+        List<ApprovalRow> rows = new ArrayList<>();
+        Cursor scan = decoded;
+        while (rows.size() <= size) {
+            List<ApprovalRow> candidates = approvals.listVisible(session.userId(), reviewable,
+                    scan.createdAt(), scan.id(), 100);
+            if (candidates.isEmpty()) break;
+            for (ApprovalRow candidate : candidates) {
+                if (canView(candidate, session.userId())) rows.add(candidate);
+                if (rows.size() > size) break;
+            }
+            if (rows.size() > size || candidates.size() < 100) break;
+            ApprovalRow last = candidates.get(candidates.size() - 1);
+            scan = new Cursor(last.createdAt(), last.id());
+        }
         boolean hasMore = rows.size() > size;
         List<ApprovalRow> pageRows = hasMore ? rows.subList(0, size) : rows;
         List<Map<String, Object>> items = new ArrayList<>(pageRows.size());
@@ -309,7 +290,7 @@ public class ApprovalService {
      * <p>同 key + 同内容（审批、决定、理由、当前口令）→ 返回首次响应快照；
      * 同 key + 不同内容 → 409。不同 key 但同一审批人重复投票仍由领域规则拦（一票）。
      */
-    @Transactional
+    @Transactional(noRollbackFor = ApprovalExpiredException.class)
     public Map<String, Object> decide(AuthenticatedSession session,
                                       UUID approvalId,
                                       String decision,
@@ -320,19 +301,19 @@ public class ApprovalService {
             return decide(session, approvalId, decision, reason, currentPassword);
         }
         String key = IdempotencyKeyHeader.require(idempotencyKey);
+        idempotency.lockKey(session.userId(), DECIDE_LEDGER_OPERATION, key);
+        authorizeDecisionReplay(session, approvalId, currentPassword);
         Map<String, Object> identity = new LinkedHashMap<>();
         identity.put("operationId", DECIDE_LEDGER_OPERATION);
         identity.put("approvalId", approvalId == null ? null : approvalId.toString());
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("decision", decision);
-        // 口令只进摘要，不做明文快照：账本里不能出现可直接读取的凭据。
-        body.put("currentPasswordDigest", currentPassword == null
-                ? null : Sha256.hex(Sha256.ofBytes(currentPassword.getBytes(StandardCharsets.UTF_8))));
+        // currentPassword is a fresh authentication proof, not persisted business input.
         String digest = ledgerDigest(identity, body, reason);
         Optional<IdempotencyRequestRepository.LedgerRow> seen =
                 idempotency.find(session.userId(), DECIDE_LEDGER_OPERATION, key);
         if (seen.isPresent()) {
-            return replay(seen.get(), digest);
+            return replayAuthorized(session, approvalId, "approval.decide", seen.get(), digest);
         }
         Map<String, Object> result = decide(session, approvalId, decision, reason, currentPassword);
         idempotency.insertSucceeded(session.userId(), DECIDE_LEDGER_OPERATION, key, digest, 200,
@@ -564,7 +545,28 @@ public class ApprovalService {
                 throw new ApiException(ErrorCode.PERMISSION_DENIED, "执行人已不具备该动作权限");
             }
             if (resolver != null) {
-                resolver.verifyUnchanged(operation, frozenFacts(row), executorUserId);
+                java.util.Set<UUID> actors = new java.util.TreeSet<>();
+                actors.add(row.requesterUserId());
+                actors.add(executorUserId);
+                approvals.listDecisions(row.id()).forEach(v -> actors.add(v.reviewerUserId()));
+                resolver.lockAuthorizationUsers(actors);
+                if (!resolver.active(row.requesterUserId()) || !resolver.active(executorUserId)
+                        || !permissionsOf(row.requesterUserId()).contains(operation.permission())) {
+                    throw new ApiException(ErrorCode.PERMISSION_DENIED, "申请人或执行人当前已无操作资格");
+                }
+                Map<String, Object> facts = frozenFacts(row);
+                if (!(facts.get("actorAuthorization") instanceof String)) {
+                    throw new ApiException(ErrorCode.RESOURCE_CONFLICT, "旧审批缺少完整冻结事实，请重新申请");
+                }
+                resolver.verifyUnchanged(operation, facts, row.requesterUserId());
+                if (!row.requesterUserId().equals(executorUserId)) resolver.verifyUnchanged(operation, facts, executorUserId);
+                long validVotes = approvals.listDecisions(row.id()).stream()
+                        .filter(vote -> APPROVE.equals(vote.decision()))
+                        .filter(vote -> currentReviewer(vote.reviewerUserId(), row))
+                        .map(DecisionRow::reviewerUserId).distinct().count();
+                if (validVotes < row.requiredApprovals()) {
+                    throw new ApiException(ErrorCode.PERMISSION_DENIED, "原审批人的当前资格或范围已变化，请重新申请");
+                }
             }
         }
         boolean updated = approvals.markConsumed(row.id(), now, row.version());
@@ -585,18 +587,8 @@ public class ApprovalService {
 
     private ApprovalRow requireVisible(UUID approvalId, UUID viewerId) {
         ApprovalRow row = approvals.findById(approvalId)
-                .orElseThrow(() -> new ApiException(ErrorCode.DATA_NOT_FOUND, "审批不存在"));
-        if (row.requesterUserId().equals(viewerId)) {
-            return row;
-        }
-        boolean reviewer = !row.executorUserId().equals(viewerId)
-                && reviewableOperations(viewerId).contains(row.operationId());
-        if (!reviewer) {
-            // 不是申请人、不是执行人、也不具备复核资格：一律 404，隐藏存在性。
-            throw new ApiException(ErrorCode.DATA_NOT_FOUND, "审批不存在");
-        }
-        // 有权限码但不在部署审批人名单 / 范围不覆盖目标时，能看到"有一条申请"，但不能投票；
-        // 这里先放行详情读取，具体裁决在 decide 里硬拒（与契约"配置身份+权限+范围"一致）。
+                .orElseThrow(() -> new ApiException(ErrorCode.DATA_NOT_FOUND, "Approval not found"));
+        if (!canView(row, viewerId)) throw new ApiException(ErrorCode.DATA_NOT_FOUND, "Approval not found");
         return row;
     }
 
@@ -666,9 +658,10 @@ public class ApprovalService {
     private boolean isConfiguredApprover(UUID userId) {
         List<String> allowlist = properties.getApproverLogins();
         if (allowlist == null || allowlist.isEmpty()) {
-            return true;
+            return false;
         }
         String loginName = users.findById(userId)
+                .filter(UserAccountRepository.UserAccountRow::isActive)
                 .map(UserAccountRepository.UserAccountRow::loginName)
                 .orElse(null);
         return loginName != null && allowlist.contains(loginName);
@@ -691,11 +684,64 @@ public class ApprovalService {
             return;
         }
         Map<String, Object> facts = frozenFacts(row);
-        java.util.Set<UUID> sites = siteIds(facts);
-        if (!resolver.covers(resolver.scopeOf(reviewerId), sites)) {
+        ApprovalOperation operation = ApprovalOperation.parse(row.operationId()).orElseThrow();
+        if (!resolver.reviewerCovers(reviewerId, operation, facts)) {
             throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE,
                     "审批目标不在你的当前数据范围内，不能复核");
         }
+    }
+
+    private void authorizeCreate(AuthenticatedSession session, Map<String, Object> raw) {
+        try {
+        ApprovalProposals.Proposal proposal = ApprovalProposals.parse(raw);
+        if (!permissionsOf(session.userId()).contains(proposal.operation().permission()))
+            throw new ApiException(ErrorCode.PERMISSION_DENIED, "当前已无该操作权限");
+        if (resolver != null) resolver.freeze(proposal.operation(), proposal.pathParameters(), proposal.requestBody(),
+                resolver.scopeOf(session.userId()), raw.get("ifMatch"), session.userId());
+        } catch (RuntimeException rejected) {
+            failure(actorOf(session), null, "approval.create", "APPROVAL_REJECTED", rejected, Map.of());
+            throw rejected;
+        }
+    }
+
+    private void authorizeDecisionReplay(AuthenticatedSession session, UUID approvalId, String password) {
+        try {
+            ApprovalRow row = requireVisible(approvalId, session.userId());
+            requireCurrentReviewer(session.userId(), row);
+            requirePassword(password);
+            requirePasswordMatches(session.userId(), password);
+        } catch (RuntimeException rejected) {
+            failure(actorOf(session), approvalId, "approval.decide", "APPROVAL_DECISION_REJECTED", rejected, Map.of());
+            throw rejected;
+        }
+    }
+
+    private Map<String, Object> replayAuthorized(AuthenticatedSession session, UUID approvalId, String action,
+                                                 IdempotencyRequestRepository.LedgerRow ledger, String digest) {
+        try { return replay(ledger, digest); }
+        catch (RuntimeException rejected) {
+            failure(actorOf(session), approvalId, action, "APPROVAL_REPLAY_REJECTED", rejected, Map.of());
+            throw rejected;
+        }
+    }
+
+    private boolean currentReviewer(UUID reviewer, ApprovalRow row) {
+        if (reviewer.equals(row.requesterUserId()) || reviewer.equals(row.executorUserId())) return false;
+        ApprovalOperation operation = ApprovalOperation.parse(row.operationId()).orElseThrow();
+        return isConfiguredApprover(reviewer) && permissionsOf(reviewer).contains(operation.permission())
+                && (resolver == null || resolver.reviewerCovers(reviewer, operation, frozenFacts(row)));
+    }
+
+    private void requireCurrentReviewer(UUID reviewer, ApprovalRow row) {
+        if (!currentReviewer(reviewer, row)) throw new ApiException(ErrorCode.PERMISSION_DENIED, "当前无审批资格或目标范围已变化");
+    }
+
+    private boolean canView(ApprovalRow row, UUID viewer) {
+        ApprovalOperation operation = ApprovalOperation.parse(row.operationId()).orElseThrow();
+        if (!permissionsOf(viewer).contains(operation.permission())) return false;
+        if (row.requesterUserId().equals(viewer) || row.executorUserId().equals(viewer))
+            return resolver == null || resolver.viewerCovers(viewer, operation, frozenFacts(row));
+        return currentReviewer(viewer, row);
     }
 
     private Map<String, Object> frozenFacts(ApprovalRow row) {

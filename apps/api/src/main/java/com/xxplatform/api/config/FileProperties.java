@@ -21,6 +21,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "xx.file")
 public class FileProperties {
+    /** Base64 deployment secret, at least 32 bytes; no built-in key or unsigned fallback. */
+    private String downloadPermitKey = "";
+    public String getDownloadPermitKey() { return downloadPermitKey; }
+    public void setDownloadPermitKey(String value) { downloadPermitKey = value == null ? "" : value; }
 
     /** 文件内容根目录；{@code ${user.home}} 由 Spring 的占位符解析。 */
     private String storageRoot = "${user.home}/.xx-platform/files";

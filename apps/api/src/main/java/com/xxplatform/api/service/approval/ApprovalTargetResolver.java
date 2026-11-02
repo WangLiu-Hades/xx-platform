@@ -1,6 +1,17 @@
 package com.xxplatform.api.service.approval;
 
-import java.util.ArrayList;
+import com.xxplatform.api.common.ApiException;
+import com.xxplatform.api.common.ErrorCode;
+import com.xxplatform.api.common.Instants;
+import com.xxplatform.api.common.Sha256;
+import com.xxplatform.api.config.ApprovalProperties;
+import com.xxplatform.api.infra.AnalysisContextRepository;
+import com.xxplatform.api.infra.AnalysisContextRepository.ContextRow;
+import com.xxplatform.api.infra.RbacRepository;
+import com.xxplatform.api.service.CurrentDataScope;
+import com.xxplatform.api.service.ScopeCalculator;
+import com.xxplatform.api.service.task.TaskParameters;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -10,250 +21,271 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.xxplatform.api.common.ApiException;
-import com.xxplatform.api.common.ErrorCode;
-import com.xxplatform.api.config.ApprovalProperties;
-import com.xxplatform.api.infra.RbacRepository;
-import com.xxplatform.api.service.ScopeCalculator;
-
-/**
- * 审批目标的**服务端解析**（M09 / M10）。
- *
- * <p>为什么不能信客户端：{@code deviceIds.length} 决定要 1 票还是 2 票。如果由调用方自己数，
- * 它只要传一个 {@code groupId}（或声称 1 台）就能把"批量 ≥10 台"的双人审批降成单人；反过来
- * 也可以把目标集合缩小，获批后再换一批设备执行。所以这里做三件事：
- *
- * <ol>
- *   <li>把 {@code groupId} / {@code deviceIds} 解析成**真实存在的设备集合**（查
- *       {@code core.device_group_member} + {@code core.device}，过滤逻辑删除）；</li>
- *   <li>校验目标落在申请人当前数据范围内，越界 403 {@code PERMISSION_DATA_SCOPE}；</li>
- *   <li>把设备集合、资源版本、授权版本、策略版本冻结进审批快照，执行前再比对一次。</li>
- * </ol>
- */
+/** Resolve real, visible targets before acceptance; re-resolve before approval consumption. */
 @Component
 public class ApprovalTargetResolver {
-
     private final JdbcTemplate jdbc;
     private final RbacRepository rbac;
     private final ApprovalProperties properties;
+    private final CurrentDataScope live;
+    private final AuthorizationBounds bounds;
+    private final AnalysisContextRepository contexts;
 
     public ApprovalTargetResolver(JdbcTemplate jdbc, RbacRepository rbac, ApprovalProperties properties) {
-        this.jdbc = jdbc;
-        this.rbac = rbac;
-        this.properties = properties;
+        this.jdbc = jdbc; this.rbac = rbac; this.properties = properties;
+        this.live = new CurrentDataScope(jdbc, rbac);
+        this.bounds = new AuthorizationBounds(jdbc, rbac, live);
+        this.contexts = new AnalysisContextRepository(jdbc);
     }
 
-    /** 当前用户的完整范围（数据站点/管理站点/类型/ownOnly/授权版本）。 */
-    public ScopeCalculator.ScopeResult scopeOf(UUID userId) {
-        return ScopeCalculator.resolve(rbac.roleScopes(userId), rbac.roleSiteGrants(userId),
-                rbac.roleDataTypes(userId), rbac.userScope(userId).orElse(null),
-                rbac.userScopeSites(userId), rbac.userScopeDataTypes(userId));
+    public ScopeCalculator.ScopeResult scopeOf(UUID userId) { return live.scopeOf(userId); }
+    public String authorizationStamp(UUID userId) { return live.stamp(userId); }
+    public boolean active(UUID userId) { return live.active(userId); }
+
+    public void lockAuthorizationUsers(Collection<UUID> userIds) {
+        String placeholders = userIds.stream().map(id -> "?").collect(Collectors.joining(","));
+        jdbc.queryForList("SELECT id FROM auth.app_user WHERE id IN (" + placeholders + ") ORDER BY id FOR SHARE", userIds.toArray());
     }
 
-    /** 冻结快照的服务端事实部分。 */
-    public record Frozen(List<UUID> deviceIds,
-                         Map<String, String> versions,
-                         Set<UUID> siteIds,
-                         long scopeVersion,
-                         String policyVersion,
-                         String dataScope) {
-
+    public record Frozen(List<UUID> deviceIds, Map<String, String> versions, Set<UUID> siteIds,
+                         long scopeVersion, String policyVersion, String dataScope,
+                         Map<String, Object> selection, boolean keyChange) {
         public Map<String, Object> toMap() {
             Map<String, Object> map = new LinkedHashMap<>();
-            map.put("deviceIds", deviceIds.stream().map(UUID::toString).toList());
-            map.put("versions", new LinkedHashMap<>(versions));
+            map.put("deviceIds", deviceIds.stream().map(UUID::toString).sorted().toList());
+            map.put("versions", versions);
             map.put("siteIds", siteIds.stream().map(UUID::toString).sorted().toList());
             map.put("scopeVersion", scopeVersion);
             map.put("policyVersion", policyVersion);
             map.put("dataScope", dataScope);
+            map.put("selection", selection);
+            map.put("keyChange", keyChange);
             return map;
         }
     }
 
-    /**
-     * 解析目标并冻结。
-     *
-     * @param actorScope 申请人当前范围；为 {@code null} 时只做存在性解析（系统调用场景）
-     */
-    public Frozen freeze(ApprovalOperation operation,
-                         Map<String, Object> pathParameters,
-                         Map<String, Object> requestBody,
-                         ScopeCalculator.ScopeResult actorScope,
-                         Object ifMatch) {
-        if (!isDeviceBatch(operation)) {
-            // 非设备类操作：没有可解析的目标集合，冻结策略/授权版本即可。
-            String dataScope = actorScope == null ? "" : describeScope(actorScope);
-            return new Frozen(List.of(), Map.of(), Set.of(), actorScope == null ? 0L : actorScope.scopeVersion(),
-                    properties.getPolicyVersion(), dataScope);
+    public Frozen freeze(ApprovalOperation operation, Map<String, Object> path, Map<String, Object> body,
+                         ScopeCalculator.ScopeResult actorScope, Object ifMatch) {
+        return freeze(operation, path, body, actorScope, ifMatch, null);
+    }
+
+    public Frozen freeze(ApprovalOperation operation, Map<String, Object> path, Map<String, Object> body,
+                         ScopeCalculator.ScopeResult actorScope, Object ifMatch, UUID actorId) {
+        Map<String, String> versions = new LinkedHashMap<>();
+        Map<String, Object> selection = new LinkedHashMap<>();
+        selection.put("pathParameters", path);
+        selection.put("requestBody", body);
+        if (ifMatch != null) selection.put("ifMatch", ifMatch);
+        if (actorId != null) {
+            if (!live.active(actorId)) throw new ApiException(ErrorCode.PERMISSION_DENIED, "账号不可用");
+            if (identityOperation(operation)) bounds.check(actorId, operation, path, body);
+        }
+        if (operation == ApprovalOperation.CREATE_EXPORT) {
+            UUID id = UUID.fromString(String.valueOf(body.get("contextId")));
+            ContextRow context = contexts.findById(id)
+                    .filter(c -> actorId != null && actorId.equals(c.ownerUserId()))
+                    .orElseThrow(() -> new ApiException(ErrorCode.DATA_NOT_FOUND, "上下文不存在"));
+            if (!context.expiresAt().isAfter(Instants.nowUtc()))
+                throw new ApiException(ErrorCode.CONTEXT_EXPIRED, "上下文已过期");
+            if (!live.contextAllowed(actorId, context)) throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE, "上下文不在当前授权范围");
+            selection.put("contextFilter", live.filter(context));
+            versions.put("context:" + id, digest(Map.of("filter", context.filterSnapshot(),
+                    "permissionVersion", context.permissionVersion(), "expiresAt", context.expiresAt().toString())));
+            return frozen(List.of(), versions, Set.of(), actorScope, selection, false);
+        }
+        if (identityOperation(operation)) {
+            for (UUID role : CurrentDataScope.uuids(body.get("roleIds")))
+                versions.put("role:" + role, resourceVersion("auth.role", role));
+            if (path.get("roleId") instanceof String text) {
+                UUID id = UUID.fromString(text);
+                versions.put("role:" + id, resourceVersion("auth.role", id));
+                matchVersion(ifMatch, versions.get("role:" + id));
+            }
+            if (path.get("userId") instanceof String text) {
+                UUID id = UUID.fromString(text);
+                versions.put("user:" + id, resourceVersion("auth.app_user", id));
+                versions.put("userAuthorization:" + id, live.stamp(id));
+                matchVersion(ifMatch, versions.get("user:" + id));
+            }
+            return frozen(List.of(), versions, Set.of(), actorScope, selection, false);
+        }
+        if (operation != ApprovalOperation.CREATE_DEVICE_COMMAND && operation != ApprovalOperation.UPDATE_DEVICE_PARAMETERS) {
+            // These domains have not connected their complete resource/execution transactions.
+            // In particular, decryption must bind its real recipient and reuse the domain grant.
+            throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "该操作尚未接入完整领域资源和执行事务，审批不可用");
         }
         LinkedHashSet<UUID> ids = new LinkedHashSet<>();
-        Object groupId = requestBody.get("groupId");
-        if (groupId instanceof String text && !text.isBlank()) {
-            ids.addAll(groupDevices(UUID.fromString(text)));
+        if (body.get("groupId") instanceof String groupId) {
+            UUID group = UUID.fromString(groupId);
+            List<Long> groups = jdbc.queryForList("SELECT version FROM core.device_group WHERE id=? AND deleted=false FOR SHARE", Long.class, group);
+            if (groups.size() != 1) throw new ApiException(ErrorCode.DATA_NOT_FOUND, "设备组不存在");
+            versions.put("deviceGroup:" + group, String.valueOf(groups.get(0)));
+            ids.addAll(jdbc.queryForList("SELECT device_id FROM core.device_group_member WHERE group_id=? ORDER BY device_id", UUID.class, group));
         }
-        Object explicit = requestBody.containsKey("deviceIds")
-                ? requestBody.get("deviceIds") : pathParameters.get("deviceIds");
-        if (explicit instanceof List<?> list) {
-            for (Object item : list) {
-                ids.add(UUID.fromString(String.valueOf(item)));
-            }
-        }
-        if (ids.isEmpty()) {
-            // 例如 updateDeviceParameters 走 path.deviceId；这里补上单设备目标。
-            Object single = pathParameters.get("deviceId");
-            if (single instanceof String text && !text.isBlank()) {
-                ids.add(UUID.fromString(text));
-            }
-        }
+        ids.addAll(CurrentDataScope.uuids(body.get("deviceIds")));
+        if (path.get("deviceId") instanceof String text) ids.add(UUID.fromString(text));
+        if (ids.isEmpty()) throw new ApiException(ErrorCode.VALIDATION_ERROR, "目标设备集合不能为空");
         List<DeviceRow> devices = loadDevices(ids);
-        if (devices.size() != ids.size()) {
-            Set<UUID> found = devices.stream().map(DeviceRow::id).collect(Collectors.toSet());
-            List<UUID> missing = ids.stream().filter(id -> !found.contains(id)).toList();
-            throw new ApiException(ErrorCode.VALIDATION_ERROR,
-                    "目标设备不存在或已删除：" + missing,
-                    List.of(new com.xxplatform.api.common.ApiResponses.FieldErrorDetail(
-                            "proposal.requestBody.deviceIds", "设备不存在")), null);
-        }
-        Set<UUID> sites = devices.stream().map(DeviceRow::siteId).collect(Collectors.toCollection(
-                LinkedHashSet::new));
-        if (actorScope != null && !covers(actorScope, sites)) {
-            throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE,
-                    "目标设备不在当前数据范围内，不能发起该审批");
-        }
-        Map<String, String> versions = new LinkedHashMap<>();
+        if (devices.size() != ids.size()) throw new ApiException(ErrorCode.DATA_NOT_FOUND, "目标设备不存在或不可见");
+        Set<UUID> sites = devices.stream().map(DeviceRow::siteId).collect(Collectors.toCollection(LinkedHashSet::new));
+        if (actorScope != null && !covers(actorScope, sites))
+            throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE, "设备超出当前管理范围");
+        boolean keyChange = false;
+        Set<String> sensitiveCodes = new LinkedHashSet<>();
+        String command = operation == ApprovalOperation.UPDATE_DEVICE_PARAMETERS ? "APPLY_PARAMETERS" : String.valueOf(body.get("commandType"));
+        if (actorId != null && "RESET".equals(command) && !rbac.permissionCodes(actorId).contains("device:reset"))
+            throw new ApiException(ErrorCode.PERMISSION_DENIED, "缺少设备重置权限");
+        Object rawChanges = body.get(operation == ApprovalOperation.UPDATE_DEVICE_PARAMETERS ? "changes" : "parameterChanges");
+        List<?> changes = rawChanges instanceof List<?> list ? list : List.of();
         for (DeviceRow device : devices) {
             versions.put("device:" + device.id(), String.valueOf(device.version()));
-        }
-        if (ifMatch != null) {
-            Object single = pathParameters.get("deviceId");
-            if (single instanceof String text) {
-                DeviceRow device = devices.stream()
-                        .filter(row -> row.id().toString().equals(text))
-                        .findFirst()
-                        .orElseThrow(() -> new ApiException(ErrorCode.DATA_NOT_FOUND, "目标设备不存在"));
-                if (!String.valueOf(device.version()).equals(String.valueOf(ifMatch))) {
-                    throw new ApiException(ErrorCode.RESOURCE_VERSION_CONFLICT,
-                            "设备参数版本已变化（If-Match=" + ifMatch + "，当前=" + device.version() + "）");
-                }
+            versions.put("deviceParameters:" + device.id(), String.valueOf(device.parameterVersion()));
+            ApprovalProperties.DeviceProfile profile = properties.getDeviceProfiles().stream()
+                    .filter(p -> Objects.equals(p.manufacturer(), device.manufacturer()) && Objects.equals(p.model(), device.model())
+                            && Objects.equals(p.protocolVersion(), device.protocolVersion()) && p.serialNumbers() != null
+                            && p.serialNumbers().contains(device.serialNumber()) && p.commands() != null && p.commands().contains(command))
+                    .findFirst().orElseThrow(() -> new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "设备未绑定支持该操作的DeviceProfile"));
+            versions.put("deviceProfile:" + device.id(), digest(Map.of("manufacturer", profile.manufacturer(), "model", profile.model(),
+                    "protocolVersion", profile.protocolVersion(), "serialNumbers", profile.serialNumbers(), "commands", profile.commands(),
+                    "parameterKinds", profile.parameterKinds() == null ? Map.of() : profile.parameterKinds())));
+            for (Object raw : changes) {
+                Map<String, Object> change = CurrentDataScope.object(raw);
+                String code = String.valueOf(change.get("parameterCode"));
+                String kind = profile.parameterKinds() == null ? null : profile.parameterKinds().get(code);
+                if (!List.of("STANDARD", "NETWORK", "KEY").contains(kind == null ? "" : kind))
+                    throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "参数缺少已绑定的敏感类别定义");
+                keyChange |= "KEY".equals(kind);
+                if ("KEY".equals(kind)) sensitiveCodes.add(code);
+                List<Map<String, Object>> definitions = jdbc.queryForList("""
+                        SELECT id,value_type,minimum,maximum,allowed_values::text AS allowed_values
+                          FROM core.device_parameter_definition
+                         WHERE manufacturer=? AND model=? AND protocol_version=? AND parameter_code=?
+                           AND enabled=true AND read_only=false
+                        """, device.manufacturer(), device.model(), device.protocolVersion(), code);
+                if (definitions.size() != 1 || !Objects.equals(definitions.get(0).get("value_type"), change.get("valueType")))
+                    throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "参数定义不可写或与DeviceProfile不匹配");
+                validateParameter(change, definitions.get(0));
+                versions.put("parameterDefinition:" + device.id() + ":" + code, digest(definitions.get(0)));
             }
         }
-        String dataScope = actorScope == null ? "" : describeScope(actorScope);
-        return new Frozen(List.copyOf(ids), versions, sites,
-                actorScope == null ? 0L : actorScope.scopeVersion(), properties.getPolicyVersion(), dataScope);
+        selection.put("sensitiveParameterCodes", List.copyOf(sensitiveCodes));
+        if (path.containsKey("deviceId")) matchVersion(ifMatch, String.valueOf(devices.get(0).version()));
+        return frozen(ids.stream().sorted().toList(), versions, sites, actorScope, selection, keyChange);
     }
 
-    /**
-     * 执行前复核：目标集合、资源版本、策略版本、执行人范围任一变化都拒绝（M10）。
-     */
-    public void verifyUnchanged(ApprovalOperation operation,
-                                Map<String, Object> frozen,
-                                UUID actorId) {
-        Object policyVersion = frozen.get("policyVersion");
-        if (policyVersion != null && !String.valueOf(policyVersion).equals(properties.getPolicyVersion())) {
-            throw new ApiException(ErrorCode.RESOURCE_CONFLICT,
-                    "审批冻结的策略版本已变化，请重新申请");
-        }
-        Object rawIds = frozen.get("deviceIds");
-        if (!(rawIds instanceof List<?> list) || list.isEmpty()) {
-            return;
-        }
-        List<UUID> expected = list.stream().map(item -> UUID.fromString(String.valueOf(item))).toList();
-        List<DeviceRow> current = loadDevices(expected);
-        Set<UUID> currentIds = current.stream().map(DeviceRow::id).collect(Collectors.toSet());
-        if (!currentIds.containsAll(expected)) {
-            throw new ApiException(ErrorCode.RESOURCE_CONFLICT,
-                    "审批冻结的目标设备已被删除或不可见，请重新申请");
-        }
-        Object rawVersions = frozen.get("versions");
-        if (rawVersions instanceof Map<?, ?> versions) {
-            for (DeviceRow device : current) {
-                Object expectedVersion = versions.get("device:" + device.id());
-                if (expectedVersion != null
-                        && !String.valueOf(expectedVersion).equals(String.valueOf(device.version()))) {
-                    throw new ApiException(ErrorCode.RESOURCE_CONFLICT,
-                            "目标设备版本已变化，请重新申请");
-                }
+    private Frozen frozen(List<UUID> devices, Map<String, String> versions, Set<UUID> sites,
+                          ScopeCalculator.ScopeResult scope, Map<String, Object> selection, boolean keyChange) {
+        return new Frozen(devices, versions, sites, scope == null ? 0 : scope.scopeVersion(),
+                properties.getPolicyVersion(), scope == null ? "" : describeScope(scope), selection, keyChange);
+    }
+
+    public void verifyUnchanged(ApprovalOperation operation, Map<String, Object> facts, UUID actorId) {
+        if (!Objects.equals(properties.getPolicyVersion(), facts.get("policyVersion"))) conflict();
+        if (!(facts.get("selection") instanceof Map<?, ?>)) conflict();
+        if (facts.get("actorAuthorization") instanceof String stamp && !stamp.equals(live.stamp(actorId))) conflict();
+        if (!(facts.get("scopeVersion") instanceof Number v) || v.longValue() != scopeOf(actorId).scopeVersion()) conflict();
+        Map<String, Object> selection = CurrentDataScope.object(facts.get("selection"));
+        Frozen current = freeze(operation, CurrentDataScope.object(selection.get("pathParameters")),
+                CurrentDataScope.object(selection.get("requestBody")), scopeOf(actorId), selection.get("ifMatch"), actorId);
+        if (!Objects.equals(facts.get("versions"), current.versions())
+                || !new java.util.HashSet<>(CurrentDataScope.uuids(facts.get("deviceIds"))).equals(new java.util.HashSet<>(current.deviceIds()))
+                || !Objects.equals(facts.get("keyChange"), current.keyChange())) conflict();
+    }
+
+    public boolean reviewerCovers(UUID reviewer, ApprovalOperation operation, Map<String, Object> facts) {
+        return viewerCovers(reviewer, operation, facts, false);
+    }
+
+    public boolean viewerCovers(UUID viewer, ApprovalOperation operation, Map<String, Object> facts) {
+        return viewerCovers(viewer, operation, facts, true);
+    }
+
+    private boolean viewerCovers(UUID reviewer, ApprovalOperation operation, Map<String, Object> facts, boolean owner) {
+        if (!live.active(reviewer)) return false;
+        Map<String, Object> selection = CurrentDataScope.object(facts.get("selection"));
+        if (selection.isEmpty()) return false;
+        Map<String, Object> body = CurrentDataScope.object(selection.get("requestBody"));
+        try {
+            if (operation == ApprovalOperation.CREATE_EXPORT) {
+                UUID contextId = UUID.fromString(String.valueOf(body.get("contextId")));
+                ContextRow original = contexts.findById(contextId).orElse(null);
+                if (original == null) return false;
+                ContextRow review = new ContextRow(original.id(), reviewer, original.sourceModule(), original.filterType(),
+                        original.filterSchemaVersion(), original.filterSnapshot(), live.authzVersion(reviewer), original.expiresAt());
+                return live.contextAllowed(reviewer, review)
+                        && (owner || scopeOf(reviewer).grants().stream().anyMatch(g -> !g.ownOnly()));
             }
-        }
-        ScopeCalculator.ScopeResult scope = scopeOf(actorId);
-        Set<UUID> sites = current.stream().map(DeviceRow::siteId).collect(Collectors.toSet());
-        if (!covers(scope, sites)) {
-            throw new ApiException(ErrorCode.PERMISSION_DATA_SCOPE,
-                    "当前范围已不覆盖审批目标，不能执行");
-        }
+            if (identityOperation(operation)) {
+                bounds.check(reviewer, operation, CurrentDataScope.object(selection.get("pathParameters")), body);
+                return true;
+            }
+            if ("RESET".equals(body.get("commandType")) && !rbac.permissionCodes(reviewer).contains("device:reset")) return false;
+            return covers(scopeOf(reviewer), CurrentDataScope.uuids(facts.get("siteIds")));
+        } catch (ApiException | IllegalArgumentException rejected) { return false; }
     }
 
-    /** 审批人范围是否覆盖目标站点集合。 */
-    public boolean covers(ScopeCalculator.ScopeResult scope, Collection<UUID> siteIds) {
-        if (siteIds == null || siteIds.isEmpty()) {
-            // 没有可解析目标的审批（例如角色授权）要求审批人至少拥有一个可管理的站点或全局范围。
-            return scope.managementAllSites() || scope.dataAllSites()
-                    || !scope.managementSiteIds().isEmpty() || !scope.dataSiteIds().isEmpty();
-        }
-        if (scope.managementAllSites() || scope.dataAllSites()) {
-            return true;
-        }
-        Set<UUID> allowed = new LinkedHashSet<>(scope.managementSiteIds());
-        allowed.addAll(scope.dataSiteIds());
-        return allowed.containsAll(siteIds);
+    public boolean covers(ScopeCalculator.ScopeResult scope, Collection<UUID> sites) {
+        return CurrentDataScope.managementCovers(scope, sites);
     }
-
-    /**
-     * 是否为设备批量类操作（决定是否需要解析并冻结真实设备集合）。
-     *
-     * <p>{@link ApprovalOperation} 的 deviceBatch 标志没有暴露 getter，而 30 个操作里只有
-     * createDeviceCommand / updateDeviceParameters / retryDeviceCommand / reviseDeviceCommand
-     * 的 operationId 含 "Device"，用这一点判定，避免为了一个 getter 去改枚举（该文件不在本组改动范围）。
-     */
-    static boolean isDeviceBatch(ApprovalOperation operation) {
-        return operation.operationId().contains("Device");
+    static boolean isDeviceBatch(ApprovalOperation operation) { return operation.operationId().contains("Device"); }
+    private static boolean identityOperation(ApprovalOperation operation) {
+        return operation.permission().startsWith("user:") || operation.permission().equals("role:grant");
     }
-
+    private String resourceVersion(String table, UUID id) {
+        if (!Set.of("auth.role", "auth.app_user").contains(table)) throw new IllegalArgumentException();
+        List<Long> versions = jdbc.queryForList("SELECT version FROM " + table + " WHERE id=? AND deleted=false FOR SHARE", Long.class, id);
+        if (versions.size() != 1) throw new ApiException(ErrorCode.DATA_NOT_FOUND, "资源不存在或不可见");
+        return String.valueOf(versions.get(0));
+    }
+    private static void matchVersion(Object ifMatch, String version) {
+        if (ifMatch != null && !("\"" + version + "\"").equals(ifMatch))
+            throw new ApiException(ErrorCode.RESOURCE_VERSION_CONFLICT, "资源版本已变化");
+    }
     private List<DeviceRow> loadDevices(Collection<UUID> ids) {
-        if (ids.isEmpty()) {
-            return List.of();
-        }
         String placeholders = ids.stream().map(id -> "?").collect(Collectors.joining(","));
-        List<Object> args = new ArrayList<>(ids);
-        return jdbc.query("SELECT id, site_id, version FROM core.device"
-                        + " WHERE deleted = false AND id IN (" + placeholders + ")",
-                (rs, rowNum) -> new DeviceRow(rs.getObject("id", UUID.class),
-                        rs.getObject("site_id", UUID.class), rs.getLong("version")),
-                args.toArray());
+        return jdbc.query("SELECT id,site_id,version,parameter_version,serial_number,manufacturer,model,protocol_version"
+                        + " FROM core.device WHERE deleted=false AND id IN (" + placeholders + ") ORDER BY id FOR SHARE",
+                (rs, n) -> new DeviceRow(rs.getObject("id", UUID.class), rs.getObject("site_id", UUID.class),
+                        rs.getLong("version"), rs.getLong("parameter_version"), rs.getString("serial_number"),
+                        rs.getString("manufacturer"), rs.getString("model"), rs.getString("protocol_version")), ids.toArray());
+    }
+    private static String digest(Map<String, Object> value) {
+        return Sha256.hex(Sha256.ofBytes(TaskParameters.canonicalJson(value).getBytes(StandardCharsets.UTF_8)));
     }
 
-    private List<UUID> groupDevices(UUID groupId) {
-        Integer exists = jdbc.query("SELECT 1 FROM core.device_group WHERE id = ? AND deleted = false",
-                rs -> rs.next() ? 1 : null, groupId);
-        if (exists == null) {
-            throw new ApiException(ErrorCode.VALIDATION_ERROR, "设备组不存在或已删除",
-                    List.of(new com.xxplatform.api.common.ApiResponses.FieldErrorDetail(
-                            "proposal.requestBody.groupId", "设备组不存在")), null);
+    private static void validateParameter(Map<String, Object> change, Map<String, Object> definition) {
+        String field = switch (String.valueOf(change.get("valueType"))) {
+            case "TEXT" -> "textValue";
+            case "INTEGER" -> "integerValue";
+            case "NUMBER" -> "numberValue";
+            case "BOOLEAN" -> "booleanValue";
+            default -> throw new ApiException(ErrorCode.VALIDATION_ERROR, "参数类型不支持");
+        };
+        Object value = change.get(field);
+        if (value instanceof Number number) {
+            java.math.BigDecimal numeric = new java.math.BigDecimal(number.toString());
+            if (definition.get("minimum") instanceof Number min && numeric.compareTo(new java.math.BigDecimal(min.toString())) < 0
+                    || definition.get("maximum") instanceof Number max && numeric.compareTo(new java.math.BigDecimal(max.toString())) > 0)
+                throw new ApiException(ErrorCode.VALIDATION_ERROR, "参数值超出已绑定定义的范围");
         }
-        return jdbc.query("SELECT device_id FROM core.device_group_member WHERE group_id = ?",
-                (rs, rowNum) -> rs.getObject("device_id", UUID.class), groupId);
+        if (definition.get("allowed_values") instanceof String json) {
+            try {
+                com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                com.fasterxml.jackson.databind.JsonNode allowed = mapper.readTree(json);
+                if (!allowed.isArray() || !java.util.stream.StreamSupport.stream(allowed.spliterator(), false)
+                        .anyMatch(item -> item.equals(mapper.valueToTree(value))))
+                    throw new ApiException(ErrorCode.VALIDATION_ERROR, "参数值不在已绑定定义的允许目录中");
+            } catch (java.io.IOException e) { throw new ApiException(ErrorCode.SYSTEM_UNAVAILABLE, "参数定义不可用"); }
+        }
     }
-
-    /** 范围的可读快照（写进复核清单，审批人能看到"批的是多大范围"）。 */
+    private static void conflict() { throw new ApiException(ErrorCode.RESOURCE_CONFLICT, "审批目标、版本或授权已变化，请重新申请"); }
     public static String describeScope(ScopeCalculator.ScopeResult scope) {
-        String sites = scope.dataAllSites() && scope.managementAllSites()
-                ? "ALL"
-                : scope.dataSiteIds().stream().map(UUID::toString).sorted()
-                        .collect(Collectors.joining(",", "[", "]"));
-        return "dataAllSites=" + scope.dataAllSites()
-                + ",managementAllSites=" + scope.managementAllSites()
-                + ",sites=" + sites
-                + ",dataTypes=" + scope.dataTypes()
-                + ",ownOnly=" + scope.ownOnly();
+        return "managementAllSites=" + scope.managementAllSites() + ",managementSites=" + scope.managementSiteIds()
+                + ",scopeGrants=" + scope.grants();
     }
-
-    private record DeviceRow(UUID id, UUID siteId, long version) {
-        private DeviceRow {
-            Objects.requireNonNull(id);
-        }
-    }
+    private record DeviceRow(UUID id, UUID siteId, long version, long parameterVersion, String serialNumber,
+                             String manufacturer, String model, String protocolVersion) { }
 }

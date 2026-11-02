@@ -140,6 +140,7 @@ xx:
   # ⚠ client-config.maxUploadBytes（10 MiB）只覆盖**图片类**上传，是前端预校验口径；
   #   普通导入（XLSX/CSV/JSON）是 100 MiB / 10 万行，两者不同，不能用一个键同时表达。
   file:
+    download-permit-key: ${XX_FILE_DOWNLOAD_PERMIT_KEY:}
     # 内容根目录；生产挂持久卷，本地默认在用户目录下（可用 XX_FILE_STORAGE_ROOT 覆盖）
     storage-root: ${user.home}/.xx-platform/files
     # 图片类（人像检索、档案头像）：10 MiB
@@ -154,7 +155,7 @@ xx:
   #
   # payload-key 是冻结快照的 AES-256 密钥（base64，32 字节）。默认留空表示"未配置"——
   # 此时创建/读取审批返回 503，而不是退化成明文落库。生产由部署 secret 注入；
-  # 本地 db profile 在 application-db.yml 里放了一个仅限开发的默认值。
+  # db profile 同样没有默认密钥，须显式配置。
   approval:
     payload-key: ${XX_APPROVAL_PAYLOAD_KEY:}
     key-id: local-dev-v1
@@ -164,9 +165,8 @@ xx:
     policy-version: PD-2026-10-19.v1
     page-size-default: 20
     page-size-max: 100
-    # 审批人白名单（M09）：空 = 按权限判定（持有该操作权限的人都是候选审批人）。
-    # 非空时，只有列在这里的登录名才算"合格审批人"，且创建审批时要先数一遍够不够
-    # required_approvals；不够直接 400「审批人不足」，不让人提交一个永远批不下来的申请。
+    # 未配置审批人或当前合格独立审批人数不足时，该动作不可用（503）。
+    # 名单内还须具备实际动作权限、当前目标范围及独立性，不按账号权限自动授予审批资格。
     approver-logins: []
 
   # 认证策略（任务 5：POST /auth/login）

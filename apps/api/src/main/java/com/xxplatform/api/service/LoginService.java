@@ -204,25 +204,13 @@ public class LoginService {
         return trimmed.length() <= CLIENT_LABEL_MAX ? trimmed : trimmed.substring(0, CLIENT_LABEL_MAX);
     }
 
-    /**
-     * 会话绑定串：{@code <UA 截断>|ip=<客户端地址>}，写入 {@code auth.user_session.client_label}。
-     *
-     * <p><b>为什么把 IP 编进 client_label 而不是加一列</b>：M02 要求"会话期间 IP 变化必须重新登录"，
-     * 而 {@code auth.user_session} 没有 IP 列，本轮又不允许改 schema——迁移由
-     * {@code MigrationBaselineTests.migrationsCoverContractStructure} 与
-     * {@code contracts/database/schema.sql} 的 SHA-256 双向锁定，任何 {@code ADD COLUMN}
-     * 都会让"迁移构建出的结构 ≠ 契约结构"直接失败（已实测，见 PR 报告）。
-     * 该列宽 200、语义是"客户端标识"，把 IP 作为一个带前缀的尾部字段拼进去，
-     * 是不加列前提下唯一能同时保留 UA 展示与 IP 绑定的做法；解析逻辑见
-     * {@link #boundUserAgent} / {@link #boundIp}，对没有 {@code |ip=} 的历史行保持向后兼容。
-     *
-     * <p>截断顺序：先按 150 截 UA，再拼 {@code |ip=} 与地址，总长 ≤ 150 + 4 + 45 = 199 < 200。
-     */
+    /** Bind the full normalized UA digest and validated client IP within the existing varchar(200) column. Legacy partial bindings require reauthentication. */
     public static String clientBinding(String userAgent, String clientIp) {
-        String ua = clientLabel(userAgent);
-        if (ua.length() > UA_PART_MAX) {
-            ua = ua.substring(0, UA_PART_MAX);
-        }
+        // Bind the complete normalized UA, including characters beyond the column's display budget.
+        String ua = "v2:" + com.xxplatform.api.common.Sha256.hex(
+                com.xxplatform.api.common.Sha256.ofBytes(
+                        (userAgent == null || userAgent.isBlank() ? UNKNOWN : userAgent.trim())
+                                .getBytes(java.nio.charset.StandardCharsets.UTF_8)));
         String ip = clientIp == null || clientIp.isBlank() ? UNKNOWN : clientIp.trim();
         return ua + IP_SEPARATOR + ip;
     }

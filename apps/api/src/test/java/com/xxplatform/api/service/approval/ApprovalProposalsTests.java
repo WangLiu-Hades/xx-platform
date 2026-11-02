@@ -96,7 +96,7 @@ class ApprovalProposalsTests {
         ApprovalProposals.Proposal proposal = ApprovalProposals.parse(Map.of(
                 "operationId", "changeUserPassword",
                 "pathParameters", Map.of("userId", USER_ID),
-                "requestBody", Map.of("currentPassword", "OldSecret1!Long15", "newPassword", "Secret123!Long15")));
+                "requestBody", Map.of("reason", "Administrator reset with documented purpose", "newPassword", "Secret123!Long15")));
 
         String masked = proposal.reviewItems().stream()
                 .filter(item -> item.fieldCode().equals("request.newPassword"))
@@ -111,15 +111,12 @@ class ApprovalProposalsTests {
     void rejectsPasswordsThatThePasswordPolicyWouldRejectAtExecutionTime() {
         // M04：口令 15-128 个 Unicode 码点。提案层若接受 8-14 位口令，审批人批准的就是一个
         // 执行阶段必然失败的动作，等于把校验成本转嫁给审批人。
-        Map<String, Object> tooShort = Map.of("userCode", "u-short", "loginName", "u-short",
-                "displayName", "短口令用户", "initialPassword", "Short12!", "roleIds", List.of(uuid(3)));
+        Map<String, Object> tooShort = userBody("Short12!");
         ApiException shortError = assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of(
                 "operationId", "createUser", "requestBody", tooShort)));
         assertEquals(ErrorCode.VALIDATION_ERROR, shortError.code());
 
-        Map<String, Object> compliant = Map.of("userCode", "u-ok", "loginName", "u-ok",
-                "displayName", "合规口令用户", "initialPassword", "Compliant123!15",
-                "roleIds", List.of(uuid(3)));
+        Map<String, Object> compliant = userBody("Compliant123!15");
         ApprovalProposals.Proposal proposal = ApprovalProposals.parse(Map.of(
                 "operationId", "createUser", "requestBody", compliant));
         assertEquals(ApprovalOperation.CREATE_USER, proposal.operation());
@@ -136,21 +133,20 @@ class ApprovalProposalsTests {
         String embedded = "{\"password\":\"Hidden1!\",\"deviceId\":\"" + uuid(7) + "\"}";
         ApprovalProposals.Proposal proposal = ApprovalProposals.parse(Map.of(
                 "operationId", "createDeviceCommand",
-                "requestBody", Map.of("deviceIds", List.of(uuid(1)),
-                        "parameterChanges", Map.of("raw", embedded))));
+                "requestBody", commandBody(List.of(uuid(1)), List.of(Map.of("parameterCode", "raw", "valueType", "TEXT", "textValue", embedded)))));
 
         assertTrue(proposal.reviewItems().stream()
                         .noneMatch(item -> item.displayValue().contains("Hidden1!")),
                 "序列化 JSON 字符串里的密码必须被打码");
         assertTrue(proposal.reviewItems().stream()
-                .anyMatch(item -> item.fieldCode().startsWith("request.parameterChanges.raw.password")));
+                .anyMatch(item -> item.fieldCode().endsWith("textValue.password")));
     }
 
     @Test
     void expandsDeviceIdsIntoOneReviewItemPerDevice() {
         ApprovalProposals.Proposal proposal = ApprovalProposals.parse(Map.of(
                 "operationId", "createDeviceCommand",
-                "requestBody", Map.of("deviceIds", List.of(uuid(1), uuid(2), uuid(3)))));
+                "requestBody", commandBody(List.of(uuid(1), uuid(2), uuid(3)), List.of())));
 
         long deviceItems = proposal.reviewItems().stream()
                 .filter(item -> item.fieldCode().startsWith("request.deviceIds["))
@@ -167,7 +163,7 @@ class ApprovalProposalsTests {
         }
         ApprovalProposals.Proposal proposal = ApprovalProposals.parse(Map.of(
                 "operationId", "createDeviceCommand",
-                "requestBody", Map.of("deviceIds", ids)));
+                "requestBody", commandBody(ids, List.of())));
 
         assertEquals(2, proposal.requiredApprovals());
     }
@@ -201,7 +197,7 @@ class ApprovalProposalsTests {
         // M10：createExport 没有 userId 这个字段；"多带一个键"不能被静默忽略。
         ApiException error = assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of(
                 "operationId", "createExport",
-                "requestBody", Map.of("format", "XLSX", "userId", "u-1"))));
+                "requestBody", Map.of("format", "XLSX", "contextId", CONTEXT_ID, "userId", "u-1"))));
         assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
         assertTrue(error.getMessage().contains("userId"));
     }
@@ -235,17 +231,18 @@ class ApprovalProposalsTests {
         ApiException error = assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of(
                 "operationId", "updateDeviceParameters",
                 "pathParameters", Map.of("deviceId", uuid(3)),
-                "requestBody", Map.of("changes", Map.of("powerClass", "P2")))));
+                "requestBody", Map.of("changes", List.of(Map.of("parameterCode", "powerClass", "valueType", "TEXT", "textValue", "P2"))))));
         assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
         assertTrue(error.getMessage().contains("ifMatch"));
     }
 
     @Test
     void ifMatchIsBoundIntoTheDigest() {
-        Map<String, Object> without = Map.of("operationId", "exportProfile",
-                "pathParameters", Map.of("profileId", PROFILE_ID));
+        Map<String, Object> without = Map.of("operationId", "updateDeviceParameters",
+                "pathParameters", Map.of("deviceId", uuid(3)), "ifMatch", "\"6\"",
+                "requestBody", Map.of("changes", List.of(Map.of("parameterCode", "powerClass", "valueType", "TEXT", "textValue", "P2")), "reason", "Synthetic parameter change"));
         Map<String, Object> with = new LinkedHashMap<>(without);
-        with.put("ifMatch", "7");
+        with.put("ifMatch", "\"7\"");
 
         ApprovalProposals.Proposal first = ApprovalProposals.parse(without);
         ApprovalProposals.Proposal second = ApprovalProposals.parse(with);
@@ -267,9 +264,8 @@ class ApprovalProposalsTests {
         // 用"拆段"把超长内容塞进同一个审批里。
         String longValue = "x".repeat(9000);
         ApiException error = assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of(
-                "operationId", "exportAuditEvents",
-                "requestBody", Map.of("format", "CSV", "reason", "导出审计事件用于核查",
-                        "filter", Map.of("note", longValue)))));
+                "operationId", "createExport",
+                "requestBody", Map.of("format", "CSV", "contextId", CONTEXT_ID, "purpose", longValue))));
         assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
         assertTrue(error.getMessage().contains("4096"), error.getMessage());
         assertTrue(error.getMessage().contains("拆分申请"), error.getMessage());
@@ -284,8 +280,56 @@ class ApprovalProposalsTests {
         }
         ApiException error = assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of(
                 "operationId", "createDeviceCommand",
-                "requestBody", Map.of("deviceIds", deviceIds, "name", "批量重置"))));
+                "requestBody", commandBody(deviceIds, List.of()))));
         assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
         assertTrue(error.getMessage().startsWith("审批展示项"), error.getMessage());
+    }
+
+    private static Map<String, Object> commandBody(List<String> devices, List<?> changes) {
+        return Map.of("commandType", "APPLY_PARAMETERS", "deviceIds", devices,
+                "parameterChanges", changes, "reason", "Synthetic parameter update", "name", "Synthetic device command");
+    }
+
+    private static Map<String, Object> userBody(String password) {
+        return Map.of("userCode", "u-ok", "loginName", "u-ok", "displayName", "Synthetic user",
+                "initialPassword", password, "roleIds", List.of(uuid(3)),
+                "siteScope", Map.of("allSites", false, "siteIds", List.of()),
+                "dataScope", Map.of("allSites", false, "siteIds", List.of(), "dataTypes", List.of(), "ownOnly", true, "scopeVersion", 0));
+    }
+
+    @Test
+    void roleProposalCannotOmitAnyRequiredInputField() {
+        Map<String, Object> role = Map.of("roleCode", "SYNTHETIC", "name", "Synthetic role", "permissionCodes", List.of("dashboard:read"),
+                "menuIds", List.of(), "siteScope", Map.of("allSites", false, "siteIds", List.of()),
+                "dataScope", Map.of("allSites", false, "siteIds", List.of(), "dataTypes", List.of(), "ownOnly", false, "scopeVersion", 0));
+        assertEquals(ApprovalOperation.CREATE_ROLE, ApprovalProposals.parse(Map.of("operationId", "createRole", "requestBody", role)).operation());
+        for (String field : role.keySet()) {
+            Map<String, Object> missing = new LinkedHashMap<>(role);
+            missing.remove(field);
+            assertThrows(ApiException.class, () -> ApprovalProposals.parse(Map.of("operationId", "createRole", "requestBody", missing)), field);
+        }
+    }
+
+    @Test
+    void adminPasswordResetUsesReasonAndNewPasswordWithoutCurrentPassword() {
+        Map<String, Object> body = new LinkedHashMap<>(Map.of("newPassword", "SyntheticLongNewPassword!2026", "reason", "Synthetic administrative reset"));
+        Map<String, Object> request = Map.of("operationId", "changeUserPassword", "pathParameters", Map.of("userId", USER_ID), "requestBody", body);
+        assertEquals(ApprovalOperation.CHANGE_USER_PASSWORD, ApprovalProposals.parse(request).operation());
+        body.put("currentPassword", "MustNotBeRequiredOrAccepted");
+        assertThrows(ApiException.class, () -> ApprovalProposals.parse(request));
+    }
+
+    @Test
+    void parameterChangesAreTypedArraysAndIfMatchIsAQuotedVersion() {
+        Map<String, Object> body = new LinkedHashMap<>(Map.of("changes", List.of(Map.of("parameterCode", "powerClass", "valueType", "TEXT", "textValue", "P2")),
+                "reason", "Synthetic legal parameter update"));
+        Map<String, Object> request = new LinkedHashMap<>(Map.of("operationId", "updateDeviceParameters", "pathParameters", Map.of("deviceId", uuid(3)),
+                "requestBody", body, "ifMatch", "\"0\""));
+        assertEquals(ApprovalOperation.UPDATE_DEVICE_PARAMETERS, ApprovalProposals.parse(request).operation());
+        request.put("ifMatch", "0");
+        assertThrows(ApiException.class, () -> ApprovalProposals.parse(request));
+        request.put("ifMatch", "\"0\"");
+        body.put("changes", Map.of("powerClass", "P2"));
+        assertThrows(ApiException.class, () -> ApprovalProposals.parse(request));
     }
 }

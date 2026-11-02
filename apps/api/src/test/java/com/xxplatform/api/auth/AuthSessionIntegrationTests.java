@@ -487,6 +487,27 @@ class AuthSessionIntegrationTests {
     private record User(UUID id, String login, String password) {
     }
 
+    @Test
+    void longUserAgentRemainsBoundAfterLoginAndSuffixChangesAreRejected() {
+        User user = createUser(false);
+        String longUa = "A".repeat(150) + "B";
+        Signed signed = signIn(user, longUa, null);
+        assertEquals(200, get("/me", headers(signed, longUa)).statusCode());
+        assertEquals(401, get("/me", headers(signed, "A".repeat(150) + "C")).statusCode());
+        assertEquals(200, get("/me", headers(signed, longUa)).statusCode());
+    }
+
+    @Test
+    void legacySessionWithoutCompleteBindingRequiresNewLogin() {
+        User user = createUser(false);
+        Signed signed = signIn(user, UA, null);
+        jdbc.update("UPDATE auth.user_session SET client_label=NULL WHERE user_id=?", user.id());
+        assertEquals(401, get("/me", headers(signed, UA)).statusCode());
+        signed = signIn(user, UA, null);
+        jdbc.update("UPDATE auth.user_session SET client_label=? WHERE user_id=?", UA, user.id());
+        assertEquals(401, get("/me", headers(signed, UA)).statusCode());
+    }
+
     private record Csrf(String cookie, String token) {
     }
 

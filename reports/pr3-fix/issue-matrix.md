@@ -1,5 +1,7 @@
 # PR #3 问题矩阵（M01–M21 + E01）
 
+> 历史快照：本表保留先前修复说明及证据。当前14组复审问题的修复和验收，以[本轮合入复核记录](final-main-rule-verification.md)为准，不以本表反向定义核心规则。
+
 - 修复分支：`codex/dev01-heyifan-api-skeleton`
 - 目标分支：`main`（规则来源提交 `aca438ebfb218d40350b60ff933d2251bed50500`）
 - 审查起点提交：`1cbcb00933bb09a93e7e988de3f0d83a6dda3ad7`（PR #3 原 head）

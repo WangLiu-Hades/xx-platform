@@ -119,7 +119,9 @@ abstract class TaskIntegrationTestSupport {
      * 响应"用例才需要 Cookie。
      */
     protected static UUID seedOwner(String tag) {
-        return seedOwner(tag, List.of(TaskScopeGuard.PERMISSION, "task:read"));
+        java.util.Set<String> permissions = new java.util.HashSet<>(List.of(TaskScopeGuard.PERMISSION, "task:read"));
+        for (TaskType type : TaskType.values()) permissions.add(TaskScopeGuard.permissionFor(type));
+        return seedOwner(tag, List.copyOf(permissions));
     }
 
     /** 建一个只有指定权限码的账号（用于"缩权/无权限"用例）。 */
@@ -135,7 +137,7 @@ abstract class TaskIntegrationTestSupport {
         jdbc.update("""
                 INSERT INTO auth.role (id, role_code, name, management_all_sites, data_all_sites, own_only,
                                        scope_policy_version)
-                VALUES (?, ?, ?, false, false, false, 'v1')
+                VALUES (?, ?, ?, true, true, false, 'v1')
                 """, roleId, "IT-" + tag + "-" + suffix, "集成测试角色 " + tag);
         for (String code : permissions) {
             jdbc.update("""
@@ -150,6 +152,9 @@ abstract class TaskIntegrationTestSupport {
                     """, roleId, code);
         }
         jdbc.update("INSERT INTO auth.user_role (user_id, role_id) VALUES (?, ?)", userId, roleId);
+        jdbc.update("UPDATE auth.app_user SET authz_version=1 WHERE id=?", userId);
+        for (String type : List.of("FENCE", "MAC", "PLATE", "FACE"))
+            jdbc.update("INSERT INTO auth.role_data_type(role_id,data_type) VALUES (?,?)", roleId, type);
         jdbc.update("""
                 INSERT INTO auth.user_scope (user_id, management_all_sites, data_all_sites, own_only,
                                              scope_version, policy_version)
@@ -188,6 +193,8 @@ abstract class TaskIntegrationTestSupport {
                                                absolute_expires_at, client_label, trace_id)
                 VALUES (?, ?, ?, now(), now() + interval '1 hour', now() + interval '1 day', NULL, 'it-trace')
                 """, sessionId, userId, com.xxplatform.api.common.Sha256.of(sid));
+        jdbc.update("UPDATE auth.user_session SET client_label=? WHERE id=?",
+                com.xxplatform.api.service.LoginService.clientBinding("Java-http-client/" + System.getProperty("java.version"), "127.0.0.1"), sessionId);
         return "SID=" + sid;
     }
 
@@ -301,9 +308,9 @@ abstract class TaskIntegrationTestSupport {
         UUID assetId = UUID.randomUUID();
         jdbc.update("""
                 INSERT INTO core.file_asset (id, storage_key, file_name, category, mime_type, byte_size,
-                                             sha256, owner_user_id, security_class, status, trace_id)
+                                             sha256, owner_user_id, security_class, status, trace_id, expires_at)
                 VALUES (?, ?, 'export.xlsx', 'EXPORT', 'application/vnd.openxmlformats-officedocument'
-                        || '.spreadsheetml.sheet', 1024, ?, ?, 'INTERNAL', ?, 'it-trace')
+                        || '.spreadsheetml.sheet', 1024, ?, ?, 'INTERNAL', ?, 'it-trace', now()+interval '12 months')
                 """, assetId, "it/" + assetId, "0".repeat(64), owner, status);
         return assetId;
     }
@@ -382,7 +389,9 @@ abstract class TaskIntegrationTestSupport {
                 INSERT INTO analysis.analysis_context
                     (id, owner_user_id, source_module, filter_type, filter_schema_version,
                      filter_snapshot, permission_version, expires_at, trace_id, created_at)
-                VALUES (?, ?, 'M09', 'GENERAL', 1, '{}'::jsonb, ?, ?, 'it-trace', ?)
+                VALUES (?, ?, 'M09', 'GENERAL', 1,
+                  '{"filterType":"GENERAL","filterVersion":1,"dataTypes":["PLATE"],"timeRange":{"from":"2026-10-01T00:00:00Z","to":"2026-10-02T00:00:00Z"}}'::jsonb,
+                  ?, ?, 'it-trace', ?)
                 """, contextId, owner, permissionVersion, expiresAt, createdAt);
         return contextId;
     }
@@ -390,6 +399,7 @@ abstract class TaskIntegrationTestSupport {
     /** 把账号的授权版本推高，模拟"缩权后 Context 的 permissionVersion 已落后"。 */
     protected static void bumpScopeVersion(UUID owner, long version) {
         jdbc.update("UPDATE auth.user_scope SET scope_version = ? WHERE user_id = ?", version, owner);
+        jdbc.update("UPDATE auth.app_user SET authz_version=? WHERE id=?", version, owner);
     }
 
     /** 改 Context 的授权版本（模拟管理员收缩该 Context 的范围）。 */

@@ -1,0 +1,15 @@
+{
+  "exitCode": 1,
+  "tests": {
+    "tests": 425,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 42
+  },
+  "isolatedDatabase": "jdbc:postgresql://127.0.0.1:55507/pr3mvn_1793628898870288300",
+  "compilerCleanupDiagnostic": false,
+  "mode": "Every main/test source independently compiled with Java 17; Maven verify incremental compilation, resources, Surefire and packaging; no test skips",
+  "buildDirectory": "C:\\Users\\Administrator\\Documents\\pr3-rule-fix-evidence-20261102\\maven-build-1793628898870288300",
+  "onlyPomChange": "build.directory; checked byte-for-byte after removing this single added line"
+}

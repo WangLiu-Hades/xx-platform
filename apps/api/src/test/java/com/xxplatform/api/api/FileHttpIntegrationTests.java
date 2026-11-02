@@ -23,6 +23,7 @@ import java.time.OffsetDateTime;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.imageio.ImageIO;
@@ -73,6 +74,9 @@ class FileHttpIntegrationTests {
     private JdbcTemplate jdbc;
 
     @Autowired
+    private com.xxplatform.api.config.FileProperties fileProperties;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @DynamicPropertySource
@@ -82,6 +86,7 @@ class FileHttpIntegrationTests {
         registry.add("spring.datasource.password", () -> env("XX_TASK_IT_DB_PASSWORD", ""));
         registry.add("xx.file.storage-root", STORAGE_ROOT::toString);
         registry.add("xx.task.reaper-enabled", () -> "false");
+        registry.add("xx.file.download-permit-key", () -> java.util.Base64.getEncoder().encodeToString(new byte[32]));
     }
 
     @AfterAll
@@ -110,6 +115,8 @@ class FileHttpIntegrationTests {
                 + " ON CONFLICT DO NOTHING", ROLE, "file:download");
         jdbc.update("INSERT INTO auth.role_permission (role_id, permission_code) VALUES (?, ?)"
                 + " ON CONFLICT DO NOTHING", ROLE, "face:download");
+        for (String permission : List.of("dataset:write", "device:write", "person-library:write", "ingestion:write"))
+            jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,?) ON CONFLICT DO NOTHING", ROLE, permission);
         // M17：V6 种入的策略必须可用；被别的用例改过就恢复。
         jdbc.update("UPDATE core.upload_policy SET enabled = true");
 
@@ -135,7 +142,7 @@ class FileHttpIntegrationTests {
                 // M19：契约 required 列表里有 expiresAt（nullable），必须出现且非空。
                 .andExpect(jsonPath("$.data.expiresAt").isNotEmpty());
 
-        mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_OWNER)))
+        mvc.perform(get("/files/" + id + "/download").cookie(downloadCookies(SID_OWNER, id)))
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(png));
 
@@ -314,7 +321,7 @@ class FileHttpIntegrationTests {
 
     @Test
     void downloadRequiresFileDownloadAndRevocationInvalidatesTheOldUrl() throws Exception {
-        UUID id = insertAsset(OWNER, "perm.png", "FACE_SEARCH", "image/png", "ACTIVE", null);
+        UUID id = insertAsset(OWNER, "perm.png", "FACE_SEARCH", "image/png", "ACTIVE", OffsetDateTime.now().plusMonths(12));
         // 补一份真实存储文件，成功路径才走得通。
         storeBytes(id);
 
@@ -323,7 +330,7 @@ class FileHttpIntegrationTests {
                 .andExpect(jsonPath("$.code").value("PERMISSION_DENIED"));
         assertThat(audit("file.download", id).get("failure_code")).isEqualTo("PERMISSION_DENIED");
 
-        mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_OWNER)))
+        mvc.perform(get("/files/" + id + "/download").cookie(downloadCookies(SID_OWNER, id.toString())))
                 .andExpect(status().isOk());
 
         // 撤权：同一个 URL 立刻失效（每次下载都重校当前权限与账号权限版本）。
@@ -356,6 +363,55 @@ class FileHttpIntegrationTests {
                         + " absolute_expires_at, trace_id) VALUES (?, ?, ?, ?, ?, ?)",
                 UUID.randomUUID(), userId, Sha256.of(sid),
                 OffsetDateTime.now().plusHours(2), OffsetDateTime.now().plusDays(1), "trace-it-http");
+        jdbc.update("UPDATE auth.user_session SET client_label=? WHERE user_id=?",
+                com.xxplatform.api.service.LoginService.clientBinding(null, "127.0.0.1"), userId);
+    }
+
+    private jakarta.servlet.http.Cookie[] downloadCookies(String sid, String id) throws Exception {
+        MvcResult metadata = mvc.perform(get("/files/" + id).cookie(cookie(sid))).andExpect(status().isOk()).andReturn();
+        jakarta.servlet.http.Cookie permit = metadata.getResponse().getCookie(com.xxplatform.api.service.file.DownloadPermits.COOKIE_NAME);
+        assertThat(permit).isNotNull();
+        return new jakarta.servlet.http.Cookie[] {cookie(sid), permit};
+    }
+
+    @Test
+    void activeFileWithoutExpiryIsNeverPermanentlyDownloadable() throws Exception {
+        UUID id = insertAsset(OWNER, "null-expiry.png", "FACE_SEARCH", "image/png", "ACTIVE", null);
+        mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_OWNER)))
+                .andExpect(status().isGone()).andExpect(jsonPath("$.code").value("FILE_EXPIRED"));
+    }
+
+    @Test
+    void downloadRequiresItsOwnShortLivedPermit() throws Exception {
+        JsonNode upload = upload(SID_OWNER, "FACE_SEARCH", "permit.png", "image/png", png(), key());
+        String id = upload.path("data").path("fileAssetId").asText();
+        mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_OWNER)))
+                .andExpect(status().isForbidden());
+        jakarta.servlet.http.Cookie[] cookies = downloadCookies(SID_OWNER, id);
+        assertThat(cookies[1].isHttpOnly()).isTrue();
+        assertThat(cookies[1].getMaxAge()).isEqualTo(300);
+        mvc.perform(get("/files/" + id + "/download").cookie(cookies)).andExpect(status().isOk());
+    }
+
+    @Test
+    void authenticatedOwnerCanPollAnUploadWithoutDownloadPermissions() throws Exception {
+        JsonNode uploaded = upload(SID_NO_PERM, "FACE_SEARCH", "own-upload.png", "image/png", png(), key());
+        String id = uploaded.path("data").path("fileAssetId").asText();
+        MvcResult metadata = mvc.perform(get("/files/" + id).cookie(cookie(SID_NO_PERM))).andExpect(status().isOk()).andReturn();
+        assertThat(metadata.getResponse().getCookie(com.xxplatform.api.service.file.DownloadPermits.COOKIE_NAME)).isNull();
+        mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_NO_PERM))).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void missingDownloadKeyKeepsMetadataAvailableAndDownloadUnavailable() throws Exception {
+        JsonNode uploaded = upload(SID_OWNER, "FACE_SEARCH", "no-key.png", "image/png", png(), key());
+        String id = uploaded.path("data").path("fileAssetId").asText();
+        String original = fileProperties.getDownloadPermitKey();
+        fileProperties.setDownloadPermitKey("");
+        try {
+            mvc.perform(get("/files/" + id).cookie(cookie(SID_OWNER))).andExpect(status().isOk());
+            mvc.perform(get("/files/" + id + "/download").cookie(cookie(SID_OWNER))).andExpect(status().isServiceUnavailable());
+        } finally { fileProperties.setDownloadPermitKey(original); }
     }
 
     private JsonNode upload(String sid, String category, String fileName, String mime, byte[] content,

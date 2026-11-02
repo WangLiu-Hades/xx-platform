@@ -38,6 +38,64 @@ class TaskPublishGuardIntegrationTests extends TaskIntegrationTestSupport {
     }
 
     @Test
+    void exportsUseTheirOwnDomainPermissionRatherThanCapturePermissionForEveryExport() {
+        UUID owner = seedOwner("audit-export", List.of("audit:export"));
+        assertNotNull(taskService.create(command(owner, Map.of("operationId", "exportAuditEvents"), newKey("audit-export"))));
+        assertCode(ErrorCode.PERMISSION_DENIED, () -> taskService.create(command(owner,
+                Map.of("operationId", "createExport"), newKey("audit-cannot-capture"))));
+    }
+
+    @Test
+    void contextScopeNeverMultipliesTypesAndSitesAcrossRoles() {
+        UUID owner = seedOwner("scope-cross");
+        UUID firstRole = jdbc.queryForObject("SELECT role_id FROM auth.user_role WHERE user_id=?", UUID.class, owner);
+        UUID secondRole = UUID.randomUUID();
+        UUID siteA = UUID.randomUUID();
+        UUID siteB = UUID.randomUUID();
+        jdbc.update("INSERT INTO core.region(region_code,name,boundary_version) VALUES ('IT_CROSS','Synthetic region','v1') ON CONFLICT DO NOTHING");
+        for (UUID site : List.of(siteA, siteB))
+            jdbc.update("INSERT INTO core.site(id,site_code,name,region_code) VALUES (?,?,?,'IT_CROSS')", site, "IT-" + site, "Synthetic scope site");
+        jdbc.update("UPDATE auth.role SET data_all_sites=false,management_all_sites=false WHERE id=?", firstRole);
+        jdbc.update("DELETE FROM auth.role_data_type WHERE role_id=?", firstRole);
+        jdbc.update("INSERT INTO auth.role_data_type(role_id,data_type) VALUES (?,'FENCE')", firstRole);
+        jdbc.update("INSERT INTO auth.role_site(role_id,site_id,scope_kind) VALUES (?,?,'DATA')", firstRole, siteA);
+        jdbc.update("INSERT INTO auth.role(id,role_code,name,own_only) VALUES (?,?,?,false)", secondRole, "IT-CROSS-" + secondRole, "Synthetic FACE role");
+        jdbc.update("INSERT INTO auth.role_data_type(role_id,data_type) VALUES (?,'FACE')", secondRole);
+        jdbc.update("INSERT INTO auth.role_site(role_id,site_id,scope_kind) VALUES (?,?,'DATA')", secondRole, siteB);
+        jdbc.update("INSERT INTO auth.user_role(user_id,role_id) VALUES (?,?)", owner, secondRole);
+        UUID contextId = seedContext(owner, 1, now().plusMinutes(30));
+        String filter = "{\"filterType\":\"GENERAL\",\"filterVersion\":1,\"dataTypes\":[\"FACE\"],\"siteIds\":[\"" + siteA
+                + "\"],\"timeRange\":{\"from\":\"2026-10-01T00:00:00Z\",\"to\":\"2026-10-02T00:00:00Z\"}}";
+        jdbc.update("UPDATE analysis.analysis_context SET filter_snapshot=?::jsonb WHERE id=?", filter, contextId);
+        assertCode(ErrorCode.PERMISSION_DATA_SCOPE, () -> taskService.create(command(owner,
+                Map.of("contextId", contextId.toString()), newKey("cross-denied"))));
+        jdbc.update("UPDATE analysis.analysis_context SET filter_snapshot=?::jsonb WHERE id=?", filter.replace(siteA.toString(), siteB.toString()), contextId);
+        assertNotNull(taskService.create(command(owner, Map.of("contextId", contextId.toString()), newKey("matching-tuple"))));
+    }
+
+    @Test
+    void matchingVersionsDoNotOverrideTheCurrentTypedScope() {
+        UUID owner = seedOwner("typed-scope");
+        jdbc.update("DELETE FROM auth.role_data_type WHERE role_id IN (SELECT role_id FROM auth.user_role WHERE user_id=?) AND data_type<>'FENCE'", owner);
+        UUID contextId = seedContext(owner, 1, now().plusMinutes(30));
+        assertCode(ErrorCode.PERMISSION_DATA_SCOPE, () -> taskService.create(command(owner,
+                Map.of("contextId", contextId.toString()), newKey("typed-scope"))));
+    }
+
+    @Test
+    void activeFileWithoutAnExpiryCannotBePublished() {
+        UUID owner = seedOwner("null-expiry");
+        UUID file = seedFileAsset(owner, "ACTIVE");
+        jdbc.update("UPDATE core.file_asset SET expires_at=NULL WHERE id=?", file);
+        TaskRow task = taskService.create(command(owner, Map.of(), newKey("null-expiry")));
+        ClaimedTask claimed = claim(task.id(), "it-null-expiry");
+        seedExportJob(task.id(), file);
+        assertEquals(TaskStatus.FAILED, taskService.finish(task.id(), "it-null-expiry", claimed.task().leaseGeneration(),
+                TaskStatus.SUCCESS, null, null, file).status());
+        assertNull(reload(task.id()).resultAssetId());
+    }
+
+    @Test
     void validLeaseAndScopePublishesSuccess() {
         UUID owner = seedOwner("guard-ok");
         UUID asset = seedFileAsset(owner, "ACTIVE");
@@ -61,7 +119,7 @@ class TaskPublishGuardIntegrationTests extends TaskIntegrationTestSupport {
         UUID asset = seedFileAsset(owner, "ACTIVE");
         TaskRow task = taskService.create(command(owner, Map.of(), newKey("guard-revoke")));
         ClaimedTask claimed = claim(task.id(), "it-guard-revoke");
-        revoke(owner, TaskScopeGuard.PERMISSION);
+        revoke(owner, "capture:export");
         int eventsBefore = countEvents(task.id());
 
         TaskRow outcome = taskService.finish(task.id(), "it-guard-revoke", claimed.task().leaseGeneration(),
@@ -128,7 +186,7 @@ class TaskPublishGuardIntegrationTests extends TaskIntegrationTestSupport {
 
     @Test
     void taskTypeNarrowedByPermissionCannotBeSubmitted() {
-        UUID owner = seedOwner("guard-type-narrow", List.of("task:run:ANALYSIS"));
+        UUID owner = seedOwner("guard-type-narrow", List.of("analysis:create"));
 
         assertCode(ErrorCode.PERMISSION_DENIED,
                 () -> taskService.create(command(owner, Map.of(), newKey("guard-type-narrow"))));
@@ -250,7 +308,7 @@ class TaskPublishGuardIntegrationTests extends TaskIntegrationTestSupport {
         TaskRow task = taskService.create(command(owner, Map.of(), newKey("guard-atomic")));
         ClaimedTask claimed = claim(task.id(), "it-guard-atomic");
         seedExportJob(task.id(), asset);
-        revoke(owner, TaskScopeGuard.PERMISSION);
+        revoke(owner, "capture:export");
 
         taskService.finish(task.id(), "it-guard-atomic", claimed.task().leaseGeneration(),
                 TaskStatus.SUCCESS, null, null, asset);

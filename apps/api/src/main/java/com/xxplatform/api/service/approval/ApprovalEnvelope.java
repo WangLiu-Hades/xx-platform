@@ -84,10 +84,30 @@ public final class ApprovalEnvelope {
      */
     public static List<ApprovalProposals.ReviewItem> reviewItems(String plaintext) {
         Envelope envelope = decode(plaintext);
-        List<ApprovalProposals.ReviewItem> items = new ArrayList<>(ApprovalProposals.reviewItems(
-                canonical(envelope.request())));
+        Map<String, Object> display = MAPPER.convertValue(envelope.request(), new TypeReference<LinkedHashMap<String, Object>>() { });
+        Map<String, Object> selectionFacts = com.xxplatform.api.service.CurrentDataScope.object(envelope.frozen().get("selection"));
+        List<String> sensitive = com.xxplatform.api.service.CurrentDataScope.strings(selectionFacts.get("sensitiveParameterCodes"));
+        maskParameterValues(display, sensitive);
+        List<ApprovalProposals.ReviewItem> items = new ArrayList<>(ApprovalProposals.reviewItems(canonical(display)));
         appendFrozen(items, envelope.frozen());
+        Object selection = envelope.frozen().get("selection");
+        if (selection instanceof Map<?, ?> map && map.get("contextFilter") != null) {
+            items.addAll(ApprovalProposals.reviewItems(canonical(Map.of("requestBody",
+                    Map.of("resolvedContextFilter", map.get("contextFilter"))))));
+        }
+        ApprovalProposals.requireReviewBudget(items);
         return items;
+    }
+
+    private static void maskParameterValues(Object value, List<String> sensitive) {
+        if (value instanceof Map<?, ?> raw) {
+            @SuppressWarnings("unchecked") Map<String, Object> map = (Map<String, Object>) raw;
+            if (sensitive.contains(String.valueOf(map.get("parameterCode")))) {
+                for (String key : List.of("textValue", "integerValue", "numberValue", "booleanValue"))
+                    if (map.containsKey(key)) map.put(key, "***");
+            }
+            for (Object child : map.values()) maskParameterValues(child, sensitive);
+        } else if (value instanceof List<?> list) for (Object child : list) maskParameterValues(child, sensitive);
     }
 
     private static void appendFrozen(List<ApprovalProposals.ReviewItem> items,

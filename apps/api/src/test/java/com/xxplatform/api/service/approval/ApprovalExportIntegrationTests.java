@@ -97,7 +97,7 @@ class ApprovalExportIntegrationTests {
     private static JdbcTemplate jdbc;
 
     @BeforeAll
-    static void startContext() {
+    static void startContext() throws java.io.IOException {
         String url = System.getenv("XX_TASK_IT_DB_URL");
         String user = System.getenv().getOrDefault("XX_TASK_IT_DB_USER", "postgres");
         String password = System.getenv().getOrDefault("XX_TASK_IT_DB_PASSWORD", "");
@@ -107,6 +107,7 @@ class ApprovalExportIntegrationTests {
                         "--spring.datasource.url=" + url,
                         "--spring.datasource.username=" + user,
                         "--spring.datasource.password=" + password,
+                        "--xx.file.storage-root=" + java.nio.file.Files.createTempDirectory("pr3-published-file-"),
                         // M12：部署密钥只经显式参数注入；未注入时审批必须 fail closed。
                         "--xx.approval.payload-key=" + PAYLOAD_KEY,
                         "--xx.approval.approver-logins=it.approval.approver1,"
@@ -120,6 +121,9 @@ class ApprovalExportIntegrationTests {
         users = context.getBean(UserAccountRepository.class);
         jdbc = context.getBean(JdbcTemplate.class);
         seed();
+        properties.setDeviceProfiles(List.of(new ApprovalProperties.DeviceProfile("SIMULATOR", "SIMULATOR",
+                "SIMULATOR_V1", java.util.stream.IntStream.rangeClosed(1, 10).mapToObj(i -> "IT-SN-" + i).toList(),
+                List.of("RESET", "APPLY_PARAMETERS"), Map.of("powerClassCode", "STANDARD", "privateKey", "KEY"))));
         properties.setApproverLogins(List.of(loginName(APPROVER1), loginName(APPROVER2),
                 loginName(APPROVER_NOSCOPE)));
     }
@@ -149,6 +153,7 @@ class ApprovalExportIntegrationTests {
 
     @BeforeEach
     void resetAllowlist() {
+        cleanupExportTasks();
         properties.setApproverLogins(List.of(loginName(APPROVER1), loginName(APPROVER2),
                 loginName(APPROVER_NOSCOPE)));
     }
@@ -241,8 +246,8 @@ class ApprovalExportIntegrationTests {
         try {
             ApiException error = assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
                     proposal("createDeviceCommand", Map.of(), deviceCommandBody()), "批量重置设备参数申请说明"));
-            assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
-            assertTrue(error.getMessage().contains("审批人不足"), error.getMessage());
+            assertEquals(ErrorCode.SYSTEM_UNAVAILABLE, error.code());
+            assertTrue(error.getMessage().contains("审批人数不足"), error.getMessage());
         } finally {
             properties.setApproverLogins(List.of(loginName(APPROVER1), loginName(APPROVER2),
                     loginName(APPROVER_NOSCOPE)));
@@ -258,8 +263,8 @@ class ApprovalExportIntegrationTests {
         UUID deviceId = DEVICES[0];
         Map<String, Object> stale = proposal("updateDeviceParameters",
                 Map.of("deviceId", deviceId.toString()),
-                Map.of("changes", Map.of("powerClassCode", "P2"), "reason", "调整设备供电等级参数值"));
-        stale.put("ifMatch", "99");
+                Map.of("changes", List.of(Map.of("parameterCode", "powerClassCode", "valueType", "TEXT", "textValue", "P2")), "reason", "调整设备供电等级参数值"));
+        stale.put("ifMatch", "\"99\"");
         ApiException error = assertThrows(ApiException.class,
                 () -> approvals.create(session(REQUESTER), stale, "调整单台设备参数申请"));
         assertEquals(ErrorCode.RESOURCE_VERSION_CONFLICT, error.code());
@@ -270,14 +275,14 @@ class ApprovalExportIntegrationTests {
         UUID missing = UUID.fromString("0192f100-0000-7000-8000-00000000ff99");
         Map<String, Object> proposal = proposal("updateDeviceParameters",
                 Map.of("deviceId", missing.toString()),
-                Map.of("changes", Map.of("powerClassCode", "P2"), "reason", "调整设备供电等级参数值"));
-        proposal.put("ifMatch", "0");
+                Map.of("changes", List.of(Map.of("parameterCode", "powerClassCode", "valueType", "TEXT", "textValue", "P2")), "reason", "调整设备供电等级参数值"));
+        proposal.put("ifMatch", "\"0\"");
 
         long before = count("SELECT count(*) FROM operation.action_approval WHERE operation_id = ?"
                 + " AND requester_user_id = ?", "updateDeviceParameters", REQUESTER);
         ApiException error = assertThrows(ApiException.class,
                 () -> approvals.create(session(REQUESTER), proposal, "调整单台设备参数申请"));
-        assertEquals(ErrorCode.VALIDATION_ERROR, error.code());
+        assertEquals(ErrorCode.DATA_NOT_FOUND, error.code());
         assertTrue(error.getMessage().contains("不存在"), error.getMessage());
         assertEquals(before, count("SELECT count(*) FROM operation.action_approval WHERE operation_id = ?"
                 + " AND requester_user_id = ?", "updateDeviceParameters", REQUESTER), "未知资源不得生成申请");
@@ -288,10 +293,10 @@ class ApprovalExportIntegrationTests {
         UUID deviceId = DEVICES[1];
         Map<String, Object> proposal = proposal("updateDeviceParameters",
                 Map.of("deviceId", deviceId.toString()),
-                Map.of("changes", Map.of("powerClassCode", "P3"), "reason", "调整设备供电等级参数值"));
+                Map.of("changes", List.of(Map.of("parameterCode", "powerClassCode", "valueType", "TEXT", "textValue", "P3")), "reason", "调整设备供电等级参数值"));
         // 真库是复用的，设备版本可能已被上一轮抬高：以当前版本作为 If-Match，避免顺序依赖。
         Long current = jdbc.queryForObject("SELECT version FROM core.device WHERE id = ?", Long.class, deviceId);
-        proposal.put("ifMatch", String.valueOf(current));
+        proposal.put("ifMatch", "\"" + current + "\"");
         UUID approvalId = (UUID) approvals.create(session(REQUESTER), proposal, "调整单台设备参数申请")
                 .get("approvalId");
         approvals.decide(session(APPROVER1), approvalId, "APPROVE", "单台设备参数调整复核", PASSWORD);
@@ -300,7 +305,7 @@ class ApprovalExportIntegrationTests {
 
         ApiException error = assertThrows(ApiException.class, () -> approvals.consume(
                 approvalId, REQUESTER, "updateDeviceParameters", digestOf(proposal), TRACE));
-        assertEquals(ErrorCode.RESOURCE_CONFLICT, error.code());
+        assertEquals(ErrorCode.RESOURCE_VERSION_CONFLICT, error.code());
         assertTrue(error.getMessage().contains("版本"), error.getMessage());
         assertEquals("APPROVED", approvalStatus(approvalId), "复核失败不能把批文烧掉");
     }
@@ -327,10 +332,9 @@ class ApprovalExportIntegrationTests {
     @Test
     void reviewItemsMaskNestedSecretsAndCiphertextCarriesNoPlaintext() {
         Map<String, Object> body = deviceCommandBody();
-        Map<String, Object> parameters = new LinkedHashMap<>();
-        parameters.put("password", "Hidden1!Secret");
-        parameters.put("raw", "{\"secret\":\"Nested2!Secret\",\"token\":\"tok-3\"}");
-        body.put("parameterChanges", parameters);
+        body.put("commandType", "APPLY_PARAMETERS");
+        body.put("parameterChanges", List.of(Map.of("parameterCode", "privateKey", "valueType", "TEXT", "textValue",
+                "{\"password\":\"Hidden1!Secret\",\"secret\":\"Nested2!Secret\",\"token\":\"tok-3\"}")));
 
         Map<String, Object> created = approvals.create(session(REQUESTER),
                 proposal("createDeviceCommand", Map.of(), body), "设备敏感参数变更审批");
@@ -342,7 +346,7 @@ class ApprovalExportIntegrationTests {
         assertFalse(rendered.contains("tok-3"), "嵌套 token 必须掩码");
         assertTrue(rendered.contains("***"));
         assertTrue(reviewItems(created).stream()
-                        .anyMatch(item -> String.valueOf(item.get("fieldCode")).endsWith("raw.secret")),
+                        .anyMatch(item -> String.valueOf(item.get("fieldCode")).endsWith("textValue")),
                 "嵌套键要以 fieldCode 形式出现，审批人才能看出批的是哪个字段");
 
         String stored = jdbc.queryForObject(
@@ -626,6 +630,9 @@ class ApprovalExportIntegrationTests {
                 "第一名审批人复核同意", PASSWORD, key);
         assertEquals("PENDING", replay.get("status"));
         assertEquals(1, countDecisions(approvalId), "重放不得再记一票");
+        assertEquals(ErrorCode.VALIDATION_ERROR, assertThrows(ApiException.class, () -> approvals.decide(
+                session(APPROVER1), approvalId, "APPROVE", "第一名审批人复核同意", "wrong-current-password", key)).code());
+        assertEquals(1, countDecisions(approvalId));
 
         ApiException conflict = assertThrows(ApiException.class, () -> approvals.decide(
                 session(APPROVER1), approvalId, "APPROVE", "同一个键但申请理由不同内容", PASSWORD, key));
@@ -658,7 +665,8 @@ class ApprovalExportIntegrationTests {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("commandType", "RESET");
         body.put("groupId", GROUP.toString());
-        body.put("parameterChanges", Map.of("reset", "ALL"));
+        body.put("deviceIds", List.of(DEVICES[0].toString()));
+        body.put("name", "SIMULATOR reset");
         body.put("reason", "批量重置设备参数前的复核申请");
         return body;
     }
@@ -733,7 +741,7 @@ class ApprovalExportIntegrationTests {
     private static UUID contextFor(UUID owner, long permissionVersion, String dataType) {
         UUID id = UUID.randomUUID();
         OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
-        String filter = "{\"captureFilter\":{\"timeRange\":{\"from\":\"2026-01-01T00:00:00Z\","
+        String filter = "{\"filterType\":\"CAPTURE_SEARCH\",\"filterVersion\":1,\"captureFilter\":{\"timeRange\":{\"from\":\"2026-01-01T00:00:00Z\","
                 + "\"to\":\"2026-02-01T00:00:00Z\"},\"dataType\":\"" + dataType + "\"}}";
         jdbc.update("""
                 INSERT INTO analysis.analysis_context
@@ -773,7 +781,7 @@ class ApprovalExportIntegrationTests {
         // M05/M14：任务提交与发布要按任务类型授权（task:run:<TYPE>）复核当前权限，
         // 导出用例的要求人必须有 EXPORT 的运行授权，否则连提交都到不了审批消费那一步。
         jdbc.update("INSERT INTO auth.permission (code, name, module_code, description, risk_level)"
-                + " VALUES ('task:run:EXPORT', 'it-task-run-export', 'M06', 'it task export', 'NORMAL')"
+                + " VALUES ('capture:export', 'it-task-run-export', 'M06', 'it task export', 'NORMAL')"
                 + " ON CONFLICT (code) DO NOTHING");
 
         jdbc.update("INSERT INTO auth.role (id, role_code, name, management_all_sites, data_all_sites, own_only)"
@@ -783,7 +791,7 @@ class ApprovalExportIntegrationTests {
                 + " VALUES (?, 'IT_APPROVAL_NOSCOPE', 'it approval noscope', false, false, true)"
                 + " ON CONFLICT (id) DO NOTHING", ROLE_NOSCOPE);
 
-        for (String permission : List.of("capture:export", "device:command", "task:run:EXPORT")) {
+        for (String permission : List.of("capture:export", "device:command", "device:reset")) {
             jdbc.update("INSERT INTO auth.role_permission (role_id, permission_code) VALUES (?, ?)"
                     + " ON CONFLICT DO NOTHING", ROLE_ALL, permission);
             jdbc.update("INSERT INTO auth.role_permission (role_id, permission_code) VALUES (?, ?)"
@@ -809,6 +817,230 @@ class ApprovalExportIntegrationTests {
                     DEVICES[i], "IT-SN-" + (i + 1), "it-device-" + (i + 1), SITE);
             jdbc.update("INSERT INTO core.device_group_member (group_id, device_id) VALUES (?, ?)"
                     + " ON CONFLICT DO NOTHING", GROUP, DEVICES[i]);
+            jdbc.update("UPDATE core.device SET manufacturer='SIMULATOR',model='SIMULATOR',protocol_version='SIMULATOR_V1' WHERE id=?", DEVICES[i]);
+        }
+        for (String code : List.of("powerClassCode", "privateKey"))
+            jdbc.update("""
+                    INSERT INTO core.device_parameter_definition(id,manufacturer,model,protocol_version,parameter_code,label,value_type,read_only,enabled)
+                     VALUES (?,'SIMULATOR','SIMULATOR','SIMULATOR_V1',?,?,'TEXT',false,true)
+                     ON CONFLICT(manufacturer,model,protocol_version,parameter_code) DO UPDATE SET enabled=true,read_only=false
+                    """, UUID.randomUUID(), code, code);
+    }
+
+    @Test
+    void missingConfigurationAndOutOfScopeReviewersDisableCreation() {
+        for (List<String> configured : List.of(List.<String>of(), List.of(loginName(APPROVER_NOSCOPE)))) {
+            properties.setApproverLogins(configured);
+            ApiException error = assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                    proposal("createDeviceCommand", Map.of(), deviceCommandBody()), "Synthetic approval qualification regression"));
+            assertEquals(ErrorCode.SYSTEM_UNAVAILABLE, error.code());
+        }
+    }
+
+    @Test
+    void outOfScopeReviewerCannotReadDetailsOrListTheApproval() {
+        UUID id = (UUID) approvals.create(session(REQUESTER), proposal("createDeviceCommand", Map.of(), deviceCommandBody()),
+                "Synthetic approval visibility regression").get("approvalId");
+        assertEquals(ErrorCode.DATA_NOT_FOUND, assertThrows(ApiException.class,
+                () -> approvals.get(session(APPROVER_NOSCOPE), id)).code());
+        @SuppressWarnings("unchecked") List<Map<String, Object>> items = (List<Map<String, Object>>)
+                approvals.page(session(APPROVER_NOSCOPE), null, 100).get("items");
+        assertTrue(items.stream().noneMatch(item -> String.valueOf(id).equals(String.valueOf(item.get("approvalId")))));
+    }
+
+    @Test
+    void oneDeviceKeyChangeNeedsTwoIndependentVotesAndNeverDisplaysTheKey() {
+        UUID device = DEVICES[2];
+        Long version = jdbc.queryForObject("SELECT version FROM core.device WHERE id=?", Long.class, device);
+        Map<String, Object> input = proposal("updateDeviceParameters", Map.of("deviceId", device.toString()),
+                Map.of("changes", List.of(Map.of("parameterCode", "privateKey", "valueType", "TEXT", "textValue", "Synthetic-secret-material")),
+                        "reason", "Synthetic key rotation regression"));
+        input.put("ifMatch", "\"" + version + "\"");
+        Map<String, Object> created = approvals.create(session(REQUESTER), input, "Synthetic key rotation regression");
+        assertEquals(2, created.get("requiredApprovals"));
+        assertFalse(created.toString().contains("Synthetic-secret-material"));
+        UUID id = (UUID) created.get("approvalId");
+        assertEquals("PENDING", approvals.decide(session(APPROVER1), id, "APPROVE", "First independent synthetic review", PASSWORD).get("status"));
+        assertEquals("APPROVED", approvals.decide(session(APPROVER2), id, "APPROVE", "Second independent synthetic review", PASSWORD).get("status"));
+    }
+
+    @Test
+    void nonexistentAndUnconnectedTargetsNeverProduceVerifiedApplications() {
+        ApiException context = assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                proposal("createExport", Map.of(), exportBody(UUID.randomUUID())), "Synthetic missing context regression"));
+        assertEquals(ErrorCode.DATA_NOT_FOUND, context.code());
+        jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,'capture:decrypt') ON CONFLICT DO NOTHING", ROLE_ALL);
+        try {
+            ApiException decrypt = assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                    proposal("readDecryptionResult", Map.of("requestId", UUID.randomUUID().toString()), Map.of()),
+                    "Synthetic unavailable decryption regression"));
+            assertEquals(ErrorCode.SYSTEM_UNAVAILABLE, decrypt.code());
+        } finally { jdbc.update("DELETE FROM auth.role_permission WHERE role_id=? AND permission_code='capture:decrypt'", ROLE_ALL); }
+        ApiException retry = assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                proposal("retryDeviceCommand", Map.of("taskId", UUID.randomUUID().toString()),
+                        Map.of("failedDeviceIds", List.of(DEVICES[0].toString()), "reason", "Synthetic retry regression")),
+                "Synthetic unavailable command retry regression"));
+        assertEquals(ErrorCode.SYSTEM_UNAVAILABLE, retry.code());
+    }
+
+    @Test
+    void changedGroupMembershipInvalidatesTheFrozenApproval() {
+        Map<String, Object> input = proposal("createDeviceCommand", Map.of(), deviceCommandBody());
+        UUID id = (UUID) approvals.create(session(REQUESTER), input, "Synthetic group membership regression").get("approvalId");
+        approvals.decide(session(APPROVER1), id, "APPROVE", "First synthetic group review", PASSWORD);
+        approvals.decide(session(APPROVER2), id, "APPROVE", "Second synthetic group review", PASSWORD);
+        jdbc.update("DELETE FROM core.device_group_member WHERE group_id=? AND device_id=?", GROUP, DEVICES[9]);
+        try {
+            assertEquals(ErrorCode.RESOURCE_CONFLICT, assertThrows(ApiException.class,
+                    () -> approvals.consume(id, REQUESTER, "createDeviceCommand", digestOf(input), TRACE)).code());
+            assertEquals("APPROVED", approvalStatus(id));
+        } finally { jdbc.update("INSERT INTO core.device_group_member(group_id,device_id) VALUES (?,?) ON CONFLICT DO NOTHING", GROUP, DEVICES[9]); }
+    }
+
+    @Test
+    void changedAuthorizationAndRemovedReviewerCannotConsumeApproval() {
+        UUID contextId = contextFor(REQUESTER, 5);
+        UUID id = approvedExport(contextId);
+        Map<String, Object> input = proposal("createExport", Map.of(), exportBody(contextId));
+        jdbc.update("UPDATE auth.app_user SET authz_version=6 WHERE id=?", REQUESTER);
+        try {
+            assertEquals(ErrorCode.RESOURCE_CONFLICT, assertThrows(ApiException.class,
+                    () -> approvals.consume(id, REQUESTER, "createExport", digestOf(input), TRACE)).code());
+        } finally { jdbc.update("UPDATE auth.app_user SET authz_version=5 WHERE id=?", REQUESTER); }
+        properties.setApproverLogins(List.of(loginName(APPROVER2)));
+        assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class,
+                () -> approvals.consume(id, REQUESTER, "createExport", digestOf(input), TRACE)).code());
+        assertEquals("APPROVED", approvalStatus(id));
+    }
+
+    @Test
+    void concurrentIdenticalApprovalKeysCreateExactlyOneApplication() throws Exception {
+        UUID contextId = contextFor(REQUESTER, 5);
+        Map<String, Object> input = proposal("createExport", Map.of(), exportBody(contextId));
+        String key = "it-approval-concurrent-" + UUID.randomUUID();
+        int before = count("SELECT count(*) FROM operation.action_approval WHERE requester_user_id=?", REQUESTER);
+        ExecutorService pool = Executors.newFixedThreadPool(8);
+        CountDownLatch start = new CountDownLatch(1);
+        try {
+            List<Future<String>> results = new ArrayList<>();
+            for (int i = 0; i < 8; i++) results.add(pool.submit(() -> {
+                start.await();
+                return String.valueOf(approvals.create(session(REQUESTER), input, "Synthetic concurrent approval regression", key).get("approvalId"));
+            }));
+            start.countDown();
+            java.util.Set<String> ids = new java.util.HashSet<>();
+            for (Future<String> result : results) ids.add(result.get(30, TimeUnit.SECONDS));
+            assertEquals(1, ids.size());
+            assertEquals(before + 1, count("SELECT count(*) FROM operation.action_approval WHERE requester_user_id=?", REQUESTER));
+        } finally { start.countDown(); pool.shutdownNow(); }
+    }
+
+    @Test
+    void approvalReplayRechecksCurrentPermission() {
+        Map<String, Object> input = proposal("createExport", Map.of(), exportBody(contextFor(REQUESTER, 5)));
+        String key = "it-approval-revocation-" + UUID.randomUUID();
+        approvals.create(session(REQUESTER), input, "Synthetic replay revocation regression", key);
+        jdbc.update("DELETE FROM auth.role_permission WHERE role_id=? AND permission_code='capture:export'", ROLE_ALL);
+        jdbc.update("UPDATE auth.app_user SET authz_version=6 WHERE id=?", REQUESTER);
+        try {
+            assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                    input, "Synthetic replay revocation regression", key)).code());
+            assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class, () -> approvals.create(session(REQUESTER),
+                    input, "Synthetic replay revocation regression", key + "-fresh")).code());
+        } finally {
+            jdbc.update("UPDATE auth.app_user SET authz_version=5 WHERE id=?", REQUESTER);
+            jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,'capture:export') ON CONFLICT DO NOTHING", ROLE_ALL);
+        }
+    }
+
+    @Test
+    void exportWorksWithBusinessPermissionWithoutTaskManagement() {
+        List<String> permissions = context.getBean(com.xxplatform.api.infra.RbacRepository.class).permissionCodes(REQUESTER);
+        assertTrue(permissions.contains("capture:export"));
+        assertFalse(permissions.contains("task:manage"));
+        assertTrue(permissions.stream().noneMatch(p -> p.startsWith("task:run:")));
+        UUID contextId = contextFor(REQUESTER, 5);
+        assertNotNull(exports.create(session(REQUESTER), command(contextId, "it-export-business-" + UUID.randomUUID(), approvedExport(contextId))).taskId());
+    }
+
+    @Test
+    void grantApplicationCannotExceedTheGrantorsCeiling() {
+        UUID actor = UUID.randomUUID();
+        UUID role = UUID.randomUUID();
+        seedUser(actor, "IT-BOUND-" + actor, "it.bound." + actor, "Synthetic limited grantor");
+        jdbc.update("INSERT INTO auth.role(id,role_code,name) VALUES (?,?,?)", role, "IT_BOUND_" + role, "Synthetic limited role");
+        jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,'user:write')", role);
+        jdbc.update("INSERT INTO auth.user_role(user_id,role_id) VALUES (?,?)", actor, role);
+        Map<String, Object> body = Map.of("userCode", "IT-NEW-" + UUID.randomUUID(), "loginName", "it.new." + UUID.randomUUID(),
+                "displayName", "Synthetic attempted elevation", "initialPassword", "SyntheticLongPassword!2026", "roleIds", List.of(ROLE_ALL.toString()),
+                "siteScope", Map.of("allSites", true, "siteIds", List.of()),
+                "dataScope", Map.of("allSites", true, "siteIds", List.of(), "dataTypes", List.of("FENCE", "MAC", "PLATE", "FACE"), "ownOnly", false, "scopeVersion", 0));
+        int before = count("SELECT count(*) FROM operation.action_approval WHERE requester_user_id=?", actor);
+        assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class, () -> approvals.create(session(actor),
+                proposal("createUser", Map.of(), body), "Synthetic grant upper bound regression")).code());
+        assertEquals(before, count("SELECT count(*) FROM operation.action_approval WHERE requester_user_id=?", actor));
+    }
+
+    @Test
+    void publishedExportFileRequiresPermitAndCurrentSourcePermission() throws Exception {
+        jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,'file:download') ON CONFLICT DO NOTHING", ROLE_ALL);
+        com.xxplatform.api.config.FileProperties fileProperties = context.getBean(com.xxplatform.api.config.FileProperties.class);
+        fileProperties.setDownloadPermitKey(Base64.getEncoder().encodeToString(new byte[32]));
+        UUID contextId = contextFor(REQUESTER, 5);
+        Map<String, Object> body = exportBody(contextId);
+        body.put("format", "CSV");
+        UUID approval = (UUID) approvals.create(session(REQUESTER), proposal("createExport", Map.of(), body),
+                "Synthetic published file authorization regression").get("approvalId");
+        approvals.decide(session(APPROVER1), approval, "APPROVE", "Independent synthetic file export review", PASSWORD);
+        UUID taskId = exports.create(session(REQUESTER), new ExportCommand(contextId, ExportFormat.CSV,
+                List.of("captureId", "dataType"), String.valueOf(body.get("purpose")),
+                "it-export-file-" + UUID.randomUUID(), TRACE, approval)).taskId();
+        com.xxplatform.api.storage.FileStorage storage = context.getBean(com.xxplatform.api.storage.FileStorage.class);
+        byte[] bytes = ("captureId,dataType\n" + UUID.randomUUID() + ",PLATE\n").getBytes(StandardCharsets.UTF_8);
+        com.xxplatform.api.storage.FileStorage.StoredObject stored = storage.store(bytes, ".csv");
+        UUID assetId = UUID.randomUUID();
+        com.xxplatform.api.infra.FileAssetRepository assets = context.getBean(com.xxplatform.api.infra.FileAssetRepository.class);
+        try {
+            assets.insert(assetId, stored.storageKey(), "synthetic.csv", "EXPORT", "text/csv", stored.byteSize(),
+                    stored.sha256Hex(), REQUESTER, TRACE, OffsetDateTime.now(ZoneOffset.UTC));
+            assets.markStatus(assetId, "ACTIVE", null, com.xxplatform.api.service.file.FileRetention.expiresAt(OffsetDateTime.now(ZoneOffset.UTC)));
+            jdbc.update("UPDATE analysis.export_job SET output_file_id=? WHERE task_id=?", assetId, taskId);
+            com.xxplatform.api.service.task.TaskService tasks = context.getBean(com.xxplatform.api.service.task.TaskService.class);
+            String worker = "it-file-publisher";
+            var claimed = tasks.claimNext(worker, List.of(com.xxplatform.api.service.task.TaskType.EXPORT), 1);
+            assertEquals(taskId, claimed.get(0).task().id());
+            assertEquals(com.xxplatform.api.service.task.TaskStatus.SUCCESS,
+                    tasks.finish(taskId, worker, claimed.get(0).task().leaseGeneration(),
+                            com.xxplatform.api.service.task.TaskStatus.SUCCESS, null, null, assetId).status());
+            com.xxplatform.api.service.file.FileService files = context.getBean(com.xxplatform.api.service.file.FileService.class);
+            AuthenticatedSession current = session(REQUESTER);
+            assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class, () -> files.download(current, assetId)).code());
+            String permit = files.issueDownloadPermit(current, files.get(current, assetId));
+            try (var stream = files.download(current, assetId, permit).stream()) {
+                assertTrue(java.util.Arrays.equals(bytes, stream.readAllBytes()));
+            }
+            jdbc.update("UPDATE auth.role SET data_all_sites=false WHERE id=?", ROLE_ALL);
+            int addedScope = jdbc.update("INSERT INTO auth.role_site(role_id,site_id,scope_kind) VALUES (?,?,'DATA') ON CONFLICT DO NOTHING", ROLE_ALL, SITE);
+            jdbc.update("UPDATE auth.app_user SET authz_version=6 WHERE id=?", REQUESTER);
+            try {
+                assertEquals(ErrorCode.PERMISSION_DATA_SCOPE,
+                        assertThrows(ApiException.class, () -> files.get(session(REQUESTER), assetId)).code());
+            } finally {
+                jdbc.update("UPDATE auth.app_user SET authz_version=5 WHERE id=?", REQUESTER);
+                jdbc.update("UPDATE auth.role SET data_all_sites=true WHERE id=?", ROLE_ALL);
+                if (addedScope > 0) jdbc.update("DELETE FROM auth.role_site WHERE role_id=? AND site_id=? AND scope_kind='DATA'", ROLE_ALL, SITE);
+            }
+            jdbc.update("DELETE FROM auth.role_permission WHERE role_id=? AND permission_code='capture:export'", ROLE_ALL);
+            try {
+                assertEquals(ErrorCode.PERMISSION_DENIED, assertThrows(ApiException.class, () -> files.download(current, assetId, permit)).code());
+            } finally {
+                jdbc.update("INSERT INTO auth.role_permission(role_id,permission_code) VALUES (?,'capture:export') ON CONFLICT DO NOTHING", ROLE_ALL);
+            }
+        } finally {
+            cleanupExportTasks();
+            jdbc.update("DELETE FROM core.file_asset WHERE id=?", assetId);
+            storage.delete(stored.storageKey());
+            jdbc.update("DELETE FROM auth.role_permission WHERE role_id=? AND permission_code='file:download'", ROLE_ALL);
         }
     }
 

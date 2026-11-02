@@ -23,50 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-/**
- * 把"请求里的 SID Cookie"解析成 {@link AuthenticatedSession}（任务 6：{@code GET /me}）。
- *
- * <p>所有需要"已登录"的端点都应当经由这里拿身份，而不是各自读 Cookie 查库——
- * 会话失效判定（撤销/空闲超时/绝对超时/账号停用/客户端绑定/初始口令）只有一份实现，
- * 才不会出现"某个端点漏判了 revoked_at"这种越权口子。
- *
- * <p>判定顺序与对应的错误码：
- * <table border="1">
- *   <caption>失败分支</caption>
- *   <tr><th>情况</th><th>HTTP</th><th>code</th><th>理由</th></tr>
- *   <tr><td>没有 SID Cookie</td><td>401</td><td>{@code AUTH_REQUIRED}</td>
- *       <td>客户端从未登录，前端应引导登录页</td></tr>
- *   <tr><td>摘要查不到会话</td><td>401</td><td>{@code AUTH_REQUIRED}</td>
- *       <td>Cookie 是伪造/来自别处（换库、清表）——等价于没登录</td></tr>
- *   <tr><td>已撤销（登出或登录轮换）</td><td>401</td><td>{@code AUTH_SESSION_EXPIRED}</td>
- *       <td>会话确实存在过，前端按"清登录态、不自动重放写请求"处理</td></tr>
- *   <tr><td>空闲或绝对超时</td><td>401</td><td>{@code AUTH_SESSION_EXPIRED}</td>
- *       <td>同上；两者都要求重新认证</td></tr>
- *   <tr><td>账号被停用/软删</td><td>401</td><td>{@code AUTH_SESSION_EXPIRED}</td>
- *       <td>不返回 403：403 会让前端显示"无权限"并保留登录态，
- *           而禁用用户的正确表现是踢回登录页</td></tr>
- *   <tr><td>UA 或 IP 与会话绑定的值不一致</td><td>401</td><td>{@code AUTH_SESSION_EXPIRED}</td>
- *       <td>M02：SID 被搬到另一个客户端上使用（共用终端、代理转发、抓包重放）</td></tr>
- *   <tr><td>仍在用初始口令访问业务端点</td><td>403</td><td>{@code PERMISSION_DENIED}</td>
- *       <td>M04：初始口令只能用于改密，不能用它做业务</td></tr>
- * </table>
- *
- * <p><b>为什么"查不到"用 {@code AUTH_REQUIRED} 而不是 {@code AUTH_SESSION_EXPIRED}</b>：
- * 后者会让前端认为"我的会话刚过期"，可能触发自动续期逻辑；而查不到意味着这个
- * SID 从来不是有效会话，续期也不可能成功。区分开能少一轮无意义的 renew 请求。
- *
- * <h2>M02：客户端绑定（UA + IP）</h2>
- * <p>登录时把"UA | IP"写进 {@code auth.user_session.client_label}（格式见
- * {@link LoginService#clientBinding}），之后每个请求都比对一次：任一变化即 401，
- * 并在 {@code audit.audit_event} 写 {@code auth.session_rejected}（原因
- * {@code USER_AGENT_MISMATCH} / {@code CLIENT_IP_MISMATCH}）。
- *
- * <p>为什么不给会话表加 {@code client_ip} 列：{@code MigrationBaselineTests} 要求
- * "迁移建出的结构"与 {@code contracts/database/schema.sql} 完全相等，且该文件的 SHA-256
- * 被写死在测试里，而本轮禁止改契约——加列会让测试直接失败（已实测）。
- * 因此 IP 以 {@code |ip=} 尾部字段编码进现有的 {@code client_label}；解析对历史行
- * （无该后缀）向后兼容，此时只比对 UA。
- */
+/** SID authentication checks current account/session authorization, source networks, complete UA/IP binding, expiry and initial-password restrictions before use or renewal. */
 @Component
 public class SessionAuthenticator {
 
@@ -217,30 +174,22 @@ public class SessionAuthenticator {
                 properties.getTrustedProxies());
     }
 
-    /**
-     * 会话与客户端绑定（M02）：UA 或 IP 不一致即视为 SID 被搬走。
-     *
-     * <p>为什么先比对、后做续期：续期会写库，一个明显不对的客户端不应该让它的会话获得
-     * 更长的空闲期。也正因为如此，比对必须发生在 {@link #renewIfActiveRequest} 之前。
-     *
-     * <p>{@code clientLabel} 为 null/空（历史数据）时整段跳过；没有 {@code |ip=} 后缀的
-     * 历史行只比对 UA——不能因为升级前签发的会话缺字段就把所有人踢下线。
-     */
+    /** Reject absent, legacy or mismatched UA/IP bindings before renewal; record the failure without accepting an unbound SID. */
     private void requireBoundClient(HttpServletRequest request, UserSessionRepository.SessionRow session,
                                     UserAccountRepository.UserAccountRow user) {
         String bound = session.clientLabel();
-        if (bound == null || bound.isBlank()) {
-            return;
-        }
         String currentIp = clientIp(request);
         String boundUa = LoginService.boundUserAgent(bound);
         String boundIp = LoginService.boundIp(bound);
-        String currentUa = LoginService.clientLabel(request.getHeader(HttpHeaders.USER_AGENT));
+        String currentUa = LoginService.boundUserAgent(LoginService.clientBinding(
+                request.getHeader(HttpHeaders.USER_AGENT), currentIp));
 
         String reason = null;
-        if (!Objects.equals(boundUa, currentUa)) {
+        if (bound == null || !bound.startsWith("v2:") || boundIp == null) {
+            reason = "CLIENT_BINDING_MISSING";
+        } else if (!Objects.equals(boundUa, currentUa)) {
             reason = "USER_AGENT_MISMATCH";
-        } else if (boundIp != null && !ClientNetworks.sameAddress(boundIp, currentIp)) {
+        } else if (!ClientNetworks.sameAddress(boundIp, currentIp)) {
             reason = "CLIENT_IP_MISMATCH";
         }
         if (reason == null) {

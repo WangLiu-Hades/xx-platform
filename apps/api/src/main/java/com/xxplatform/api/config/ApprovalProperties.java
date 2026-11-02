@@ -46,19 +46,20 @@ public class ApprovalProperties {
     /** 列表页大小上限。 */
     private int pageSizeMax = 100;
 
-    /**
-     * 审批人白名单（登录名）。空列表 = 按权限判定：持有该操作权限码的可用账号都是候选审批人。
-     *
-     * <p><b>为什么需要这个开关</b>：协议只说"两名独立审批人"，没说是谁。真实部署里审批权
-     * 往往收窄到少数几个人（值班主管），而 RBAC 权限码是给"能调用这个接口的人"用的，两者
-     * 不是一回事。用配置表达部署口径，比在数据库里再造一张审批人表更轻，也不用改代码。
-     *
-     * <p><b>为什么要"白名单人数不足就直接拒"</b>：如果一个申请按规则需要 2 票，而部署里
-     * 只有 1 个合格审批人，那么这个申请会一直卡在 PENDING 直到 24h 过期——申请人以为
-     * 有人会批，审批人也以为不关自己的事。在创建时就 400「审批人不足」能把问题前移到
-     * 最显眼的位置。
-     */
+    /** Deployment approver allowlist. Empty means unavailable; permissions and current target scope are checked separately. */
     private List<String> approverLogins = List.of();
+
+    /** Deployment-bound DeviceProfiles. No profile means device approvals are unavailable (P-018). */
+    private List<DeviceProfile> deviceProfiles = List.of();
+
+    public record DeviceProfile(String manufacturer, String model, String protocolVersion,
+                                List<String> serialNumbers, List<String> commands,
+                                java.util.Map<String, String> parameterKinds) { }
+
+    public List<DeviceProfile> getDeviceProfiles() { return deviceProfiles; }
+    public void setDeviceProfiles(List<DeviceProfile> profiles) {
+        deviceProfiles = profiles == null ? List.of() : List.copyOf(profiles);
+    }
 
     public String getPayloadKey() {
         return payloadKey;

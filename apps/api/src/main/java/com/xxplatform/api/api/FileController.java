@@ -53,10 +53,18 @@ public class FileController {
 
     private final SessionAuthenticator sessionAuthenticator;
     private final FileService fileService;
+    private final com.xxplatform.api.config.SessionProperties sessionProperties;
 
-    public FileController(SessionAuthenticator sessionAuthenticator, FileService fileService) {
+    @org.springframework.beans.factory.annotation.Autowired
+    public FileController(SessionAuthenticator sessionAuthenticator, FileService fileService,
+                          com.xxplatform.api.config.SessionProperties sessionProperties) {
         this.sessionAuthenticator = sessionAuthenticator;
         this.fileService = fileService;
+        this.sessionProperties = sessionProperties;
+    }
+
+    public FileController(SessionAuthenticator authenticator, FileService service) {
+        this(authenticator, service, new com.xxplatform.api.config.SessionProperties());
     }
 
     @PostMapping(path = "/files/uploads", consumes = MULTIPART)
@@ -84,16 +92,30 @@ public class FileController {
     }
 
     @GetMapping("/files/{fileAssetId}")
-    public ApiResponses get(@PathVariable UUID fileAssetId, HttpServletRequest request) {
+    public ResponseEntity<ApiResponses> get(@PathVariable UUID fileAssetId, HttpServletRequest request) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
         FileAssetRow row = fileService.get(session, fileAssetId);
-        return ApiResponses.success(view(row), RequestIdFilter.currentTraceIdOrFallback());
+        HttpHeaders headers = new HttpHeaders();
+        String permit = fileService.issueDownloadPermit(session, row);
+        if (permit != null) {
+            headers.add(HttpHeaders.SET_COOKIE, org.springframework.http.ResponseCookie
+                    .from(com.xxplatform.api.service.file.DownloadPermits.COOKIE_NAME, permit)
+                    .path(sessionProperties.getCookiePath() + "/files/" + fileAssetId + "/download")
+                    .httpOnly(true).secure(sessionProperties.isSecureCookie()).sameSite("Lax")
+                    .maxAge(java.time.Duration.ofMinutes(5)).build().toString());
+        }
+        headers.setCacheControl(CacheControl.noStore());
+        return ResponseEntity.ok().headers(headers).body(ApiResponses.success(view(row), RequestIdFilter.currentTraceIdOrFallback()));
     }
 
     @GetMapping("/files/{fileAssetId}/download")
     public ResponseEntity<Resource> download(@PathVariable UUID fileAssetId, HttpServletRequest request) {
         AuthenticatedSession session = sessionAuthenticator.require(request);
-        FileService.Download download = fileService.download(session, fileAssetId);
+        String permit = null;
+        if (request.getCookies() != null) for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
+            if (com.xxplatform.api.service.file.DownloadPermits.COOKIE_NAME.equals(cookie.getName())) permit = cookie.getValue();
+        }
+        FileService.Download download = fileService.download(session, fileAssetId, permit);
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.CONTENT_TYPE, download.mimeType());
         headers.setContentLength(download.byteSize());

@@ -1,3 +1,5 @@
+> 历史描述，已由2026-11-02的[主分支规则修复与复核](final-main-rule-verification.md)取代；不得使用本页旧统计或分支内规则来源作最终合并判断。
+
 > **本轮修复（M01–M21 + E01）**：代码提交 `34556f7`（此后分支上的提交只修改 `reports/pr3-fix/` 下的文档、脚本与证据，不改 `apps/`、`contracts/`、`docs/`）；目标 `main@aca438eb`；结论：**具备进入合并审查条件**。全量真库测试 391 用例 0 失败 0 错误 0 跳过，逐项依据与证据见 [`reports/pr3-fix/issue-matrix.md`](issue-matrix.md)，就绪度评估见 [`merge-readiness.md`](merge-readiness.md)。
 
 ## 任务与角色
