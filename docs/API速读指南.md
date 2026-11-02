@@ -4,7 +4,7 @@
 
 1. `/api/v1`同源HTTPS，SID Cookie；写操作CSRF/Origin；不使用浏览器localStorage Token。
 2. 先读[约定](../contracts/api/api-conventions.md)，按operationId调用；UUID代理标识、敏感条件POST JSON。
-3. `/me`给权限/菜单/范围，列表、详情、导出、结果、文件每次由服务端重校。菜单共28页，见policy.menuCatalog。
+3. `/me`给权限/菜单/范围，列表、详情、导出、结果、文件每次由服务端重校。菜单共28页，见policy.menuCatalog；2026-11-02 前端新增"智能对话"主界面（本地菜单29项），真实后端需在菜单目录补该项，否则 HTTP 模式登录后回落到系统首页。
 4. 普通查询31天/分页20默认100最大；Context30分钟；SQL5秒硬超时。导出一律异步。
 5. Task的SUCCESS是工作流状态，Delivery的ACKNOWLEDGED才是通道确认；UNKNOWN先对账。任务执行30分钟/2小时从RUNNING开始，排队另计。
 6. 敏感动作先申请`createActionApproval`、独立复核，再带`X-Approval-Id`执行原操作。提案/版本改变需重新申请。解密申请自动建立审批，仅指定recipient一次性POST结果。

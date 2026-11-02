@@ -1,0 +1,42 @@
+{
+  "time": "2026-11-02T10:20:41.903Z",
+  "origin": "http://127.0.0.1:5180",
+  "checks": [
+    {
+      "name": "登录后默认进入智能对话主界面",
+      "passed": true
+    },
+    {
+      "name": "对话区高度不撑出页面、欢迎页元素齐全",
+      "passed": true
+    },
+    {
+      "name": "输入“布控”返回查看、新建、预警结果三个可点击入口",
+      "passed": true
+    },
+    {
+      "name": "点击“新建布控”跳到布控页并打开新建表单",
+      "passed": true
+    },
+    {
+      "name": "点击“查看布控预警结果”跳到告警结果页",
+      "passed": true
+    },
+    {
+      "name": "追问检索条件：目标与时间带入围栏检索",
+      "passed": true
+    },
+    {
+      "name": "会话列表可新建、切换并保留历史",
+      "passed": true
+    },
+    {
+      "name": "模型设置可打开并显示本地部署说明",
+      "passed": true
+    }
+  ],
+  "passed": 8,
+  "failed": 0,
+  "pageErrors": [],
+  "consoleErrors": []
+}

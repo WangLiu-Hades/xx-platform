@@ -5,13 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "dev:http": "vite --host 127.0.0.1 --mode http",
     "preview": "vite preview --host 127.0.0.1",
     "generate:api": "node scripts/generate-api.mjs",
     "typecheck": "vue-tsc --noEmit",
     "build": "npm run typecheck && vite build",
+    "build:http": "npm run typecheck && vite build --mode http",
     "test": "vitest run --pool=threads --maxWorkers=1",
     "test:e2e": "node tests/vue.e2e.cjs",
-    "audit": "node scripts/audit.mjs"
+    "audit": "node scripts/audit.mjs",
+    "stub": "node scripts/contract-stub.mjs",
+    "llm": "node scripts/llm-stub.mjs",
+    "llm:selfcheck": "node scripts/llm-stub.mjs --selfcheck",
+    "evidence": "node scripts/first-chain-evidence.mjs",
+    "baseline": "node scripts/baseline.mjs"
   },
   "dependencies": {
     "vue": "3.5.43",

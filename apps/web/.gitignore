@@ -3,5 +3,8 @@ node_modules/
 .vite/
 coverage/
 test-results/
+dist-http/
 .env.local
 .env.*.local
+# 根 .gitignore 的 **/.env.* 会把 .env.http 一起忽略；这里显式放行（该文件只含模式与路径，无密钥）
+!.env.http

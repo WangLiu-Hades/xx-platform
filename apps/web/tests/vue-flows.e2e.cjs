@@ -13,6 +13,7 @@ async function main(){
   const browser=await chromium.launch({headless:true,executablePath:process.env.AUDIT_BROWSER||'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
   const context=await browser.newContext({viewport:{width:1600,height:1000},permissions:['clipboard-read','clipboard-write'],acceptDownloads:true});
   const page=await context.newPage();page.setDefaultTimeout(8000);
+  await page.addInitScript(()=>{try{localStorage.setItem('vue-agent-llm-config-v1',JSON.stringify({enabled:false}));}catch{}});
   page.on('pageerror',error=>errors.push(error.message));page.on('console',message=>{if(message.type()==='error')consoleErrors.push(message.text());});
   const db=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('vue-prototype-mock-v2')).db);
   const dialog=()=>page.locator('.el-dialog:visible').last();

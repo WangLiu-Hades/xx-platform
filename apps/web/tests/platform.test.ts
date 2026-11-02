@@ -22,7 +22,7 @@ describe('PDF frontend business flows',()=>{
   it('[PDF-001] failed or disabled login does not establish a session; success opens home',async()=>{
     await p.logout();await p.login('demo.admin','bad');expect(p.session).toBe('');expect(p.error).toContain('错误');
     await p.login('demo.disabled','demo123');expect(p.session).toBe('');expect(p.error).toContain('禁用');
-    await p.login('demo.admin','demo123');expect(p.active).toBe('系统首页');expect(p.allowed('系统首页')).toBe(true);
+    await p.login('demo.admin','demo123');expect(p.active).toBe('智能对话');expect(p.allowed('系统首页')).toBe(true);expect(p.allowed('智能对话')).toBe(true);
   });
   it('[PDF-015,PDF-016,PDF-031,PDF-044] combined capture filters and reset preserve the intended type',()=>{
     const rows=p.captureRows('电围');const first=rows[0]!;

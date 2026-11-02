@@ -1,11 +1,12 @@
 # 业务页面组件
 
-11个Vue组件由App按当前菜单和状态选择，承载28页，共用Pinia、表单、表格与接口层，不是11个独立站点。
+12个Vue组件由App按当前菜单和状态选择，承载29页，共用Pinia、表单、表格与接口层，不是独立站点。登录后默认进入AgentPage智能对话，其他28个业务菜单保持原有页面与交互。
 
 ## 文件与目录
 
 | 文件 | 页面职责 |
 | --- | --- |
+| [AgentPage.vue](<AgentPage.vue>) | 智能体对话主界面：会话列表、欢迎页、消息流、动作卡片、输入区与模型设置；调用stores/agent |
 | [DashboardPage.vue](<DashboardPage.vue>) | 系统首页指标、排行、地图、应用入口；HTTP委托RemoteDashboard |
 | [SearchPage.vue](<SearchPage.vue>) | 四源检索、人像搜图、受控图片和右键动作 |
 | [LibraryPage.vue](<LibraryPage.vue>) | 人员库/人员、导入导出、删除及选人布控 |

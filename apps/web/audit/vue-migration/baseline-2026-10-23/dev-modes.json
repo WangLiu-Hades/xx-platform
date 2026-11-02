@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-23T21:15:00+08:00",
+  "note": "环境就绪自检：两种模式都能起服务；HTTP 模式的请求已正确经过 Vite 代理到达 /api/v1，因后端未启动返回 502，前端显示“后端连接失败”且不回落 Mock。",
+  "node": "v24.22.1",
+  "npm": "11.19.1",
+  "mockMode": {
+    "command": "npm run dev -- --port 5180 --strictPort",
+    "url": "http://127.0.0.1:5180",
+    "mode": "mock",
+    "menus": 28,
+    "login": "demo.admin / demo123 自动预填，登录后进入系统首页",
+    "pageErrors": 0
+  },
+  "httpMode": {
+    "command": "npm run dev:http -- --port 5181 --strictPort",
+    "url": "http://127.0.0.1:5181",
+    "mode": "http",
+    "requestSequence": [
+      "GET /api/v1/auth/csrf -> 502（无后端）"
+    ],
+    "ui": "提示“后端连接失败”，不回退为 Mock 成功",
+    "pageErrors": 0,
+    "conclusion": "只要 8080 上有服务响应 /api/v1/auth/csrf，登录链即可继续；这正是周六契约桩的入口。"
+  },
+  "httpBuild": {
+    "command": "npm run build:http",
+    "outDir": "dist-http/",
+    "serveCheck": "npx vite preview --outDir dist-http --port 5198",
+    "bakedMode": "http",
+    "note": "已确认构建产物固化为 HTTP 模式（登录页显示“后端接口模式”），不会误发 Mock 包。"
+  }
+}

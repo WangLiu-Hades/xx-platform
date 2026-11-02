@@ -1,0 +1,393 @@
+{
+  "generatedAt": "2026-10-25T06:34:55.673Z",
+  "timeZone": "Asia/Shanghai",
+  "app": "http://127.0.0.1:5181",
+  "stub": "http://127.0.0.1:8080",
+  "note": "契约桩验证：验证前端在真实 HTTP 路径下的行为，不代表真实后端联调或业务验收",
+  "cases": [
+    {
+      "id": "login-ok",
+      "label": "登录成功并进入系统首页",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "菜单 28 个",
+        "落地页：系统首页"
+      ],
+      "shot": "login-ok.png",
+      "alerts": [],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary"
+      ]
+    },
+    {
+      "id": "login-fail",
+      "label": "密码错误被拒绝（401）",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "提示：账号或密码错误"
+      ],
+      "shot": "login-fail.png",
+      "alerts": [],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "401 POST /api/v1/auth/login"
+      ]
+    },
+    {
+      "id": "search-ok",
+      "label": "检索成功（20 条 + 游标翻页）",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "首页 20 条",
+        "场所列：中心广场；设备列：设备 A-01",
+        "第二页 5 条"
+      ],
+      "shot": "search-ok.png",
+      "alerts": [],
+      "rows": 5,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search",
+        "200 GET /api/v1/devices",
+        "200 POST /api/v1/captures/search"
+      ]
+    },
+    {
+      "id": "search-empty",
+      "label": "空结果",
+      "scenario": "empty",
+      "ok": true,
+      "notes": [
+        "显示空态文案"
+      ],
+      "shot": "search-empty.png",
+      "alerts": [],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search"
+      ]
+    },
+    {
+      "id": "search-forbidden",
+      "label": "无权访问（403）",
+      "scenario": "forbidden",
+      "ok": true,
+      "notes": [],
+      "shot": "search-forbidden.png",
+      "alerts": [
+        "接口加载失败：无操作权限：当前账号无此操作权限（桩场景 forbidden） · Trace ID：stub-PERMISSION_DENIED-mvngcd2x"
+      ],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "403 GET /api/v1/sites"
+      ]
+    },
+    {
+      "id": "search-server",
+      "label": "服务异常（500）",
+      "scenario": "server",
+      "ok": true,
+      "notes": [],
+      "shot": "search-server.png",
+      "alerts": [
+        "接口加载失败：服务内部错误（桩场景 server） · Trace ID：stub-INTERNAL_ERROR-mvngcekc"
+      ],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "500 GET /api/v1/sites"
+      ]
+    },
+    {
+      "id": "search-timeout",
+      "label": "请求超时（20s 客户端超时）",
+      "scenario": "timeout",
+      "ok": true,
+      "notes": [
+        "等待 23s 观察超时提示"
+      ],
+      "shot": "search-timeout.png",
+      "alerts": [
+        "接口加载失败：请求超时，请重试"
+      ],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary"
+      ]
+    },
+    {
+      "id": "map-ok",
+      "label": "地图研判加载（5 台设备 + 8 点轨迹）",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "轨迹行 8 条",
+        "在线 3"
+      ],
+      "shot": "map-ok.png",
+      "alerts": [],
+      "rows": 8,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/sites",
+        "200 GET /api/v1/map/devices",
+        "201 POST /api/v1/contexts",
+        "200 POST /api/v1/trajectories/query",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000001",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000002",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000003",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000004",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000005",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000006",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000007",
+        "200 GET /api/v1/captures/90000000-0000-4000-8000-000000000008"
+      ]
+    },
+    {
+      "id": "map-forbidden",
+      "label": "地图无权（403）",
+      "scenario": "forbidden",
+      "ok": true,
+      "notes": [],
+      "shot": "map-forbidden.png",
+      "alerts": [
+        "接口加载失败：无操作权限：当前账号无此操作权限（桩场景 forbidden） · Trace ID：stub-PERMISSION_DENIED-mvngd1po"
+      ],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "403 GET /api/v1/sites"
+      ]
+    },
+    {
+      "id": "session-renew",
+      "label": "401 静默续期并重放（不跳登录页）",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "续期后检索 20 条；未跳登录页",
+        "已调用 renewSession"
+      ],
+      "shot": "session-renew.png",
+      "alerts": [],
+      "rows": 20,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/dashboard/summary",
+        "401 GET /api/v1/sites",
+        "200 POST /api/v1/auth/session/renew",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search",
+        "200 GET /api/v1/devices"
+      ]
+    },
+    {
+      "id": "search-expired-410",
+      "label": "上下文过期 410 与「重新查询」",
+      "scenario": "expired",
+      "ok": true,
+      "notes": [
+        "出现「重新查询」按钮",
+        "重查后 20 条"
+      ],
+      "shot": "search-expired-410.png",
+      "alerts": [],
+      "rows": 20,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 410 (Gone)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "410 GET /api/v1/sites",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search",
+        "200 GET /api/v1/devices"
+      ]
+    },
+    {
+      "id": "export-ok",
+      "label": "导出 202 → 任务 → 下载",
+      "scenario": "ok",
+      "ok": true,
+      "notes": [
+        "任务状态列：成功（中文映射）",
+        "下载文件名：检索结果导出.xlsx"
+      ],
+      "shot": "export-ok.png",
+      "alerts": [],
+      "rows": 1,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search",
+        "200 GET /api/v1/devices",
+        "201 POST /api/v1/contexts",
+        "202 POST /api/v1/exports",
+        "200 GET /api/v1/tasks",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/tasks",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/tasks",
+        "200 GET /api/v1/tasks/B0000000-0000-4000-8000-000000000001",
+        "200 GET /api/v1/files/30000000-0000-4000-8000-000000000001",
+        "200 GET /api/v1/files/30000000-0000-4000-8000-000000000001/download"
+      ]
+    },
+    {
+      "id": "export-cancel",
+      "label": "任务取消（RUNNING → 已取消）",
+      "scenario": "pending",
+      "ok": true,
+      "notes": [
+        "详情状态：CANCELLED"
+      ],
+      "shot": "export-cancel.png",
+      "alerts": [],
+      "rows": 2,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "200 GET /api/v1/sites",
+        "200 POST /api/v1/captures/search",
+        "200 GET /api/v1/devices",
+        "201 POST /api/v1/contexts",
+        "202 POST /api/v1/exports",
+        "200 GET /api/v1/tasks",
+        "200 GET /api/v1/tasks/B0000000-0000-4000-8000-000000000001",
+        "202 POST /api/v1/tasks/B0000000-0000-4000-8000-000000000001/cancel",
+        "200 GET /api/v1/tasks/B0000000-0000-4000-8000-000000000001"
+      ]
+    },
+    {
+      "id": "export-conflict",
+      "label": "导出冲突（409）",
+      "scenario": "conflict",
+      "ok": true,
+      "notes": [],
+      "shot": "export-conflict.png",
+      "alerts": [
+        "接口加载失败：数据已被他人修改，请刷新后重试（桩场景 conflict） · Trace ID：stub-VERSION_CONFLICT-mvngdlgz"
+      ],
+      "rows": 0,
+      "pageErrors": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 409 (Conflict)",
+        "Failed to load resource: the server responded with a status of 409 (Conflict)"
+      ],
+      "api": [
+        "200 GET /api/v1/auth/csrf",
+        "200 POST /api/v1/auth/login",
+        "200 GET /api/v1/auth/csrf",
+        "200 GET /api/v1/me",
+        "200 GET /api/v1/client-config",
+        "200 GET /api/v1/dashboard/summary",
+        "409 GET /api/v1/sites",
+        "409 POST /api/v1/contexts"
+      ]
+    }
+  ]
+}

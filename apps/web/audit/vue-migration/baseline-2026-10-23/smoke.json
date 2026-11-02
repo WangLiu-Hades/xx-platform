@@ -1,0 +1,261 @@
+{
+  "previewUrl": "http://127.0.0.1:5199",
+  "menuCount": 28,
+  "pages": [
+    {
+      "page": "系统首页",
+      "visible": true,
+      "chars": 757,
+      "tableRows": 0,
+      "buttons": 21,
+      "fields": 6,
+      "pageErrors": 0
+    },
+    {
+      "page": "围栏检索",
+      "visible": true,
+      "chars": 661,
+      "tableRows": 5,
+      "buttons": 21,
+      "fields": 14,
+      "pageErrors": 0
+    },
+    {
+      "page": "车牌检索",
+      "visible": true,
+      "chars": 610,
+      "tableRows": 5,
+      "buttons": 20,
+      "fields": 13,
+      "pageErrors": 0
+    },
+    {
+      "page": "MAC检索",
+      "visible": true,
+      "chars": 669,
+      "tableRows": 5,
+      "buttons": 20,
+      "fields": 13,
+      "pageErrors": 0
+    },
+    {
+      "page": "人像检索",
+      "visible": true,
+      "chars": 852,
+      "tableRows": 0,
+      "buttons": 41,
+      "fields": 23,
+      "pageErrors": 0
+    },
+    {
+      "page": "人员库",
+      "visible": true,
+      "chars": 151,
+      "tableRows": 1,
+      "buttons": 14,
+      "fields": 7,
+      "pageErrors": 0
+    },
+    {
+      "page": "地图研判",
+      "visible": true,
+      "chars": 789,
+      "tableRows": 5,
+      "buttons": 29,
+      "fields": 26,
+      "pageErrors": 0
+    },
+    {
+      "page": "伴随任务",
+      "visible": true,
+      "chars": 342,
+      "tableRows": 2,
+      "buttons": 18,
+      "fields": 8,
+      "pageErrors": 0
+    },
+    {
+      "page": "碰撞任务",
+      "visible": true,
+      "chars": 338,
+      "tableRows": 2,
+      "buttons": 18,
+      "fields": 8,
+      "pageErrors": 0
+    },
+    {
+      "page": "区域统计",
+      "visible": true,
+      "chars": 338,
+      "tableRows": 2,
+      "buttons": 18,
+      "fields": 8,
+      "pageErrors": 0
+    },
+    {
+      "page": "数据运算",
+      "visible": true,
+      "chars": 243,
+      "tableRows": 0,
+      "buttons": 25,
+      "fields": 4,
+      "pageErrors": 0
+    },
+    {
+      "page": "综合布控",
+      "visible": true,
+      "chars": 312,
+      "tableRows": 2,
+      "buttons": 17,
+      "fields": 9,
+      "pageErrors": 0
+    },
+    {
+      "page": "告警结果",
+      "visible": true,
+      "chars": 364,
+      "tableRows": 3,
+      "buttons": 19,
+      "fields": 9,
+      "pageErrors": 0
+    },
+    {
+      "page": "图码档案",
+      "visible": true,
+      "chars": 414,
+      "tableRows": 0,
+      "buttons": 16,
+      "fields": 3,
+      "pageErrors": 0
+    },
+    {
+      "page": "车码档案",
+      "visible": true,
+      "chars": 373,
+      "tableRows": 0,
+      "buttons": 16,
+      "fields": 3,
+      "pageErrors": 0
+    },
+    {
+      "page": "数据态势",
+      "visible": true,
+      "chars": 397,
+      "tableRows": 6,
+      "buttons": 18,
+      "fields": 14,
+      "pageErrors": 0
+    },
+    {
+      "page": "运维首页",
+      "visible": true,
+      "chars": 898,
+      "tableRows": 0,
+      "buttons": 8,
+      "fields": 26,
+      "pageErrors": 0
+    },
+    {
+      "page": "场所管理",
+      "visible": true,
+      "chars": 295,
+      "tableRows": 5,
+      "buttons": 23,
+      "fields": 11,
+      "pageErrors": 0
+    },
+    {
+      "page": "设备管理",
+      "visible": true,
+      "chars": 501,
+      "tableRows": 5,
+      "buttons": 55,
+      "fields": 15,
+      "pageErrors": 0
+    },
+    {
+      "page": "设备分布",
+      "visible": true,
+      "chars": 264,
+      "tableRows": 0,
+      "buttons": 18,
+      "fields": 17,
+      "pageErrors": 0
+    },
+    {
+      "page": "参数配置",
+      "visible": true,
+      "chars": 170,
+      "tableRows": 1,
+      "buttons": 14,
+      "fields": 6,
+      "pageErrors": 0
+    },
+    {
+      "page": "运维报表",
+      "visible": true,
+      "chars": 254,
+      "tableRows": 2,
+      "buttons": 17,
+      "fields": 8,
+      "pageErrors": 0
+    },
+    {
+      "page": "运维通知",
+      "visible": true,
+      "chars": 213,
+      "tableRows": 1,
+      "buttons": 18,
+      "fields": 5,
+      "pageErrors": 0
+    },
+    {
+      "page": "用户管理",
+      "visible": true,
+      "chars": 371,
+      "tableRows": 5,
+      "buttons": 24,
+      "fields": 11,
+      "pageErrors": 0
+    },
+    {
+      "page": "角色管理",
+      "visible": true,
+      "chars": 568,
+      "tableRows": 5,
+      "buttons": 24,
+      "fields": 10,
+      "pageErrors": 0
+    },
+    {
+      "page": "操作日志",
+      "visible": true,
+      "chars": 412,
+      "tableRows": 5,
+      "buttons": 11,
+      "fields": 11,
+      "pageErrors": 0
+    },
+    {
+      "page": "短信日志",
+      "visible": true,
+      "chars": 220,
+      "tableRows": 1,
+      "buttons": 12,
+      "fields": 8,
+      "pageErrors": 0
+    },
+    {
+      "page": "任务中心",
+      "visible": true,
+      "chars": 258,
+      "tableRows": 5,
+      "buttons": 9,
+      "fields": 9,
+      "pageErrors": 0
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "sparsePages": []
+}

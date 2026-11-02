@@ -25,14 +25,35 @@ export function clearIdentity(){invalidateRequests();onUnauthorized();}
 export const isRequestCanceled=axios.isCancel;
 export function bindUnauthorized(fn:()=>void){onUnauthorized=fn;}
 export function setCsrfToken(value:string){csrfToken=value;}
-export async function request<I extends OperationId>(id:I,args:Request<I>={}):Promise<Response<I>>{
+/** 会话续期钩子：返回 true 表示已续期，调用方会重放原请求；由 stores/platform 绑定。 */
+let renewSessionHook:(()=>Promise<boolean>)|null=null;
+let renewal:Promise<boolean>|null=null;
+export function bindSessionRenewal(fn:(()=>Promise<boolean>)|null){renewSessionHook=fn;renewal=null;}
+async function renewOnce(){if(!renewSessionHook)return false;renewal??=renewSessionHook().finally(()=>{renewal=null;});return renewal;}
+/** 把后端错误码翻译成可展示文案：数据范围、版本冲突、上下文过期、能力未开放等需要区别提示。 */
+export function describeError(error:unknown):string{
+ if(error instanceof ApiError){switch(error.code){
+  case 'PERMISSION_DATA_SCOPE':return '超出数据范围：'+error.message;
+  case 'PERMISSION_DENIED':return '无操作权限：'+error.message;
+  case 'RESOURCE_VERSION_CONFLICT':return error.message+'（数据已被修改，请刷新后重试）';
+  case 'CONTEXT_EXPIRED':return error.message+'（查询条件已过期，请重新查询）';
+  case 'REQUIREMENT_PENDING':return '该能力尚未开放：'+error.message;
+  case 'SYSTEM_UNAVAILABLE':return '服务暂不可用：'+error.message;
+  case 'TASK_RESULT_NOT_READY':return '结果尚未就绪：'+error.message;
+  default:return error.message;
+ }}return error instanceof Error?error.message:String(error);
+}
+export async function request<I extends OperationId>(id:I,args:Request<I>={}):Promise<Response<I>>{return send(id,args,true);}
+async function send<I extends OperationId>(id:I,args:Request<I>,allowRenewal:boolean):Promise<Response<I>>{
  const epoch=identityEpoch;
  const op=operationCatalog[id];const validator=await import('./validation');validator.validateRequest(id,args.path,args.query,args.body);let url:string=op.path;
  for(const [key,value] of Object.entries(args.path||{}))url=url.replace('{'+key+'}',encodeURIComponent(String(value)));
  if(url.includes('{'))throw new ApiError('缺少接口路径参数','CLIENT_VALIDATION','',0);
  const writing=!['GET','HEAD'].includes(op.method);
  const headers:Record<string,string>={};
- if(writing){if(csrfToken)headers['X-CSRF-Token']=csrfToken;headers['Idempotency-Key']=args.idempotencyKey||crypto.randomUUID();}
+ // 幂等键在续期重放时必须复用，否则同一次业务重试会被后端当成两次请求
+ const idempotencyKey=args.idempotencyKey||crypto.randomUUID();
+ if(writing){if(csrfToken)headers['X-CSRF-Token']=csrfToken;headers['Idempotency-Key']=idempotencyKey;}
  if(args.etag)headers['If-Match']=args.etag;
  if(args.approvalId)headers['X-Approval-Id']=args.approvalId;
  try{
@@ -55,7 +76,11 @@ export async function request<I extends OperationId>(id:I,args:Request<I>={}):Pr
    if(error instanceof ApiError)throw error;
    if(axios.isAxiosError(error)){
      const status=error.response?.status||0;const e=error.response?.data as {message?:string;code?:string;traceId?:string;details?:unknown}|undefined;
-     if(status===401)clearIdentity();
+     // 401：先尝试静默续期一次并重放原请求，续期失败才让身份失效
+     if(status===401&&allowRenewal&&id!=='login'&&id!=='renewSession'&&renewSessionHook){
+       if(await renewOnce())return send(id,{...args,idempotencyKey},false);
+     }
+     if(status===401&&id!=='login')clearIdentity();
      throw new ApiError(e?.message||(error.code==='ECONNABORTED'?'请求超时，请重试':navigator.onLine?'后端连接失败':'网络已断开'),e?.code||error.code||'NETWORK_ERROR',e?.traceId||'',status,e?.details);
    }throw error;
  }

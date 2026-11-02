@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-24T03:38:03.167Z",
+  "timeZone": "Asia/Shanghai",
+  "workdayLabel": "2026-10-24",
+  "note": "本地基线：证明原型可运行，不是 215 项业务验收证据",
+  "env": {
+    "node": "v24.22.1",
+    "npm": "11.19.1",
+    "platform": "win32 x64"
+  },
+  "hashes": {
+    "packageLock": {
+      "path": "apps/web/package-lock.json",
+      "bytes": 111744,
+      "sha256": "c836ec1b59e65f322328e991fe9a1f723e5e82f7b478c10139b0a3e5b07f7ae1"
+    },
+    "openapi": {
+      "path": "contracts/api/openapi.yaml",
+      "bytes": 1457560,
+      "sha256": "340e95f1c58d6215a6434ca3f822856648a12a862c501048fc5e1d37a8ec601f"
+    }
+  },
+  "steps": [
+    {
+      "command": "npx vue-tsc --noEmit",
+      "exitCode": 0,
+      "durationMs": 6334,
+      "error": null
+    },
+    {
+      "command": "npx vitest run --pool=threads --maxWorkers=1",
+      "exitCode": 0,
+      "durationMs": 4403,
+      "error": null
+    },
+    {
+      "command": "npx vite build",
+      "exitCode": 0,
+      "durationMs": 1510,
+      "error": null
+    },
+    {
+      "command": "npx vite build --mode http --outDir dist-http --emptyOutDir",
+      "exitCode": 0,
+      "durationMs": 1377,
+      "error": null
+    }
+  ],
+  "unitTests": {
+    "passed": 295,
+    "files": 8
+  },
+  "builds": {
+    "mock": {
+      "exitCode": 0,
+      "distMB": 3.28
+    },
+    "http": {
+      "exitCode": 0,
+      "distMB": 3.32
+    }
+  }
+}

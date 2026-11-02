@@ -7,12 +7,12 @@
 | 文件 | 功能 |
 | --- | --- |
 | [fixture.json](<fixture.json>) | 初始虚构账号、场所、设备、采集、人员、任务、布控、报表和日志等 |
-| [repository.ts](<repository.ts>) | 数据校验/加载、reactive数据库、本地持久化/重置、模拟审计/统计/分析/报表 |
+| [repository.ts](<repository.ts>) | 数据校验/加载、存量角色菜单迁移、reactive数据库、本地持久化/重置、模拟审计/统计/分析/报表 |
 | [imports.ts](<imports.ts>) | stageImport在副本中准备/校验演示导入，由调用者成功提交 |
 
 ## 怎么使用
 
-按[工程说明](<../../README.md>)运行Mock。LocalStorage键为vue-prototype-mock-v2，清除当前站点该键并刷新恢复fixture。修改fixture不会自动替换已有浏览器存储，测试使用隔离上下文或明确重置。
+按[工程说明](<../../README.md>)运行Mock。LocalStorage键为vue-prototype-mock-v2，清除当前站点该键并刷新恢复fixture。修改fixture不会自动替换已有浏览器存储，测试使用隔离上下文或明确重置。加载旧数据时会为已有业务菜单的角色补上"智能助手"菜单，只有"系统首页"的受限角色保持不变。
 
 ## 维护与检查
 
