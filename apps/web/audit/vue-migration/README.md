@@ -14,8 +14,9 @@
 | [unit-initial.json](<unit-initial.json>) | 迁移初期单元测试记录，历史证据 |
 | [unit-final.json](<unit-final.json>) | 最后实际保存的单测结果，当前283项；看报告执行时间 |
 | [smoke-initial.json](<smoke-initial.json>) | 初期28页冒烟记录 |
-| [smoke-final.json](<smoke-final.json>) | 最后实际保存的28页冒烟及页面/控制台错误记录 |
-| [vue-e2e-results.json](<vue-e2e-results.json>) | 13组Mock浏览器回归记录，保留历史实际时间 |
+| [smoke-final.json](<smoke-final.json>) | 最后实际保存的29个菜单页冒烟及页面/控制台错误记录（2026-11-02） |
+| [smoke-final-28pages-2026-10-25.json](<smoke-final-28pages-2026-10-25.json>) | 改造前28页冒烟备份，保留历史证据 |
+| [vue-e2e-results.json](<vue-e2e-results.json>) | 14组Mock浏览器回归记录（含智能体布控三入口），保留历史实际时间 |
 | [http-e2e-results.json](<http-e2e-results.json>) | 5组HTTP契约样例回归，不是真后端 |
 | [http-analysis-results.json](<http-analysis-results.json>) | 3组HTTP研判表单样例回归 |
 | [http-resources-results.json](<http-resources-results.json>) | 8组受控上传/资源/画像/地图等样例回归 |

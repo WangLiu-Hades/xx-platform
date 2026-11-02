@@ -13,8 +13,10 @@
 | [session.test.ts](<session.test.ts>) | 会话切换/失效、旧请求与跨会话状态隔离 |
 | [http-forms.test.ts](<http-forms.test.ts>) | HTTP表单字段、上下文模块来源、更新及未决能力边界 |
 | [http-resources.test.ts](<http-resources.test.ts>) | 受控上传、文件/资源、任务与响应处理边界 |
-| [vue.e2e.cjs](<vue.e2e.cjs>) | 13组Mock浏览器操作，输出audit/vue-migration/vue-e2e-results.json |
-| [vue-smoke.cjs](<vue-smoke.cjs>) | 28页冒烟，输出smoke-final.json和dashboard-smoke.png |
+| [agent.test.ts](<agent.test.ts>) | 智能体意图识别、动作目录、会话/跳转/权限、Markdown转义与本地模型SSE解析 |
+| [vue.e2e.cjs](<vue.e2e.cjs>) | 14组Mock浏览器操作，含智能体布控三入口，输出audit/vue-migration/vue-e2e-results.json |
+| [vue-smoke.cjs](<vue-smoke.cjs>) | 29个菜单页冒烟，输出smoke-final.json和dashboard-smoke.png |
+| [vue-agent.e2e.cjs](<vue-agent.e2e.cjs>) | 8组智能体主界面浏览器检查，截图与结果输出audit/smart-agent-<日期>/ |
 | [vue-flows.e2e.cjs](<vue-flows.e2e.cjs>) | 22组扩展Mock业务流程，输出audit/vue-migration/flows/ |
 | [vue-map-selection.e2e.cjs](<vue-map-selection.e2e.cjs>) | 11项合成多点框选/反向/替换/空白/单选/重置，输出map-selection-results.json |
 | [vue-http.e2e.cjs](<vue-http.e2e.cjs>) | 5组HTTP契约样例浏览器检查，输出http-e2e-results.json |
@@ -32,6 +34,15 @@ npm run test:e2e
 node tests/vue-smoke.cjs
 node tests/vue-flows.e2e.cjs
 ```
+
+智能体专项需要本地模型在线才有流式回复（未在线时走规则引擎，功能用例仍应通过）。两种模式任选其一后再执行：
+
+```powershell
+npm run llm                                # 终端1：本地模型桩，127.0.0.1:11434
+node tests/vue-agent.e2e.cjs               # 终端2（前端服务另开）
+```
+
+`vue-agent.e2e.cjs` 会检查布控三入口、新建表单、预警结果跳转、检索条件带入、会话切换和模型设置，并在 `audit/smart-agent-<日期>/` 留存截图。其余 Mock 回归脚本通过 `addInitScript` 在浏览器本地存储中关闭本地模型（`vue-agent-llm-config-v1`），避免未启动模型时探活请求产生控制台网络错误；这不会影响它们检查的业务页面。
 
 Mock脚本使用PROTOTYPE_URL，默认5180；地图专项默认5182，需先npm run build并另起`npm run preview -- --port 5182 --strictPort`，再执行`node tests/vue-map-selection.e2e.cjs`。若在其他Mock端口运行，在测试终端设置`$env:PROTOTYPE_URL='http://127.0.0.1:5182'`。FLOW_FILTER用`|`分隔流程名片段，定向结果不能充当22组完整回归。
 

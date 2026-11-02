@@ -14,6 +14,7 @@ async function main(){
   const browser=await chromium.launch({headless:true,executablePath:process.env.AUDIT_BROWSER||'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'});
   const context=await browser.newContext({viewport:{width:1600,height:1100}});
   await context.addInitScript(data=>localStorage.setItem('vue-prototype-mock-v2',JSON.stringify({version:2,db:data})),db);
+  await context.addInitScript(()=>{try{localStorage.setItem('vue-agent-llm-config-v1',JSON.stringify({enabled:false}));}catch{}});
   const page=await context.newPage(),checks=[],errors=[],consoleErrors=[];
   page.setDefaultTimeout(5000);
   page.on('pageerror',e=>errors.push(e.message));

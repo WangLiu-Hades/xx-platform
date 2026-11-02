@@ -47,3 +47,44 @@
 - 新增14个来源模块回归场景，并修正碰撞测试中旧M09期望；283项单测通过，类型检查和构建通过。
 - 交接清单、职责修订和当前进度见`docs/project-governance/`；OpenAPI业务契约未改。
 
+
+# 2026-10-23 本地开发环境与基线
+
+- 运行环境固定为 Node 24.22.1 / npm 11.19.1；按 package-lock.json 执行 `npm ci`（220 包）。
+- 新增 `.env.http`（VITE_API_MODE=http）与 `dev:http`、`build:http` 两个脚本：`npm run dev` 仍是 Mock，`npm run dev:http` 走 HTTP 且由 Vite 按 mode 加载 `.env.http`，两种模式互不影响；`dist-http/` 已排除出版本库。
+- 新增 `scripts/baseline.mjs`（`npm run baseline`）：把类型检查、单测、Mock/HTTP 双构建、28 页浏览器冒烟汇总到 `audit/vue-migration/baseline-<日期>/`，含契约指纹与首页截图，用于每周会前留带日期的现状证据。
+- 本机验证：类型检查 0 错；294 项单测通过；双构建通过；28 页 0 页面错误、0 控制台错误。HTTP 模式下登录请求已到达 `GET /api/v1/auth/csrf`，后端未启动时代理返回 502，界面提示"后端连接失败"且不回落 Mock。
+- 以上仅为前端原型与环境证据，不构成真实后端联调或 215 项业务验收。
+
+# 2026-10-24 契约桩与首链证据
+
+- 新增 `scripts/contract-stub.mjs`（`npm run stub`）：按 `contracts/api/openapi.yaml` 实现的本地契约桩，监听 `127.0.0.1:8080`、路由挂 `/api/v1`。响应结构取自契约强类型样例，`npm run stub -- --selfcheck` 用前端同一份 AJV 契约自检，当前 **21/21 通过**。
+- 桩覆盖登录链（`GET /auth/csrf` → `POST /auth/login` → 再次 `GET /auth/csrf` 轮换 → `/me` → `/client-config`）、首页聚合、场所分页、四类检索（含游标翻页）、地图要素、目标解析、上下文、轨迹、导出（202 → 任务状态机 → 文件）、任务取消/重试与文件下载；校验 `X-CSRF-Token`、`Idempotency-Key` 与 SID Cookie。
+- 桩提供场景开关 `/_stub/scenario?s=ok|forbidden|conflict|expired|server|timeout|empty|pending|cancelled|unauthorized`，以及 `/_stub/state`、`/_stub/reset`，可在不重启的情况下复现 403/409/410/500/超时/空结果/取消。
+- 新增 `scripts/first-chain-evidence.mjs`（`npm run evidence`）：驱动登录、围栏检索、地图研判、导出/任务中心在 12 个场景下截图并记录请求序列，输出 `audit/vue-migration/first-chain-<日期>/`（矩阵 `README.md` + `matrix.json`）。本次 **12/12 通过**，导出的 XLSX 已用 openpyxl 验证可打开（5 行真实数据）。
+- 修正：登录失败（`POST /auth/login` 返回 401 `AUTH_INVALID_CREDENTIALS`）此前会触发会话失效分支，把提示覆盖成"登录已过期，请重新登录"；现在登录操作的 401 按凭据错误提示，并新增 `tests/session.test.ts` 用例。单测 295 项通过。
+- 通过桩联调发现两处待修（已记入首链矩阵，未在本轮改动）：① 围栏检索列表"设备"列显示 deviceId 而非设备名（该页只加载场所字典，未加载设备字典）；② 任务中心"状态"列显示英文枚举 `SUCCESS`，未走 `labels` 映射。
+- 以上为契约桩验证，不构成真实后端联调或 215 项业务验收。
+
+# 2026-10-25 前端侧补齐（首链联调前置）
+
+- 修正围栏/车牌/MAC/人像检索列表"设备"列显示 UUID：检索后按本页出现的 deviceId 批量补齐设备字典（`listDevices` 的 `ids` 筛选，单次最多 100 个），字典补齐失败不阻断检索，列表退回显示原始 ID。
+- 修正任务中心"状态"列显示英文枚举：统一走 `labels` 映射（`SUCCESS`→成功、`RUNNING`→运行中、`CANCELLED`→已取消）；"下载任务结果"按钮改用原始状态判断，避免映射后失效。
+- 新增 401 静默续期：`client.ts` 暴露 `bindSessionRenewal`，收到 401 时先续期一次并重放原请求（幂等键复用，避免同一次重试被后端当成两次业务），续期失败才清理身份回登录页；平台侧在剩余有效期不足 5 分钟时主动续期并重新获取 CSRF。
+- 新增错误分级文案 `describeError`：数据范围不足、无操作权限、版本冲突（提示刷新）、上下文过期（提示重新查询）、能力未开放、服务不可用分别提示；页面级 410 在顶部给出"重新查询"按钮。
+- 任务取消改为异步体验：提交取消后继续轮询到 `CANCELLED`/终态，按钮显示"取消中…"，避免用户以为未生效。
+- 契约桩补 `GET /devices`（支持 `ids` 筛选）与 `GET /_stub/expire`（把会话置为过期但允许续期恢复），自检增至 **22/22**；`npm run evidence` 增至 **14 个场景，14/14 通过**，新增"401 静默续期并重放"与"410 重新查询"两格。
+- 验证：类型检查 0 错；单测 **297 项**通过（新增 2 项续期用例）；Mock/HTTP 双构建通过；28 页 Mock 冒烟 0 错误。
+- 边界同前：以上为契约桩验证，不构成真实后端联调或 215 项业务验收。
+
+# 2026-11-02 智能体主界面与本地大模型
+
+- 需求：以智能体为载体，把豆包式"用户输入 + 智能体应答"作为主界面，其他功能不变；输入"布控"返回"查看布控任务 / 新建布控 / 查看布控预警结果"并可跳转；大模型部署在本地。
+- 新增 `智能助手 → 智能对话`（29 个菜单），登录后默认落地；28 个原业务页、菜单层级、筛选、表格、表单、地图与任务入口未改。其他页面右下角增加"智能助手"悬浮入口。
+- 新增 `src/stores/agent.ts`、`src/utils/agentNlu.ts`（15 类平台能力与动作目录）、`src/api/llm.ts`（OpenAI 兼容本地模型客户端，SSE 流式）、`src/utils/agentMarkdown.ts` 和 `src/components/agent/` 六个对话组件；智能体先识别能力与条件，再让本地模型组织语言，模型离线/超时/空输出时回退规则应答，跳转不受影响。
+- "布控"三入口：查看布控任务 → 综合布控；新建布控 → 综合布控 + 新增表单；查看布控预警结果 → 告警结果。动作执行前用 `platform.allowed` 校验菜单权限，提交仍复用原表单。
+- 本地模型默认 `http://127.0.0.1:11434/v1` + `qwen2.5:7b-instruct`，可在页面「模型设置」修改并测试；新增 `npm run llm` 本地模型桩（OpenAI 兼容流式）与 `npm run llm:selfcheck`（6/6）；部署与选型见 `docs/smart-agent/本地大模型部署与接入.md`，逐文件修改见 `docs/smart-agent/修改日志.md`。
+- 提示词只发送能力目录、用户输入的条件和聚合数量，不发送采集明细、人员信息、身份证/手机号；会话与模型配置只存浏览器 localStorage（`vue-agent-conversations-v1`、`vue-agent-llm-config-v1`）。
+- 兼容处理：旧 localStorage 为有业务菜单的角色补"智能助手"（仅系统首页的受限角色不变）；契约桩 `MENU_LABELS` 增加"智能对话"，并补只读 `GET /watch-rules`、`GET /alerts`（自检 24/24），使 HTTP 模式下智能体的"查看布控任务/查看布控预警结果"可联调；回归脚本默认在浏览器关闭本地模型，避免未启动模型的探活网络错误；Mock 下相对时间以演示数据最新时间为基准。
+- 验证：类型检查 0 错；单测 **312 项**通过（新增 `tests/agent.test.ts` 15 项）；Mock 构建通过；29 页冒烟 0 错误；`vue.e2e` **14/14**、`vue-agent.e2e` **8/8** 通过；截图与结果在 `audit/smart-agent-2026-11-02/`。
+- 边界：对话编排仍在前端、会话不跨设备、真实模型效果与并发未验收；真实后端 `/me` 菜单需补"智能对话"，否则 HTTP 模式回落到系统首页。以上不构成真实后端联调或生产验收。

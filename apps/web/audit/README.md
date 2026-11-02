@@ -10,6 +10,7 @@
 | [requirements.md](<requirements.md>) | 上述需求追踪的阅读版 |
 | [manifest.json](<manifest.json>) | 原PDF哈希、页数、图像占位信息及旧验证摘要 |
 | [vue-migration/](<vue-migration/README.md>) | Vue需求基线、生成记录、单测/浏览器/HTTP样例和历史最终汇总 |
+| [smart-agent-2026-11-02/](<smart-agent-2026-11-02/results.json>) | 智能体主界面浏览器回归结果；同目录5+1张截图覆盖欢迎页、布控三入口、新建表单、预警结果、检索带入和模型设置 |
 
 ## 怎么使用
 

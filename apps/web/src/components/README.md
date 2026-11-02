@@ -19,6 +19,18 @@
 | [RemoteProfiles.vue](<RemoteProfiles.vue>) | HTTP档案、关联记录、人像与轨迹 |
 | [RemoteReportPreview.vue](<RemoteReportPreview.vue>) | 固定历史报表资源的详情、预览及图表 |
 | [RemoteTaskDetails.vue](<RemoteTaskDetails.vue>) | 任务状态、行错误、导入/集合结果、取消/重试 |
+| [agent/](<agent/README.md>) | 智能体对话组件：欢迎页、会话列表、消息气泡、操作卡片、输入区和本地模型设置 |
+
+## 智能体组件
+
+| 文件 | 功能 |
+| --- | --- |
+| [AgentWelcome.vue](<agent/AgentWelcome.vue>) | 欢迎页：开场白、四类快捷入口、能力示例、当前应答通道 |
+| [AgentConversationList.vue](<agent/AgentConversationList.vue>) | 本机会话列表：新建、搜索、按日期分组、删除 |
+| [AgentMessageItem.vue](<agent/AgentMessageItem.vue>) | 用户/智能体气泡、思考过程、Markdown正文、来源标签、复制/重生成 |
+| [AgentActionCard.vue](<agent/AgentActionCard.vue>) | 把动作目录渲染为可点击卡片，主操作（新建）高亮 |
+| [AgentComposer.vue](<agent/AgentComposer.vue>) | 多行输入、Enter发送/Shift+Enter换行、停止生成、模型状态入口 |
+| [AgentModelDialog.vue](<agent/AgentModelDialog.vue>) | 本地模型地址/模型/温度/超时、连接测试与部署提示 |
 
 ## 怎么使用
 

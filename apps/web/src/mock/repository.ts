@@ -5,13 +5,16 @@ import {uid,reportTypes} from '../domain';
 export const storageKey='vue-prototype-mock-v2';
 const collections=['sites','devices','captures','people','libraries','datasets','watches','configs','reports','notifications','models','roles','users','logs','sms','messages'] as const;
 export let recovered=false;
+/** 存量浏览器数据迁移：已有业务菜单的角色补上"智能助手"，仅保留系统首页的受限角色不变。 */
+function migrateAgentMenu(database:Database){let changed=false;for(const role of database.roles){if(role.menus.length>1&&!role.menus.includes('智能助手')){role.menus.unshift('智能助手');changed=true;}}return changed;}
 export function validDatabase(value:unknown):value is Database{
  if(!value||typeof value!=='object')return false;const o=value as Record<string,unknown>;
  if(!o.analysis||typeof o.analysis!=='object'||!['伴随任务','碰撞任务','区域统计'].every(k=>Array.isArray((o.analysis as Record<string,unknown>)[k])))return false;
  return collections.every(k=>Array.isArray(o[k])&&(o[k] as unknown[]).every(r=>!!r&&typeof r==='object'&&typeof (r as {id?:unknown}).id==='string'))&& (o.users as Database['users']).every(u=>typeof u.account==='string'&&typeof u.role==='string'&&typeof u.enabled==='boolean')&&(o.roles as Database['roles']).every(r=>Array.isArray(r.menus)&&Array.isArray(r.sites))&&(o.people as Database['people']).every(p=>['男','女','未知'].includes(p.sex));
 }
 export function freshDatabase():Database{return structuredClone(fixture) as Database;}
-function load():Database{try{const raw=localStorage.getItem(storageKey);if(!raw)return freshDatabase();const parsed:unknown=JSON.parse(raw);if(!parsed||typeof parsed!=='object'||!('version' in parsed)||parsed.version!==2||!('db' in parsed)||!validDatabase(parsed.db))throw new Error('本地演示数据结构损坏');return parsed.db;}catch{recovered=true;return freshDatabase();}}
+function load():Database{try{const raw=localStorage.getItem(storageKey);if(!raw)return freshDatabase();const parsed:unknown=JSON.parse(raw);if(!parsed||typeof parsed!=='object'||!('version' in parsed)||parsed.version!==2||!('db' in parsed)||!validDatabase(parsed.db))throw new Error('本地演示数据结构损坏');if(migrateAgentMenu(parsed.db))persistValue(parsed.db);return parsed.db;}catch{recovered=true;return freshDatabase();}}
+function persistValue(value:Database){localStorage.setItem(storageKey,JSON.stringify({version:2,db:value}));}
 export const db=reactive<Database>(load());
 export function persist(){localStorage.setItem(storageKey,JSON.stringify({version:2,db}));}
 export function resetMock(){Object.assign(db,freshDatabase());persist();}

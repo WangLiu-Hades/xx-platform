@@ -1,16 +1,17 @@
 {
-  "timestamp": "2026-10-08T14:59:28.188Z",
+  "timestamp": "2026-11-02T10:18:55.960Z",
   "origin": "http://127.0.0.1:5180",
   "checks": [
     {
-      "name": "登录与个人首页",
+      "name": "登录与智能对话主界面",
       "passed": true,
-      "evidence": "首页可见"
+      "evidence": "智能对话主界面可见"
     },
     {
-      "name": "28 个菜单均可访问",
+      "name": "29 个菜单均可访问",
       "passed": true,
       "evidence": [
+        "智能对话",
         "系统首页",
         "围栏检索",
         "车牌检索",
@@ -42,6 +43,11 @@
       ]
     },
     {
+      "name": "智能体：布控意图三入口并可跳转",
+      "passed": true,
+      "evidence": "三入口及跳转"
+    },
+    {
       "name": "首页 12 区域与图表",
       "passed": true,
       "evidence": "三列布局"
@@ -67,7 +73,7 @@
       "name": "地图框选和复位",
       "passed": true,
       "evidence": {
-        "selected": 1
+        "selected": 4
       }
     },
     {
@@ -104,7 +110,7 @@
       }
     }
   ],
-  "passed": 13,
+  "passed": 14,
   "failed": 0,
   "pageErrors": [],
   "consoleErrors": []

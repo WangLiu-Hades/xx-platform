@@ -12,6 +12,7 @@
 | [httpForms.ts](<httpForms.ts>) | 从字典/资源/配置构造HTTP表单、初值和编辑意图 |
 | [resources.ts](<resources.ts>) | 上传策略、受控上传、导入任务/模板、证据与档案筛选 |
 | [tasks.ts](<tasks.ts>) | awaitTask轮询统一任务，处理成功/失败/取消与AbortSignal |
+| [llm.ts](<llm.ts>) | 本地大模型客户端：OpenAI兼容地址归一化、探活、SSE流式对话、超时/取消与本机内网地址校验（不经过平台API代理） |
 | [validation.ts](<validation.ts>) | AJV校验参数、正文和响应，按需加载校验器 |
 | [schema.ts](<schema.ts>) | **生成文件**：OpenAPI DTO及operation TypeScript类型 |
 | [operations.ts](<operations.ts>) | **生成文件**：operationId到方法/路径/权限/pending轻量目录 |
@@ -23,6 +24,8 @@
 从client导入request，按operationId传path/query/body，适用时传etag、signal或upload。查询在gateway或Remote组件加载，写操作经mutations/store编排。文件先读取策略/上传再提交导入任务；异步响应只表示已提交，成功后才能取结果或下载。
 
 契约改变从工程根执行`npm run generate:api`，覆盖上述四个生成文件和生成记录。手工维护client/gateway等适配文件，不手工改生成DTO，也不使用历史YAML副本。
+
+本地大模型不走OpenAPI契约：`llm.ts`直接访问用户在设置页填写的OpenAI兼容地址（默认`http://127.0.0.1:11434/v1`），只发送能力目录和聚合数量，不发送采集明细；默认拒绝公网地址仅作提示，是否允许由部署方确认。
 
 ## 维护与检查
 
