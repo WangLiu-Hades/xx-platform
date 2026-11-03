@@ -25,6 +25,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,9 +76,9 @@ class TaskQuotaIntegrationTests extends TaskIntegrationTestSupport {
         boot();
     }
 
-    @org.junit.jupiter.api.BeforeEach
+    @AfterEach
     void clearQueue() {
-        // claimNext 是全局队列：先把上一条用例的残留任务收成终态，避免系统级 I/O 槽位被占。
+        // claimNext 使用全局队列，用例结束时释放占用的 I/O 槽位，避免影响其他测试类。
         abandonAllNonTerminalTasks();
     }
 
