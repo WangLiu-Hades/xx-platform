@@ -1,0 +1,20 @@
+{
+  "isolatedDatabase": "pr3jar_1793630058687033600",
+  "port": 62831,
+  "checks": [
+    {
+      "endpoint": "health",
+      "http": 200,
+      "traceMatches": true
+    },
+    {
+      "endpoint": "csrf",
+      "http": 200,
+      "cookieIssued": true,
+      "traceMatches": true
+    }
+  ],
+  "ownedPid": 16032,
+  "passed": true,
+  "ownedProcessStopped": true
+}

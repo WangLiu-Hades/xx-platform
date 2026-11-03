@@ -32,6 +32,11 @@
   </properties>
 
   <dependencies>
+    <!-- Read the packaged, authoritative OpenAPI schemas rather than maintaining a second DTO rule set. -->
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+    </dependency>
     <!-- Web 层：REST 接口（统一响应壳、异常兜底、traceId 过滤都在这里落地） -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -48,7 +53,7 @@
       持久化：Spring JDBC + PostgreSQL 驱动。
 
       为什么用 JdbcTemplate 而不是 JPA/MyBatis：
-        - 契约的 DDL 已经写死（163 表、复合主键、部分唯一索引、触发器），
+        - 契约的 DDL 已经写死（165 表、复合主键、部分唯一索引、触发器），
           JPA 的自动 DDL / 实体映射会与它打架，而且复合主键、`text[]`、geometry
           这些类型映射成本远高于直接写 SQL；
         - 本项目的读路径大量依赖部分索引谓词（`WHERE deleted=false`）和
@@ -57,7 +62,8 @@
         - 分工方案要求"不允许跨包直接写他人的表"，显式 SQL 让越界一眼可见。
 
       注意：数据源只在 `db` profile 下启用（见 application-db.yml）。
-      默认启动不连数据库，`mvn test` / `mvn compile` 在没有数据库的机器上仍然可用。
+      应用启动和完整测试需要 PostgreSQL/PostGIS；编译本身不连接数据库。
+      完整测试通过 XX_TASK_IT_DB_URL / USER / PASSWORD 指定隔离库。
     -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -80,7 +86,7 @@
 
       为什么不会被默认构建拖累：
         FlywayAutoConfiguration 只在存在 DataSource 时生效，而数据源只在 `db` profile 下
-        配置（application-db.yml）。不带该 profile 启动时 Flyway 完全不参与。
+        配置（application-db.yml）。应用启动须提供数据库配置，迁移失败即拒绝启动。
 
       并发安全：Flyway 在 `flyway_schema_history` 上取咨询锁，多实例同时启动只有一个
       真正执行，其余等待。因此不需要额外的"谁先迁移"编排。
@@ -112,6 +118,14 @@
   </dependencies>
 
   <build>
+    <resources>
+      <resource><directory>src/main/resources</directory></resource>
+      <resource>
+        <directory>${project.basedir}/../../contracts/api</directory>
+        <targetPath>contracts/api</targetPath>
+        <includes><include>openapi.yaml</include></includes>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -124,17 +138,17 @@
     <!--
       契约生成 profile：`mvn -Pgenerate-api generate-sources`
 
-      为什么单独放 profile，而不是放进默认 build：
-      插件本身需要联网下载（本机与 CI 的离线环境跑默认构建时会直接失败，
-      并连带影响本来能编译的代码）。放在 profile 里之后：
-        - 默认 `mvn compile` / `mvn package` 完全离线可用；
-        - 需要生成或更新契约产物时显式加 -Pgenerate-api，并确保能访问 Maven 仓库。
+      领域控制器直接使用生成接口和 DTO，因此 generate-api 默认激活。
+      CI/本地验收仍显式使用 -Pgenerate-api，避免其他 profile 影响默认激活。
+      首次构建需取得生成器及依赖；缓存齐全后可使用 -o，不能承诺首次离线可用。
+      编译不连接数据库；完整 verify 必须提供隔离 PostgreSQL/PostGIS 测试库。
 
       配置必须与契约 info.x-codegen.spring 及 contracts/api/api-conventions.md §9 一致。
       生成物进入 target/generated-sources/openapi（target 下，mvn clean 会清除，不提交）。
     -->
     <profile>
       <id>generate-api</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
       <build>
         <plugins>
           <plugin>

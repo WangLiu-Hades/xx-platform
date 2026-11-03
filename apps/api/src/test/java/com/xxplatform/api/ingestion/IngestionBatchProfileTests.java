@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = "spring.profiles.active=dev")
-class IngestionBatchProfileTests {
+class IngestionBatchProfileTests extends com.xxplatform.api.support.DataHttpTestSupport {
     @Autowired
     TestRestTemplate rest;
 

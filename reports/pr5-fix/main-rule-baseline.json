@@ -1,0 +1,937 @@
+{
+  "mainCommit": "aca438ebfb218d40350b60ff933d2251bed50500",
+  "count": 155,
+  "allMatch": true,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "mainBlob": "70752a0e628774151f400c3fc7bebc1b1385ca1a",
+      "fixedPr5Blob": "70752a0e628774151f400c3fc7bebc1b1385ca1a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/.gitattributes"
+    },
+    {
+      "path": ".github/workflows/frontend.yml",
+      "mainBlob": "d75d81a2d413d94e74d7250e51fa609cd97a35d4",
+      "fixedPr5Blob": "d75d81a2d413d94e74d7250e51fa609cd97a35d4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/.github/workflows/frontend.yml"
+    },
+    {
+      "path": "README.md",
+      "mainBlob": "d2084bf339d123f1c6c0397b5845888cb97eb806",
+      "fixedPr5Blob": "d2084bf339d123f1c6c0397b5845888cb97eb806",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/README.md"
+    },
+    {
+      "path": "contracts/README.md",
+      "mainBlob": "19ff14de1aecc9e461be30fc170f6ba8a058a95b",
+      "fixedPr5Blob": "19ff14de1aecc9e461be30fc170f6ba8a058a95b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/README.md"
+    },
+    {
+      "path": "contracts/api/FRONTEND_INTEGRATION.md",
+      "mainBlob": "95d7a585d1381c5e734e203245a66d9208fdbc38",
+      "fixedPr5Blob": "95d7a585d1381c5e734e203245a66d9208fdbc38",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/FRONTEND_INTEGRATION.md"
+    },
+    {
+      "path": "contracts/api/OPENAPI_CHANGELOG.md",
+      "mainBlob": "cb88cb3dda70d8edd106b49c8f1316fefea92cf8",
+      "fixedPr5Blob": "cb88cb3dda70d8edd106b49c8f1316fefea92cf8",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/OPENAPI_CHANGELOG.md"
+    },
+    {
+      "path": "contracts/api/OPENAPI_COVERAGE.md",
+      "mainBlob": "bf15721e2ed8ac6372ecf68777b7887f236360f3",
+      "fixedPr5Blob": "bf15721e2ed8ac6372ecf68777b7887f236360f3",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/OPENAPI_COVERAGE.md"
+    },
+    {
+      "path": "contracts/api/OPENAPI_PENDING.md",
+      "mainBlob": "28d149377ad2e09e00a528a9d8626bda57b1f0c0",
+      "fixedPr5Blob": "28d149377ad2e09e00a528a9d8626bda57b1f0c0",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/OPENAPI_PENDING.md"
+    },
+    {
+      "path": "contracts/api/README.md",
+      "mainBlob": "babb59e795fd5b5981b5f43fdf87e0c72ed13828",
+      "fixedPr5Blob": "babb59e795fd5b5981b5f43fdf87e0c72ed13828",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/README.md"
+    },
+    {
+      "path": "contracts/api/api-conventions.md",
+      "mainBlob": "fa2981593c837c61119e8e86adcc74e6c23aa986",
+      "fixedPr5Blob": "fa2981593c837c61119e8e86adcc74e6c23aa986",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-conventions.md"
+    },
+    {
+      "path": "contracts/api/api-coverage-matrix.md",
+      "mainBlob": "dc60349e1eb67d62f0adacc1178579db21959ba4",
+      "fixedPr5Blob": "dc60349e1eb67d62f0adacc1178579db21959ba4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/api-coverage-matrix.md"
+    },
+    {
+      "path": "contracts/api/error-codes.md",
+      "mainBlob": "2042822721610885503f57758eb171db7cfe14e9",
+      "fixedPr5Blob": "2042822721610885503f57758eb171db7cfe14e9",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/error-codes.md"
+    },
+    {
+      "path": "contracts/api/openapi-audit-report.md",
+      "mainBlob": "3c398c68d09943a541ac14b56955da3ba0bbb637",
+      "fixedPr5Blob": "3c398c68d09943a541ac14b56955da3ba0bbb637",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi-audit-report.md"
+    },
+    {
+      "path": "contracts/api/openapi.yaml",
+      "mainBlob": "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+      "fixedPr5Blob": "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/api/openapi.yaml"
+    },
+    {
+      "path": "contracts/database/README.md",
+      "mainBlob": "0d106e789b40b9baba388fa4a26bf361d807877c",
+      "fixedPr5Blob": "0d106e789b40b9baba388fa4a26bf361d807877c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/README.md"
+    },
+    {
+      "path": "contracts/database/api-storage-map.md",
+      "mainBlob": "4d0f4dfa542d652cbde2799fe70c8f19e6e514a4",
+      "fixedPr5Blob": "4d0f4dfa542d652cbde2799fe70c8f19e6e514a4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/api-storage-map.md"
+    },
+    {
+      "path": "contracts/database/data-dictionary.md",
+      "mainBlob": "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+      "fixedPr5Blob": "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/data-dictionary.md"
+    },
+    {
+      "path": "contracts/database/design-changelog.md",
+      "mainBlob": "734802e699e66f3c1f72a10b7fffbcdcc0ca5d8b",
+      "fixedPr5Blob": "734802e699e66f3c1f72a10b7fffbcdcc0ca5d8b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/design-changelog.md"
+    },
+    {
+      "path": "contracts/database/design-validation.md",
+      "mainBlob": "f91021734cc7157df01ba9805c68904ca6cf6e75",
+      "fixedPr5Blob": "f91021734cc7157df01ba9805c68904ca6cf6e75",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/design-validation.md"
+    },
+    {
+      "path": "contracts/database/index-design.md",
+      "mainBlob": "1b79a564153628820fd38767679633a945698d61",
+      "fixedPr5Blob": "1b79a564153628820fd38767679633a945698d61",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/index-design.md"
+    },
+    {
+      "path": "contracts/database/migration-plan.md",
+      "mainBlob": "c602c550b5792753ee7b52adeb52268c996ee81b",
+      "fixedPr5Blob": "c602c550b5792753ee7b52adeb52268c996ee81b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/migration-plan.md"
+    },
+    {
+      "path": "contracts/database/migrations/PD_20261018_approval.sql",
+      "mainBlob": "7db6c2249fa62cf96e7fb5b33893bf8b0616df4c",
+      "fixedPr5Blob": "7db6c2249fa62cf96e7fb5b33893bf8b0616df4c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/migrations/PD_20261018_approval.sql"
+    },
+    {
+      "path": "contracts/database/migrations/README.md",
+      "mainBlob": "bdc18b828994a016b95d9f6bb1a166f6c6408169",
+      "fixedPr5Blob": "bdc18b828994a016b95d9f6bb1a166f6c6408169",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/migrations/README.md"
+    },
+    {
+      "path": "contracts/database/pending-design.md",
+      "mainBlob": "b59adb61a09997b50a54eacf56c1b806d75497d0",
+      "fixedPr5Blob": "b59adb61a09997b50a54eacf56c1b806d75497d0",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/pending-design.md"
+    },
+    {
+      "path": "contracts/database/query-examples.sql",
+      "mainBlob": "666b54bc7afeb0cdbd28914e2050280c55496c3b",
+      "fixedPr5Blob": "666b54bc7afeb0cdbd28914e2050280c55496c3b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/query-examples.sql"
+    },
+    {
+      "path": "contracts/database/schema.sql",
+      "mainBlob": "2e9835fbf3f8b70137bf0883c07331db3b205b55",
+      "fixedPr5Blob": "2e9835fbf3f8b70137bf0883c07331db3b205b55",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/contracts/database/schema.sql"
+    },
+    {
+      "path": "docs/START_HERE.md",
+      "mainBlob": "f1776b1b28708ef6d911d1bd334829d6c8b66ea4",
+      "fixedPr5Blob": "f1776b1b28708ef6d911d1bd334829d6c8b66ea4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/START_HERE.md"
+    },
+    {
+      "path": "docs/project-governance/BACKEND_TWO_DEV_SPLIT.md",
+      "mainBlob": "94944a433f32bf78857b0764cfecf280b0fc7638",
+      "fixedPr5Blob": "94944a433f32bf78857b0764cfecf280b0fc7638",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/BACKEND_TWO_DEV_SPLIT.md"
+    },
+    {
+      "path": "docs/project-governance/DEPENDENCY_AUDIT.md",
+      "mainBlob": "7e022a72258f297ff45116579f575e67046a9ed5",
+      "fixedPr5Blob": "7e022a72258f297ff45116579f575e67046a9ed5",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/DEPENDENCY_AUDIT.md"
+    },
+    {
+      "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+      "mainBlob": "a9c9f1d7da765cc0deea894ae62792279eeaed10",
+      "fixedPr5Blob": "a9c9f1d7da765cc0deea894ae62792279eeaed10",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/DEVELOPMENT_PLAN.md"
+    },
+    {
+      "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+      "mainBlob": "3690dabb273082dbfec7282844a07145ecaaf174",
+      "fixedPr5Blob": "3690dabb273082dbfec7282844a07145ecaaf174",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/ENGINEERING_ASSIGNMENTS.md"
+    },
+    {
+      "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+      "mainBlob": "fdf31aabcf97fa402219b909cddd31dc4cd7200e",
+      "fixedPr5Blob": "fdf31aabcf97fa402219b909cddd31dc4cd7200e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/FRONTEND_API_HANDOFF.md"
+    },
+    {
+      "path": "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+      "mainBlob": "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+      "fixedPr5Blob": "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/INTERNAL_TASK_PROTOCOL.md"
+    },
+    {
+      "path": "docs/project-governance/METRIC_ALGORITHM_RULES.md",
+      "mainBlob": "61fa7fa65029fa5f2c8b1dfe19f37c7126fcc4bb",
+      "fixedPr5Blob": "61fa7fa65029fa5f2c8b1dfe19f37c7126fcc4bb",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/METRIC_ALGORITHM_RULES.md"
+    },
+    {
+      "path": "docs/project-governance/MODIFICATIONS.md",
+      "mainBlob": "b10a45cda80556d5c8492faa84225e03a62c2ab4",
+      "fixedPr5Blob": "b10a45cda80556d5c8492faa84225e03a62c2ab4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/MODIFICATIONS.md"
+    },
+    {
+      "path": "docs/project-governance/PENDING_REGISTER.md",
+      "mainBlob": "62ba7ebd902fc41ef0aabb225239485b7562f658",
+      "fixedPr5Blob": "62ba7ebd902fc41ef0aabb225239485b7562f658",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/PENDING_REGISTER.md"
+    },
+    {
+      "path": "docs/project-governance/PROJECT_AUDIT.md",
+      "mainBlob": "a171e39090fe390888be620d8c3f7c45e9ec6d9a",
+      "fixedPr5Blob": "a171e39090fe390888be620d8c3f7c45e9ec6d9a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/PROJECT_AUDIT.md"
+    },
+    {
+      "path": "docs/project-governance/README.md",
+      "mainBlob": "97d0828e4a7db6c313d288270ed903a46147c649",
+      "fixedPr5Blob": "97d0828e4a7db6c313d288270ed903a46147c649",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/README.md"
+    },
+    {
+      "path": "docs/project-governance/README_REVIEW.md",
+      "mainBlob": "ad26a8a22743ac117078b8dc910ced19bc1c43ad",
+      "fixedPr5Blob": "ad26a8a22743ac117078b8dc910ced19bc1c43ad",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/README_REVIEW.md"
+    },
+    {
+      "path": "docs/project-governance/RETENTION_POLICY.md",
+      "mainBlob": "112576e648d22f52e8097e6f6ed6d90c309cd5ce",
+      "fixedPr5Blob": "112576e648d22f52e8097e6f6ed6d90c309cd5ce",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/RETENTION_POLICY.md"
+    },
+    {
+      "path": "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+      "mainBlob": "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+      "fixedPr5Blob": "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md"
+    },
+    {
+      "path": "docs/project-governance/audit/README.md",
+      "mainBlob": "cdd58ac81d620b2345a405e1d9b6a8e8113f7d0e",
+      "fixedPr5Blob": "cdd58ac81d620b2345a405e1d9b6a8e8113f7d0e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/README.md"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.csv",
+      "mainBlob": "5b8d6796754d62baf5c3a78c0c09d53133135897",
+      "fixedPr5Blob": "5b8d6796754d62baf5c3a78c0c09d53133135897",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/api-inventory.csv"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.json",
+      "mainBlob": "b8e700ab82bade42948f36907f2026b9ca7b64b5",
+      "fixedPr5Blob": "b8e700ab82bade42948f36907f2026b9ca7b64b5",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/api-inventory.json"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-final.pdf",
+      "mainBlob": "483d8bda28fd951d44f8c31a33dc405fecafcf66",
+      "fixedPr5Blob": "483d8bda28fd951d44f8c31a33dc405fecafcf66",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-review-final.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v2.pdf",
+      "mainBlob": "fd451dde95310f24f841ad37ee15b3e4c62efd9b",
+      "fixedPr5Blob": "fd451dde95310f24f841ad37ee15b3e4c62efd9b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-review-v2.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v3.pdf",
+      "mainBlob": "4dee5034190372f278370300d4afee77e3d5183a",
+      "fixedPr5Blob": "4dee5034190372f278370300d4afee77e3d5183a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-review-v3.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v4.pdf",
+      "mainBlob": "bc999db3908d4247cc4f81de80adda8199bf82b7",
+      "fixedPr5Blob": "bc999db3908d4247cc4f81de80adda8199bf82b7",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-review-v4.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review.pdf",
+      "mainBlob": "eea24afbcabfb7e08fe3ce663b379a827738c2ba",
+      "fixedPr5Blob": "eea24afbcabfb7e08fe3ce663b379a827738c2ba",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-review.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-reviewed.pdf",
+      "mainBlob": "d2f86083129dd3bc7382c346347599847accdd36",
+      "fixedPr5Blob": "d2f86083129dd3bc7382c346347599847accdd36",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/assignment-reviewed.pdf"
+    },
+    {
+      "path": "docs/project-governance/audit/checks.json",
+      "mainBlob": "b7a7b39440dcfa7992bf375d0a0fd2fbb64fd46e",
+      "fixedPr5Blob": "b7a7b39440dcfa7992bf375d0a0fd2fbb64fd46e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/checks.json"
+    },
+    {
+      "path": "docs/project-governance/audit/contract-only-operations.md",
+      "mainBlob": "1cb4685e46bc38b074e34d0e036096450280a429",
+      "fixedPr5Blob": "1cb4685e46bc38b074e34d0e036096450280a429",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/contract-only-operations.md"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current-run.json",
+      "mainBlob": "5b23376bd858308e6d0c870c2d0ea5f02c45d4eb",
+      "fixedPr5Blob": "5b23376bd858308e6d0c870c2d0ea5f02c45d4eb",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/dependency-current-run.json"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.json",
+      "mainBlob": "ffb27c4dbb487a703ac9fdac3412017813128eeb",
+      "fixedPr5Blob": "ffb27c4dbb487a703ac9fdac3412017813128eeb",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/dependency-current.json"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.stderr.txt",
+      "mainBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "fixedPr5Blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/dependency-current.stderr.txt"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-pre-authorization.json",
+      "mainBlob": "a24ced9fb3e7f7dc46efefa01ccf860d5be7c05f",
+      "fixedPr5Blob": "a24ced9fb3e7f7dc46efefa01ccf860d5be7c05f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/dependency-pre-authorization.json"
+    },
+    {
+      "path": "docs/project-governance/audit/output-manifest.json",
+      "mainBlob": "8fc3fd4a468d6e76f66cd88c75d2062c947d69ce",
+      "fixedPr5Blob": "8fc3fd4a468d6e76f66cd88c75d2062c947d69ce",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/output-manifest.json"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-catalog.json",
+      "mainBlob": "63f587d0a2780c700f816e50bb1cdfef31fb0610",
+      "fixedPr5Blob": "63f587d0a2780c700f816e50bb1cdfef31fb0610",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/readme-catalog.json"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-checks.json",
+      "mainBlob": "443a0974c9d3b7887b23b31fba6bffcfb928d2bf",
+      "fixedPr5Blob": "443a0974c9d3b7887b23b31fba6bffcfb928d2bf",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/readme-checks.json"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-source-baseline.json",
+      "mainBlob": "b8460d23ad30dbb9662b756734573386c99076f3",
+      "fixedPr5Blob": "b8460d23ad30dbb9662b756734573386c99076f3",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/readme-source-baseline.json"
+    },
+    {
+      "path": "docs/project-governance/audit/unit-current.json",
+      "mainBlob": "0e47b647f4487cbc64f416462434e8ac522285a0",
+      "fixedPr5Blob": "0e47b647f4487cbc64f416462434e8ac522285a0",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/unit-current.json"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/README.md",
+      "mainBlob": "724fc03d5f118304b60c3b560b2ea96b9fd8c943",
+      "fixedPr5Blob": "724fc03d5f118304b60c3b560b2ea96b9fd8c943",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/README.md"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-1.png",
+      "mainBlob": "59ef6394c020994f48cfcc1ee8f1604016c2511c",
+      "fixedPr5Blob": "59ef6394c020994f48cfcc1ee8f1604016c2511c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-1.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-10.png",
+      "mainBlob": "67755ddc71cf847d9646c4896eb238c13282680c",
+      "fixedPr5Blob": "67755ddc71cf847d9646c4896eb238c13282680c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-10.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-11.png",
+      "mainBlob": "8417017a0f197604ab09348546b05c8343f17b08",
+      "fixedPr5Blob": "8417017a0f197604ab09348546b05c8343f17b08",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-11.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-12.png",
+      "mainBlob": "cb03811c84f036b86d2ebc551db2e9ba662340f8",
+      "fixedPr5Blob": "cb03811c84f036b86d2ebc551db2e9ba662340f8",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-12.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-13.png",
+      "mainBlob": "d0badae7983844f6473773c4666bc487a2800ca9",
+      "fixedPr5Blob": "d0badae7983844f6473773c4666bc487a2800ca9",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-13.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-14.png",
+      "mainBlob": "57e99d91a3e3bde2fe3404577942b76b7b730d18",
+      "fixedPr5Blob": "57e99d91a3e3bde2fe3404577942b76b7b730d18",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-14.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-15.png",
+      "mainBlob": "204dc140814aaee1aedf337336a9a709d2586fbc",
+      "fixedPr5Blob": "204dc140814aaee1aedf337336a9a709d2586fbc",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-15.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-16.png",
+      "mainBlob": "1fc197a0fbadd20f52684cba353e119b2aa8e191",
+      "fixedPr5Blob": "1fc197a0fbadd20f52684cba353e119b2aa8e191",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-16.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-17.png",
+      "mainBlob": "574aaf2d5f330790918414f6e04c80bb61f69e87",
+      "fixedPr5Blob": "574aaf2d5f330790918414f6e04c80bb61f69e87",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-17.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-18.png",
+      "mainBlob": "ff4eaaecd24211d6b84379b20beffca3174ad1fc",
+      "fixedPr5Blob": "ff4eaaecd24211d6b84379b20beffca3174ad1fc",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-18.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-19.png",
+      "mainBlob": "6f784342271d0cde9b8bfc2870bd5fea51124e29",
+      "fixedPr5Blob": "6f784342271d0cde9b8bfc2870bd5fea51124e29",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-19.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-2.png",
+      "mainBlob": "569bd5ea4ea2c2e27caddb28c029bbd665c6846e",
+      "fixedPr5Blob": "569bd5ea4ea2c2e27caddb28c029bbd665c6846e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-2.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-3.png",
+      "mainBlob": "4ba7c1f6eebd4a8d831645cad5b031e4a11d25d8",
+      "fixedPr5Blob": "4ba7c1f6eebd4a8d831645cad5b031e4a11d25d8",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-3.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-4.png",
+      "mainBlob": "0718b39863f7982ade750b051c75af3eb043c341",
+      "fixedPr5Blob": "0718b39863f7982ade750b051c75af3eb043c341",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-4.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-5.png",
+      "mainBlob": "10f4314b70e459fd35d13b670fb24aba3e0bb102",
+      "fixedPr5Blob": "10f4314b70e459fd35d13b670fb24aba3e0bb102",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-5.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-6.png",
+      "mainBlob": "9e6a6e7b3ee8eab467916c3cbf66106f4884fa5a",
+      "fixedPr5Blob": "9e6a6e7b3ee8eab467916c3cbf66106f4884fa5a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-6.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-7.png",
+      "mainBlob": "102173cdc39cd9fcd9568d98cf7e7bc56c64b558",
+      "fixedPr5Blob": "102173cdc39cd9fcd9568d98cf7e7bc56c64b558",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-7.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-8.png",
+      "mainBlob": "9ad6f7b8959b764a933f7d11c5b5adea92a18374",
+      "fixedPr5Blob": "9ad6f7b8959b764a933f7d11c5b5adea92a18374",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-8.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-9.png",
+      "mainBlob": "4beabfdc16623481684ee2698022ddd152583a8b",
+      "fixedPr5Blob": "4beabfdc16623481684ee2698022ddd152583a8b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-render/page-9.png"
+    },
+    {
+      "path": "docs/project-governance/audit/word-visual-review.json",
+      "mainBlob": "bc19543b7561660671d96e3dbea4ae85768bb27b",
+      "fixedPr5Blob": "bc19543b7561660671d96e3dbea4ae85768bb27b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/word-visual-review.json"
+    },
+    {
+      "path": "docs/project-governance/audit/work-packages.json",
+      "mainBlob": "c826bc357f05b51c3bfb9c4625d7bc30bac4758e",
+      "fixedPr5Blob": "c826bc357f05b51c3bfb9c4625d7bc30bac4758e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/work-packages.json"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-files.jsonl",
+      "mainBlob": "03a653315fe988fbf82338b03d3aaf3152014501",
+      "fixedPr5Blob": "03a653315fe988fbf82338b03d3aaf3152014501",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/workspace-files.jsonl"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-inventory-summary.json",
+      "mainBlob": "a1d160fca0ed2fad565b9aae9c5ed7bbfdda59d3",
+      "fixedPr5Blob": "a1d160fca0ed2fad565b9aae9c5ed7bbfdda59d3",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/audit/workspace-inventory-summary.json"
+    },
+    {
+      "path": "docs/project-governance/backend-operation-owners.csv",
+      "mainBlob": "ed961392f8e831bf08af6a5e612ea84b9f4ac57f",
+      "fixedPr5Blob": "ed961392f8e831bf08af6a5e612ea84b9f4ac57f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/backend-operation-owners.csv"
+    },
+    {
+      "path": "docs/project-governance/backend-operation-owners.json",
+      "mainBlob": "6f4bead5d9310c66811347c7b41e43847b04d46c",
+      "fixedPr5Blob": "6f4bead5d9310c66811347c7b41e43847b04d46c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/backend-operation-owners.json"
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.csv",
+      "mainBlob": "7cfecf3cde3bf9df2a598cc5d4305af22d16cb6c",
+      "fixedPr5Blob": "7cfecf3cde3bf9df2a598cc5d4305af22d16cb6c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/api-inventory.csv"
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.json",
+      "mainBlob": "4f7ccf6f6f55732d2aaad1f28dcb3db7763da47e",
+      "fixedPr5Blob": "4f7ccf6f6f55732d2aaad1f28dcb3db7763da47e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/api-inventory.json"
+    },
+    {
+      "path": "docs/project-governance/checks/build.log",
+      "mainBlob": "16716fba294673afc111f8eab936a162e4d8a5bf",
+      "fixedPr5Blob": "16716fba294673afc111f8eab936a162e4d8a5bf",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/build.log"
+    },
+    {
+      "path": "docs/project-governance/checks/contract-only-operations.md",
+      "mainBlob": "16543dd8c04b465f50e75694d57000f6e60e8115",
+      "fixedPr5Blob": "16543dd8c04b465f50e75694d57000f6e60e8115",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/contract-only-operations.md"
+    },
+    {
+      "path": "docs/project-governance/checks/contract-policy-check.json",
+      "mainBlob": "085fd09cc03ea57f587ee3fa2be46a5127cd11c1",
+      "fixedPr5Blob": "085fd09cc03ea57f587ee3fa2be46a5127cd11c1",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/contract-policy-check.json"
+    },
+    {
+      "path": "docs/project-governance/checks/delivery-manifest.json",
+      "mainBlob": "c74565ce1399e99b67cffbd7f1bf384620fc7e1a",
+      "fixedPr5Blob": "c74565ce1399e99b67cffbd7f1bf384620fc7e1a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/delivery-manifest.json"
+    },
+    {
+      "path": "docs/project-governance/checks/document-check.json",
+      "mainBlob": "a110ed7525624ef9367b0ec646a92caae1c2fbb1",
+      "fixedPr5Blob": "a110ed7525624ef9367b0ec646a92caae1c2fbb1",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/document-check.json"
+    },
+    {
+      "path": "docs/project-governance/checks/generation.log",
+      "mainBlob": "20983de012e844b8aa6b45ba8be25c45139dbc19",
+      "fixedPr5Blob": "20983de012e844b8aa6b45ba8be25c45139dbc19",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/generation.log"
+    },
+    {
+      "path": "docs/project-governance/checks/sql-check.json",
+      "mainBlob": "c8037dca1cd5930d8245c3516853c17771f8af20",
+      "fixedPr5Blob": "c8037dca1cd5930d8245c3516853c17771f8af20",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/sql-check.json"
+    },
+    {
+      "path": "docs/project-governance/checks/tests.log",
+      "mainBlob": "656ddd041ce6f9601b00f282235c9bbf6583980d",
+      "fixedPr5Blob": "656ddd041ce6f9601b00f282235c9bbf6583980d",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/tests.log"
+    },
+    {
+      "path": "docs/project-governance/checks/typecheck.log",
+      "mainBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "fixedPr5Blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/checks/typecheck.log"
+    },
+    {
+      "path": "docs/project-governance/provisional-contract-changes.json",
+      "mainBlob": "ccbcc0361637f78cd845bc9e22bde524447dcccf",
+      "fixedPr5Blob": "ccbcc0361637f78cd845bc9e22bde524447dcccf",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/provisional-contract-changes.json"
+    },
+    {
+      "path": "docs/project-governance/provisional-policy.json",
+      "mainBlob": "82f0d4c0e55f0aa25f4266298766e3623de7bc83",
+      "fixedPr5Blob": "82f0d4c0e55f0aa25f4266298766e3623de7bc83",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/provisional-policy.json"
+    },
+    {
+      "path": "docs/project-governance/scripts/README.md",
+      "mainBlob": "530c74dd49a6c2e2ed7fbaf2ae7858a448fc6008",
+      "fixedPr5Blob": "530c74dd49a6c2e2ed7fbaf2ae7858a448fc6008",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/README.md"
+    },
+    {
+      "path": "docs/project-governance/scripts/audit_dependencies.cjs",
+      "mainBlob": "37149018ae17044ea63de8e49a588766d5fdc4dc",
+      "fixedPr5Blob": "37149018ae17044ea63de8e49a588766d5fdc4dc",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/audit_dependencies.cjs"
+    },
+    {
+      "path": "docs/project-governance/scripts/build_governance.py",
+      "mainBlob": "11b1d3857b8f9343fd9ea0f9bdefecce449b7434",
+      "fixedPr5Blob": "11b1d3857b8f9343fd9ea0f9bdefecce449b7434",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/build_governance.py"
+    },
+    {
+      "path": "docs/project-governance/scripts/generate_backend_ownership.cjs",
+      "mainBlob": "2ddf8f22225c89e58e617ea529213327e0c619d4",
+      "fixedPr5Blob": "2ddf8f22225c89e58e617ea529213327e0c619d4",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/generate_backend_ownership.cjs"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_api.cjs",
+      "mainBlob": "915b31ead54f521d3eecf24956e83b51cfbb8f3d",
+      "fixedPr5Blob": "915b31ead54f521d3eecf24956e83b51cfbb8f3d",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/inspect_api.cjs"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_workspace.py",
+      "mainBlob": "b32d0d593f3e5c41bc97832bf06d04ee82ff774f",
+      "fixedPr5Blob": "b32d0d593f3e5c41bc97832bf06d04ee82ff774f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/inspect_workspace.py"
+    },
+    {
+      "path": "docs/project-governance/scripts/render_word_review.py",
+      "mainBlob": "f19cf67306a9f9502b0b3678cd51938eea26c7d0",
+      "fixedPr5Blob": "f19cf67306a9f9502b0b3678cd51938eea26c7d0",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/render_word_review.py"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_deliverables.py",
+      "mainBlob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "fixedPr5Blob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/verify_deliverables.py"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_provisional.cjs",
+      "mainBlob": "3ed21b5a89297f6b67b9317f9639d0c96d817ad9",
+      "fixedPr5Blob": "3ed21b5a89297f6b67b9317f9639d0c96d817ad9",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/verify_provisional.cjs"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_readmes.py",
+      "mainBlob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "fixedPr5Blob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/scripts/verify_readmes.py"
+    },
+    {
+      "path": "docs/project-governance/修改与检查记录.md",
+      "mainBlob": "9a6e6f90a5c7c241a55040e4076c4b86b97641ee",
+      "fixedPr5Blob": "9a6e6f90a5c7c241a55040e4076c4b86b97641ee",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E4%BF%AE%E6%94%B9%E4%B8%8E%E6%A3%80%E6%9F%A5%E8%AE%B0%E5%BD%95.md"
+    },
+    {
+      "path": "docs/project-governance/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "mainBlob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf",
+      "fixedPr5Blob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%A8%A1%E5%9D%97%E4%B8%8E%E4%BA%BA%E5%91%98%E5%88%86%E5%B7%A5%EF%BC%88%E4%BF%AE%E8%AE%A2%E7%89%88%EF%BC%89.docx"
+    },
+    {
+      "path": "docs/project-governance/暂定方案与修改记录.md",
+      "mainBlob": "ef1fed4a2f25dfd81f2f5c28f8b8987f44cca41b",
+      "fixedPr5Blob": "ef1fed4a2f25dfd81f2f5c28f8b8987f44cca41b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E6%96%B9%E6%A1%88%E4%B8%8E%E4%BF%AE%E6%94%B9%E8%AE%B0%E5%BD%95.md"
+    },
+    {
+      "path": "docs/project-governance/暂定规则明细.md",
+      "mainBlob": "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+      "fixedPr5Blob": "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/project-governance/%E6%9A%82%E5%AE%9A%E8%A7%84%E5%88%99%E6%98%8E%E7%BB%86.md"
+    },
+    {
+      "path": "docs/system-design/00_需求追踪与设计说明.md",
+      "mainBlob": "4a21a8c9c90cdc5a0094b1cb0cfb6818aa2e676c",
+      "fixedPr5Blob": "4a21a8c9c90cdc5a0094b1cb0cfb6818aa2e676c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/00_%E9%9C%80%E6%B1%82%E8%BF%BD%E8%B8%AA%E4%B8%8E%E8%AE%BE%E8%AE%A1%E8%AF%B4%E6%98%8E.md"
+    },
+    {
+      "path": "docs/system-design/01_总体系统架构设计.md",
+      "mainBlob": "a8d7554c7bb245bdcd5733f4b2a9d953250ab5a5",
+      "fixedPr5Blob": "a8d7554c7bb245bdcd5733f4b2a9d953250ab5a5",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/01_%E6%80%BB%E4%BD%93%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/02_技术栈选型与ADR.md",
+      "mainBlob": "b869d1d2fd7c6f702d9173b97ec48864a1027519",
+      "fixedPr5Blob": "b869d1d2fd7c6f702d9173b97ec48864a1027519",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/02_%E6%8A%80%E6%9C%AF%E6%A0%88%E9%80%89%E5%9E%8B%E4%B8%8EADR.md"
+    },
+    {
+      "path": "docs/system-design/03_数据库与数据架构设计.md",
+      "mainBlob": "7c645a798a1a852ae4b85da368f056e82672f431",
+      "fixedPr5Blob": "7c645a798a1a852ae4b85da368f056e82672f431",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/03_%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/04_API与接口契约设计.md",
+      "mainBlob": "b98a0c2c0c87d6598e0bafa0dfdef29d3d2abc26",
+      "fixedPr5Blob": "b98a0c2c0c87d6598e0bafa0dfdef29d3d2abc26",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/04_API%E4%B8%8E%E6%8E%A5%E5%8F%A3%E5%A5%91%E7%BA%A6%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/05_UIUX与交互设计.md",
+      "mainBlob": "b084c3ff1516c83b40c9e556004eab9c9f09fe3f",
+      "fixedPr5Blob": "b084c3ff1516c83b40c9e556004eab9c9f09fe3f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/05_UIUX%E4%B8%8E%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/06_安全架构设计.md",
+      "mainBlob": "b0361489be0cf6e18772c80a08f1284986727b90",
+      "fixedPr5Blob": "b0361489be0cf6e18772c80a08f1284986727b90",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/06_%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/07_性能与容量设计.md",
+      "mainBlob": "21b89ee88e2b6ac1bf600bb71fd9e446fb0d73d9",
+      "fixedPr5Blob": "21b89ee88e2b6ac1bf600bb71fd9e446fb0d73d9",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/07_%E6%80%A7%E8%83%BD%E4%B8%8E%E5%AE%B9%E9%87%8F%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/08_可靠性与可观测性设计.md",
+      "mainBlob": "a31be398163c10fa397b4167fdd74ef07f1b4c3e",
+      "fixedPr5Blob": "a31be398163c10fa397b4167fdd74ef07f1b4c3e",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/08_%E5%8F%AF%E9%9D%A0%E6%80%A7%E4%B8%8E%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/09_部署架构设计.md",
+      "mainBlob": "b9ee22537ca5e97be586fdae9dab42cbfb41d896",
+      "fixedPr5Blob": "b9ee22537ca5e97be586fdae9dab42cbfb41d896",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/09_%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1.md"
+    },
+    {
+      "path": "docs/system-design/10_开发联调与集成方案.md",
+      "mainBlob": "51cd0882c35691ee02d3daaa7053b3032918bfe5",
+      "fixedPr5Blob": "51cd0882c35691ee02d3daaa7053b3032918bfe5",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/10_%E5%BC%80%E5%8F%91%E8%81%94%E8%B0%83%E4%B8%8E%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88.md"
+    },
+    {
+      "path": "docs/system-design/11_架构风险与待确认事项.md",
+      "mainBlob": "ca0751f34cf3e8819b3cbda8a9f839cbad9b6877",
+      "fixedPr5Blob": "ca0751f34cf3e8819b3cbda8a9f839cbad9b6877",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/11_%E6%9E%B6%E6%9E%84%E9%A3%8E%E9%99%A9%E4%B8%8E%E5%BE%85%E7%A1%AE%E8%AE%A4%E4%BA%8B%E9%A1%B9.md"
+    },
+    {
+      "path": "docs/system-design/README.md",
+      "mainBlob": "bf9a4fc1a158a85abfb81cf7b068852fb4684a8f",
+      "fixedPr5Blob": "bf9a4fc1a158a85abfb81cf7b068852fb4684a8f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/README.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-001-architecture.md",
+      "mainBlob": "f57bf5d1110a2f7850eb2116d45f84e0ff3f5ace",
+      "fixedPr5Blob": "f57bf5d1110a2f7850eb2116d45f84e0ff3f5ace",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-001-architecture.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-002-backend.md",
+      "mainBlob": "4320da82680ecbce2c2dbac5fceee4717cb0fdc7",
+      "fixedPr5Blob": "4320da82680ecbce2c2dbac5fceee4717cb0fdc7",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-002-backend.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-003-database.md",
+      "mainBlob": "c4c8a204c3848f80d0442db26c75097d9ee4870c",
+      "fixedPr5Blob": "c4c8a204c3848f80d0442db26c75097d9ee4870c",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-003-database.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-004-gis.md",
+      "mainBlob": "57f12f0075c4346db117bedcf2d9ee9d7d7b0a52",
+      "fixedPr5Blob": "57f12f0075c4346db117bedcf2d9ee9d7d7b0a52",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-004-gis.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-005-async-task.md",
+      "mainBlob": "053c208644080eb8f2b2e339ec3de629b19a36e0",
+      "fixedPr5Blob": "053c208644080eb8f2b2e339ec3de629b19a36e0",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-005-async-task.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-006-api.md",
+      "mainBlob": "7282971192f620979d8b82e637ae088ece4fe195",
+      "fixedPr5Blob": "7282971192f620979d8b82e637ae088ece4fe195",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-006-api.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-007-authentication.md",
+      "mainBlob": "228531b6b2c3286f2bb3e9fd1bb50ad9236f6a88",
+      "fixedPr5Blob": "228531b6b2c3286f2bb3e9fd1bb50ad9236f6a88",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-007-authentication.md"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-008-deployment.md",
+      "mainBlob": "e2f7c010bae883f4a0d28a07514070f8779d9467",
+      "fixedPr5Blob": "e2f7c010bae883f4a0d28a07514070f8779d9467",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/ADR-008-deployment.md"
+    },
+    {
+      "path": "docs/system-design/adr/README.md",
+      "mainBlob": "156bb20800d462822d3e2813a0a35c1cd3976a94",
+      "fixedPr5Blob": "156bb20800d462822d3e2813a0a35c1cd3976a94",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/adr/README.md"
+    },
+    {
+      "path": "docs/system-design/diagrams/README.md",
+      "mainBlob": "d4415d47473e217f52af621428be45c6b2b08e04",
+      "fixedPr5Blob": "d4415d47473e217f52af621428be45c6b2b08e04",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/README.md"
+    },
+    {
+      "path": "docs/system-design/diagrams/analysis-task-sequence.mmd",
+      "mainBlob": "5481d6ece4f8296a077aecbc94d176a388ad6961",
+      "fixedPr5Blob": "5481d6ece4f8296a077aecbc94d176a388ad6961",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/analysis-task-sequence.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/auth-sequence.mmd",
+      "mainBlob": "be770a3d9349717c03e7cf1d8fd975a2cdf2cd31",
+      "fixedPr5Blob": "be770a3d9349717c03e7cf1d8fd975a2cdf2cd31",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/auth-sequence.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/component-architecture.mmd",
+      "mainBlob": "73bbc3f36a29ed0c43e97a850816a4d458a5651b",
+      "fixedPr5Blob": "73bbc3f36a29ed0c43e97a850816a4d458a5651b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/component-architecture.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/container-architecture.mmd",
+      "mainBlob": "9f4b2578202d605c14a5d150905665aaa2b5c03b",
+      "fixedPr5Blob": "9f4b2578202d605c14a5d150905665aaa2b5c03b",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/container-architecture.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/data-flow.mmd",
+      "mainBlob": "643374a0c88c162ea8020b4b5f7c14ce31b11f87",
+      "fixedPr5Blob": "643374a0c88c162ea8020b4b5f7c14ce31b11f87",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/data-flow.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/deployment.mmd",
+      "mainBlob": "4d51e43fccd3c7a7a77df6758169fb875e09a2d3",
+      "fixedPr5Blob": "4d51e43fccd3c7a7a77df6758169fb875e09a2d3",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/deployment.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/er-diagram.mmd",
+      "mainBlob": "3cda07ce97212ef83c5e070b2005dae6d954258a",
+      "fixedPr5Blob": "3cda07ce97212ef83c5e070b2005dae6d954258a",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/er-diagram.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/module-dependency.mmd",
+      "mainBlob": "6f15fe5504213d88a756be0155e62242c3a9b2e1",
+      "fixedPr5Blob": "6f15fe5504213d88a756be0155e62242c3a9b2e1",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/module-dependency.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/search-sequence.mmd",
+      "mainBlob": "698fddf392a5c39c8900362a493592c53927fbfb",
+      "fixedPr5Blob": "698fddf392a5c39c8900362a493592c53927fbfb",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/search-sequence.mmd"
+    },
+    {
+      "path": "docs/system-design/diagrams/system-context.mmd",
+      "mainBlob": "cde91c8ec872567891824b9e0ab828cf181ce055",
+      "fixedPr5Blob": "cde91c8ec872567891824b9e0ab828cf181ce055",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/diagrams/system-context.mmd"
+    },
+    {
+      "path": "docs/system-design/ui/README.md",
+      "mainBlob": "a38e70eadf38a7834d28e03b1363d403e675937f",
+      "fixedPr5Blob": "a38e70eadf38a7834d28e03b1363d403e675937f",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/ui/README.md"
+    },
+    {
+      "path": "docs/system-design/ui/design-system.md",
+      "mainBlob": "ad55ccd7d55b308ee4501bd8aa58a0407b3590fe",
+      "fixedPr5Blob": "ad55ccd7d55b308ee4501bd8aa58a0407b3590fe",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/ui/design-system.md"
+    },
+    {
+      "path": "docs/system-design/ui/information-architecture.md",
+      "mainBlob": "1470344e098a461f9ffb77c3eea0f2e288e90c65",
+      "fixedPr5Blob": "1470344e098a461f9ffb77c3eea0f2e288e90c65",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/ui/information-architecture.md"
+    },
+    {
+      "path": "docs/system-design/ui/wireframes/README.md",
+      "mainBlob": "11c2e8d35ad00ca4d5820ad24e749445a28f5df7",
+      "fixedPr5Blob": "11c2e8d35ad00ca4d5820ad24e749445a28f5df7",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/ui/wireframes/README.md"
+    },
+    {
+      "path": "docs/system-design/ui/wireframes/核心页面线框.md",
+      "mainBlob": "f62b16a2110de3083b4bf45e65de4b1a6c82bafe",
+      "fixedPr5Blob": "f62b16a2110de3083b4bf45e65de4b1a6c82bafe",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/ui/wireframes/%E6%A0%B8%E5%BF%83%E9%A1%B5%E9%9D%A2%E7%BA%BF%E6%A1%86.md"
+    },
+    {
+      "path": "docs/system-design/系统设计说明书.md",
+      "mainBlob": "dda922ea0633a63ed5d581fb638d5383a8c87756",
+      "fixedPr5Blob": "dda922ea0633a63ed5d581fb638d5383a8c87756",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/system-design/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E8%AF%B4%E6%98%8E%E4%B9%A6.md"
+    },
+    {
+      "path": "多维数据分析平台开发模块与人员分工.docx",
+      "mainBlob": "971b0f6a0323a5d4eae8ce4922b9649fe6b8c851",
+      "fixedPr5Blob": "971b0f6a0323a5d4eae8ce4922b9649fe6b8c851",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/%E5%A4%9A%E7%BB%B4%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91%E6%A8%A1%E5%9D%97%E4%B8%8E%E4%BA%BA%E5%91%98%E5%88%86%E5%B7%A5.docx"
+    },
+    {
+      "path": "平台功能设计（原始）.pdf",
+      "mainBlob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31",
+      "fixedPr5Blob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31",
+      "url": "https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/%E5%B9%B3%E5%8F%B0%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1%EF%BC%88%E5%8E%9F%E5%A7%8B%EF%BC%89.pdf"
+    }
+  ]
+}

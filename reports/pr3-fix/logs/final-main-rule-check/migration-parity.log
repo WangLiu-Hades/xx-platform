@@ -1,0 +1,16 @@
+[1/4] checking server 127.0.0.1:55507
+      created parity_7148_1102212322_mig
+      created parity_7148_1102212322_ref
+[2/4] applying 6 migration(s) to parity_7148_1102212322_mig
+      - V1__baseline_design_2.sql
+      - V2__seed_deployment_client_config.sql
+      - V3__approval_aggregate_and_policy_v1.sql
+      - V4__policy_parameters_20261019.sql
+      - V5__backfill_file_asset_retention.sql
+      - V6__upload_policy_alignment.sql
+[3/4] applying contracts/database/schema.sql to parity_7148_1102212322_ref
+[4/4] comparing structure fingerprints
+
+PASS  structure is identical: 3033 fingerprints match (165 tables)
+cleaned up parity_7148_1102212322_mig, parity_7148_1102212322_ref (only databases this run created)
+Work directory kept at C:\Users\Administrator\Documents\pr3-rule-fix-20261102\apps\api\target\pg-parity\7148_1102212322

@@ -54,7 +54,7 @@ class PlateQueryServiceTests {
     private MockMvc mvc(PlateQueryService service) {
         return MockMvcBuilders.standaloneSetup(new CaptureController(service, mapper), new MapController(service, mapper))
                 .setControllerAdvice(new DataApiExceptionHandler(), new ApiExceptionHandler())
-                .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper)).addFilters(new RequestIdFilter()).build();
+                .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper)).addFilters(new RequestIdFilter(false)).build();
     }
     private MockMvc mvc() { return mvc(new PlateQueryService(access, gateway)); }
     private org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder request(String body) {

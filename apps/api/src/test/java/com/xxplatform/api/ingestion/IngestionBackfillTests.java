@@ -53,7 +53,7 @@ class IngestionBackfillTests {
                 new InMemoryIngestionBatchQuery(InMemoryIngestionBatchQuery.demoRows()));
         return MockMvcBuilders.standaloneSetup(new IngestionController(reads, mapper,
                 IngestionBatchSubmissionService.unavailable(), IngestionBatchReplayService.unavailable(), service))
-                .setControllerAdvice(new ApiExceptionHandler()).addFilters(new RequestIdFilter())
+                .setControllerAdvice(new ApiExceptionHandler()).addFilters(new RequestIdFilter(false))
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper)).build();
     }
     private MockMvc mvc() { return mvc(new IngestionBackfillService(access, gateway)); }

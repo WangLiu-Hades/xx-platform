@@ -103,6 +103,7 @@ public class IngestionController implements IngestionApi {
 
     @Override
     public ResponseEntity<GetIngestionBatchResponse> getIngestionBatch(UUID batchId) {
+        ApiInputValidator.currentPathUuid("batchId", batchId);
         var envelope = ApiResponses.success(
                 service.get(batchId), RequestIdFilter.currentTraceIdOrFallback());
         return ResponseEntity.ok(mapper.convertValue(envelope, GetIngestionBatchResponse.class));
@@ -111,6 +112,7 @@ public class IngestionController implements IngestionApi {
     @Override
     public ResponseEntity<ListIngestionErrorsResponse> listIngestionErrors(
             UUID batchId, String cursor, Integer pageSize) {
+        ApiInputValidator.currentPathUuid("batchId", batchId);
         var envelope = ApiResponses.success(
                 service.errors(batchId, cursor, pageSize),
                 RequestIdFilter.currentTraceIdOrFallback());

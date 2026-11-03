@@ -140,8 +140,8 @@ public final class IngestionDomainGateway implements
         if (file == null || !id.equals(file.id())) {
             throw problem(ErrorCode.DATA_NOT_FOUND, "sourceFileId", "File not found");
         }
-        if (!file.retained() || (file.expiresAt() != null
-                && !file.expiresAt().isAfter(catalog.now()))) {
+        if (!file.retained() || file.expiresAt() == null
+                || !file.expiresAt().isAfter(catalog.now())) {
             throw problem(ErrorCode.FILE_EXPIRED, "sourceFileId", "Input file has expired");
         }
         if (!"ACTIVE".equals(file.status()) || !"RAW_INGESTION".equals(file.category())

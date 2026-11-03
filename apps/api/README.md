@@ -1,259 +1,73 @@
-> 当前基线：PD-2026-10-19.v1；后端个人模块按[当前分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)。前端DEV-03、数据DEV-04、测试DEV-05。
+# xx-platform 后端
 
-# xx-platform 后端服务（`apps/api`）
+本轮把 #5 的领域代码与已修复 #3 `7e5f131704c784fc61657d8c2f5999bc83e44d44` 集成。规则唯一基线为远程 main `aca438ebfb218d40350b60ff933d2251bed50500` 的原件，不以本页或分支报告替代开发规则。
 
-多维数据分析平台的**正式 HTTP API**。前端（Vue 原型）已经按契约写好，这里要把 198 个操作真正实现出来。
+规则入口：[主分支开发入口](https://github.com/WangLiu-Hades/xx-platform/blob/aca438ebfb218d40350b60ff933d2251bed50500/docs/START_HERE.md)、[OpenAPI](../../contracts/api/openapi.yaml)、[API约定](../../contracts/api/api-conventions.md)、[双人分工](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)、[内部任务协议](../../docs/project-governance/INTERNAL_TASK_PROTOCOL.md)、[审批协议](../../docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md)、[数据库定义与字典](../../contracts/database/README.md)。本轮不改写这些规则原件。
 
-- 契约唯一来源：[openapi.yaml](../../contracts/api/openapi.yaml)（OpenAPI 3.0.3，版本 `1.0.0-dev.4-provisional`，198 操作 / 623 Schema，Base URL `/api/v1`）
-- 接口约定：[api-conventions.md](../../contracts/api/api-conventions.md) ｜ 错误码：[error-codes.md](../../contracts/api/error-codes.md)
-- 前端对接：[FRONTEND_INTEGRATION.md](../../contracts/api/FRONTEND_INTEGRATION.md)
-- 契约速读（新人先看这个）：[API速读指南.md](../../docs/API速读指南.md)
-- **两人分工与边界**：[BACKEND_TWO_DEV_SPLIT.md](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)
+## 构建与完整测试
 
-> 当前状态：**只有骨架，没有任何业务接口**。18 个源文件，其中 5 个是分层说明（`package-info.java`）。
-> 骨架已完成并经过实跑验证的部分见 §4，未做的见 §5。
-
----
-
-## 1. 五分钟跑起来
-
-环境要求：**JDK 17** + Maven（本机实测：Java 17.0.12 + Maven 3.9.16，装在 `C:\Tools\apache-maven-3.9.16`）。
-
-**构建入口**：
-
-```powershell
-# 入口 A：用本机 Maven（本机已装，最省事）
-mvn -B compile
-
-# 入口 B：用 轻量Maven启动脚本（复用已有安装或缓存，不自动下载）
-.\mvnw.cmd -B compile        # cmd/PowerShell
-sh mvnw -B compile            # Git Bash / Linux / macOS
-```
-
-Wrapper 的行为：**优先复用本机已装的 Maven**；本机没装时，按 `.mvn/wrapper/maven-wrapper.properties` 里的 `distributionUrl` 指引使用缓存发行版。说明：本目录的 `mvnw`/`mvnw.cmd` 是**轻量等价实现**（官方 `mvn wrapper:wrapper` 会额外生成一个二进制 `maven-wrapper.jar`，当前离线环境不便引入，详见 properties 文件里的注释）。需要换成官方 wrapper 时执行 `mvn -N wrapper:wrapper -Dmaven=3.9.16` 即可，properties 文件可继续沿用。
-
-完整跑起来：
+使用 Java17、Maven3.9.x。生成器固定为主分支约定的 Spring Generator7.25.0，生成目录在 `target/generated-sources/openapi`，不提交生成文件。`generate-api` 默认激活；验收仍显式指定，避免其他Maven profile影响默认激活。
 
 ```powershell
 cd apps/api
-
-# 1) 编译（首次需要解析依赖；仅缓存完整时可加-o）
-mvn -B compile
-
-# 2) 带自检端点启动（dev profile 才会注册 /smoke）
-mvn -B spring-boot:run "-Dspring-boot.run.profiles=dev"
-
-# 3) 另开一个终端验证
-curl.exe http://127.0.0.1:8080/api/v1/smoke
+mvn -B -Pgenerate-api compile
 ```
 
-端口 **8080**、上下文路径 **`/api/v1`**（在 `application.yml` 里配死），与前端 Vite 开发代理的默认目标一致。
+编译不连接数据库。首次构建需要取得生成器及依赖；缓存齐全后才可加 `-o`，不承诺首次离线可用。
 
-一键自检脚本（编译 + 提示下一步）：
+完整测试包括真实数据库、真实HTTP登录、权限、CSRF、任务、审批和文件检查，必须指定**专用、可丢弃的 PostgreSQL/PostGIS 测试库**。测试会写入合成数据，并清理测试队列等表，不能指向开发共享库或生产库。
 
 ```powershell
-# 用 powershell 或 pwsh 都可以；pwsh 不在 PATH 时用前者
-powershell -NoProfile -ExecutionPolicy Bypass -File apps/api/scripts/dev-check.ps1
+$env:XX_TASK_IT_DB_URL='jdbc:postgresql://127.0.0.1:55433/pr5_it'
+$env:XX_TASK_IT_DB_USER='你的隔离测试账号'
+$env:XX_TASK_IT_DB_PASSWORD='该测试账号的口令'
+mvn -B -Pgenerate-api clean verify
 ```
 
-### 前端联调怎么接
+`scripts/dev-check.ps1` 使用同一完整入口，未配置测试库时会先报错。CI使用一次性PostgreSQL/PostGIS服务并提供上述环境变量，保留Surefire原始结果；镜像来源为[PostGIS维护仓库](https://github.com/postgis/docker-postgis)。仓库内CI口令只用于这一个临时测试容器，不是部署凭据。
 
-前端跑在 5180，通过 Vite 代理把 `/api/v1/**` 转发到 `http://127.0.0.1:8080`：
+生成、编译成功不能代替完整测试；只跑领域单测也不能代替 #3 与 #5 的组合回归。当前验证结果和本机Windows编译限制的实际处理见[本轮检查报告](../../reports/pr5-fix/verification.md)。
+
+## 启动与联调
+
+先按 `scripts/db-provision.ps1` 及数据库说明建立开发库和账号，由迁移账号应用原始迁移。应用启动使用运行账号，保持原始迁移校验。真实连接口令只从环境注入，不写入仓库。
 
 ```powershell
-cd apps/web
-# 复制 .env.example 为 .env.local，设置 VITE_API_MODE=http、VITE_API_BASE_URL=/api/v1
-$env:API_PROXY_TARGET='http://127.0.0.1:8080'
-npm run dev -- --port 5180 --strictPort
+$env:SPRING_DATASOURCE_URL='jdbc:postgresql://127.0.0.1:5432/xxplatform_dev'
+$env:SPRING_DATASOURCE_USERNAME='xxplatform_app'
+$env:SPRING_DATASOURCE_PASSWORD='该开发运行账号的口令'
+mvn -B -Pgenerate-api spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 ```
 
-代理**保留路径**，后端必须自己带 `/api/v1` 前缀（已配好）。注意：`API_PROXY_TARGET` 必须作为环境变量传入，只写进 `.env.local` 当前配置读不到。
+接口前缀 `/api/v1`。用 `/health` 和 `/ready` 检查；旧 `/smoke` 控制器已删除，不恢复演示端点。就绪检查依赖真实配置和依赖状态，不能把health成功当作所有业务已就绪。
 
----
+前端使用现有Vite同源代理转发 `/api/v1`，沿用SID Cookie、绑定CSRF、可信Origin和固定权限码。生产部署按主分支要求使用HTTPS及Secure Cookie；本轮测试中的HTTP回环设置不改变生产配置。
 
-## 2. 目录结构与分层
+## 已实现代码及尚待接入的能力
 
-```
-apps/api/
-├── pom.xml                    Java 17 / Spring Boot 3.5.16；契约生成器在 generate-api profile 里
-├── mvnw / mvnw.cmd            Maven Wrapper 入口（轻量等价实现，见 §1）
-├── .mvn/wrapper/              固定 Maven 发行版与版本
-├── README.md                  本文件
-├── .gitignore                 target/ 与 IDE、本机配置
-├── scripts/dev-check.ps1      编译自检
-└── src/
-    ├── main/
-    │   ├── java/com/xxplatform/api/
-    │   │   ├── ApiApplication.java        启动类（@SpringBootApplication）
-    │   │   ├── api/                       ① 接口层：Controller（当前只有 dev 自检端点）
-    │   │   ├── service/                   ② 业务层：领域规则、状态机、事务边界（空）
-    │   │   ├── infra/                     ③ 基础设施：持久化/幂等/游标/文件/任务表/迁移（空）
-    │   │   ├── client/                    ④ 外部依赖：DEV-04 查询计算、通知通道、设备协议（空）
-    │   │   ├── common/                    ⑤ 跨层共享：响应壳、错误码、异常兜底、traceId
-    │   │   ├── config/                    ⑥ 配置：JSON 口径、开发期 CORS
-    │   │   └── generated/                 ⑦ 契约生成物（构建时生成，不入库，目前尚未生成）
-    │   └── resources/application.yml
-    └── test/java/com/xxplatform/api/ApiApplicationTests.java   骨架冒烟测试（2 个用例）
-```
+本分支包含 #3 的会话、当前权限/范围、Context、统一任务、审批及受控文件底座，以及 #5 的接入批次、回放、补数、质量查询、车牌查询和地图编排。路由存在不代表真实数据或外部业务已经接通。
 
-### 分层规则（写代码前请先看 `package-info.java`，每个包都写了边界）
-
-| 层 | 只做 | 不做 |
-| --- | --- | --- |
-| `api` | 参数绑定与校验、调 service、返回响应壳 | 业务规则、直接访问数据库、自己拼错误壳 |
-| `service` | 领域规则、状态机、`@Transactional` | 重写 DEV-04 的查询/算法 |
-| `infra` | 持久化、幂等键、游标签名、文件存储、迁移 | 业务判断 |
-| `client` | 调 DEV-04、通知通道、设备协议；超时/重试/错误翻译 | 把厂商协议暴露到 `/api/v1` |
-| `common` | 响应壳、错误码、异常兜底、traceId | ——（**只有平台侧能改**，见 §6） |
-
-`generated/` 里的东西**永远不要手改**：契约变了重新生成，编译器会告诉你哪个签名变了。
-
----
-
-## 3. 契约生成器（重要，别配错）
-
-契约不靠人手抄成 Java，用 OpenAPI Generator 生成 **接口 + DTO + 枚举**，保证 Java 签名和契约一字不差。
-
-```powershell
-# 需要联网下载生成器（首次），之后会缓存
-mvn -Pgenerate-api generate-sources
-```
-
-生成到 `target/generated-sources/openapi`（在 `target` 下，`mvn clean` 会清掉，**不提交进仓库**）：
-
-| 包 | 内容 |
+| 生产接入端口 | 当前状态与接入要求 |
 | --- | --- |
-| `com.xxplatform.api.generated.api` | 每个 operationId 一个 Java 接口方法 |
-| `com.xxplatform.api.generated.model` | 623 个 Schema 对应的 DTO 与枚举（`TaskStatus`、`ErrorCode`…） |
+| `DataServiceBindings.SharedAccess` | 尚未绑定。需调用 #3 的真实SID、当前操作权限及授权元组；不可采用固定身份 |
+| `IngestionDomainGateway.AtomicSubmission` | 尚未绑定。批次、公共任务、幂等回执、审批消费及审计必须同事务提交 |
+| `IngestionQueryAdapter.Client` | 尚未绑定真实M03读取服务 |
+| `IngestionQueryAdapter.WindowPolicy` | 已有窗口工具类；仍需绑定当前留存边界与主分支查询预算 |
+| `PlateQueryAdapter.Client`、`TargetLookup` | 尚未绑定真实采集/地图查询及目标LOOKUP，不编造传输地址或目标ID |
+| `CaptureExportSourceAdapter.ContextLookup`及导出执行连接 | 尚未绑定。需接现有完整Context、公共导出/发布/下载链路 |
 
-配置（在 `pom.xml` 的 `generate-api` profile 内，必须与契约 `info.x-codegen.spring` 一致）：
+未绑定时返回实际不可用原因，不制造成功回执。`client-config.features`仍是唯一能力目录，RAW_INGESTION等未就绪能力保持禁用。回放/补数还需要接入 #3 的真实资源冻结、版本重校与同事务审批消费；不能仅检查 `X-Approval-Id` 的UUID形状。
 
-```
-generatorName          = spring
-interfaceOnly          = true     ← 只生成接口，业务写在 service，契约更新不会覆盖你的代码
-useSpringBoot3         = true     ← 否则生成 javax.*，Boot 3 编译不过
-useOneOfInterfaces     = true     ← 契约有 21 个 discriminator / 22 个 oneOf（如 GeoJSON）
-nameMappings           = setTaskId=setOperationId
-```
+`dev,ingestion-mock`只允许回环演示读取，普通启动不启用；演示写入仍不可用。不能把这类测试或测试替身结果当作真实浏览器→API→数据库业务验收。
 
-**关于 `setTaskId=setOperationId`**：契约里 `Task` 的 JSON 字段是 `taskId`，Java 侧 setter 改名以避免与"执行 taskId"重名。**JSON 报文不变**。这是契约指定的唯一改名，不要自己加映射，更不要为了让编译通过去改契约字段名。
+## 必须保留的安全与文件规则
 
-**生成与编译分开**：默认构建不运行生成器，需要时加`-Pgenerate-api`。默认骨架编译不证明生成的198操作接口/DTO可以编译，业务实现前必须单独验证。
+- 审批人名单、审批快照密钥 `XX_APPROVAL_PAYLOAD_KEY` 及真实设备Profile由部署绑定；申请人/执行人不得自批，配置缺失保持动作不可用。
+- 下载许可密钥 `XX_FILE_DOWNLOAD_PERMIT_KEY` 为至少32字节随机值的Base64，多实例共享。前端先取元数据获取5分钟许可，再下载；当前权限、来源范围及文件到期都需复核。
+- ACTIVE文件缺少到期时间不能引用、访问或发布。#5接入和回放也执行相同要求，不能把空到期时间当成永久有效。
+- 新会话完整绑定UA/IP；旧的不完整绑定需重新登录。缩权后不能通过旧审批、旧幂等响应或下载许可继续访问。
+- 批次详情及错误行路径拒绝缩写UUID，隐藏/不存在对象仍按404处理。
 
----
+## 历史记录
 
-## 4. 骨架已经做完并验证过的部分
-
-| 能力 | 位置 | 说明 |
-| --- | --- | --- |
-| 启动与配置 | `ApiApplication`、`application.yml` | 8080 端口、`/api/v1` 上下文路径、UTF-8、关闭 RFC 7807（避免两套错误格式）、日志含 traceId |
-| 统一成功壳 | `common/ApiResponses#success` | `{code:"0",message:"success",data,traceId}`，**不含 details** |
-| 统一失败壳 | `common/ErrorResponse` | `{code,message,data:null,traceId,details:[]}`，**data 必须出现且为 null** |
-| 错误码全集 | `common/ErrorCode` | 契约 34 个错误码 + 每个的 HTTP 状态映射，字面量已与契约对齐 |
-| traceId 链路 | `common/RequestIdFilter` | 写 MDC、回写 `X-Trace-Id` 响应头；客户端传了就透传，保证**头与体内一致** |
-| 异常兜底 | `common/ApiExceptionHandler` | 参数校验/报文解析/缺参/类型错/未知路由/未捕获，全部转成契约错误壳 |
-| JSON 口径 | `config/WebConfiguration` | 当前仍忽略未知字段，与主分支additionalProperties:false要求存在待修差异；**故意不设全局 NON_NULL**（会吃掉错误体的 `data: null`） |
-| 开发期 CORS | `config/WebConfiguration` | 配置列出localhost Origin，但当前未限定dev且路径匹配需复核；正式同源HTTPS规则不变，见本轮检查报告 |
-| 骨架冒烟测试 | `ApiApplicationTests` | 上下文能起来；未知路由返回契约错误壳且头=体 |
-| dev 自检端点 | `api/SmokeController` | 仅 `dev` profile 注册；`GET /api/v1/smoke` 验证成功壳/traceId/UTF-8/时间格式 |
-
-### 实跑验证记录（本机）
-
-```
-$ mvn -B compile
-[INFO] Compiling 12 source files with javac [debug parameters release 17]
-[INFO] BUILD SUCCESS
-
-$ GET http://127.0.0.1:8080/api/v1/smoke          （dev profile）
-{"code":"0","message":"success","data":{"status":"UP","profile":"dev",
- "checkedAt":"2026-10-15T11:26:24.9473498+08:00","note":"骨架自检：统一成功壳 / traceId / UTF-8"},
- "traceId":"b931091e-..."}
-
-$ GET http://127.0.0.1:8080/api/v1/no-such-route
-HTTP 404   X-Trace-Id: d7039b3b-...
-{"code":"DATA_NOT_FOUND","message":"资源不存在","data":null,
- "traceId":"d7039b3b-...","details":[]}
-
-$ GET /api/v1/smoke 带 X-Trace-Id: front-end-abc-123
-响应头与 body 的 traceId 都等于 front-end-abc-123   ← 透传成立
-```
-
----
-
-## 5. 还没做（依当前分工与主分支计划）
-
-**基础设施（平台侧先做，另一侧只调用）**
-
-- [ ] 会话与 CSRF：SID Cookie（HttpOnly/Secure/SameSite=Lax/Path=/api/v1）、`GET /auth/csrf`、login 轮换 SID、写请求校验 `X-CSRF-Token` + 可信 Origin
-- [ ] 权限与数据范围：`PermissionCode`（58 项）注解 + 数据范围切面，列表/详情/导出/文件每次重校
-- [ ] 幂等：`Idempotency-Key`（16–160 字符），同键同 payload 返原响应，异 payload 409
-- [ ] 乐观锁：`If-Match` ↔ `version`，冲突 409 `RESOURCE_VERSION_CONFLICT`
-- [ ] 签名游标：绑定账号/范围版本/查询快照/排序/页大小，只校验不解析，失败 400 `DATA_CURSOR_INVALID`
-- [ ] 任务底座：`async_task` 表 + 状态机 + 领取/续租/取消/重试/发布协议（H04 交接物）
-- [ ] 文件底座：multipart 分类策略、`PROCESSING→ACTIVE`、受权下载（不返回永久裸 URL）
-- [ ] 审计埋点、`client-config.features` 能力开关（开发按暂定方案；真实资源与实现未就绪须明确不可用）
-- [ ] 数据库迁移框架（DDL 版本化，只有平台侧统一合并）
-
-**业务接口**：198 个操作全部未实现，按当前分工的模块归属和主分支60工作日计划推进。
-
-**重要提醒**：原65操作已按主分支转为provisional，甲方确认仍pending；按暂定设计开发，不再仅因未签认统一返回422。资源缺失时按契约禁用能力或返回503，保留REQUIREMENT_PENDING兼容用途。动手前读当前[OPENAPI_PENDING.md](../../contracts/api/OPENAPI_PENDING.md)。
-
----
-
-## 6. 归属与协作规则（两人并行，别改到对方的东西）
-
-模块级不重叠，完整清单见 [BACKEND_TWO_DEV_SPLIT.md](../../docs/project-governance/BACKEND_TWO_DEV_SPLIT.md)：
-
-| | DEV-01 平台与运维侧 | DEV-02 数据与研判侧 |
-| --- | --- | --- |
-| 模块 | M01、M06、M10、M12、M14、M15 | M03、M04、M05、M07、M08、M09、M11、M13 |
-| 操作数 | 118 | 80 |
-| 数据协作 | 统计、报表等消费DEV-04结果 | 查询、计算与结果消费DEV-04交付 |
-
-**三条硬规则**
-
-1. `common/`、`infra/`、`config/` 是**共享层**，由平台侧主写；另一侧只能调用，要新能力提需求，不要 fork 第二份响应壳/错误码。
-2. **`async_task` 表与任务状态机只有平台侧能动**；另一侧创建任务只调已发布接口，不自己推进状态。
-3. **数据库迁移由平台侧统一合并**；另一侧的迁移片段走 PR 提交，不各自改库。
-
-**已知的跨边界三处**（规则见当前分工“共享层与跨域边界”）：设备实体只有平台侧能改（另一侧报表只读引用）；通知投递/回执/频控的写路径只有平台侧能动（另一侧只读 `/deliveries`、`/messages`）；任务底座如上。
-
----
-
-## 7. 契约红线（写完接口自检用）
-
-1. 成功 `code` 是字符串 `"0"`，不是数字 200；失败 `data` 必须出现且为 `null`，`details` 是数组。
-2. **按 `code` 判断，不按中文 message 判断**；每个响应都要有 `X-Trace-Id`，且与体内 `traceId` 相同。
-3. 权限在后端：**单对象不可见返回 404 `DATA_NOT_FOUND`**（隐藏存在性），403 只用于"操作整体无权/范围收缩"。前端隐藏按钮不算授权。
-4. 分页只有两套：管理资源用 `page/pageSize/total`，大结果用 `cursor/nextCursor`；游标服务端签名，**不要伪造 total**。
-5. 时间是 RFC 3339 带偏移（UTC 存储/返回 Z），`TimeRange` 是 `[from,to)`；地图是 WGS84 且**经度在前**。
-6. `targetId`（目标代理 ID）≠ `fileAssetId`（文件资产）；`analysisTaskId`（分析任务）≠ `taskId`（执行任务）。
-7. 异步 202 只代表"已接受"，不代表执行成功；取消要先写 `cancelRequestedAt`，终态不可撤回（409）。
-8. 按PD暂定设计开发；生产启用仍需真实资源与审批配置。缺资源明确不可用，不得用Mock结果或阈值冒充真实能力。
-9. 文件上传要校验真实内容（不是扩展名），只有 `ACTIVE` 才可引用；下载返回二进制流、不套 JSON 壳。
-10. `interfaceOnly=true` 不生成 Controller，**同一个生成的 Api 接口只允许一个实现类**，否则 Spring 启动报 `NoUniqueBeanDefinitionException`（建议后续加个"一接口一实现"的上下文测试）。
-
----
-
-## 8. 环境注意（踩过的坑）
-
-| 现象 | 原因与做法 |
-| --- | --- |
-| `mvn package` / `mvn clean` 报无法解析插件 | 本机离线（Maven Central 不通）时，Maven **插件自身**的依赖可能没缓存。`mvn compile` 与 `mvn spring-boot:run` 不受影响；需要打包时先联网让 Maven 拉一次 |
-| `mvn -Pgenerate-api generate-sources` 失败 | openapi-generator 未缓存，必须联网一次；之后本地缓存可复用 |
-| 测试里出现 `Mockito ... Could not self-attach to current VM` | 沙箱环境禁止 Mockito 的自附加代理，**不是代码问题**；正常开发机/CI 上 `mvn test` 可正常跑 |
-| 手工用 `.m2` 拼 classpath 启动会报 snakeyaml 找不到 | 别手工拼 classpath（会带上别的项目的旧版 slf4j/devtools），用 `mvn spring-boot:run` |
-| 直接 `java -jar` 跑不了 | 还没执行过 `package`；先 `mvn package` 生成可执行 jar |
-| `mvnw`/`mvnw.cmd` 报奇怪的 `'xx' is not recognized` | `.cmd` 必须是 **CRLF + ASCII**：cmd.exe 逐行解析批处理，LF 换行或 UTF-8 中文注释都会让它错乱。改这个文件时注意别被编辑器改成 LF |
-
----
-
-## 9. 接下来各自的第一件事
-
-1. **先跑 `mvn -B compile` 和 `mvn spring-boot:run -Dspring-boot.run.profiles=dev`**，用 §4 的两条响应确认骨架在你机器上也是通的。
-2. **把 `scripts/dev-check.ps1` 跑一遍**，确认 JDK/Maven 版本对得上。
-3. 按当前分工确认自己负责的模块，再按共享底座与领域依赖顺序开工。
-4. 共享层接口在开工第一周内冻结并补进本 README 的 §4 表格；之后只在评审后变更。
-5. 需要新增分层或改包结构，先在这里更新 §2，别让下一个人对着过时文档写代码。
-
-本README保留PR的环境记录；其中编译/探针历史输出不是本轮测试结果。分支文档提及的离线环境、本机工具路径与旧脚本说明需按实际机器核验；本轮证据另存reports/pr1-integration/。
+此前阶段说明已保存在[历史README](../../reports/pr5-fix/history/api-readme-before-compatibility-fix.md)。历史副本仅统一了行尾空白，原件可按修复后 #3 的提交追溯。其中旧测试数量、仅骨架描述和无数据库全量测试等内容不再作为当前使用说明；历史记录不替代主分支规则。本轮修复及可重复检查记录见[验证报告](../../reports/pr5-fix/verification.md)，#3原修复证据仍在[原复核报告](../../reports/pr3-fix/final-main-rule-verification.md)。

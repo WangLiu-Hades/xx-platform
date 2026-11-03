@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"spring.profiles.active=dev,ingestion-mock", "server.address=127.0.0.1"})
-class IngestionBatchSubmissionProfileTests {
+class IngestionBatchSubmissionProfileTests extends com.xxplatform.api.support.DataHttpTestSupport {
     @Autowired TestRestTemplate rest;
     @Autowired ObjectMapper mapper;
 
     private HttpHeaders headers() {
-        HttpHeaders headers = new HttpHeaders();
+        HttpHeaders headers = authenticatedHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-CSRF-Token", "synthetic-token-not-a-real-session");
+        headers.set("X-CSRF-Token", csrfToken());
         headers.set("Idempotency-Key", "synthetic-idempotency-live-profile");
         return headers;
     }

@@ -39,12 +39,19 @@ class IngestionBatchDetailTests {
                         new IngestionController(service, mapper))
                 .setControllerAdvice(new ApiExceptionHandler())
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper))
-                .addFilters(new RequestIdFilter())
+                .addFilters(new RequestIdFilter(false))
                 .build();
     }
 
     private MockMvc mvc() {
         return mvc(InMemoryIngestionBatchQuery::demoScope);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"/ingestion-batches/0-0-0-0-1", "/ingestion-batches/0-0-0-0-1/errors"})
+    void shortenedUuidCannotResolveAnOtherwiseVisibleBatch(String path) throws Exception {
+        mvc().perform(get(path)).andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
     }
 
     @Test

@@ -70,7 +70,7 @@ class IngestionBatchSubmissionTests {
         return MockMvcBuilders.standaloneSetup(new IngestionController(reads, mapper, service))
                 .setControllerAdvice(new ApiExceptionHandler())
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper))
-                .addFilters(new RequestIdFilter()).build();
+                .addFilters(new RequestIdFilter(false)).build();
     }
 
     private MockMvc mvc() {

@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = {"spring.profiles.active=dev,ingestion-mock", "server.address=127.0.0.1"})
-class DataApiProfileTests {
+class DataApiProfileTests extends com.xxplatform.api.support.DataHttpTestSupport {
     @Autowired TestRestTemplate rest;
     @Autowired ObjectMapper mapper;
     private HttpHeaders headers() {
-        var h = new HttpHeaders(); h.setContentType(MediaType.APPLICATION_JSON);
-        h.set("X-CSRF-Token", "synthetic-week2-csrf-not-a-real-session");
+        var h = authenticatedHeaders(); h.setContentType(MediaType.APPLICATION_JSON);
+        h.set("X-CSRF-Token", csrfToken());
         h.set("Idempotency-Key", "synthetic-week2-profile-key"); return h;
     }
     private void error(ResponseEntity<String> response, HttpStatus status, String code) throws Exception {

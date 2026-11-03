@@ -39,7 +39,7 @@ class IngestionBatchListTests {
                         new IngestionController(service, mapper))
                 .setControllerAdvice(new ApiExceptionHandler())
                 .setMessageConverters(new MappingJackson2HttpMessageConverter(mapper))
-                .addFilters(new RequestIdFilter())
+                .addFilters(new RequestIdFilter(false))
                 .build();
     }
 

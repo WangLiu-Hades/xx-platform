@@ -2,10 +2,25 @@ import {beforeEach,it,expect,vi} from 'vitest';
 import type {AxiosResponse,InternalAxiosRequestConfig} from 'axios';
 import axios from 'axios';
 import contract from '../src/api/contract.json';
-import {http,request,invalidateRequests,isRequestCanceled,bindUnauthorized,setCsrfToken} from '../src/api/client';
+import {http,request,invalidateRequests,isRequestCanceled,bindUnauthorized,setCsrfToken,downloadFileBinary} from '../src/api/client';
 const csrf=contract.operations.getCsrfToken.responses['200'].content['application/json'].examples.success.value;
 const response=(config:InternalAxiosRequestConfig,data:unknown):AxiosResponse=>({config,data,status:200,statusText:'OK',headers:{}});
 beforeEach(()=>{invalidateRequests();bindUnauthorized(()=>{});});
+it('refreshes the file metadata permission before requesting its download',async()=>{
+ const calls:string[]=[];
+ const example=contract.operations.getFileAsset.responses['200'].content['application/json'].examples.success.value;
+ const metadata={...structuredClone(example),data:{...example.data,status:'ACTIVE',expiresAt:'2027-11-02T00:00:00Z'}};
+ http.defaults.adapter=async c=>{calls.push(String(c.url));return response(c,String(c.url).endsWith('/download')?new Blob(['synthetic'],{type:'application/octet-stream'}):metadata);};
+ await downloadFileBinary('00000000-0000-4000-8000-000000000001');
+ expect(calls).toEqual(['/files/00000000-0000-4000-8000-000000000001','/files/00000000-0000-4000-8000-000000000001/download']);
+});
+it('does not request the binary when the metadata authorization fails',async()=>{
+ const calls:string[]=[];
+ http.defaults.adapter=async c=>{calls.push(String(c.url));throw new axios.AxiosError('Forbidden','ERR_BAD_REQUEST',c,undefined,{...response(c,null),status:403});};
+ await expect(downloadFileBinary('00000000-0000-4000-8000-000000000001')).rejects.toThrow();
+ expect(calls).toHaveLength(1);
+ expect(calls[0]).not.toContain('/download');
+});
 it('discards a response from the previous identity after logout',async()=>{
  let finish:(data:AxiosResponse)=>void=()=>{},config:InternalAxiosRequestConfig|undefined;
  http.defaults.adapter=c=>{config=c;return new Promise(resolve=>{finish=resolve;});};

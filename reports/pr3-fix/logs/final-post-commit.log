@@ -1,0 +1,1087 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.xxplatform:xx-platform-api >-------------------
+[INFO] Building xx-platform-api 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ xx-platform-api ---
+[INFO] Deleting C:\Users\dev02\workspace\xx-platform\apps\api\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ xx-platform-api ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 6 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ xx-platform-api ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 105 source files with javac [debug parameters release 17] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ xx-platform-api ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ xx-platform-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 41 source files with javac [debug parameters release 17] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ xx-platform-api ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.xxplatform.api.api.CorsContractTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:40:19.766 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:40:19.772 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:40:22.100 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:40:22.124 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:40:22.124 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:40:22.218 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:40:22.220 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2366 ms
+2026-11-02 01:40:22.740 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:40:22.956 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@591be8aa
+2026-11-02 01:40:22.958 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:40:23.013 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:40:23.095 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-02 01:40:23.099 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.050s)
+2026-11-02 01:40:23.131 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-02 01:40:23.217 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-11-02 01:40:23.545 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - baseline design 2"
+2026-11-02 01:40:23.551 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:40:23.554 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: extension "postgis" already exists, skipping (SQL State: 42710 - Error Code: 0)
+2026-11-02 01:40:26.585 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - seed deployment client config"
+2026-11-02 01:40:26.603 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "3 - approval aggregate and policy v1"
+2026-11-02 01:40:26.603 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:40:26.684 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "4 - policy parameters 20261019"
+2026-11-02 01:40:26.686 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:40:26.696 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "5 - backfill file asset retention"
+2026-11-02 01:40:26.708 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "6 - upload policy alignment"
+2026-11-02 01:40:26.708 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:40:26.724 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Successfully applied 6 migrations to schema "public", now at version v6 (execution time 00:03.098s)
+2026-11-02 01:40:26.868 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:40:26.870 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:40:27.697 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54180 (http) with context path '/api/v1'
+2026-11-02 01:40:27.715 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 8.775 seconds (process running for 10.396)
+2026-11-02 01:40:27.719 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:40:28.091 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 01:40:28.091 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 01:40:28.093 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-11-02 01:40:28.314 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:40:28.396 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 01:40:28.402 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 01:40:28.405 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.791 s -- in com.xxplatform.api.api.CorsContractTests
+[INFO] Running com.xxplatform.api.api.FileControllerTests
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.api.FileControllerTests
+[INFO] Running com.xxplatform.api.api.FileHttpIntegrationTests
+2026-11-02 01:40:28.483 INFO  [no-trace] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.xxplatform.api.api.FileHttpIntegrationTests]: FileHttpIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-02 01:40:28.564 INFO  [no-trace] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.xxplatform.api.ApiApplication for test class com.xxplatform.api.api.FileHttpIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:40:28.684 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - Starting FileHttpIntegrationTests using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:40:28.685 DEBUG [no-trace] c.x.api.api.FileHttpIntegrationTests - Running with Spring Boot v3.5.16, Spring v6.2.19
+2026-11-02 01:40:28.685 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - The following 1 profile is active: "db"
+2026-11-02 01:40:29.323 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:40:29.392 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@28269c65
+2026-11-02 01:40:29.393 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:40:29.394 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:40:29.436 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.028s)
+2026-11-02 01:40:29.513 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:40:29.514 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:40:29.730 INFO  [no-trace] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-11-02 01:40:29.730 INFO  [no-trace] o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-11-02 01:40:29.731 INFO  [no-trace] o.s.t.w.s.TestDispatcherServlet - Completed initialization in 1 ms
+2026-11-02 01:40:29.764 INFO  [no-trace] c.x.api.api.FileHttpIntegrationTests - Started FileHttpIntegrationTests in 1.14 seconds (process running for 12.445)
+2026-11-02 01:40:29.765 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:40:30.470 INFO  [it-http-5bea7ca8-8d09-4a2e-80e4-82b7e1404a9b] c.x.api.service.file.FileService - �ļ��ϴ���� asset=4bc3b022-0d6a-4aa9-b418-3dc29d2a4a69 category=DATASET_IMPORT bytes=12 status=ACTIVE rows=1 detail=ok
+2026-11-02 01:40:30.598 INFO  [it-http-4a53bfaf-fc4e-4ee0-8d6e-348acadb92a6] c.x.api.service.file.FileService - �ļ��ϴ���� asset=b6b8e235-8999-4ca4-8e22-f84fc223a784 category=DATASET_IMPORT bytes=6 status=QUARANTINED rows=0 detail=CSV �� 2 ������Ϊ 1����ͷΪ 2
+2026-11-02 01:40:30.691 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=FILE_EXPIRED message=�ļ��ѹ��� traceId=unknown-trace
+2026-11-02 01:40:30.768 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=FILE_EXPIRED message=�ļ��ѹ��� traceId=unknown-trace
+2026-11-02 01:40:30.811 INFO  [it-http-9240e268-7a32-4982-bf0d-975b162d6038] c.x.api.service.file.FileService - �ļ��ϴ���� asset=b59131a5-653b-4915-906c-d9e8f0284692 category=DATASET_IMPORT bytes=18 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:40:30.899 INFO  [it-http-2d2d8097-a48a-4f99-bac4-009ff2e3c70b] c.x.api.service.file.FileService - �ļ��ϴ���� asset=27adaea1-5435-4c53-95ed-6f43834c5535 category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:40:31.010 INFO  [it-http-9e2b9c14-320c-43a8-a36d-77d957d0e687] c.x.api.service.file.FileService - �ļ��ϴ���� asset=9ab4bd29-2063-484c-af01-a7cd9869804a category=DATASET_IMPORT bytes=1188 status=ACTIVE rows=1 detail=ok
+2026-11-02 01:40:31.029 INFO  [it-http-fb6b02fd-9e9b-4f6d-8f2a-8c781b60593e] c.x.api.service.file.FileService - �ļ��ϴ���� asset=4c06c499-4938-454b-884a-685a027f2249 category=DATASET_IMPORT bytes=877 status=QUARANTINED rows=0 detail=sheet S ��Ŀ��ȱʧ��xl/worksheets/sheet1.xml
+2026-11-02 01:40:31.067 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=DATA_NOT_FOUND message=�ļ��������� traceId=unknown-trace
+2026-11-02 01:40:31.075 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=DATA_NOT_FOUND message=�ļ������� traceId=unknown-trace
+2026-11-02 01:40:31.188 DEBUG [it-http-fd9d2b8f-025f-452d-8683-9fa138a68a69] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=FILE_TOO_LARGE message=�ļ����� 10485760 �ֽ����ޣ�ʵ�� 10485761�� traceId=it-http-fd9d2b8f-025f-452d-8683-9fa138a68a69
+2026-11-02 01:40:31.200 DEBUG [it-http-46d1b05b-5071-4876-83fe-c58e663180c1] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=FILE_MEDIA_UNSUPPORTED message=�÷���ֻ���� image/jpeg/image/png���յ� image/gif traceId=it-http-46d1b05b-5071-4876-83fe-c58e663180c1
+2026-11-02 01:40:31.230 DEBUG [it-http-66f411f3-bb48-4241-b042-8df3e781b94e] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=FILE_MEDIA_UNSUPPORTED message=�÷���δ�����ϴ���DATASET_IMPORT traceId=it-http-66f411f3-bb48-4241-b042-8df3e781b94e
+2026-11-02 01:40:31.268 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=ȱ������Ȩ�� traceId=unknown-trace
+2026-11-02 01:40:31.282 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=ȱ������Ȩ�� traceId=unknown-trace
+2026-11-02 01:40:31.324 INFO  [it-http-4bd4d19e-00f0-4328-9dce-f3d0c446e9aa] c.x.api.service.file.FileService - �ļ��ϴ���� asset=88d99ad5-3303-46b7-9aa6-57a948d6bb70 category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:40:31.341 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=IDEMPOTENCY_CONFLICT message=ͬһ Idempotency-Key �����ڲ�ͬ���ϴ����� traceId=unknown-trace
+2026-11-02 01:40:31.354 INFO  [it-http-63082b8a-8d18-4634-a79b-bf0b5392358a] c.x.api.service.file.FileService - �ļ��ϴ���� asset=e37ad5c3-0023-472e-a9d3-c9428e864f6a category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:40:31.362 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=VALIDATION_ERROR message=ȱ�� Idempotency-Key ����ͷ traceId=unknown-trace
+2026-11-02 01:40:31.394 INFO  [it-http-1d0a11fd-2708-45d4-95f3-fe360d8c42c4] c.x.api.service.file.FileService - �ļ��ϴ���� asset=bf42bd46-92bf-4127-bb8b-152ab9f23e9a category=DATASET_IMPORT bytes=16 status=QUARANTINED rows=0 detail=JSON ����ʧ�ܣ�Unrecognized token 'this': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1]
+2026-11-02 01:40:31.404 DEBUG [no-trace] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=DATA_NOT_FOUND message=�ļ��������� traceId=unknown-trace
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.985 s -- in com.xxplatform.api.api.FileHttpIntegrationTests
+[INFO] Running com.xxplatform.api.ApiApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:40:31.452 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:40:31.453 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - No active profile set, falling back to 1 default profile: "default"
+2026-11-02 01:40:31.977 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:40:31.979 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:40:31.979 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:40:32.015 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:40:32.015 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 560 ms
+2026-11-02 01:40:32.069 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:40:32.071 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:40:32.193 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54186 (http) with context path '/api/v1'
+2026-11-02 01:40:32.196 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.773 seconds (process running for 14.877)
+2026-11-02 01:40:32.203 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 01:40:32.203 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 01:40:32.203 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-11-02 01:40:32.223 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:40:32.298 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.884 s -- in com.xxplatform.api.ApiApplicationTests
+[INFO] Running com.xxplatform.api.auth.AuthSessionIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:40:32.340 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:40:32.342 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:40:32.764 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:40:32.765 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:40:32.765 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:40:32.794 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:40:32.794 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 450 ms
+2026-11-02 01:40:32.838 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:40:32.901 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@40304938
+2026-11-02 01:40:32.901 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:40:32.902 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:40:32.935 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.019s)
+2026-11-02 01:40:33.010 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:40:33.010 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:40:33.023 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:40:33.023 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:40:33.117 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54191 (http) with context path '/api/v1'
+2026-11-02 01:40:33.121 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.812 seconds (process running for 15.802)
+2026-11-02 01:40:33.122 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:40:34.031 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 01:40:34.031 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 01:40:34.032 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-11-02 01:40:34.045 WARN  [51f26ebb-e0bb-498b-b518-58bffd3fcfd8] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:34.836 INFO  [522088fa-46b2-4bb1-8c50-f5be60eb3950] c.x.api.service.LoginService - ��¼�ɹ� userId=c8d7530d-ad69-4706-9fc7-96bc4236b43a loginName=it.auth.c8d7530dad clientIp=127.0.0.1 sessionId=32ad01fe-0e6b-4f85-9bbc-c34cda40d37a
+2026-11-02 01:40:34.872 INFO  [32bca08a-f665-4e6d-893e-eef67955acc1] c.x.api.service.SessionService - �Ự������ sessionId=32ad01fe-0e6b-4f85-9bbc-c34cda40d37a idleExpiresAt=2026-11-01T17:43:34.866089Z absoluteExpiresAt=2026-11-01T17:43:34.866089Z
+2026-11-02 01:40:34.929 INFO  [bcfa6ec2-9302-498e-86ce-cdf6771e6217] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=32ad01fe-0e6b-4f85-9bbc-c34cda40d37a traceId=bcfa6ec2-9302-498e-86ce-cdf6771e6217
+2026-11-02 01:40:34.949 WARN  [fca4960d-134e-41bc-b851-900d5dbac0c5] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:34.955 WARN  [f9f2927d-64af-48e7-ad84-5022797e8cc5] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:34.967 WARN  [6223ff53-4c3a-4cbc-8852-05cdfe2b2b54] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:35.643 INFO  [12a2615d-0f0a-490f-9ee7-0c9393edbc69] c.x.api.service.LoginService - ��¼�ɹ� userId=e370e8e8-229b-4ac5-a684-319336c4400d loginName=it.auth.e370e8e822 clientIp=127.0.0.1 sessionId=433fef1d-7627-4fcf-ab0b-d13cf3404a71
+2026-11-02 01:40:37.663 INFO  [3849ba3a-73aa-4ed9-bbb5-41983a801532] c.x.api.service.SessionService - ��¼�ֻ��������ɻỰ 1 �� userId=e370e8e8-229b-4ac5-a684-319336c4400d traceId=3849ba3a-73aa-4ed9-bbb5-41983a801532
+2026-11-02 01:40:37.666 INFO  [3849ba3a-73aa-4ed9-bbb5-41983a801532] c.x.api.service.PasswordService - ���ܳɹ����ֻ�ƾ�� userId=e370e8e8-229b-4ac5-a684-319336c4400d sessionId=df9bc139-76dd-40fe-a267-7147de8ee108 replayed=false
+2026-11-02 01:40:37.672 DEBUG [86cac100-fbb4-4ca2-8baf-d83ddf8b08ad] c.x.api.service.SessionAuthenticator - �Ự�ѳ��� sessionId=433fef1d-7627-4fcf-ab0b-d13cf3404a71
+2026-11-02 01:40:37.673 DEBUG [86cac100-fbb4-4ca2-8baf-d83ddf8b08ad] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự��ʧЧ�������µ�¼ traceId=86cac100-fbb4-4ca2-8baf-d83ddf8b08ad
+2026-11-02 01:40:37.691 INFO  [4b05ec12-5805-435a-947b-e63aa5b616f5] c.x.api.service.PasswordService - �����طţ��ݵ����У� userId=e370e8e8-229b-4ac5-a684-319336c4400d
+2026-11-02 01:40:37.699 INFO  [433b0df3-3929-4d58-bd1e-c44490c1b61b] c.x.api.service.PasswordService - ���ܱ��ܣ�ͬһ Idempotency-Key �����ݲ�ͬ userId=e370e8e8-229b-4ac5-a684-319336c4400d
+2026-11-02 01:40:37.703 DEBUG [433b0df3-3929-4d58-bd1e-c44490c1b61b] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=IDEMPOTENCY_CONFLICT message=Idempotency-Key �ѱ���ͬ������ʹ�� traceId=433b0df3-3929-4d58-bd1e-c44490c1b61b
+2026-11-02 01:40:37.709 DEBUG [0d1196f8-f0b0-4484-bb7d-39482995dd27] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=VALIDATION_ERROR message=ȱ�� Idempotency-Key ����ͷ traceId=0d1196f8-f0b0-4484-bb7d-39482995dd27
+2026-11-02 01:40:37.722 WARN  [28a2797b-3605-475b-825d-6bba7d757586] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:38.396 INFO  [7df58eae-0441-4156-9496-801f86c7f12d] c.x.api.service.LoginService - ��¼�ɹ� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 loginName=it.auth.d41259a176 clientIp=127.0.0.1 sessionId=ca159d23-cf81-4eca-aff8-fd2e56e7731d
+2026-11-02 01:40:38.418 INFO  [80945b3d-cab8-476d-a9a3-b98c59720f31] c.x.api.service.SessionAuthenticator - ��ʼ�������ҵ��˵㱻�� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 target=GET /api/v1/tasks
+2026-11-02 01:40:38.422 DEBUG [80945b3d-cab8-476d-a9a3-b98c59720f31] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=�״ε�¼�������޸ĳ�ʼ���� traceId=80945b3d-cab8-476d-a9a3-b98c59720f31
+2026-11-02 01:40:39.116 INFO  [9dece8af-ed92-40e6-895f-0f8ca5ccb022] c.x.api.service.PasswordService - ����ʧ�ܣ���ǰ�����ȷ userId=d41259a1-7605-4e57-84d7-99559ae7ce08
+2026-11-02 01:40:39.120 DEBUG [9dece8af-ed92-40e6-895f-0f8ca5ccb022] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_INVALID_CREDENTIALS message=��ǰ�����ȷ traceId=9dece8af-ed92-40e6-895f-0f8ca5ccb022
+2026-11-02 01:40:39.126 INFO  [eab0b0ab-3db9-44f9-a3c8-9efd7e5d8dc3] c.x.api.service.SessionAuthenticator - ��ʼ�������ҵ��˵㱻�� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 target=GET /api/v1/tasks
+2026-11-02 01:40:39.128 DEBUG [eab0b0ab-3db9-44f9-a3c8-9efd7e5d8dc3] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=�״ε�¼�������޸ĳ�ʼ���� traceId=eab0b0ab-3db9-44f9-a3c8-9efd7e5d8dc3
+2026-11-02 01:40:41.157 INFO  [60938087-41c1-4126-950a-7634bfde9b28] c.x.api.service.SessionService - ��¼�ֻ��������ɻỰ 1 �� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 traceId=60938087-41c1-4126-950a-7634bfde9b28
+2026-11-02 01:40:41.160 INFO  [60938087-41c1-4126-950a-7634bfde9b28] c.x.api.service.PasswordService - ���ܳɹ����ֻ�ƾ�� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 sessionId=7329b377-2fdc-436f-8ea7-ea0d1b42ef39 replayed=false
+2026-11-02 01:40:41.167 DEBUG [2167cf28-2b15-4045-9186-b2ad0fc46395] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/auth/logout
+2026-11-02 01:40:41.172 DEBUG [b4e85a8b-3116-4cf4-8ead-6f5cbccbc005] c.x.api.service.SessionAuthenticator - �Ự�ѳ��� sessionId=ca159d23-cf81-4eca-aff8-fd2e56e7731d
+2026-11-02 01:40:41.172 DEBUG [b4e85a8b-3116-4cf4-8ead-6f5cbccbc005] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự��ʧЧ�������µ�¼ traceId=b4e85a8b-3116-4cf4-8ead-6f5cbccbc005
+2026-11-02 01:40:41.190 DEBUG [2b3ec43b-39a7-4ba3-a52f-2439a97dafc8] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=��Ȩ�鿴����ȱ�� task:read�� traceId=2b3ec43b-39a7-4ba3-a52f-2439a97dafc8
+2026-11-02 01:40:41.196 WARN  [0afb9c86-b27a-4765-9837-c39aacbaa9c9] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:41.857 INFO  [dc1c3247-33bc-4ae1-815e-b4761cfc2f33] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 traceId=dc1c3247-33bc-4ae1-815e-b4761cfc2f33
+2026-11-02 01:40:41.859 INFO  [dc1c3247-33bc-4ae1-815e-b4761cfc2f33] c.x.api.service.LoginService - ��¼�ɹ� userId=d41259a1-7605-4e57-84d7-99559ae7ce08 loginName=it.auth.d41259a176 clientIp=127.0.0.1 sessionId=2b15a519-6a37-401f-8c52-9ca235638cd8
+2026-11-02 01:40:41.871 WARN  [8dd75ae2-92bc-46fe-9a5c-b8b947aa2ed6] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:42.527 INFO  [2e9ee76c-570b-401a-81d3-cf5a38dc819f] c.x.api.service.LoginService - ��¼ʧ�ܣ����ƥ�� loginName=it.auth.d41259a176 clientIp=127.0.0.1
+2026-11-02 01:40:42.529 DEBUG [2e9ee76c-570b-401a-81d3-cf5a38dc819f] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_INVALID_CREDENTIALS message=��¼�������벻��ȷ traceId=2e9ee76c-570b-401a-81d3-cf5a38dc819f
+2026-11-02 01:40:42.537 WARN  [6277a33c-1788-4fee-b017-328ed83b0d2b] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:43.259 INFO  [5d10de3c-7681-42dc-9a5c-9b0506390dec] c.x.api.service.LoginService - ��¼�ɹ� userId=23112906-de4f-4c12-abae-f765be9c5b9c loginName=it.auth.23112906de clientIp=127.0.0.1 sessionId=0484877d-1439-4c43-ad94-efcf04eba53d
+2026-11-02 01:40:43.273 DEBUG [22fc76d8-9e6f-4625-962c-8aa6751d7149] c.x.api.service.SessionAuthenticator - �Ự���г�ʱ sessionId=0484877d-1439-4c43-ad94-efcf04eba53d idleExpiresAt=2026-11-01T17:40:42.268829Z
+2026-11-02 01:40:43.274 DEBUG [22fc76d8-9e6f-4625-962c-8aa6751d7149] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự�ѹ��ڣ������µ�¼ traceId=22fc76d8-9e6f-4625-962c-8aa6751d7149
+2026-11-02 01:40:43.281 DEBUG [b5dd67e4-a89f-4449-a52c-af555d9ed57d] c.x.api.service.SessionAuthenticator - �Ự���г�ʱ sessionId=0484877d-1439-4c43-ad94-efcf04eba53d idleExpiresAt=2026-11-01T17:40:42.268829Z
+2026-11-02 01:40:43.281 DEBUG [b5dd67e4-a89f-4449-a52c-af555d9ed57d] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự�ѹ��ڣ������µ�¼ traceId=b5dd67e4-a89f-4449-a52c-af555d9ed57d
+2026-11-02 01:40:43.291 WARN  [a1bc9e7f-5982-45c8-b2e2-3108a21b548c] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:43.971 INFO  [6cda9ea4-88c4-4482-afb7-a8741639ddab] c.x.api.service.LoginService - ��¼�ɹ� userId=8eb87c77-9e7c-4609-b296-b93ff9c5dec8 loginName=it.auth.8eb87c779e clientIp=127.0.0.1 sessionId=8a96e091-373f-47f9-969b-5d75528d8e16
+2026-11-02 01:40:43.992 WARN  [5b2d7820-fa3d-4f33-8d23-d1361553f9d3] c.x.api.service.SessionAuthenticator - �Ự�ͻ��˰󶨲�ƥ�� sessionId=8a96e091-373f-47f9-969b-5d75528d8e16 userId=8eb87c77-9e7c-4609-b296-b93ff9c5dec8 reason=USER_AGENT_MISMATCH boundIp=127.0.0.1 currentIp=127.0.0.1
+2026-11-02 01:40:43.994 DEBUG [5b2d7820-fa3d-4f33-8d23-d1361553f9d3] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự����Ϣ�ѱ仯�������µ�¼ traceId=5b2d7820-fa3d-4f33-8d23-d1361553f9d3
+2026-11-02 01:40:44.021 WARN  [5bd68378-9408-48dc-a9d3-68947541e7c6] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:44.714 INFO  [764d33ea-cf31-4917-85d1-fbede0bc203a] c.x.api.service.LoginService - ��¼�ɹ� userId=180ddfde-b88e-4def-b36e-d609391dc78e loginName=it.auth.180ddfdeb8 clientIp=127.0.0.1 sessionId=ca801f60-12b0-4843-89f1-37e060b95f2d
+2026-11-02 01:40:47.148 DEBUG [38950b61-410e-4529-abba-617e4b5c1122] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=��Ȩ�鿴����ȱ�� task:read�� traceId=38950b61-410e-4529-abba-617e4b5c1122
+2026-11-02 01:40:50.803 WARN  [0f5caa22-29d2-46d9-ad71-ddaf810d8beb] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:50.809 WARN  [528cc6aa-fe60-463c-9aff-47cbf88fa1fc] c.x.api.service.LoginService - ��¼���ܣ���Դ������������ clientIp=8.8.8.8 loginName=it.auth.b3e8c6e219
+2026-11-02 01:40:50.812 DEBUG [528cc6aa-fe60-463c-9aff-47cbf88fa1fc] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=PERMISSION_DENIED message=��¼��Դ���������������Χ traceId=528cc6aa-fe60-463c-9aff-47cbf88fa1fc
+2026-11-02 01:40:50.818 WARN  [54708b26-a9c8-469d-9364-0aac07a6b399] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:51.498 INFO  [96de7fbc-50a3-41c9-9ac3-52a57dfa29be] c.x.api.service.LoginService - ��¼�ɹ� userId=b3e8c6e2-1926-4c2d-8d1c-6a4bfe884091 loginName=it.auth.b3e8c6e219 clientIp=10.1.2.3 sessionId=f85a9884-2edc-4d55-86d9-77ec68c0eb34
+2026-11-02 01:40:51.520 WARN  [10d0e852-1da1-46f2-827d-e282bd73a757] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:52.170 INFO  [94e476ce-8fec-4dba-8432-b6513cf1fb85] c.x.api.service.LoginService - ��¼�ɹ� userId=b4790f02-2fc7-468e-9332-d520fcb836d8 loginName=it.auth.b4790f022f clientIp=127.0.0.1 sessionId=2a456ad0-1829-49af-a035-436ba189c16b
+2026-11-02 01:40:52.181 DEBUG [251c0780-2e40-4eb6-9d62-da9cc5202ec8] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/auth/logout
+2026-11-02 01:40:52.187 INFO  [95be36cb-e37f-4c48-8904-6d17c1e7d250] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=2a456ad0-1829-49af-a035-436ba189c16b traceId=95be36cb-e37f-4c48-8904-6d17c1e7d250
+2026-11-02 01:40:52.198 WARN  [fa0f09e2-c9bf-456b-9574-eacc3eb5aacb] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:52.866 INFO  [35d3f843-d396-4406-876e-9a43e0247f80] c.x.api.service.LoginService - ��¼ʧ�ܣ����ƥ�� loginName=it.auth.f08d30f941 clientIp=127.0.0.1
+2026-11-02 01:40:52.870 DEBUG [35d3f843-d396-4406-876e-9a43e0247f80] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_INVALID_CREDENTIALS message=��¼�������벻��ȷ traceId=35d3f843-d396-4406-876e-9a43e0247f80
+2026-11-02 01:40:52.876 WARN  [b8c317c8-c8f7-4b67-b8d9-c4944a5de00a] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:53.572 INFO  [827084b0-c55a-469a-bc4d-5b3368172b9f] c.x.api.service.LoginService - ��¼�ɹ� userId=f08d30f9-41ff-404d-bdd4-49e5d67cdd82 loginName=it.auth.f08d30f941 clientIp=127.0.0.1 sessionId=483a4c2b-c814-41b2-9f50-a5495338bb49
+2026-11-02 01:40:53.584 INFO  [ccaffe26-a9bb-4ad2-90c6-fece6d74f9d0] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=483a4c2b-c814-41b2-9f50-a5495338bb49 traceId=ccaffe26-a9bb-4ad2-90c6-fece6d74f9d0
+2026-11-02 01:40:53.593 WARN  [f005880b-f3f8-420a-87e8-63c20d2918bf] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:54.248 INFO  [c5b15f6c-d6d7-4487-ae46-af536fbd7d6d] c.x.api.service.LoginService - ��¼�ɹ� userId=f08d30f9-41ff-404d-bdd4-49e5d67cdd82 loginName=it.auth.f08d30f941 clientIp=127.0.0.1 sessionId=db7f31e6-deb3-4d76-852b-b1f3745668f3
+2026-11-02 01:40:54.929 INFO  [a6d80b94-67f2-4f20-b7a7-9450c87d4d8a] c.x.api.service.PasswordService - ����ʧ�ܣ���ǰ�����ȷ userId=f08d30f9-41ff-404d-bdd4-49e5d67cdd82
+2026-11-02 01:40:54.932 DEBUG [a6d80b94-67f2-4f20-b7a7-9450c87d4d8a] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_INVALID_CREDENTIALS message=��ǰ�����ȷ traceId=a6d80b94-67f2-4f20-b7a7-9450c87d4d8a
+2026-11-02 01:40:56.962 INFO  [cfa751db-596a-4239-82c8-2737657549a0] c.x.api.service.SessionService - ��¼�ֻ��������ɻỰ 1 �� userId=f08d30f9-41ff-404d-bdd4-49e5d67cdd82 traceId=cfa751db-596a-4239-82c8-2737657549a0
+2026-11-02 01:40:56.964 INFO  [cfa751db-596a-4239-82c8-2737657549a0] c.x.api.service.PasswordService - ���ܳɹ����ֻ�ƾ�� userId=f08d30f9-41ff-404d-bdd4-49e5d67cdd82 sessionId=6a57bfd5-e0f5-4f30-a9a3-3bd217344af3 replayed=false
+2026-11-02 01:40:56.990 WARN  [133a90eb-a124-48f5-9fcd-9965289cf86b] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:56.998 WARN  [71999108-7f51-4959-a408-de2b7a752fdf] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:57.689 INFO  [9f236619-41d8-4ef8-9d6e-a2ea8e899869] c.x.api.service.LoginService - ��¼�ɹ� userId=11a67596-09e9-437c-94b6-038b36af3641 loginName=it.auth.11a6759609 clientIp=127.0.0.1 sessionId=b5bc83e6-f768-4d77-bb54-b61f70f9625f
+2026-11-02 01:40:57.703 WARN  [b08164a4-d43a-42fa-9ab6-96662317742b] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:40:58.391 INFO  [067bb02f-9ae2-4e52-a72f-4ec307df7930] c.x.api.service.LoginService - ��¼�ɹ� userId=9e351702-ec48-493d-b697-8736dad6e0e0 loginName=it.auth.9e351702ec clientIp=10.1.2.3 sessionId=2dcb3756-1233-428a-bf19-c20ca449660b
+2026-11-02 01:40:58.403 WARN  [b92dc19c-4264-4c10-8894-28d668c35936] c.x.api.service.SessionAuthenticator - �Ự�ͻ��˰󶨲�ƥ�� sessionId=2dcb3756-1233-428a-bf19-c20ca449660b userId=9e351702-ec48-493d-b697-8736dad6e0e0 reason=CLIENT_IP_MISMATCH boundIp=10.1.2.3 currentIp=10.1.2.4
+2026-11-02 01:40:58.405 DEBUG [b92dc19c-4264-4c10-8894-28d668c35936] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=AUTH_SESSION_EXPIRED message=�Ự����Ϣ�ѱ仯�������µ�¼ traceId=b92dc19c-4264-4c10-8894-28d668c35936
+2026-11-02 01:40:58.414 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:40:58.482 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 01:40:58.485 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 01:40:58.486 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.18 s -- in com.xxplatform.api.auth.AuthSessionIntegrationTests
+[INFO] Running com.xxplatform.api.common.ClientNetworksTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.015 s -- in com.xxplatform.api.common.ClientNetworksTests
+[INFO] Running com.xxplatform.api.common.CsrfFilterTests
+2026-11-02 01:40:58.508 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 01:40:58.508 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/auth/login origin=https://evil.example.com
+2026-11-02 01:40:58.513 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 01:40:58.519 DEBUG [a50ef2d1-67aa-4879-ba8a-9da1494c31b2] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 01:40:58.522 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 01:40:58.523 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/tasks origin=null
+2026-11-02 01:40:58.559 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 01:40:58.565 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 01:40:58.569 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks/t-1
+2026-11-02 01:40:58.572 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+2026-11-02 01:40:58.574 DEBUG [no-trace] c.x.api.common.SameOriginVerifier - ͬԴУ��ܾ���Origin=https://evil.example.com ����=http://127.0.0.1:8080
+2026-11-02 01:40:58.576 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ����ǿ�����Դ path=/tasks origin=https://evil.example.com
+2026-11-02 01:40:58.583 ERROR [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF token У��ʧ�ܣ��� 500 �ܾ� path=/tasks
+java.lang.IllegalStateException: db down
+	at com.xxplatform.api.common.CsrfFilterTests.storageFailureFailsClosed(CsrfFilterTests.java:207) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 01:40:58.593 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - CSRF բ�žܾ���ȱ�ٻ���Ч�� token path=/tasks
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.094 s -- in com.xxplatform.api.common.CsrfFilterTests
+[INFO] Running com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.xxplatform.api.common.IdempotencyKeyHeaderTests
+[INFO] Running com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.xxplatform.api.infra.LoginThrottleTests
+[INFO] Running com.xxplatform.api.infra.PasswordHasherTests
+2026-11-02 01:40:58.628 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ��ʽ����ʶ��ǰ׺���������������У��ʧ�ܴ���
+2026-11-02 01:40:58.628 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ��ʽ����ʶ��ǰ׺���������������У��ʧ�ܴ���
+2026-11-02 01:40:58.628 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ������������������У��ʧ�ܴ���
+2026-11-02 01:40:58.628 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ�������Ƿ���0������У��ʧ�ܴ���
+2026-11-02 01:40:58.628 WARN  [no-trace] c.x.api.infra.PasswordHasher - �����ϣ���λ�ժҪ���ǺϷ� base64url����У��ʧ�ܴ���
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.83 s -- in com.xxplatform.api.infra.PasswordHasherTests
+[INFO] Running com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.262 s -- in com.xxplatform.api.migration.MigrationBaselineTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalExportIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:41:09.779 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:41:09.779 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:41:10.240 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:41:10.241 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:41:10.241 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:41:10.268 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:41:10.268 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 487 ms
+2026-11-02 01:41:10.314 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:41:10.381 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@42af2977
+2026-11-02 01:41:10.381 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:41:10.393 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:41:10.426 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.021s)
+2026-11-02 01:41:10.498 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:41:10.498 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:41:10.510 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:41:10.510 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:41:10.605 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54210 (http) with context path '/api/v1'
+2026-11-02 01:41:10.608 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.858 seconds (process running for 53.285)
+2026-11-02 01:41:10.609 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:41:11.496 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=7ba022bf-b38f-4400-a508-6c7b17a8a5ec operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:13.568 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=7ba022bf-b38f-4400-a508-6c7b17a8a5ec approveCount=2/2
+2026-11-02 01:41:13.583 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=e2f340c7-a650-4df9-8a4c-f24f61979beb operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:14.286 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=e2f340c7-a650-4df9-8a4c-f24f61979beb approveCount=1/1
+2026-11-02 01:41:14.310 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=7d7721e5-0c6f-4b33-894e-d2884702ad50 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:14.326 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=3e7fdf6f-1930-44c5-a170-af9509df14db operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:15.000 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=3e7fdf6f-1930-44c5-a170-af9509df14db approveCount=1/1
+2026-11-02 01:41:15.025 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=063b8099-999c-460f-8414-d01bbc70b0f4 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:15.032 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �����ݵ��ط� ledgerId=2c8cf264-4119-42b6-ae0b-ffb5db6feb4c
+2026-11-02 01:41:15.036 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �����ݵȳ�ͻ��ͬһ Idempotency-Key �����ݲ�ͬ
+2026-11-02 01:41:15.045 WARN  [no-trace] c.x.a.s.approval.ApprovalService - �����˲��� operation=createDeviceCommand required=2 eligible=1 allowlist=true
+2026-11-02 01:41:15.059 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=e844fa40-092e-4fd4-a511-97377c63355d operation=updateDeviceParameters requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:15.743 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=e844fa40-092e-4fd4-a511-97377c63355d approveCount=1/1
+2026-11-02 01:41:15.761 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ed154729-0dce-4d28-9055-ce4db02e2818 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:15.777 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=f69606e9-31e9-4ce1-a043-c3f338b141b3 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:15.820 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=6faccc8c-8ac0-418f-9ffe-4a7b1361b012 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:16.496 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �����ݵ��ط� ledgerId=319e390d-645a-42bc-8e86-4d2be22fdefb
+2026-11-02 01:41:16.499 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �����ݵȳ�ͻ��ͬһ Idempotency-Key �����ݲ�ͬ
+2026-11-02 01:41:17.159 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ae8392ef-59b5-4266-bb4c-f07d15078121 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:17.830 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=ae8392ef-59b5-4266-bb4c-f07d15078121 approveCount=1/1
+2026-11-02 01:41:17.840 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=ae8392ef-59b5-4266-bb4c-f07d15078121 operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 01:41:17.892 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=044549e2-00c3-4bcf-9ea6-9e97ef6838b3 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:18.558 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=044549e2-00c3-4bcf-9ea6-9e97ef6838b3 approveCount=1/1
+2026-11-02 01:41:18.566 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=044549e2-00c3-4bcf-9ea6-9e97ef6838b3 operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 01:41:18.587 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=aeabc75d-8c29-4434-9ca5-c2db7935a43e key=it-export-8792b1ff-18ed-4054-97a1-234507285099
+2026-11-02 01:41:18.595 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=4b8360d9-e236-4771-87ba-a1c0e59f48ee operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:19.299 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=4b8360d9-e236-4771-87ba-a1c0e59f48ee approveCount=1/1
+2026-11-02 01:41:19.310 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=4b8360d9-e236-4771-87ba-a1c0e59f48ee operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 01:41:19.353 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ad89d6c9-6e32-4865-bc62-35d4e27d6256 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:20.043 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=ad89d6c9-6e32-4865-bc62-35d4e27d6256 approveCount=1/1
+2026-11-02 01:41:20.051 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=ad89d6c9-6e32-4865-bc62-35d4e27d6256 operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 01:41:20.065 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=d511bf53-e0f5-4efd-958e-82bd08fada23 operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:20.735 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ���������� approvalId=d511bf53-e0f5-4efd-958e-82bd08fada23 reviewer=0192f100-0000-7000-8000-00000000a002
+2026-11-02 01:41:20.751 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=837c37d4-8f3a-4643-94dd-b6be4dee49ed operation=createExport requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=1
+2026-11-02 01:41:21.415 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=837c37d4-8f3a-4643-94dd-b6be4dee49ed approveCount=1/1
+2026-11-02 01:41:21.424 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=837c37d4-8f3a-4643-94dd-b6be4dee49ed operation=createExport executor=0192f100-0000-7000-8000-00000000a001
+2026-11-02 01:41:21.447 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=02921b4f-e422-4151-a541-48845807eaf2 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:22.139 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=af3f181a-0db1-460a-be69-6f5c6c0ebd95 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:22.835 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=aa09697d-9151-481e-b7cd-e08cab04ead2 operation=createDeviceCommand requester=0192f100-0000-7000-8000-00000000a001 requiredApprovals=2
+2026-11-02 01:41:22.895 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:41:23.023 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 01:41:23.025 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 01:41:23.034 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.29 s -- in com.xxplatform.api.service.approval.ApprovalExportIntegrationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.xxplatform.api.service.approval.ApprovalOperationTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.165 s -- in com.xxplatform.api.service.approval.ApprovalProposalsTests
+[INFO] Running com.xxplatform.api.service.approval.ApprovalServiceTests
+2026-11-02 01:41:23.875 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=a42c08b1-2801-4735-b77b-8f21dddacff1 operation=createExport requester=f7955251-3386-4a66-9d7a-990b5c85949c requiredApprovals=1
+2026-11-02 01:41:23.883 WARN  [no-trace] c.x.a.s.approval.ApprovalService - �����˲��� operation=readDecryptionResult required=2 eligible=1 allowlist=false
+2026-11-02 01:41:23.885 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=b0a93252-5f62-4fa5-ade3-c624230b2f36 operation=createExport requester=9e825683-2a65-4f58-ab78-0c2fd93ef7a3 requiredApprovals=1
+2026-11-02 01:41:23.888 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=3e28d6c5-3200-413e-85ec-ff361c736e76 operation=createExport requester=172ed260-f83d-4291-81a9-e1b1f672c917 requiredApprovals=1
+2026-11-02 01:41:24.541 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=3e28d6c5-3200-413e-85ec-ff361c736e76 approveCount=1/1
+2026-11-02 01:41:25.186 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=5a54453f-fcd3-45f3-a1e0-aa43b48708a6 operation=createExport requester=51ffe8da-0bdd-4a21-b396-6e2bfe39cce1 requiredApprovals=1
+2026-11-02 01:41:25.829 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=fd61d89e-b35a-424c-a189-84bcc2e20a54 operation=createExport requester=29e220b8-d2f8-4b5b-bdc4-b5bd97521c38 requiredApprovals=1
+2026-11-02 01:41:26.509 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=fd61d89e-b35a-424c-a189-84bcc2e20a54 approveCount=1/1
+2026-11-02 01:41:26.513 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=ac3c7d99-1b97-45e3-8536-1fcbc8fb44d3 operation=readDecryptionResult requester=ff278eb9-10ef-4312-a600-f8503e54d9c9 requiredApprovals=2
+2026-11-02 01:41:27.870 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=ac3c7d99-1b97-45e3-8536-1fcbc8fb44d3 approveCount=2/2
+2026-11-02 01:41:27.874 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=7f268304-1225-4d0a-a60b-aaada79b13be operation=createExport requester=9129baf9-15c3-4abb-b2b7-ff691be35678 requiredApprovals=1
+2026-11-02 01:41:27.876 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=cbf8c0dc-50b3-4b89-8dd1-b18d3fdc1e89 operation=createExport requester=432dce1c-9b01-489c-a578-ca7cbba71e87 requiredApprovals=1
+2026-11-02 01:41:28.529 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=cbf8c0dc-50b3-4b89-8dd1-b18d3fdc1e89 approveCount=1/1
+2026-11-02 01:41:28.532 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=408b7595-a0de-402b-b4dc-cb47cfd9dbef operation=createExport requester=e356c564-19da-4650-87e8-468fccb7dafd requiredApprovals=1
+2026-11-02 01:41:29.214 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=408b7595-a0de-402b-b4dc-cb47cfd9dbef approveCount=1/1
+2026-11-02 01:41:29.219 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=46371b43-0e70-499e-9dff-7bc56d973a2b operation=createExport requester=f3761685-1181-471b-9369-d6cd15be6d0f requiredApprovals=1
+2026-11-02 01:41:29.884 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=4286e3c1-822c-4f58-b85e-12b8cf359712 operation=createExport requester=cc9b2e38-d504-46ed-a956-a047e67a37dd requiredApprovals=1
+2026-11-02 01:41:30.574 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=4286e3c1-822c-4f58-b85e-12b8cf359712 approveCount=1/1
+2026-11-02 01:41:30.579 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=3e817da0-b28b-4755-83be-457374736781 operation=createExport requester=f30db4f3-6f99-4688-9841-7fb4e46f04c9 requiredApprovals=1
+2026-11-02 01:41:30.580 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=5d379077-feb7-48d2-ad25-81146d2e0adf operation=createExport requester=f30db4f3-6f99-4688-9841-7fb4e46f04c9 requiredApprovals=1
+2026-11-02 01:41:30.586 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=59d55348-ffd5-42d0-bbf2-169c64588ba3 operation=createExport requester=ec869105-5547-46c1-96c8-2a3060559852 requiredApprovals=1
+2026-11-02 01:41:30.588 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=6af2ba2a-2183-4350-9727-017cd4d6f339 operation=createExport requester=4c511ba5-a11d-4dda-87ff-4551d11674b3 requiredApprovals=1
+2026-11-02 01:41:31.236 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ���������� approvalId=6af2ba2a-2183-4350-9727-017cd4d6f339 reviewer=e198f251-7f1e-442c-8fcd-b594219d8397
+2026-11-02 01:41:31.891 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=a05c93f1-636f-4a8b-9497-a3e7e3012eec operation=createExport requester=ff761361-658a-4ef6-ada9-cb15773a395e requiredApprovals=1
+2026-11-02 01:41:31.893 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=f150240e-3078-4460-afd1-dd93485c3c04 operation=createExport requester=11569850-be82-4646-a08c-4cd6af0acc70 requiredApprovals=1
+2026-11-02 01:41:32.605 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=269c180f-5cc4-4b08-8b1d-c208b98b0989 operation=createExport requester=bd2aef00-8284-45bc-969a-30690f57a773 requiredApprovals=1
+2026-11-02 01:41:33.303 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ����ͨ�� approvalId=269c180f-5cc4-4b08-8b1d-c208b98b0989 approveCount=1/1
+2026-11-02 01:41:33.305 INFO  [no-trace] c.x.a.s.approval.ApprovalService - �������� approvalId=269c180f-5cc4-4b08-8b1d-c208b98b0989 operation=createExport executor=bd2aef00-8284-45bc-969a-30690f57a773
+2026-11-02 01:41:33.307 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=20d583b7-f389-48f8-a8d2-174c9432fd78 operation=createExport requester=ac243030-6f06-4a19-b0e3-d726c118dcb2 requiredApprovals=1
+2026-11-02 01:41:33.312 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ������ж������� approvalId=7c25618d-afb4-4479-aeb4-13b894f22847 operation=createExport requester=1977100b-b13e-4b11-b41a-b67c02361685 requiredApprovals=1
+2026-11-02 01:41:33.981 INFO  [no-trace] c.x.a.s.approval.ApprovalService - ���������� approvalId=7c25618d-afb4-4479-aeb4-13b894f22847 reviewer=a53e5774-05e8-4eb2-9995-9d63ea4627c4
+[INFO] Tests run: 25, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.77 s -- in com.xxplatform.api.service.approval.ApprovalServiceTests
+[INFO] Running com.xxplatform.api.service.AuditRollbackIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:41:34.018 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:41:34.018 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:41:34.461 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:41:34.461 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:41:34.461 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:41:34.484 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:41:34.484 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 463 ms
+2026-11-02 01:41:34.522 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:41:34.586 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@5de15ce1
+2026-11-02 01:41:34.586 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:41:34.587 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:41:34.629 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.030s)
+2026-11-02 01:41:34.700 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:41:34.700 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:41:34.711 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:41:34.711 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:41:34.808 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54235 (http) with context path '/api/v1'
+2026-11-02 01:41:34.811 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.826 seconds (process running for 77.486)
+2026-11-02 01:41:34.812 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:41:34.853 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:41:34.924 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 01:41:34.927 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 01:41:34.929 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.948 s -- in com.xxplatform.api.service.AuditRollbackIntegrationTests
+[INFO] Running com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s -- in com.xxplatform.api.service.ClientConfigScalarsTests
+[INFO] Running com.xxplatform.api.service.ExportServiceTests
+2026-11-02 01:41:34.975 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=c952b695-bbef-4ba6-97a5-5035c90215a9 key=idem-key-000000000001
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.xxplatform.api.service.ExportServiceTests
+[INFO] Running com.xxplatform.api.service.file.FilePolicyIntegrationTests
+2026-11-02 01:41:34.979 INFO  [no-trace] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.xxplatform.api.service.file.FilePolicyIntegrationTests]: FilePolicyIntegrationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-02 01:41:35.056 INFO  [no-trace] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.xxplatform.api.ApiApplication for test class com.xxplatform.api.service.file.FilePolicyIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:41:35.092 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Starting FilePolicyIntegrationTests using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:41:35.092 DEBUG [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Running with Spring Boot v3.5.16, Spring v6.2.19
+2026-11-02 01:41:35.092 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - The following 1 profile is active: "db"
+2026-11-02 01:41:35.515 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:41:35.576 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@230ea983
+2026-11-02 01:41:35.576 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:41:35.578 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:41:35.611 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.022s)
+2026-11-02 01:41:35.701 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:41:35.701 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:41:35.833 INFO  [no-trace] c.x.a.s.f.FilePolicyIntegrationTests - Started FilePolicyIntegrationTests in 0.772 seconds (process running for 78.508)
+2026-11-02 01:41:35.834 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:41:36.131 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=47ec4aed-c8f2-4a17-b23f-bbd2908e1717 category=DATASET_IMPORT bytes=1177784 status=ACTIVE rows=100000 detail=ok
+2026-11-02 01:41:36.426 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=f2f2e0f2-f4ab-4870-b4f3-645df9d45020 category=DATASET_IMPORT bytes=11534337 status=ACTIVE rows=1 detail=ok
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.496 s -- in com.xxplatform.api.service.file.FilePolicyIntegrationTests
+[INFO] Running com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.xxplatform.api.service.file.FileRetentionTests
+[INFO] Running com.xxplatform.api.service.file.FileServiceTests
+2026-11-02 01:41:36.485 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=8bb683d6-33e8-466f-8c10-d43f89598acd category=DATASET_IMPORT bytes=4 status=QUARANTINED rows=0 detail=CSV �� NUL �ֽ�
+2026-11-02 01:41:36.489 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=62652317-1ac8-49b2-b4d1-7428c8a7b286 category=DATASET_IMPORT bytes=29 status=ACTIVE rows=2 detail=ok
+2026-11-02 01:41:36.642 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=fe5dc7c5-da13-4afe-ade3-7ee5aa2670de category=DATASET_IMPORT bytes=11534336 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:41:36.644 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=128561e9-6e88-406e-9217-e65f4cdbe097 category=DATASET_IMPORT bytes=26 status=QUARANTINED rows=0 detail=CSV �� 3 ������Ϊ 1����ͷΪ 2
+2026-11-02 01:41:36.656 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=9084bdd4-9663-4177-9f45-2a4cd2cf0863 category=DATASET_IMPORT bytes=11 status=QUARANTINED rows=0 detail=JSON ����ʧ�ܣ�Unexpected end-of-input within/between Object entries
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 12]
+2026-11-02 01:41:36.658 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=1c795b2f-a535-4b08-842a-9f0d636193ef category=DATASET_IMPORT bytes=25 status=QUARANTINED rows=0 detail=XLSX ȱ�� [Content_Types].xml
+2026-11-02 01:41:36.662 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=b0ce82ca-cd02-457c-91dd-296cad9f4c7d category=FACE_SEARCH bytes=69 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:41:36.664 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=f020362f-e3af-4771-9ba3-ddb1de1fb5ec category=DATASET_IMPORT bytes=27 status=ACTIVE rows=0 detail=ok
+2026-11-02 01:41:36.672 INFO  [no-trace] c.x.api.service.file.FileService - �ļ��ϴ���� asset=7dfc569d-ad1c-40c7-9e64-54e5e2146b95 category=FACE_SEARCH bytes=17 status=QUARANTINED rows=0 detail=û�п��õ�ͼƬ������
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.191 s -- in com.xxplatform.api.service.file.FileServiceTests
+[INFO] Running com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 s -- in com.xxplatform.api.service.file.UploadPolicyCatalogTests
+[INFO] Running com.xxplatform.api.service.HealthServiceTests
+2026-11-02 01:41:36.689 WARN  [no-trace] c.x.api.service.HealthService - ��������� database ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.databaseFailure(HealthService.java:149) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$0(HealthService.java:110) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:110) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 01:41:36.692 WARN  [no-trace] c.x.api.service.HealthService - ��������� schema ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.schemaFailure(HealthService.java:160) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$1(HealthService.java:111) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:111) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+2026-11-02 01:41:36.694 WARN  [no-trace] c.x.api.service.HealthService - ��������� deployment-config ִ��ʧ��
+org.springframework.dao.DataAccessResourceFailureException: FATAL: password authentication failed for user "xxplatform_owner"
+	at com.xxplatform.api.service.HealthServiceTests$2.queryForObject(HealthServiceTests.java:73) ~[test-classes/:na]
+	at com.xxplatform.api.service.HealthService.deploymentConfigFailure(HealthService.java:175) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.lambda$readiness$2(HealthService.java:112) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.check(HealthService.java:133) ~[classes/:na]
+	at com.xxplatform.api.service.HealthService.readiness(HealthService.java:112) ~[classes/:na]
+	at com.xxplatform.api.service.HealthServiceTests.readinessDoesNotLeakDatabaseErrors(HealthServiceTests.java:164) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.executeWithoutCancellationToken(LauncherAdapter.java:60) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.LauncherAdapter.execute(LauncherAdapter.java:52) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:203) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:168) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:136) ~[surefire-junit-platform-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.6.jar:3.5.6]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.6.jar:3.5.6]
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s -- in com.xxplatform.api.service.HealthServiceTests
+[INFO] Running com.xxplatform.api.service.PasswordServiceTests
+2026-11-02 01:41:36.705 WARN  [no-trace] c.x.api.service.PasswordService - ����ʱ�˺��Ѳ����� userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.708 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿����뵱ǰ������ͬ userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.709 INFO  [no-trace] c.x.api.service.PasswordService - ���ܳɹ����ֻ�ƾ�� userId=00000000-0000-4000-8000-0000000000a1 sessionId=00000000-0000-4000-8000-0000000000b2 replayed=false
+2026-11-02 01:41:36.711 INFO  [no-trace] c.x.api.service.PasswordService - ���ܳɹ����ֻ�ƾ�� userId=00000000-0000-4000-8000-0000000000a1 sessionId=00000000-0000-4000-8000-0000000000b2 replayed=false
+2026-11-02 01:41:36.712 INFO  [no-trace] c.x.api.service.PasswordService - �����طţ��ݵ����У� userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.714 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿���Ȳ��Ϲ� userId=00000000-0000-4000-8000-0000000000a1 length=11
+2026-11-02 01:41:36.716 INFO  [no-trace] c.x.api.service.PasswordService - ���ܱ��ܣ�ͬһ Idempotency-Key �����ݲ�ͬ userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.717 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿���������������� userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.718 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ���ǰ�����ȷ userId=00000000-0000-4000-8000-0000000000a1
+2026-11-02 01:41:36.721 INFO  [no-trace] c.x.api.service.PasswordService - ����ʧ�ܣ��¿���Ȳ��Ϲ� userId=00000000-0000-4000-8000-0000000000a1 length=129
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.019 s -- in com.xxplatform.api.service.PasswordServiceTests
+[INFO] Running com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.xxplatform.api.service.ScopeCalculatorTests
+[INFO] Running com.xxplatform.api.service.SessionRenewalTests
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.SessionRenewalTests
+[INFO] Running com.xxplatform.api.service.SessionServiceBeginTests
+2026-11-02 01:41:36.745 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 01:41:36.747 WARN  [no-trace] c.x.api.service.SessionService - ��¼��̬���Ựǩ��ǰ�˺��Ѳ����� status=DISABLED userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 01:41:36.747 INFO  [no-trace] c.x.api.service.SessionService - ��¼�ֻ��������ɻỰ 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 01:41:36.747 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+2026-11-02 01:41:36.749 INFO  [no-trace] c.x.api.service.SessionService - ���Ự���ԣ��������˺�������Ч�Ự 1 �� userId=0c9a1f5e-5c2b-4a4e-9a4d-2f7d3b1c8a10 traceId=trace-begin-1
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.SessionServiceBeginTests
+[INFO] Running com.xxplatform.api.service.SessionServiceLogoutTests
+2026-11-02 01:41:36.752 DEBUG [no-trace] c.x.api.service.SessionService - �˳������ѳ����ĻỰ������ sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 01:41:36.752 INFO  [no-trace] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 01:41:36.754 INFO  [no-trace] c.x.api.service.SessionService - �Ự�ѳ��� sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+2026-11-02 01:41:36.754 DEBUG [no-trace] c.x.api.service.SessionService - �˳������ѳ����ĻỰ������ sessionId=3f1d9a6e-6f3c-4c56-9c2f-0d0a6f9b1c11 traceId=trace-logout-1
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.xxplatform.api.service.SessionServiceLogoutTests
+[INFO] Running com.xxplatform.api.service.SessionServiceRenewTests
+2026-11-02 01:41:36.756 INFO  [no-trace] c.x.api.service.SessionService - �Ự������ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T17:43:36Z absoluteExpiresAt=2026-11-01T17:43:36Z
+2026-11-02 01:41:36.758 DEBUG [no-trace] c.x.api.service.SessionService - �Ự���������� sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T17:42:36Z
+2026-11-02 01:41:36.760 INFO  [no-trace] c.x.api.service.SessionService - �Ự������ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05 idleExpiresAt=2026-11-01T17:56:36Z absoluteExpiresAt=2026-11-02T01:41:36Z
+2026-11-02 01:41:36.762 DEBUG [no-trace] c.x.api.service.SessionService - ����ʱ�Ự��ʧЧ sessionId=8c41f0a2-5d7e-4bb1-9a3c-2f6d1b8e7a05
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.xxplatform.api.service.SessionServiceRenewTests
+[INFO] Running com.xxplatform.api.service.task.TaskBaseIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:41:36.796 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:41:36.797 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:41:37.272 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:41:37.272 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:41:37.272 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:41:37.299 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:41:37.299 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 500 ms
+2026-11-02 01:41:37.344 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:41:37.413 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@47cf41d7
+2026-11-02 01:41:37.413 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:41:37.414 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:41:37.447 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.020s)
+2026-11-02 01:41:37.516 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:41:37.518 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:41:37.528 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:41:37.529 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:41:37.632 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54241 (http) with context path '/api/v1'
+2026-11-02 01:41:37.636 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.872 seconds (process running for 80.311)
+2026-11-02 01:41:37.638 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:41:37.772 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=621fe586-8da1-4c19-8548-2f1a82dd3429 attempt=1 worker=it-worker-5
+2026-11-02 01:41:37.849 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=6b19cb44-8e3b-4372-8baa-72d0d0654b52 attempt=1 worker=it-worker-3
+2026-11-02 01:41:37.855 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:37.876 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=da296d25-c37f-4322-a578-4ba432f46faf key=it-idem-ee459a3d-5778-4f47-a515-450cf905e7c9
+2026-11-02 01:41:37.900 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=acd4a0c3-67d5-4f3f-91d3-93cf2e29bef3 attempt=1 worker=it-worker-2
+2026-11-02 01:41:37.928 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=426b7cf1-e19c-40f4-86b5-89c2a4689022 attempt=1 worker=it-worker-4
+2026-11-02 01:41:37.934 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:37.962 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=95c80e34-1de1-4f5e-ae0a-4bf34e2b2c09 attempt=1 worker=it-worker-1
+2026-11-02 01:41:37.978 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-02 01:41:38.053 INFO  [no-trace] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-02 01:41:38.054 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown initiated...
+2026-11-02 01:41:38.057 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Shutdown completed.
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.297 s -- in com.xxplatform.api.service.task.TaskBaseIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s -- in com.xxplatform.api.service.task.TaskDomainTests
+[INFO] Running com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:41:38.113 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Starting ForkedBooter v3.5.6 using Java 17.0.12 with PID 8484 (started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:41:38.113 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - The following 1 profile is active: "db"
+2026-11-02 01:41:38.557 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 0 (http)
+2026-11-02 01:41:38.558 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:41:38.559 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:41:38.582 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:41:38.582 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 468 ms
+2026-11-02 01:41:38.619 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:41:38.726 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@6afed88d
+2026-11-02 01:41:38.726 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:41:38.726 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_final5 (PostgreSQL 16.15)
+2026-11-02 01:41:38.760 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.022s)
+2026-11-02 01:41:38.837 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": 6
+2026-11-02 01:41:38.837 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-11-02 01:41:38.853 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:41:38.853 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:41:38.950 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 54245 (http) with context path '/api/v1'
+2026-11-02 01:41:38.954 INFO  [no-trace] o.a.m.surefire.booter.ForkedBooter - Started ForkedBooter in 0.874 seconds (process running for 81.627)
+2026-11-02 01:41:38.954 DEBUG [no-trace] c.xxplatform.api.infra.DevUserSeeder - ���������˺�δ���ã�xx.auth.dev-seed.enabled=false��������
+2026-11-02 01:41:39.102 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=86f67ad4-10e7-4fc3-b740-02ed63424a88 attempt=1 worker=it-idem-worker
+2026-11-02 01:41:39.114 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-02 01:41:39.114 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-02 01:41:39.114 INFO  [no-trace] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2026-11-02 01:41:39.122 WARN  [362a3a11-e6f9-4ae2-af56-faaa6257a0e6] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.143 INFO  [06d6dc6b-e04b-4288-a1cc-05d0421c1aeb] c.xxplatform.api.api.TaskController - �������������� traceId=06d6dc6b-e04b-4288-a1cc-05d0421c1aeb taskId=86f67ad4-10e7-4fc3-b740-02ed63424a88 status=QUEUED
+2026-11-02 01:41:39.149 WARN  [db6ad902-b7ef-4057-9c7e-ef8081f834f8] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.157 INFO  [501fe47f-4363-46cb-97d0-d97a4b46fe8b] c.xxplatform.api.api.TaskController - �������������� traceId=501fe47f-4363-46cb-97d0-d97a4b46fe8b taskId=86f67ad4-10e7-4fc3-b740-02ed63424a88 status=QUEUED
+2026-11-02 01:41:39.192 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.195 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.196 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.197 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.199 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.200 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.203 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=886df81d-8bba-4377-a2ed-8ff6b04c1907 key=idem-concurrent-15a92e75-5754-40a8-b056-caa053a48f16
+2026-11-02 01:41:39.248 WARN  [fbfc20c5-3e26-45e5-9580-190f66c49f8e] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.258 INFO  [173826ed-c878-42fd-b4f6-577196031120] c.xxplatform.api.api.TaskController - ����ȡ�������� traceId=173826ed-c878-42fd-b4f6-577196031120 taskId=225f0d56-8ecd-4086-9bd5-3c7e1aba725e status=CANCELLED
+2026-11-02 01:41:39.265 WARN  [5bd69b06-0a52-4032-a36f-3b63f1152c1a] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.276 INFO  [829b0474-848a-45d0-b4fe-698c894b1588] c.xxplatform.api.api.TaskController - ����ȡ�������� traceId=829b0474-848a-45d0-b4fe-698c894b1588 taskId=3e0c9577-606e-4b0f-8ae0-bf2da117894e status=CANCELLED
+2026-11-02 01:41:39.307 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=933982ec-3221-4713-a167-5d1562f3b8eb key=idem-race-c270a881-c9cd-404f-98c0-63a4bcb5e518
+2026-11-02 01:41:39.310 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=933982ec-3221-4713-a167-5d1562f3b8eb key=idem-race-c270a881-c9cd-404f-98c0-63a4bcb5e518
+2026-11-02 01:41:39.320 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=933982ec-3221-4713-a167-5d1562f3b8eb key=idem-race-c270a881-c9cd-404f-98c0-63a4bcb5e518
+2026-11-02 01:41:39.352 WARN  [0e0cb320-d7f1-4b8c-b2d0-dbfa4b6fa488] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.361 INFO  [43f0de06-d56b-49b0-a10e-9c04f93c2752] c.xxplatform.api.api.TaskController - ����ȡ�������� traceId=43f0de06-d56b-49b0-a10e-9c04f93c2752 taskId=35687eaa-2b2f-46a9-8698-a2004c155798 status=CANCELLED
+2026-11-02 01:41:39.367 WARN  [e93598ae-d98f-4311-a231-a6745e6766c2] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.373 DEBUG [f5cb192b-7913-43d0-a826-fae1f346f8b5] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=IDEMPOTENCY_CONFLICT message=ͬһ Idempotency-Key ��Ӧ�˲�ͬ���������� traceId=f5cb192b-7913-43d0-a826-fae1f346f8b5
+2026-11-02 01:41:39.403 WARN  [e64601ce-2168-4486-86cb-aa9ba2e62d60] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.413 INFO  [f56887ed-03ed-45a7-aa23-1b5311b9156f] c.xxplatform.api.api.TaskController - ����ȡ�������� traceId=f56887ed-03ed-45a7-aa23-1b5311b9156f taskId=d0de89c1-149d-442d-9ea4-c387799dd620 status=CANCELLED
+2026-11-02 01:41:39.421 WARN  [e0adce9d-db2a-4d72-aea4-aef0eedf6553] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.427 INFO  [9bb9c36c-c9a8-410a-96e8-9225fb85bf27] c.xxplatform.api.api.TaskController - ����ȡ�������� traceId=9bb9c36c-c9a8-410a-96e8-9225fb85bf27 taskId=d0de89c1-149d-442d-9ea4-c387799dd620 status=CANCELLED
+2026-11-02 01:41:39.454 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=9905b445-c72d-4caf-a653-374380d946ee attempt=1 worker=it-idem-unknown
+2026-11-02 01:41:39.459 WARN  [no-trace] c.x.api.service.task.TaskService - ������Լ�����ҽ��δ֪�����˹����� taskId=9905b445-c72d-4caf-a653-374380d946ee attempt=1
+2026-11-02 01:41:39.459 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:39.467 WARN  [463be924-d3d7-4f67-af0a-46267908f3d9] c.xxplatform.api.api.AuthController - CSRF Cookie δ�� Secure ���ԣ�xx.csrf.secure-cookie=false���������������뿪�� HTTPS ����Ϊ true��
+2026-11-02 01:41:39.473 DEBUG [ff07aec8-0721-4eb3-9c68-f6127265ca5a] c.x.api.common.ApiExceptionHandler - ҵ���쳣 code=TASK_CONFLICT message=�ⲿ�������δ֪��TASK_OUTCOME_UNKNOWN���������ȶ��ˣ�����ֱ������ traceId=ff07aec8-0721-4eb3-9c68-f6127265ca5a
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.401 s -- in com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests
+2026-11-02 01:41:39.514 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=9314cc47-3405-48d6-ab5a-ff3d01e1aed5 attempt=1 worker=it-guard-scope
+2026-11-02 01:41:39.524 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=9314cc47-3405-48d6-ab5a-ff3d01e1aed5 blocker=TASK_SCOPE_SHRUNK
+2026-11-02 01:41:39.553 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=8ef0c7f1-77d3-403c-92fb-17cb43788c1e attempt=1 worker=it-gen-w1
+2026-11-02 01:41:39.557 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:39.569 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=8ef0c7f1-77d3-403c-92fb-17cb43788c1e attempt=2 worker=it-gen-w2
+2026-11-02 01:41:39.601 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=eeb6336a-f000-42fc-ac98-f69156993200 attempt=1 worker=it-guard-race
+2026-11-02 01:41:39.684 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=2b8f3541-3648-4ea3-843a-6ce782baacdb attempt=1 worker=it-guard-asset
+2026-11-02 01:41:39.688 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=2b8f3541-3648-4ea3-843a-6ce782baacdb blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:39.716 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=67a76ee6-4952-4845-883e-ec7fb4655c70 attempt=1 worker=it-guard-atomic
+2026-11-02 01:41:39.722 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=67a76ee6-4952-4845-883e-ec7fb4655c70 blocker=TASK_PERMISSION_REVOKED
+2026-11-02 01:41:39.755 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=4be63b96-57be-4391-a8c5-da1b1906c8f6 attempt=1 worker=it-guard-cancel
+2026-11-02 01:41:39.764 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:39.794 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=c60ea8a0-07f2-423b-a3b7-5d4a55af302b attempt=1 worker=it-guard-asset-del
+2026-11-02 01:41:39.800 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=c60ea8a0-07f2-423b-a3b7-5d4a55af302b blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:39.835 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=dfbf5e25-1178-492d-93b9-8da1dc77f32a attempt=1 worker=it-guard-revoke
+2026-11-02 01:41:39.839 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=dfbf5e25-1178-492d-93b9-8da1dc77f32a blocker=TASK_PERMISSION_REVOKED
+2026-11-02 01:41:39.888 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=cf7e000c-afe7-4ff6-bc96-c144bdfb1d0b attempt=1 worker=it-guard-ok
+2026-11-02 01:41:39.920 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=3f1c14c7-494b-425b-8285-dee48c55e75e attempt=1 worker=it-guard-hb
+2026-11-02 01:41:39.946 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=1d8e51cd-1243-4e53-8047-5040cd368371 attempt=1 worker=it-expiry-w1
+2026-11-02 01:41:39.971 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=335e8a11-a5e4-416f-982c-7308fba4e3cd attempt=1 worker=it-owner-w1
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.499 s -- in com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskQuotaIntegrationTests
+2026-11-02 01:41:40.001 WARN  [no-trace] c.x.api.service.task.TaskService - �Ŷӳ�ʱ��ֹ 1 ������
+2026-11-02 01:41:40.114 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=56e35973-6331-4885-ba58-3aaeb71f5b54 attempt=1 worker=it-worker-quota-order
+2026-11-02 01:41:40.121 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=37ae378a-12f1-4eb0-9524-925e30088584 attempt=1 worker=it-worker-quota-order
+2026-11-02 01:41:40.129 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=ae882b6a-818d-4c70-9168-429c2ab396a1 attempt=1 worker=it-worker-quota-order
+2026-11-02 01:41:40.147 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=7bde7c11-d584-4db3-92be-df30fce9e1b6 attempt=1 worker=it-worker-quota-order
+2026-11-02 01:41:40.153 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=5e4242d8-7cdc-4156-9fc5-901be6687ea7 attempt=1 worker=it-worker-quota-order
+2026-11-02 01:41:40.509 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=4720375f-0fc8-4e33-88ee-0ec78c1b9a63 attempt=1 worker=it-worker-quota-heartbeat
+2026-11-02 01:41:40.520 DEBUG [no-trace] c.x.api.service.task.TaskService - �������� 1 ������
+2026-11-02 01:41:40.542 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=9d0325b7-63e3-4a33-9e10-a2ab1f204f90 attempt=1 worker=it-worker-quota-exec
+2026-11-02 01:41:40.548 WARN  [no-trace] c.x.api.service.task.TaskService - ִ�г�ʱ�ѷ���ȡ�� 1 ������
+2026-11-02 01:41:40.654 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=17962c93-e7cc-4baf-8031-e5727ac31b56 attempt=1 worker=it-worker-quota-concurrent-3
+2026-11-02 01:41:40.658 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=444d89d1-6438-45d2-884b-3ab9eeb3e270 attempt=1 worker=it-worker-quota-concurrent-5
+2026-11-02 01:41:40.808 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=17d36825-8425-4c4b-a5d1-54b93ab59b43 attempt=1 worker=it-worker-quota-export-only
+2026-11-02 01:41:40.817 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=2476d68a-e8d0-4934-ace0-f42e05c08c0f attempt=1 worker=it-worker-quota-notify
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.846 s -- in com.xxplatform.api.service.task.TaskQuotaIntegrationTests
+[INFO] Running com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.020 s -- in com.xxplatform.api.service.task.TaskReadServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskResultReferenceTests
+2026-11-02 01:41:40.872 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=ff38b9af-8b59-48f9-a994-3edc23a2ca5e attempt=1 worker=it-worker-ref
+2026-11-02 01:41:40.907 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=3e6bc659-981a-4948-a66c-9b6fbc300249 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:40.943 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=79ed75dd-6f22-4ea8-a8bb-54b3c680776e attempt=1 worker=it-worker-ref
+2026-11-02 01:41:40.959 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=7c21407c-549d-429c-ad72-45511539b370 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:40.973 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=b415cd02-c247-455b-8afb-e9a67f7198c6 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:40.988 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=d82c1482-0b6d-4230-8525-7875bd685368 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.004 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=be176200-f10d-4167-8ce3-b4f0c02bdf0b attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.025 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=eea55d6f-ca7b-41d9-9733-bfe8f12560df attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.040 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=13a4737d-555a-44f3-8efc-ee760c272380 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.052 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=cea559a4-23cf-4dff-b07e-e529a17abed7 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.063 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=5aa6f88a-ae16-4016-b3f3-8590cc127418 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.084 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=647ba338-28ac-4539-81d6-14faa1962417 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.150 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=5f47aa32-e85d-466e-8b68-0a0eeb4da12a attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.153 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=5f47aa32-e85d-466e-8b68-0a0eeb4da12a blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:41.165 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=67d76327-f6d2-4597-9a1b-a1eba6d9c0bb attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.168 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=67d76327-f6d2-4597-9a1b-a1eba6d9c0bb blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:41.175 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=f6f8132c-b309-43c5-b12b-f38cd52b7ff7 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.178 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=f6f8132c-b309-43c5-b12b-f38cd52b7ff7 blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:41.184 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=42230691-00d0-4e64-b8ac-944da07a4122 attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.187 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=42230691-00d0-4e64-b8ac-944da07a4122 blocker=TASK_RESULT_REFERENCE_INVALID
+2026-11-02 01:41:41.193 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=b38501f9-144a-410d-952c-0e88a7037f8a attempt=1 worker=it-worker-ref
+2026-11-02 01:41:41.195 WARN  [no-trace] c.x.api.service.task.TaskService - ��������δͨ������������� taskId=b38501f9-144a-410d-952c-0e88a7037f8a blocker=TASK_RESULT_REFERENCE_INVALID
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.349 s -- in com.xxplatform.api.service.task.TaskResultReferenceTests
+[INFO] Running com.xxplatform.api.service.task.TaskServiceTests
+2026-11-02 01:41:41.201 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=6de0bd8c-17ce-49de-981d-e4d7530fc22f attempt=1 worker=worker-1
+2026-11-02 01:41:41.201 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=0f40f93d-45ab-4d73-8003-5932ca22a6f6 key=idem-001
+2026-11-02 01:41:41.204 DEBUG [no-trace] c.x.api.service.task.TaskService - �ݵ��ط� taskId=2b717e4b-319a-42ab-9797-ffd42b0635fb key=idem-001
+2026-11-02 01:41:41.207 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=37886dbc-f308-453d-a1ad-dbf13c293e31 attempt=1 worker=worker-1
+2026-11-02 01:41:41.209 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:41.213 WARN  [no-trace] c.x.api.service.task.TaskService - ������Լ�����ҽ��δ֪�����˹����� taskId=8ce03194-31a5-4332-a0cb-24e8f87c6ecd attempt=2
+2026-11-02 01:41:41.213 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:41.214 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:41.215 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=ada8ae66-d0ea-4b3a-a9c4-035cbdb8b226 attempt=1 worker=worker-1
+2026-11-02 01:41:41.220 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s -- in com.xxplatform.api.service.task.TaskServiceTests
+[INFO] Running com.xxplatform.api.service.task.TaskSideEffectOutcomeTests
+2026-11-02 01:41:41.250 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=0cc1e780-6a83-43c2-a680-103ce942320e attempt=1 worker=it-m07-worker
+2026-11-02 01:41:41.254 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=8fe2d3d2-51df-4e95-98ae-4d42b64fa8af attempt=1 worker=it-m07-worker
+2026-11-02 01:41:41.260 WARN  [no-trace] c.x.api.service.task.TaskService - ������Լ�����ҽ��δ֪�����˹����� taskId=8fe2d3d2-51df-4e95-98ae-4d42b64fa8af attempt=1
+2026-11-02 01:41:41.260 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 2 ��
+2026-11-02 01:41:41.285 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=cfda82cd-fe13-47d6-b517-cbe1b5c7ed80 attempt=1 worker=it-m07-worker
+2026-11-02 01:41:41.288 WARN  [no-trace] c.x.api.service.task.TaskService - ������Լ�����ҽ��δ֪�����˹����� taskId=cfda82cd-fe13-47d6-b517-cbe1b5c7ed80 attempt=1
+2026-11-02 01:41:41.288 INFO  [no-trace] c.x.api.service.task.TaskService - reaper �ջع�����Լ 1 ��
+2026-11-02 01:41:41.312 INFO  [no-trace] c.x.api.service.task.TaskService - ��������ȡ taskId=4c328cc2-dd0a-48c8-ad26-4de13fe7c00d attempt=1 worker=it-m07-worker
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.097 s -- in com.xxplatform.api.service.task.TaskSideEffectOutcomeTests
+[INFO] Running com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.xxplatform.api.service.task.TaskWriteServiceTests
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 391, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:35 min
+[INFO] Finished at: 2026-11-02T01:41:42+08:00
+[INFO] ------------------------------------------------------------------------

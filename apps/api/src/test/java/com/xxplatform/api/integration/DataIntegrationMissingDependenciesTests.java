@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = "spring.profiles.active=integration-missing")
-class DataIntegrationMissingDependenciesTests {
+class DataIntegrationMissingDependenciesTests extends com.xxplatform.api.support.DataHttpTestSupport {
     @Autowired TestRestTemplate rest;
     @Autowired ObjectMapper mapper;
     @Autowired CaptureExportSourceAdapter exports;
@@ -30,9 +30,9 @@ class DataIntegrationMissingDependenciesTests {
         }
     }
     @Test void writeRoutesDoNotCreateFakeReceipts() throws Exception {
-        var headers = new HttpHeaders();
+        var headers = authenticatedHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-CSRF-Token","integration-csrf-token");
+        headers.set("X-CSRF-Token",csrfToken());
         headers.set("Idempotency-Key","integration-idempotency-key");
         String id = "00000000-0000-0000-0000-000000000001";
         String range = "\"timeRange\":{\"from\":\"2026-10-24T10:00:00Z\",\"to\":\"2026-10-24T11:00:00Z\"}";
@@ -46,15 +46,15 @@ class DataIntegrationMissingDependenciesTests {
                 entry[0],new HttpEntity<>(entry[1],headers),String.class));
     }
     @Test void normalProfileUsesStrictDeserializers() {
-        var headers = new HttpHeaders();
+        var headers = authenticatedHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("X-CSRF-Token","integration-csrf-token");
+        headers.set("X-CSRF-Token",csrfToken());
         var response = rest.postForEntity("/captures/search",new HttpEntity<>(
                 "{\"dataType\":\"PLATE\",\"timeRange\":{\"from\":\"2026-10-24T10:00:00\",\"to\":\"2026-10-24T11:00:00Z\"}}",headers),String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }
     @Test void exportBeanIsPresentButRequiresTrustedDependencies() {
-        assertThatThrownBy(() -> exports.prepare("integration-csrf-token",new UUID(0,1),"CSV",null,"test"))
+        assertThatThrownBy(() -> exports.prepare(csrfToken(),new UUID(0,1),"CSV",null,"test"))
                 .isInstanceOfSatisfying(DataApiException.class,
                         error -> assertThat(error.code()).isEqualTo(ErrorCode.SYSTEM_UNAVAILABLE));
     }

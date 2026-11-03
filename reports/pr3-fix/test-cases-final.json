@@ -1,0 +1,763 @@
+[
+  {
+    "class": "com.xxplatform.api.api.CorsContractTests",
+    "tests": 5,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "sameOriginRequestWithoutOriginHeaderPasses",
+      "preflightFromUntrustedOriginIsRejected",
+      "actualRequestEchoesTrustedOriginWithoutWildcard",
+      "preflightFromTrustedOriginAllowsContractHeaders",
+      "actualRequestFromUntrustedOriginIsRejected"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.api.FileControllerTests",
+    "tests": 3,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "attachmentHeaderFallsBackForMissingName",
+      "attachmentHeaderPercentEncodesChineseName",
+      "attachmentHeaderUsesRfc5987WithUtf8Name"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "tests": 15,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "csvQuotedNewlinesAreAcceptedAndColumnMismatchIsQuarantined",
+      "activeFileWithoutExpiryIsNeverPermanentlyDownloadable",
+      "expiredFileCannotBeReadOrDownloaded",
+      "validJsonBecomesActive",
+      "uploadPngIsActiveAndDetailAndDownloadWork",
+      "xlsxIsParsedForRealAndTruncatedXlsxIsQuarantined",
+      "processingAndForeignAssetsAreHidden",
+      "missingDownloadKeyKeepsMetadataAvailableAndDownloadUnavailable",
+      "authenticatedOwnerCanPollAnUploadWithoutDownloadPermissions",
+      "downloadRequiresItsOwnShortLivedPermit",
+      "oversizeAndUnsupportedTypeAreRejectedAndAudited",
+      "disabledPolicyRejectsUploadAndIsAudited",
+      "downloadRequiresFileDownloadAndRevocationInvalidatesTheOldUrl",
+      "idempotentReplayReturnsSameAssetAndDoesNotDuplicateRows",
+      "invalidJsonIsQuarantinedAndCannotBeDownloaded"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.ApiApplicationTests",
+    "tests": 1,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "unknownRouteReturnsContractErrorEnvelope"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "tests": 14,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "renewIsClampedToTheAbsoluteDeadlineAndKeepsSidAndCsrf",
+      "legacySessionWithoutCompleteBindingRequiresNewLogin",
+      "originIsCheckedBothWaysOnReadAndWrite",
+      "passwordChangeRotatesCredentialsAndEnforcesIdempotency",
+      "initialPasswordUserIsGatedAndUnblockedByChangingPassword",
+      "expiredSessionCannotBeRevivedEvenWhenLastSeenIsFresh",
+      "userAgentChangeRequiresReloginAndIsAudited",
+      "idleSlidesOnActiveRequestsButNotOnPollingPathsOrBackgroundHeader",
+      "loginOutsideConfiguredCidrIsRejectedAndAudited",
+      "longUserAgentRemainsBoundAfterLoginAndSuffixChangesAreRejected",
+      "csrfIssuedBeforeLoginIsRevokedByLoginAndRotatedValueWorks",
+      "loginLogoutAndPasswordChangeLeaveAuditEvents",
+      "credentialResponsesAreNotCacheable",
+      "clientIpChangeRequiresReloginAndIsAudited"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.common.ClientNetworksTests",
+    "tests": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "malformedHopStopsResolution",
+      "trustedProxyResolvesRightmostUntrustedHop",
+      "forgedForwardedHeaderCannotBypassLoginCidr",
+      "allowedFollowsCidrAndDefaultsToDeny",
+      "forwardedHeaderFromUntrustedPeerIsIgnored",
+      "sameAddressComparesBytes"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.common.CsrfFilterTests",
+    "tests": 15,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "loginFromForeignOriginIsRejected",
+      "nonBrowserStillNeedsToken",
+      "rejectionCarriesRequestTraceId",
+      "refererFallsBackWhenOriginIsAbsent",
+      "everyWriteMethodIsGated(String)[1]",
+      "everyWriteMethodIsGated(String)[2]",
+      "everyWriteMethodIsGated(String)[3]",
+      "postWithoutTokenIsRejected",
+      "foreignOriginIsRejectedEvenWithValidToken",
+      "loginIsTokenExempt",
+      "sameOriginPasses",
+      "storageFailureFailsClosed",
+      "postWithWrongTokenIsRejected",
+      "postWithValidTokenPairPasses",
+      "readRequestsAreNotGated"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "tests": 5,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "rejectsBlankKey",
+      "rejectsKeyAboveMaximum",
+      "rejectsKeyBelowMinimum",
+      "rejectsMissingKey",
+      "acceptsBoundaryLengthsAndTrims"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.infra.LoginThrottleTests",
+    "tests": 8,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "differentIpHasSeparateBucket",
+      "recoversAfterLockout",
+      "clearResetsHistory",
+      "loginNameIsCaseSensitive",
+      "blocksAtThreshold",
+      "keyShape",
+      "failuresOutsideWindowArePruned",
+      "allowsBelowThreshold"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.infra.PasswordHasherTests",
+    "tests": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "malformedStoredValueIsRejected",
+      "saltIsRandomPerHash",
+      "hashThenVerify",
+      "longPasswordNotTruncatedAt72Bytes",
+      "wrongPasswordRejected",
+      "nonAsciiPasswordRoundTrip"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "tests": 5,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "baselineCoversAllSchemasAndGuards",
+      "contractSchemaHashIsUnchanged",
+      "baselineStaysFrozen",
+      "migrationsCoverContractStructure",
+      "migrationDirectoryFollowsNamingConvention"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "truncatedCiphertextIsRejected",
+      "repositoryConfigurationHasNoBuiltInApprovalKey",
+      "missingDeploymentKeyDisablesApprovalInsteadOfFallingBackToARepositoryValue",
+      "malformedKeyFailsFastAtStartup",
+      "tamperedCiphertextAndWrongKeyCannotDecrypt",
+      "keyIdIsPersistedWithTheCiphertextButTheKeyNeverIs",
+      "everySealUsesAFreshNonceAndRoundTrips"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "tests": 33,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "staleContextPermissionVersionIsRejected",
+      "duplicateVoteBySameReviewerIsNotCountedTwice",
+      "exportWorksWithBusinessPermissionWithoutTaskManagement",
+      "failedExportLeavesApprovalUnconsumed",
+      "oneDeviceKeyChangeNeedsTwoIndependentVotesAndNeverDisplaysTheKey",
+      "publishedExportFileRequiresPermitAndCurrentSourcePermission",
+      "tamperedCiphertextAndWrongKeyFailClosed",
+      "missingConfigurationAndOutOfScopeReviewersDisableCreation",
+      "outOfScopeReviewerCannotReadDetailsOrListTheApproval",
+      "expiredExecutionGrantIsGone",
+      "approvalCreationIsIdempotentPerKeyAndRejectsDifferentContent",
+      "insufficientEligibleApproversRejectsCreation",
+      "changedGroupMembershipInvalidatesTheFrozenApproval",
+      "executionIsRejectedAfterTargetVersionChanges",
+      "requesterAndExecutorCannotApproveTheirOwnRequest",
+      "deviceGroupIsResolvedServerSideAndDrivesTwoVoteRequirement",
+      "rejectionAuditSurvivesBusinessRollback",
+      "nonexistentAndUnconnectedTargetsNeverProduceVerifiedApplications",
+      "approvalDecisionIsIdempotentPerKeyAndStillCountsOneVotePerApprover",
+      "changedAuthorizationAndRemovedReviewerCannotConsumeApproval",
+      "rolledBackExportTransactionLeavesApprovalUnconsumedAndNoTask",
+      "approvalReplayRechecksCurrentPermission",
+      "exportRequiresApprovalAndConsumesItExactlyOnce",
+      "concurrentConsumptionAllowsExactlyOneSuccess",
+      "approvalsAndExportRejectionsAreAudited",
+      "concurrentIdenticalApprovalKeysCreateExactlyOneApplication",
+      "contextDataTypeOutsideCurrentScopeIsRejected",
+      "unknownTargetDeviceCannotBeFrozenIntoAnApproval",
+      "idempotencyKeyIsScopedToActor",
+      "grantApplicationCannotExceedTheGrantorsCeiling",
+      "actionPermissionAloneIsNotEnoughToVote",
+      "ifMatchMustMatchTheFrozenDeviceVersion",
+      "reviewItemsMaskNestedSecretsAndCiphertextCarriesNoPlaintext"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "exportOperationsAllRequireCaptureExport",
+      "deviceBatchesNeedTwoApprovalsOnlyAtTenDevices",
+      "everyOperationCarriesAPermission",
+      "parsesOnlyRegisteredOperationIds",
+      "nonDeviceOperationsStayAtOneApprovalEvenWithManyItems",
+      "catalogsEveryProposalInTheContract",
+      "decryptionAlwaysNeedsTwoApprovals"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "tests": 25,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "rejectsInvalidBusinessBodyEvenWhenKeysAreAllowed",
+      "rejectsPasswordsThatThePasswordPolicyWouldRejectAtExecutionTime",
+      "digestChangesWhenContentChanges",
+      "rejectsEmptyPayload",
+      "digestIsStableAcrossKeyOrder",
+      "deviceBatchAtThresholdNeedsTwoApprovals",
+      "rejectsPathParametersThatDoNotMatchThePathTemplate",
+      "pathParametersProposalWorksForDecryptionReview",
+      "reviewItemsCanBeRebuiltFromCanonicalJson",
+      "rejectsUnknownKeys",
+      "rejectsRequestBodyKeysOutsideTheOperationSchema",
+      "adminPasswordResetUsesReasonAndNewPasswordWithoutCurrentPassword",
+      "rejectsProposalsWhoseReviewItemsExceedTheCap",
+      "roleProposalCannotOmitAnyRequiredInputField",
+      "everyApprovalOperationHasAProposalSpec",
+      "masksSensitiveValuesNestedInSerializedJsonStrings",
+      "acceptsCreateExportProposalWithRequestBody",
+      "ifMatchIsBoundIntoTheDigest",
+      "rejectsDisplayValuesBeyondThePerItemBudget",
+      "parameterChangesAreTypedArraysAndIfMatchIsAQuotedVersion",
+      "expandsDeviceIdsIntoOneReviewItemPerDevice",
+      "rejectsIfMatchOfWrongShape",
+      "masksSensitiveValuesInReviewItems",
+      "rejectsUnknownOperation",
+      "updateDeviceParametersRequiresIfMatch"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "tests": 25,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "createFailsClosedWhenNoPayloadKeyIsConfigured",
+      "consumeRejectsPendingApproval",
+      "invalidCursorIsValidationError",
+      "createRejectsShortReason",
+      "createRejectsWhenTooFewEligibleApprovers",
+      "createAllowsSingleApproverOperationWhenDeploymentHasOneApprover",
+      "pageSizeOutOfRangeIsValidationError",
+      "repeatingTheSameDecisionIsIdempotent",
+      "wrongCurrentPasswordIsRejectedWithoutRecordingDecision",
+      "consumeRejectsExpiredExecutionGrant",
+      "twoApprovalsAreCollectedThenGranted",
+      "requesterCannotApproveOwnRequest",
+      "consumeRejectsDigestMismatchAndKeepsGrantUsable",
+      "consumeRejectsOperationMismatch",
+      "createRequiresTheOperationPermission",
+      "expiredPendingApprovalIsMarkedAndRejected",
+      "consumeRejectsExecutorOtherThanTheDesignatedOne",
+      "listReturnsOwnApplicationAndReviewableItemsWithCursor",
+      "reviewerWithPermissionCanReadAndSeeReviewItems",
+      "approvingACompletedApprovalIsConflict",
+      "createFreezesProposalWithDigestAndPendingStatus",
+      "versionConflictOnConcurrentDecisionIsReported",
+      "consumeMarksApprovalConsumedAndIsSingleUse",
+      "strangerCannotReadApproval",
+      "rejectionEndsTheApprovalImmediately"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.approval.AuthorizationBoundsTests",
+    "tests": 1,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "authoritativeTypedGrantsAreNotExpandedIntoAProjectionCrossProduct"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+    "tests": 4,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "failureAuditSurvivesBusinessRollback",
+      "successAuditIsWrittenOnceOnCommit",
+      "auditWithoutOuterTransactionIsWritten",
+      "auditRowIsAppendOnly"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "tests": 9,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "missingKeyNamesTheKey",
+      "oversizedUploadLimitIsRejected",
+      "parsesValidObject",
+      "zeroIsRejected",
+      "foreignTimeZoneIsRejected",
+      "foreignCoordinateSystemIsRejected",
+      "wrongTypeIsRejected",
+      "nonObjectIsRejected",
+      "unknownKeysAreTolerated"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.ExportServiceTests",
+    "tests": 15,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "createRejectsEmptyColumnList",
+      "createFreezesTaskAndExportJobForPlateExport",
+      "createAcceptsBoundedGeneralRangeAcrossDataTypes",
+      "createRejectsExpiredContext",
+      "createStoresFrozenLimitsInTaskParameters",
+      "createRejectsUnknownContext",
+      "createKeepsRequestedColumnOrderAndDeduplicates",
+      "createRejectsMissingPermission",
+      "createRejectsSameKeyWithDifferentParameters",
+      "createRejectsUnboundedGeneralRange",
+      "createRejectsColumnFromAnotherDataType",
+      "createRejectsUnsupportedContextType",
+      "createReplaysSameKeyWithSameParameters",
+      "createRejectsUnknownColumn",
+      "createHidesContextOwnedBySomeoneElse"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "tests": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "permitCannotOutliveFileRetention",
+      "permitIsBoundToFileAndSession",
+      "deploymentMustBindASigningKey",
+      "permitExpiresExactlyAtFiveMinutes",
+      "revocationInvalidatesAnUnexpiredPermitImmediately",
+      "missingOrModifiedPermitIsRejected"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "importRowLimitIsEnforced",
+      "disabledPolicyRejectsUploadAndIsVisibleDownstream",
+      "containerMultipartLimitsCoverTheBusinessLimit",
+      "effectiveLimitIsTheSmallerOfGlobalAndCategory",
+      "elevenMiBImportIsAcceptedAndGetsTwelveMonthExpiry",
+      "v5BackfillIsIdempotentAndUsesNaturalMonths",
+      "seededPoliciesAreTheSameSourceForServerAndClientConfig"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.file.FileRetentionTests",
+    "tests": 4,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "usesShanghaiCalendarEvenWhenUtcIsPreviousDay",
+      "addsTwelveCalendarMonths",
+      "clampsToLastDayOfMonthWhenDayDoesNotExist",
+      "rejectsNull"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.file.FileServiceTests",
+    "tests": 23,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "downloadReturnsBytesForActiveOwnAsset",
+      "uploadQuarantinesCsvThatContainsNulBytes",
+      "uploadRejectsEmptyContent",
+      "downloadRequiresFileDownloadPermission",
+      "uploadAcceptsCsvWhoseRowsMatchTheHeaderColumnCount",
+      "uploadAllowsElevenMiBImportWhenImageLimitWouldRejectIt",
+      "uploadRejectsMediaOutsideCategoryWhitelist",
+      "uploadQuarantinesCsvWithInconsistentColumnCount",
+      "getHidesForeignAndUnknownAssets",
+      "uploadRejectsServerGeneratedCategory",
+      "downloadOfFaceAssetAlsoRequiresFacePermission",
+      "uploadRejectsOversizedImage",
+      "downloadRejectsExpiredAsset",
+      "uploadQuarantinesInvalidJsonContent",
+      "downloadRejectsNonActiveAsset",
+      "uploadQuarantinesUnknownXlsxThatIsNotAnOfficePackage",
+      "uploadRejectsExtensionOutsideCategoryWhitelist",
+      "uploadInsertsProcessingThenActivatesWhenMagicMatches",
+      "uploadAcceptsValidJsonContent",
+      "downloadHidesForeignAssetEvenWithPermissions",
+      "uploadRejectsUnknownCategory",
+      "getRejectsExpiredAsset",
+      "uploadQuarantinesWhenMagicDisagreesWithDeclaredType"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "tests": 8,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "extensionsAreLowercasedAndDefaultToEmpty",
+      "faceAndPortraitOnlyAcceptJpegAndPng",
+      "categoryParsingIsCaseInsensitiveAndRejectsUnknown",
+      "serverGeneratedCategoriesRejectUploadPolicyLookup",
+      "importCategoriesAcceptXlsxCsvJsonOnly",
+      "uploadableFlagMatchesContractEnum",
+      "imageAndImportLimitsAreIndependent",
+      "contentTypesAreNormalizedBeforeComparison"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.HealthServiceTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "readinessWithFailedMigration",
+      "readinessWithMissingDeploymentConfig",
+      "readinessWithEmptyMigrationHistory",
+      "readinessDoesNotLeakDatabaseErrors",
+      "healthIsAlwaysUp",
+      "readinessWhenEverythingIsHealthy",
+      "readinessWithoutDataSourceIsNotReady"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.PasswordServiceTests",
+    "tests": 11,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "failsWithSessionExpiredWhenAccountIsDeactivatedDuringTheWrite",
+      "rejectsNewPasswordEqualToCurrentOne",
+      "changesPasswordAndRotatesSessionAndCsrf",
+      "normalisesToNfcBeforeApplyingTheLengthRule",
+      "replayedKeyReturnsAcceptedWithoutSideEffects",
+      "missingIdempotencyKeyIsAValidationError",
+      "rejectsNewPasswordShorterThanFifteenCharacters",
+      "sameKeyWithDifferentContentIsRejectedAsConflict",
+      "rejectsWeakPasswordThatContainsTheLoginName",
+      "rejectsWrongCurrentPasswordWith401NotValidationError",
+      "rejectsNewPasswordLongerThan128Characters"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "tests": 13,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "singleRoleProducesOneGrantPerType",
+      "siteKindsDoNotLeak",
+      "rolesDoNotCrossMultiply",
+      "accountScopeAllSites",
+      "roleWithoutDataTypesGrantsNothing",
+      "duplicateGrantsAreCollapsed",
+      "accountScopeIsAdditive",
+      "dataTypesAreOrderedStably",
+      "ownOnlyStaysPerTuple",
+      "roleWithoutSitesGrantsNothing",
+      "accountSitesAreUnioned",
+      "roleAllSitesForcesEmptySiteList",
+      "emptyUserScopeAddsNothing"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.SessionRenewalTests",
+    "tests": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "staysAtTheAbsoluteDeadlineOnceReached",
+      "doesNotWriteWhenTheClockWentBackwards",
+      "rejectsNullArguments",
+      "renewsWhenTheNewValueIsLater",
+      "neverPushesPastTheAbsoluteDeadline",
+      "doesNotWriteWhenTheValueWouldNotMove"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "tests": 5,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "beginUsesConfiguredTtls",
+      "beginRejectsAccountDisabledAfterPasswordCheck",
+      "beginRevokesPresentedSidEvenIfItBelongsToAnotherAccount",
+      "beginRevokesAllSessionsEvenWithoutPresentedSid",
+      "beginRejectsAccountDeletedAfterPasswordCheck"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.SessionServiceLogoutTests",
+    "tests": 4,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "endReportsFalseWhenTheSessionWasAlreadyRevoked",
+      "realRepositoryRejectsNullSessionId",
+      "endRevokesTheAuthenticatedSession",
+      "endIsIdempotentAcrossCalls"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "realRepositoryRejectsNullSessionId",
+      "renewNeverPushesPastAbsolute",
+      "renewPropagatesStorageFailure",
+      "renewIsNoOpWhenAlreadyAtAbsolute",
+      "renewReturnsLaterIdleWhenConcurrentRenewWon",
+      "renewAdvancesIdleAndKeepsAbsolute",
+      "renewRejectsSessionRevokedConcurrently"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "tests": 6,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "cancelAndRetryFollowTheContractSemantics",
+      "reaperReclaimsExpiredLeaseAndClosesTheAttempt",
+      "duplicateIdempotencyKeyCreatesOneTaskAndDifferentPayloadConflicts",
+      "finishedTaskCannotBeClaimedAgain",
+      "reaperFailsTaskOnceAttemptsAreExhausted",
+      "claimAndFinishDriveTheTriggerBackedStateMachine"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskDomainTests",
+    "tests": 14,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "hashAllowsNullParameterValues",
+      "transitionTableMatchesTheDatabaseTriggerForEveryPair",
+      "hashCoversSchemaVersionAndIsSixtyFourLowercaseHex",
+      "requireAcceptsLegalTransitionAndRejectsIllegalOne",
+      "heavyTaskTypesMatchTheSignedList",
+      "canonicalJsonSortsKeysSoInsertionOrderDoesNotMatter",
+      "leaseIsExpiredAtTheExactBoundary",
+      "perUserQuotaConstantsMatchTheSignedPolicy",
+      "commandValidatesIdentityAndPriority",
+      "deadlineIsNowPlusLease",
+      "sideEffectTaskTypesAreExactlyTheOnesThatCannotBeRetriedBlindly",
+      "terminalStatesAreTerminal",
+      "onlyRunningTasksWithExpiredLeasesNeedReaping",
+      "stateMachineRejectsNull"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "tests": 7,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "retryWithSameKeyReplaysAndDoesNotRetryTwice",
+      "concurrentCreateWithSameKeyYieldsOneTaskForEveryCaller",
+      "idempotencyScopeIsActorAndOperation",
+      "concurrentCreateWithDifferentPayloadsHasExactlyOneWinner",
+      "sameKeyDifferentTaskConflictsWith409",
+      "cancelWithSameKeyReplaysOriginalResponseWithoutSecondSideEffect",
+      "unknownOutcomeCannotBeRetriedAndLeavesNoLedgerRow"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "tests": 20,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "dataScopeShrinkAfterClaimBlocksPublish",
+      "staleGenerationAfterReclaimCannotPublish",
+      "contextScopeNeverMultipliesTypesAndSitesAcrossRoles",
+      "concurrentCancelAndFinishNeverProduceTwoTerminalOutcomes",
+      "shrunkContextCannotBeUsedToSubmit",
+      "expiredContextCannotBeUsedToSubmit",
+      "exportResultMustBelongToCurrentOwner",
+      "rejectedPublishLeavesConsistentAttemptEventAndPointerState",
+      "cancelRequestIsNotACompletedCancellation",
+      "exportedFileMustBeActiveAtPublishTime",
+      "taskTypeNarrowedByPermissionCannotBeSubmitted",
+      "permissionRevokedAfterClaimBlocksPublishAndFailsAttempt",
+      "foreignContextIsHiddenBehind404",
+      "activeFileWithoutAnExpiryCannotBePublished",
+      "validLeaseAndScopePublishesSuccess",
+      "matchingVersionsDoNotOverrideTheCurrentTypedScope",
+      "leaseMustStillBeValidAtPublishAndHeartbeatExtendsIt",
+      "exportsUseTheirOwnDomainPermissionRatherThanCapturePermissionForEveryExport",
+      "expiredLeaseCannotPublish",
+      "wrongOwnerCannotPublishEvenWithRightGeneration"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "tests": 11,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "pendingTasksCountTowardTheFiveWaitingTaskLimit",
+      "fullComputeBudgetDoesNotBlockAnAvailableNotificationSlot",
+      "queueDeadlineFailsTasksThatWaitedTooLong",
+      "queuedTasksPerOwnerAreCappedAtFive",
+      "claimOrderFollowsPriorityThenSubmittedAtThenId",
+      "globalQueueCapIsEnforced",
+      "heartbeatExtendsLeaseByLeaseDuration",
+      "threeQueuedHeavyTasksStillAllowTheFirstTwoToBeClaimed",
+      "executionDeadlineRequestsCancellation",
+      "concurrentClaimsNeverHandOutTheSameTaskTwice",
+      "workerOnlyClaimsSupportedTypesWithinLimit"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "tests": 18,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "attemptsReturnRowsInAttemptOrderWithNullableFinish",
+      "listMapsFailedTaskToContractErrorCode",
+      "listRequiresTaskReadPermission",
+      "listAddsResultReferenceWhenResultAssetExists",
+      "listPassesFiltersAndPagingToRepository",
+      "attemptsForTaskWithoutAttemptsReturnEmptyList",
+      "listHidesSensitiveParametersBehindSnapshotSummary",
+      "getUnknownTaskIsNotFound",
+      "listDerivesExportResourceTypeWithoutResourceId",
+      "listRejectsInvertedCreatedWindow",
+      "attemptsRequireTaskReadPermission",
+      "listRejectsPageBelowOne",
+      "listRejectsPageSizeAboveHundred",
+      "getRequiresPermissionBeforeTouchingRows",
+      "listReturnsContractPageShape",
+      "getHidesAnotherUsersTaskAsNotFound",
+      "attemptsHideAnotherUsersTaskAsNotFound",
+      "getReturnsOwnTask"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskResultReferenceTests",
+    "tests": 3,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "httpResponseExposesTheTypedReference",
+      "everyTaskTypePublishesTheContractShape",
+      "missingDomainRowBlocksPublish"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskServiceTests",
+    "tests": 23,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "createFailsWithConflictWhenIgnoredInsertWinnerCannotBeRead",
+      "claimNextPromotesPendingTaskAndRecordsBothTransitions",
+      "createTreatsIgnoredConflictAsIdempotentReplay",
+      "retryOnlyAcceptsFailedTask",
+      "createReplaysExistingTaskWhenParametersMatch",
+      "renewReportsLeaseLoss",
+      "claimNextPassesWorkerCapabilitiesAndLimitToRepository",
+      "claimNextReturnsEmptyWhenQueueIsEmpty",
+      "finishRejectsWhenLeaseWasStolen",
+      "reapFailsTaskWhenAttemptsAreExhausted",
+      "cancelRunningTaskOnlyRecordsRequest",
+      "cancelAlreadyCancelledTaskIsIdempotent",
+      "createRejectsConflictWhenStoredParametersDiffer",
+      "reapFailsSideEffectTaskWithUnknownOutcomeAndDoesNotRetry",
+      "reapCancelsTaskWhoseCancellationWasRequested",
+      "claimNextWritesAttemptAndRunningEvent",
+      "createPersistsPendingTaskAndCreationEvent",
+      "cancelQueuedTaskIsImmediate",
+      "cancelTerminalTaskIsRejected",
+      "createRejectsSameKeyWithDifferentParameters",
+      "finishRejectsNonTerminalOutcome",
+      "getHidesForeignTaskBehindNotFound",
+      "reapRequeuesExpiredLeaseAndClosesAttempt"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskSideEffectOutcomeTests",
+    "tests": 3,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "pureComputeIsRequeuedWhileSideEffectGoesUnknown",
+      "resetCommandThatLostItsLeaseEndsUnknownAndIsNeverRedispatched",
+      "deviceCommandTtlCapsLeaseAt120SecondsFromStart"
+    ]
+  },
+  {
+    "class": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "tests": 10,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "cancelOfRunningTaskOnlyRegistersRequest",
+      "retryRequiresTaskManagePermission",
+      "cancelOfQueuedTaskBecomesCancelledImmediately",
+      "retryOfFailedTaskRequeuesSameTaskAndKeepsSnapshot",
+      "cancelHidesAnotherUsersTask",
+      "cancelOfRunningTaskWhoseStateChangedReportsConflict",
+      "retryOfNonFailedTaskIsRejected",
+      "cancelOfTerminalTaskIsRejected",
+      "cancelRequiresTaskManagePermission",
+      "cancelOfCancelledTaskIsIdempotent"
+    ]
+  }
+]

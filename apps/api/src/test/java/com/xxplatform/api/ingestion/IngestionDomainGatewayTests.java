@@ -87,6 +87,14 @@ class IngestionDomainGatewayTests {
         file=new FileInfo(FILE,"ACTIVE","RAW_INGESTION","PLATE_A",now,true,"v1");
         fails(ErrorCode.FILE_EXPIRED,this::create);
     }
+    @Test void activeFileWithoutAnExpiryCannotCreateTask() {
+        file=new FileInfo(FILE,"ACTIVE","RAW_INGESTION","PLATE_A",null,true,"v1");
+        fails(ErrorCode.FILE_EXPIRED,this::create);
+    }
+    @Test void activeFileWithoutAnExpiryCannotBeReplayed() {
+        file=new FileInfo(FILE,"ACTIVE","RAW_INGESTION","PLATE_A",null,true,"v1");
+        fails(ErrorCode.FILE_EXPIRED,()->replay(null,null,APPROVAL));
+    }
     @Test void absentSourceIsUnavailableForBusiness() {
         source=null; fails(ErrorCode.REQUIREMENT_PENDING,this::create);
     }

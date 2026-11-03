@@ -24,7 +24,7 @@ import static org.mockito.Mockito.*;
 /** Exercises normal-profile HTTP -> DEV2 orchestration -> supplied upstream ports. */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         properties = "spring.profiles.active=integration")
-class DataIntegrationTests {
+class DataIntegrationTests extends com.xxplatform.api.support.DataHttpTestSupport {
     @Autowired TestRestTemplate rest;
     @Autowired ObjectMapper mapper;
     @Autowired CaptureExportSourceAdapter exports;
@@ -35,18 +35,20 @@ class DataIntegrationTests {
     @MockitoBean PlateQueryAdapter.Client plate;
     @MockitoBean PlateQueryAdapter.TargetLookup targets;
     @MockitoBean CaptureExportSourceAdapter.ContextLookup contexts;
-    private final UUID batch = new UUID(0,1), actor = new UUID(0,2), task = new UUID(0,3);
+    private final UUID batch = new UUID(0,1), task = new UUID(0,3);
+    private UUID actor;
     private final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
     private IngestionQueryService.ReadScope scope;
     private Authority authority;
     private HttpHeaders headers() {
-        var h = new HttpHeaders();
+        var h = authenticatedHeaders();
         h.setContentType(MediaType.APPLICATION_JSON);
-        h.set("X-CSRF-Token", "integration-csrf-token");
+        h.set("X-CSRF-Token", csrfToken());
         h.set("Idempotency-Key", "integration-idempotency-key");
         return h;
     }
     @BeforeEach void setUp() {
+        actor = currentUserId();
         scope = new IngestionQueryService.ReadScope(actor, "scope-v1", Set.of(batch));
         authority = new Authority(actor,"scope-v1",List.of(new ScopeTuple("PLATE",batch,true)),
                 new QueryBudget(Duration.ofDays(31),Duration.ofSeconds(3)));
@@ -58,6 +60,15 @@ class DataIntegrationTests {
                 "mappingVersion","map-v1","dedupVersion","dedup-v1",
                 "status","SUCCESS","createdAt",now.toString(),
                 "acceptedCount",0,"rejectedCount",0,"duplicateCount",0);
+    }
+    @Test void invalidCsrfCannotReachTheSuppliedDomainPorts() throws Exception {
+        var invalid = headers();
+        invalid.set("X-CSRF-Token", "synthetic-invalid-token");
+        var response = rest.postForEntity("/captures/search", new HttpEntity<>(
+                "{\"dataType\":\"PLATE\",\"timeRange\":{\"from\":\"2026-10-24T10:00:00Z\",\"to\":\"2026-10-24T11:00:00Z\"}}", invalid), String.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(mapper.readTree(response.getBody()).path("code").asText()).isEqualTo("AUTH_CSRF_INVALID");
+        verifyNoInteractions(plate, submissions);
     }
     @Test void ingestionReadsUseSuppliedClientAndFreshScope() throws Exception {
         when(ingestion.listBatches(anyMap(),same(scope))).thenReturn(
@@ -92,7 +103,7 @@ class DataIntegrationTests {
         var body = "{\"dataType\":\"PLATE\",\"cursor\":\"opaque\",\"timeRange\":{\"from\":\"2026-10-24T10:00:00Z\",\"to\":\"2026-10-24T11:00:00Z\"}}";
         assertThat(rest.postForEntity("/captures/search",new HttpEntity<>(body,headers()),String.class)
                 .getStatusCode()).isEqualTo(HttpStatus.OK);
-        verify(access).requireAccess("capture:read","integration-csrf-token");
+        verify(access).requireAccess("capture:read",csrfToken());
         verify(plate).search(same(authority),anyMap(),eq("opaque"),eq(Duration.ofSeconds(3)));
     }
     @Test void mapDelegatesToDataSide() {
@@ -105,7 +116,7 @@ class DataIntegrationTests {
         verify(access).requireAccess("map:read",null);
     }
     @Test void submissionCallsSharedAtomicBridge() throws Exception {
-        when(access.requireWriteAccess("integration-csrf-token")).thenReturn(
+        when(access.requireWriteAccess(csrfToken())).thenReturn(
                 new IngestionBatchSubmissionService.AuthorizedActor(actor,"scope-v1"));
         when(submissions.submit(any(),eq("createIngestionBatch"),eq("integration-idempotency-key"),
                 isNull(),any(),any())).thenReturn(new IngestionDomainGateway.Committed(batch,task,TaskStatus.QUEUED,now));
@@ -132,18 +143,18 @@ class DataIntegrationTests {
         when(contexts.load(batch,authority)).thenReturn(new CaptureExportSourceAdapter.FrozenContext(
                 batch,"CAPTURE_SEARCH",now.plusHours(1),query));
         when(targets.resolve(authority,"SYNTHETIC")).thenReturn(Optional.of(task));
-        var source = exports.prepare("integration-csrf-token",batch,"CSV",List.of("captureId"),"test");
+        var source = exports.prepare(csrfToken(),batch,"CSV",List.of("captureId"),"test");
         assertThat(source.query().filters()).containsEntry("targetIds",List.of(task))
                 .doesNotContainKeys("pageSize","cursor","plateNumber");
-        verify(access).requireAccess("capture:export","integration-csrf-token");
+        verify(access).requireAccess("capture:export",csrfToken());
         verify(contexts).load(batch,authority);
         verify(targets).resolve(authority,"SYNTHETIC");
     }
 
     @Test void replayAndBackfillReachSharedSubmissionWithCorrectOperation() {
-        when(access.requireReplayAccess("integration-csrf-token",batch)).thenReturn(
+        when(access.requireReplayAccess(csrfToken(),batch)).thenReturn(
                 new IngestionBatchReplayService.ReplayActor(actor,"scope-v1"));
-        when(access.requireBackfillAccess("integration-csrf-token","PLATE_A")).thenReturn(
+        when(access.requireBackfillAccess(csrfToken(),"PLATE_A")).thenReturn(
                 new IngestionBackfillService.BackfillActor(actor,"scope-v1"));
         when(submissions.submit(any(),anyString(),anyString(),isNull(),any(),any()))
                 .thenReturn(new IngestionDomainGateway.Committed(new UUID(0,10),task,TaskStatus.QUEUED,now));
