@@ -1,6 +1,8 @@
 # PR #3 修复记录
 
-当前结论见 [主分支规则修复与复核](final-main-rule-verification.md)，规则版本、逐项修复、测试证据及未接入能力均在其中列明。
+2026-11-03：PR #3 已按用户指示合入 main，合并提交为 `ea741a181fd7a481cb228cf843b09b1c0ac8e2b1`。本次复审仍有 **6 项待修 Bug**，当前台账见 [已知 Bug 与修复登记](known-bugs-2026-11-03.md)，状态均为 OPEN。合并不代表这些问题已经修复。
+
+此前修复和验证记录见 [主分支规则修复与复核](final-main-rule-verification.md)，规则版本、逐项修复、测试证据及未接入能力均在其中列明；后续复审发现的问题按上述台账继续跟踪。
 
 - [主分支原件比对清单](main-rule-baseline.json)
 - [最终验证及受测文件摘要](final-verification.json)
