@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M01",
+    "title": "数据库启动及测试配置",
+    "status": "已修复",
+    "evidence": "合入修复后 #3，六类HTTP套件共享隔离真库配置，实际登录并校验/me；完整测试通过。"
+  },
+  {
+    "id": "M02",
+    "title": "dev-check合并冲突",
+    "status": "已修复",
+    "evidence": "保留dev,db及health/ready，统一生成/完整验收入口，缺少测试库输入时先报错。"
+  },
+  {
+    "id": "M03",
+    "title": "8处旧构造方法",
+    "status": "已修复",
+    "evidence": "全部改为RequestIdFilter(false)，没有改变公共实现的安全默认值。"
+  },
+  {
+    "id": "M04",
+    "title": "18项假CSRF HTTP测试",
+    "status": "已修复",
+    "evidence": "改为真实数据库账号、真实HTTP登录、SID和登录轮换后绑定的CSRF，保留Filter并新增错误token拒绝用例。"
+  },
+  {
+    "id": "M05",
+    "title": "ACTIVE文件无到期时间仍可引用",
+    "status": "已修复",
+    "evidence": "接入及回放均拒绝空到期时间；新增两个回归，既有到期边界和有效文件用例保留。"
+  },
+  {
+    "id": "M06",
+    "title": "详情及错误行缩写UUID",
+    "status": "已修复",
+    "evidence": "两个入口复用严格UUID检查；新增两个路径负例，合法UUID及隐藏对象404用例继续通过。"
+  },
+  {
+    "id": "M07",
+    "title": "构建与启动说明失配",
+    "status": "已修复",
+    "evidence": "生成profile默认激活并实跑无显式profile的生成；当前README/环境示例统一，旧说明保留为历史。"
+  },
+  {
+    "id": "G01",
+    "title": "组合CI缺少真实数据库",
+    "status": "本地等效检查通过，远程CI待上传后运行",
+    "evidence": "工作流提供PostgreSQL/PostGIS及XX_TASK_IT_DB_*并保留Surefire；本地实际完整785项通过，未声称远程CI已变绿。"
+  },
+  {
+    "id": "P01",
+    "title": "SharedAccess真实身份/范围适配",
+    "status": "保持未绑定、按规则不可用",
+    "evidence": "本轮不制造生产适配Bean；真实SID/CSRF已进入测试装配，测试替身仍只证明编排边界。"
+  },
+  {
+    "id": "P02",
+    "title": "AtomicSubmission真实领域事务",
+    "status": "保持未绑定、按规则不可用",
+    "evidence": "需要真实批次、公共任务、幂等回执、审批、审计的同事务实现后方可启用。"
+  },
+  {
+    "id": "P03",
+    "title": "回放/补数真实资源与审批消费",
+    "status": "保持未绑定、按规则不可用",
+    "evidence": "保留 #3 缺少完整领域解析时503的保护，不以UUID格式代替批准。"
+  },
+  {
+    "id": "P04",
+    "title": "真实数据、查询窗口及目标LOOKUP",
+    "status": "保持未绑定、按规则不可用",
+    "evidence": "没有真实服务/资源绑定时不编造传输地址、身份或查询结果。"
+  },
+  {
+    "id": "P05",
+    "title": "完整Context和真实导出执行",
+    "status": "保持未绑定、按规则不可用",
+    "evidence": "不把已注册的来源Bean宣称成真实导出闭环，沿用 #3 文件和下载许可边界。"
+  }
+]

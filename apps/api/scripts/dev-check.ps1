@@ -55,14 +55,20 @@ if (-not $ok) {
     exit 1
 }
 
-Show-Step 'Offline compile (mvn -o -B -q compile)'
+if (-not $env:XX_TASK_IT_DB_URL) {
+    Write-Host '  [FAIL] Set XX_TASK_IT_DB_URL to a disposable PostgreSQL/PostGIS test database.' -ForegroundColor Red
+    Write-Host '         Use XX_TASK_IT_DB_USER and XX_TASK_IT_DB_PASSWORD for its credentials.' -ForegroundColor Yellow
+    exit 1
+}
+
+Show-Step 'Contract generation and verification (mvn -B -Pgenerate-api clean verify)'
 Push-Location $apiDir
 try {
-    & mvn -o -B -q compile
+    & mvn -B -Pgenerate-api clean verify
     if ($LASTEXITCODE -eq 0) {
-        Write-Host '  [OK]   compile passed' -ForegroundColor Green
+        Write-Host '  [OK]   clean verify passed' -ForegroundColor Green
     } else {
-        Write-Host '  [FAIL] compile failed; see Maven output above' -ForegroundColor Red
+        Write-Host '  [FAIL] clean verify failed; see Maven output above' -ForegroundColor Red
         Write-Host '         If it cannot resolve a plugin/dependency you may be offline:' -ForegroundColor Yellow
         Write-Host '         compile dependencies are usually cached, but plugins' -ForegroundColor Yellow
         Write-Host '         (clean/package/openapi-generator) need one online fetch.' -ForegroundColor Yellow
@@ -78,7 +84,7 @@ if ($ok) {
     Write-Host @'
   1) Start the service (the DB profile is required from task 4 on):
        cd apps/api
-       mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
+       mvn -B -Pgenerate-api spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 
   2) In another terminal, verify the contract envelope:
        curl.exe http://127.0.0.1:8080/api/v1/health

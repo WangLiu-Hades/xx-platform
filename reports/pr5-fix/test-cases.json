@@ -1,0 +1,5497 @@
+[
+  {
+    "suite": "com.xxplatform.api.api.CorsContractTests",
+    "name": "sameOriginRequestWithoutOriginHeaderPasses",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.CorsContractTests",
+    "name": "preflightFromUntrustedOriginIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.CorsContractTests",
+    "name": "actualRequestEchoesTrustedOriginWithoutWildcard",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.CorsContractTests",
+    "name": "preflightFromTrustedOriginAllowsContractHeaders",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.CorsContractTests",
+    "name": "actualRequestFromUntrustedOriginIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileControllerTests",
+    "name": "attachmentHeaderFallsBackForMissingName",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileControllerTests",
+    "name": "attachmentHeaderPercentEncodesChineseName",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileControllerTests",
+    "name": "attachmentHeaderUsesRfc5987WithUtf8Name",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "csvQuotedNewlinesAreAcceptedAndColumnMismatchIsQuarantined",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "activeFileWithoutExpiryIsNeverPermanentlyDownloadable",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "expiredFileCannotBeReadOrDownloaded",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "validJsonBecomesActive",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "uploadPngIsActiveAndDetailAndDownloadWork",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "xlsxIsParsedForRealAndTruncatedXlsxIsQuarantined",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "processingAndForeignAssetsAreHidden",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "missingDownloadKeyKeepsMetadataAvailableAndDownloadUnavailable",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "authenticatedOwnerCanPollAnUploadWithoutDownloadPermissions",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "downloadRequiresItsOwnShortLivedPermit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "oversizeAndUnsupportedTypeAreRejectedAndAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "disabledPolicyRejectsUploadAndIsAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "downloadRequiresFileDownloadAndRevocationInvalidatesTheOldUrl",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "idempotentReplayReturnsSameAssetAndDoesNotDuplicateRows",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.api.FileHttpIntegrationTests",
+    "name": "invalidJsonIsQuarantinedAndCannotBeDownloaded",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ApiApplicationTests",
+    "name": "unknownRouteReturnsContractErrorEnvelope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "renewIsClampedToTheAbsoluteDeadlineAndKeepsSidAndCsrf",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "legacySessionWithoutCompleteBindingRequiresNewLogin",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "originIsCheckedBothWaysOnReadAndWrite",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "passwordChangeRotatesCredentialsAndEnforcesIdempotency",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "initialPasswordUserIsGatedAndUnblockedByChangingPassword",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "expiredSessionCannotBeRevivedEvenWhenLastSeenIsFresh",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "userAgentChangeRequiresReloginAndIsAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "idleSlidesOnActiveRequestsButNotOnPollingPathsOrBackgroundHeader",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "loginOutsideConfiguredCidrIsRejectedAndAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "longUserAgentRemainsBoundAfterLoginAndSuffixChangesAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "csrfIssuedBeforeLoginIsRevokedByLoginAndRotatedValueWorks",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "loginLogoutAndPasswordChangeLeaveAuditEvents",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "credentialResponsesAreNotCacheable",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+    "name": "clientIpChangeRequiresReloginAndIsAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "malformedHopStopsResolution",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "trustedProxyResolvesRightmostUntrustedHop",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "forgedForwardedHeaderCannotBypassLoginCidr",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "allowedFollowsCidrAndDefaultsToDeny",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "forwardedHeaderFromUntrustedPeerIsIgnored",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.ClientNetworksTests",
+    "name": "sameAddressComparesBytes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "loginFromForeignOriginIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "nonBrowserStillNeedsToken",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "rejectionCarriesRequestTraceId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "refererFallsBackWhenOriginIsAbsent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "everyWriteMethodIsGated(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "everyWriteMethodIsGated(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "everyWriteMethodIsGated(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "postWithoutTokenIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "foreignOriginIsRejectedEvenWithValidToken",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "loginIsTokenExempt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "sameOriginPasses",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "storageFailureFailsClosed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "postWithWrongTokenIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "postWithValidTokenPairPasses",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.CsrfFilterTests",
+    "name": "readRequestsAreNotGated",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "name": "rejectsBlankKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "name": "rejectsKeyAboveMaximum",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "name": "rejectsKeyBelowMinimum",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "name": "rejectsMissingKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+    "name": "acceptsBoundaryLengthsAndTrims",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "differentIpHasSeparateBucket",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "recoversAfterLockout",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "clearResetsHistory",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "loginNameIsCaseSensitive",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "blocksAtThreshold",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "keyShape",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "failuresOutsideWindowArePruned",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.LoginThrottleTests",
+    "name": "allowsBelowThreshold",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "malformedStoredValueIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "saltIsRandomPerHash",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "hashThenVerify",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "longPasswordNotTruncatedAt72Bytes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "wrongPasswordRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.infra.PasswordHasherTests",
+    "name": "nonAsciiPasswordRoundTrip",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "requiredFieldsCannotBeOmitted(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "requiredFieldsCannotBeOmitted(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "requiredFieldsCannotBeOmitted(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "equalOrReversedInstantsAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "equalOrReversedInstantsAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "forwardsUtcWindowAndApprovalAndReturnsTypedReceipt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "missingHeaderIs400AndMalformedApprovalIs400",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "repeatedCallsReauthorizeBeforeTheDurableGateway",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "timezoneIsMandatory(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "timezoneIsMandatory(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "timezoneIsMandatory(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "unavailableConfigurationReturns503WithoutAReceipt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "accessFailuresStopCreation(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "accessFailuresStopCreation(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "accessFailuresStopCreation(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "accessFailuresStopCreation(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "blankTextIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "blankTextIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "unknownFieldsAndExplicitNullAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "sharedApprovalSourceAndTaskFailuresRemainErrors(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "sharedApprovalSourceAndTaskFailuresRemainErrors(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "sharedApprovalSourceAndTaskFailuresRemainErrors(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "sharedApprovalSourceAndTaskFailuresRemainErrors(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBackfillTests",
+    "name": "sharedApprovalSourceAndTaskFailuresRemainErrors(ErrorCode)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "visibleBatchReturnsContractDetailAndTrace",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "malformedBatchIdIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "detailRechecksTheCurrentScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "hiddenAndMissingBatchesUseTheSame404(int)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "hiddenAndMissingBatchesUseTheSame404(int)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "listEntryAndDetailAreTheSameBatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "simulatedAccessFailuresKeepTheirStatus(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "simulatedAccessFailuresKeepTheirStatus(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "shortenedUuidCannotResolveAnOtherwiseVisibleBatch(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchDetailTests",
+    "name": "shortenedUuidCannotResolveAnOtherwiseVisibleBatch(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "hiddenAndMissingBatchesReturnTheSame404(int)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "hiddenAndMissingBatchesReturnTheSame404(int)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "cursorCannotUseAnOldScopeVersion",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "boundedCacheEvictsOldContinuations",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "cursorCannotChangePageSize",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "simulatedAccessFailuresKeepTheirHttpStatus(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "simulatedAccessFailuresKeepTheirHttpStatus(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "laterPagesDoNotExtendTheOriginalExpiry",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "cursorCannotBeUsedForAnotherReadableBatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "defaultResponseContainsPublicErrorsAndMatchingTrace",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "invalidUuidIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "expiredCursorIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "changedCursorCannotContinue",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "nextCursorReturnsRemainingRowsAndCanBeReplayed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "readableBatchWithoutErrorsHasAnEmptyPage",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "aNewPagerDoesNotAcceptAnOldProcessCursor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "cursorCannotBeUsedByAnotherPrincipal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "lostBatchAccessIsRecheckedBeforeContinuing",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "errorsAreOrderedByRowThenInternalIdWithoutSkippingTies",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "changedScopeSetInvalidatesCursorEvenWhenBatchRemainsVisible",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "unknownOrEmptyCursorIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "unknownOrEmptyCursorIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "invalidPageSizesAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "invalidPageSizesAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "invalidPageSizesAreRejected(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchErrorTests",
+    "name": "invalidPageSizesAreRejected(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "simulatedMissingPermissionReturns403",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "statusSortIsStableAndAscending",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "invalidInputUsesContractError(String)[7]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "emptyTrustedScopeMeansNoRows",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "hugePageReturnsEmptyItemsAndKeepsActualTotal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "pageTwoUsesStableIdTieBreaker",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "simulatedMissingSessionReturns401",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "filteringUsesAndAndCountsBeforePaging",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "emptyFilterReturnsZeroTotal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "authorizationIsRefreshedForEachCall",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchListTests",
+    "name": "defaultsAndEnvelopeMatchContract",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchProfileTests",
+    "name": "plainDevProfileExposesRealRouteWithoutMockFallback",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "actualConfigurationRejectsExplicitNullVersion",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "typedApprovalHeaderRejectsInvalidUuid",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "actualConfigurationRejectsShortReason",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "duplicateApprovalHeadersAreRejectedBeforeUnavailableAdapters(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "duplicateApprovalHeadersAreRejectedBeforeUnavailableAdapters(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "actualConfigurationReturns503AndKeepsSourceBatchAndListUnchanged",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayProfileTests",
+    "name": "validApprovalIdentifierDoesNotAuthorizeWithoutSharedServices",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "omittedVersionsRemainOmittedForTrustedSourceVersionResolution",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "duplicateApprovalHeadersAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedAccessFailureStopsReplay(ErrorCode)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[7]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "gatewayApprovalVersionOrSubmissionFailuresArePreserved(ErrorCode)[8]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidCsrfShapeIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidCsrfShapeIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "blankIdempotencyKeyIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidApprovalHeaderIsRejectedBeforeTrustedPorts(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidApprovalHeaderIsRejectedBeforeTrustedPorts(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidApprovalHeaderIsRejectedBeforeTrustedPorts(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "directServiceCallsAlsoRejectMissingBatchOrBody",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[7]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[8]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[9]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[10]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[11]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[12]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[13]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[14]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidBodyCannotReachTrustedPorts(String)[15]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "trustedGatewayReceiptUsesTaskCreatedAndForwardsSourceAndApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "idempotencyKeyLengthIsChecked(int)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "idempotencyKeyLengthIsChecked(int)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "repeatedCallsResolveFreshAccessAndDelegateWithoutLocalIdempotency",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "newBatchReferenceIsReturnedWhenTheTrustedGatewayProvidesIt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidOrAbbreviatedBatchIdIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "invalidOrAbbreviatedBatchIdIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "missingHeadersAreValidationErrors(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "missingHeadersAreValidationErrors(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "missingApprovalIsDelegatedToTheTrustedPolicyAndCannotBeSilentlyApproved",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "unavailableServiceReturns503WithNoFakeTaskReference",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchReplayTests",
+    "name": "missingBodyIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionProfileTests",
+    "name": "domainInputModuleIsActiveInTheRealSpringContext",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionProfileTests",
+    "name": "actualDevConfigurationReturns503AndDoesNotAddABatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredBodyFieldsCannotBeOmitted(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredBodyFieldsCannotBeOmitted(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredBodyFieldsCannotBeOmitted(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredBodyFieldsCannotBeOmitted(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "shortOrBlankIdempotencyKeyIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "shortOrBlankIdempotencyKeyIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "numericStringsAreNotSilentlyCoerced",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "malformedAndAbbreviatedFileIdsAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "malformedAndAbbreviatedFileIdsAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "repeatedInputReauthorizesAndDelegatesReplayWithoutALocalCache",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "shortCsrfHeaderIsRejectedBeforePorts",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredTextCannotBeWhitespace(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredTextCannotBeWhitespace(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "requiredTextCannotBeWhitespace(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "sharedPortFailuresArePropagatedWithoutA202(ErrorCode)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "failedTrustedAccessPreventsSubmission(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "failedTrustedAccessPreventsSubmission(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "failedTrustedAccessPreventsSubmission(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "failedTrustedAccessPreventsSubmission(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "failedTrustedAccessPreventsSubmission(ErrorCode)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "successfulTrustedPortReceiptReturns202AndExactContract",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "missingHeadersAre400RatherThanAnUnhandled500(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "missingHeadersAre400RatherThanAnUnhandled500(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "additionalBodyFieldsAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "nonObjectOrInvalidJsonIsRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "nonObjectOrInvalidJsonIsRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "nonObjectOrInvalidJsonIsRejected(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "overlongIdempotencyKeyIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "nullInputInDirectServiceCallsIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "overlongSourceIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionBatchSubmissionTests",
+    "name": "configuredUnavailableSubmissionNeverReturnsAFakeReceipt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "responseMapsIntoExistingBusinessObjects",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "qualityWindowUsesUtcAndCannotInventMissingBounds",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "unauthorizedProviderRowIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "qualityRequiresAllCountersAndMatchingSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "internalErrorLabelsCannotBecomePublicRowCodes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "countCannotBeMissingFractionalOrOverflowed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "exportExamplesForActualWorkerParserWhenRequested",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "errorPagePreservesOpaqueCursorAndTerminalNull",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "defaultsMatchWorkerParser",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "pageMetadataCannotChange",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionContractAdapterTests",
+    "name": "detailMustMatchRequestedId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "activeFileWithoutAnExpiryCannotBeReplayed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "wrongFileCategoryCannotCreateTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayDoesNotRestoreExpiredData",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayAcceptsAnExplicitCompatiblePair",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayRejectsIncompatibleVersions",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "backfillFreezesUtcAndApprovedDefaultVersions",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "activeFileWithoutAnExpiryCannotCreateTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "sharedSubmissionFailureIsNotReportedAsSuccess",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "absentSourceIsUnavailableForBusiness",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayInheritsOmittedVersionsAndPreservesOriginal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayRejectsMissingOriginal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "backfillRejectsExpiredRange",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "backfillRejectsFutureRange",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "wrongFileSourceCannotCreateTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "expiredFileCannotCreateTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "createFreezesVersionsAndReturnsCommittedIds",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "inactiveFileCannotCreateTask(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "inactiveFileCannotCreateTask(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "inactiveFileCannotCreateTask(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionDomainGatewayTests",
+    "name": "replayCannotSkipSharedApprovalCheck",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "sourceFilterIsAppliedAndEchoed(String, int)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "sourceFilterIsAppliedAndEchoed(String, int)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "sourceFilterIsAppliedAndEchoed(String, int)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "defaultSummaryHasRequiredFieldsWithoutAnAbsentSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "equivalentOffsetTimesSelectTheSameRecords",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "omittedTimeBoundsDoNotAddImplicitFilters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "allProcessingOutcomesAndQualityUnitsAreCounted",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "scopeIsFreshForEveryRequestAndEmptyScopeReturnsZeros",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "equalOrReversedInstantsAreRejected(String, String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "equalOrReversedInstantsAreRejected(String, String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "equalOrReversedInstantsAreRejected(String, String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "startIsInclusive",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "simulatedAccessFailuresUseSharedCodes(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "simulatedAccessFailuresUseSharedCodes(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "failedBatchDiagnosticsAreExcluded",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "emptyTimeRangeResultHasAllFiveZeroCounts",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "malformedOrUnzonedTimesAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "malformedOrUnzonedTimesAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "sourceAndTimeFiltersAreCombined",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "hiddenSuccessfulBatchContributesOnlyAfterARealScopeGrantInTheTest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "endIsExclusiveAndUsesProcessedTime",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQualitySummaryTests",
+    "name": "summaryIsIndependentOfTheBatchListPageSize",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "errorCursorIsPassedUnchangedToExistingSession",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "qualityResolvesMissingWindowAndOmitsMissingSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "invisibleDetailDoesNotCallWorker",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "workerCursorFailureUsesPublicCode",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "largeCountsCannotBeSilentlyTruncated",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "unrecognizedInternalFailureIsNotSuccessOrRawDiagnostic",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "listRejectsAnUnauthorizedReturnedRow",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "qualityConvertsOffsetToUtc",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryAdapterTests",
+    "name": "listMapsDefaultsAndPassesCurrentExplicitScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "totalCannotExceedExplicitBatchGrants",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "qualityUsesTheConcretePolicyAndWholeRetainedRange",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "numericEnumInAProviderReplyIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "workerFailureIsMappedWithoutAFakeSuccess",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "requiredNullableCursorMustStillBePresent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "blankSourceInAProviderReplyIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "duplicateBatchesAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "sourceSpecificQualityCannotReturnAnotherSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "cursorAndCurrentScopeAreForwardedUnchanged",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "privateErrorSummaryIsNotReturned",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.IngestionQueryFlowTests",
+    "name": "emptyErrorPageCannotClaimThereIsAnotherPage",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "exactBudgetBoundaryIsAllowed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "omittedStartUsesTheRetainedLowerBoundary",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "explicitTimesKeepTheirInstantsAndReturnUtc",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "omittedEndUsesTheRetainedUpperBoundary",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "scopeIsForwardedToTheCurrentPolicyLookup",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "omittedTimesUseTheWholeRetainedWindow",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "missingRetentionPolicyDoesNotInventADefault",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "overBudgetIsRejectedWithoutTruncatingTheWindow",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "laterThanRetentionIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "olderThanRetentionIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.ingestion.QualityQueryWindowPolicyTests",
+    "name": "equalOrReversedTimesAreInvalid",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationMissingDependenciesTests",
+    "name": "exportBeanIsPresentButRequiresTrustedDependencies",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationMissingDependenciesTests",
+    "name": "normalProfileUsesStrictDeserializers",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationMissingDependenciesTests",
+    "name": "normalProfileRegistersReadRoutesWithoutDemoFallback",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationMissingDependenciesTests",
+    "name": "writeRoutesDoNotCreateFakeReceipts",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "qualityResolvesServerWindowBeforeCallingDataSide",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "captureForwardsCursorBudgetAndTrustedAuthority",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "invalidCsrfCannotReachTheSuppliedDomainPorts",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "detailAndErrorsUseRealBindings",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "exportBeanConsumesSharedContextAndTargetLookupWithoutPaging",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "ingestionReadsUseSuppliedClientAndFreshScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "mapDelegatesToDataSide",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "replayAndBackfillReachSharedSubmissionWithCorrectOperation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "upstreamCursorFailureIsNotWrappedAsAnInternalError",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "submissionCallsSharedAtomicBridge",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.integration.DataIntegrationTests",
+    "name": "permissionFailureSurvivesBridgeAndKeepsContractEnvelope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "name": "baselineCoversAllSchemasAndGuards",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "name": "contractSchemaHashIsUnchanged",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "name": "baselineStaysFrozen",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "name": "migrationsCoverContractStructure",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.migration.MigrationBaselineTests",
+    "name": "migrationDirectoryFollowsNamingConvention",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "missingTimezonesRemainInvalid(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "missingTimezonesRemainInvalid(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[7]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "explicitlyNullOptionalFieldsRemainInvalid(String)[8]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "directDtoCallsStillValidateTypeRangeAndLists",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "unknownOrWrongSubtypeFieldsRemainInvalid(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "unknownOrWrongSubtypeFieldsRemainInvalid(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "unknownOrWrongSubtypeFieldsRemainInvalid(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "unknownOrWrongSubtypeFieldsRemainInvalid(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "completePlateBodyKeepsExactFiltersIdsAndOpaqueCursor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptySiteAndDeviceListsStayPresent(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptySiteAndDeviceListsStayPresent(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptySiteAndDeviceListsStayPresent(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptySiteAndDeviceListsStayPresent(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[6]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[7]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "minimalBodiesKeepTheirTypeTimesAndDefaults(String, boolean)[8]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedNonemptyTargetListIsNeverCleared(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedNonemptyTargetListIsNeverCleared(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedNonemptyTargetListIsNeverCleared(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedNonemptyTargetListIsNeverCleared(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptyTargetListStillFailsStrictRawValidation(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptyTargetListStillFailsStrictRawValidation(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptyTargetListStillFailsStrictRawValidation(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "suppliedEmptyTargetListStillFailsStrictRawValidation(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "otherSubtypesKeepTheirOwnExactFilters(String, String, String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "otherSubtypesKeepTheirOwnExactFilters(String, String, String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.CaptureSearchBindingTests",
+    "name": "otherSubtypesKeepTheirOwnExactFilters(String, String, String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.DataApiProfileTests",
+    "name": "backfillIsUnavailableAndDoesNotAddAVisibleBatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.DataApiProfileTests",
+    "name": "actualSearchAndMapDoNotUseTheFixedIngestionReadIdentity",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.DataApiProfileTests",
+    "name": "malformedMapAndUnknownCaptureFieldsAre400",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.DataApiProfileTests",
+    "name": "strictBackfillTimesAreActiveInBootContext",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "unresolvedIdentifierCannotContinueAnOldCursor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "wrongContextTypeCannotProduceAnExportSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "emptyColumnsAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "cursorAndTupleScopeRemainSeparateAndUnchanged",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "unresolvedIdentifierReturnsEmptyAndNeverBecomesAnAllDataQuery",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "exportUsesTheWholeFrozenQueryWithoutPageOrCursor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "explicitTargetFilterAndRawIdentifierAreIntersected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "rawPlateIsResolvedAndNeverSentAsAWorkerFilter",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "expiredContextCannotProduceAnExportSource",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryAndExportTests",
+    "name": "plaintextOrUnknownColumnsAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "emptyAuthorizedPagePreservesRequiredNullCursorAndTrace",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "accessFailuresNeverReachTheDataGateway(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "accessFailuresNeverReachTheDataGateway(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "accessFailuresNeverReachTheDataGateway(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "accessFailuresNeverReachTheDataGateway(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "rawExactIdentifiersAreNotReplacedWithMaskedDisplayText",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "missingCsrfIs400",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "plateProjectionPreservesRequiredNullsAndOmitsUnprovidedOptionalFields",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "mapForwardsBoundingBoxAndIntersectionsAsTypedInputs",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "actualUnavailablePortsDoNotReturnInventedSearchOrMapResults",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidRootBodiesAre400(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidRootBodiesAre400(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidRootBodiesAre400(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidRootBodiesAre400(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "dataFailuresAreErrorsInsteadOfSuccessfulPartialPages(ErrorCode)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "dataFailuresAreErrorsInsteadOfSuccessfulPartialPages(ErrorCode)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "dataFailuresAreErrorsInsteadOfSuccessfulPartialPages(ErrorCode)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "dataFailuresAreErrorsInsteadOfSuccessfulPartialPages(ErrorCode)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invisibleCaptureDetailsAre404UnderTheCurrentScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "serverWindowBudgetIsAppliedAfterAuthorization",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidBoundingBoxesAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidBoundingBoxesAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidBoundingBoxesAreRejected(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidBoundingBoxesAreRejected(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidBoundingBoxesAreRejected(String)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "filterScopeAndOpaqueCursorReachTheGatewayWithoutReplacingTupleScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "wrongBranchFieldsOrClientIdentityAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "invalidPageAndEmptyTargetListAreRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "mapDoesNotSilentlyTruncateOverLimitResults",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "scopeIsRefreshedForEveryContinuation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "explicitNullOptionalFieldsAreRejected(String)[1]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "explicitNullOptionalFieldsAreRejected(String)[2]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "explicitNullOptionalFieldsAreRejected(String)[3]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "explicitNullOptionalFieldsAreRejected(String)[4]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.plate.PlateQueryServiceTests",
+    "name": "explicitNullOptionalFieldsAreRejected(String)[5]",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "truncatedCiphertextIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "repositoryConfigurationHasNoBuiltInApprovalKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "missingDeploymentKeyDisablesApprovalInsteadOfFallingBackToARepositoryValue",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "malformedKeyFailsFastAtStartup",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "tamperedCiphertextAndWrongKeyCannotDecrypt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "keyIdIsPersistedWithTheCiphertextButTheKeyNeverIs",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+    "name": "everySealUsesAFreshNonceAndRoundTrips",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "staleContextPermissionVersionIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "duplicateVoteBySameReviewerIsNotCountedTwice",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "exportWorksWithBusinessPermissionWithoutTaskManagement",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "failedExportLeavesApprovalUnconsumed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "oneDeviceKeyChangeNeedsTwoIndependentVotesAndNeverDisplaysTheKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "publishedExportFileRequiresPermitAndCurrentSourcePermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "tamperedCiphertextAndWrongKeyFailClosed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "missingConfigurationAndOutOfScopeReviewersDisableCreation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "outOfScopeReviewerCannotReadDetailsOrListTheApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "expiredExecutionGrantIsGone",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "approvalCreationIsIdempotentPerKeyAndRejectsDifferentContent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "insufficientEligibleApproversRejectsCreation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "changedGroupMembershipInvalidatesTheFrozenApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "executionIsRejectedAfterTargetVersionChanges",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "requesterAndExecutorCannotApproveTheirOwnRequest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "deviceGroupIsResolvedServerSideAndDrivesTwoVoteRequirement",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "rejectionAuditSurvivesBusinessRollback",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "nonexistentAndUnconnectedTargetsNeverProduceVerifiedApplications",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "approvalDecisionIsIdempotentPerKeyAndStillCountsOneVotePerApprover",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "changedAuthorizationAndRemovedReviewerCannotConsumeApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "rolledBackExportTransactionLeavesApprovalUnconsumedAndNoTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "approvalReplayRechecksCurrentPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "exportRequiresApprovalAndConsumesItExactlyOnce",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "concurrentConsumptionAllowsExactlyOneSuccess",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "approvalsAndExportRejectionsAreAudited",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "concurrentIdenticalApprovalKeysCreateExactlyOneApplication",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "contextDataTypeOutsideCurrentScopeIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "unknownTargetDeviceCannotBeFrozenIntoAnApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "idempotencyKeyIsScopedToActor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "grantApplicationCannotExceedTheGrantorsCeiling",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "actionPermissionAloneIsNotEnoughToVote",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "ifMatchMustMatchTheFrozenDeviceVersion",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+    "name": "reviewItemsMaskNestedSecretsAndCiphertextCarriesNoPlaintext",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "exportOperationsAllRequireCaptureExport",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "deviceBatchesNeedTwoApprovalsOnlyAtTenDevices",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "everyOperationCarriesAPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "parsesOnlyRegisteredOperationIds",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "nonDeviceOperationsStayAtOneApprovalEvenWithManyItems",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "catalogsEveryProposalInTheContract",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalOperationTests",
+    "name": "decryptionAlwaysNeedsTwoApprovals",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsInvalidBusinessBodyEvenWhenKeysAreAllowed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsPasswordsThatThePasswordPolicyWouldRejectAtExecutionTime",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "digestChangesWhenContentChanges",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsEmptyPayload",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "digestIsStableAcrossKeyOrder",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "deviceBatchAtThresholdNeedsTwoApprovals",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsPathParametersThatDoNotMatchThePathTemplate",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "pathParametersProposalWorksForDecryptionReview",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "reviewItemsCanBeRebuiltFromCanonicalJson",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsUnknownKeys",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsRequestBodyKeysOutsideTheOperationSchema",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "adminPasswordResetUsesReasonAndNewPasswordWithoutCurrentPassword",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsProposalsWhoseReviewItemsExceedTheCap",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "roleProposalCannotOmitAnyRequiredInputField",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "everyApprovalOperationHasAProposalSpec",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "masksSensitiveValuesNestedInSerializedJsonStrings",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "acceptsCreateExportProposalWithRequestBody",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "ifMatchIsBoundIntoTheDigest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsDisplayValuesBeyondThePerItemBudget",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "parameterChangesAreTypedArraysAndIfMatchIsAQuotedVersion",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "expandsDeviceIdsIntoOneReviewItemPerDevice",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsIfMatchOfWrongShape",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "masksSensitiveValuesInReviewItems",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "rejectsUnknownOperation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+    "name": "updateDeviceParametersRequiresIfMatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createFailsClosedWhenNoPayloadKeyIsConfigured",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeRejectsPendingApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "invalidCursorIsValidationError",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createRejectsShortReason",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createRejectsWhenTooFewEligibleApprovers",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createAllowsSingleApproverOperationWhenDeploymentHasOneApprover",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "pageSizeOutOfRangeIsValidationError",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "repeatingTheSameDecisionIsIdempotent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "wrongCurrentPasswordIsRejectedWithoutRecordingDecision",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeRejectsExpiredExecutionGrant",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "twoApprovalsAreCollectedThenGranted",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "requesterCannotApproveOwnRequest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeRejectsDigestMismatchAndKeepsGrantUsable",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeRejectsOperationMismatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createRequiresTheOperationPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "expiredPendingApprovalIsMarkedAndRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeRejectsExecutorOtherThanTheDesignatedOne",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "listReturnsOwnApplicationAndReviewableItemsWithCursor",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "reviewerWithPermissionCanReadAndSeeReviewItems",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "approvingACompletedApprovalIsConflict",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "createFreezesProposalWithDigestAndPendingStatus",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "versionConflictOnConcurrentDecisionIsReported",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "consumeMarksApprovalConsumedAndIsSingleUse",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "strangerCannotReadApproval",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.ApprovalServiceTests",
+    "name": "rejectionEndsTheApprovalImmediately",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.approval.AuthorizationBoundsTests",
+    "name": "authoritativeTypedGrantsAreNotExpandedIntoAProjectionCrossProduct",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+    "name": "failureAuditSurvivesBusinessRollback",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+    "name": "successAuditIsWrittenOnceOnCommit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+    "name": "auditWithoutOuterTransactionIsWritten",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+    "name": "auditRowIsAppendOnly",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "missingKeyNamesTheKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "oversizedUploadLimitIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "parsesValidObject",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "zeroIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "foreignTimeZoneIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "foreignCoordinateSystemIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "wrongTypeIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "nonObjectIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ClientConfigScalarsTests",
+    "name": "unknownKeysAreTolerated",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsEmptyColumnList",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createFreezesTaskAndExportJobForPlateExport",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createAcceptsBoundedGeneralRangeAcrossDataTypes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsExpiredContext",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createStoresFrozenLimitsInTaskParameters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsUnknownContext",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createKeepsRequestedColumnOrderAndDeduplicates",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsMissingPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsSameKeyWithDifferentParameters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsUnboundedGeneralRange",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsColumnFromAnotherDataType",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsUnsupportedContextType",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createReplaysSameKeyWithSameParameters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createRejectsUnknownColumn",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ExportServiceTests",
+    "name": "createHidesContextOwnedBySomeoneElse",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "permitCannotOutliveFileRetention",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "permitIsBoundToFileAndSession",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "deploymentMustBindASigningKey",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "permitExpiresExactlyAtFiveMinutes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "revocationInvalidatesAnUnexpiredPermitImmediately",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.DownloadPermitsTests",
+    "name": "missingOrModifiedPermitIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "importRowLimitIsEnforced",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "disabledPolicyRejectsUploadAndIsVisibleDownstream",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "containerMultipartLimitsCoverTheBusinessLimit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "effectiveLimitIsTheSmallerOfGlobalAndCategory",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "elevenMiBImportIsAcceptedAndGetsTwelveMonthExpiry",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "v5BackfillIsIdempotentAndUsesNaturalMonths",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+    "name": "seededPoliciesAreTheSameSourceForServerAndClientConfig",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileRetentionTests",
+    "name": "usesShanghaiCalendarEvenWhenUtcIsPreviousDay",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileRetentionTests",
+    "name": "addsTwelveCalendarMonths",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileRetentionTests",
+    "name": "clampsToLastDayOfMonthWhenDayDoesNotExist",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileRetentionTests",
+    "name": "rejectsNull",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadReturnsBytesForActiveOwnAsset",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadQuarantinesCsvThatContainsNulBytes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsEmptyContent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadRequiresFileDownloadPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadAcceptsCsvWhoseRowsMatchTheHeaderColumnCount",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadAllowsElevenMiBImportWhenImageLimitWouldRejectIt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsMediaOutsideCategoryWhitelist",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadQuarantinesCsvWithInconsistentColumnCount",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "getHidesForeignAndUnknownAssets",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsServerGeneratedCategory",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadOfFaceAssetAlsoRequiresFacePermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsOversizedImage",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadRejectsExpiredAsset",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadQuarantinesInvalidJsonContent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadRejectsNonActiveAsset",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadQuarantinesUnknownXlsxThatIsNotAnOfficePackage",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsExtensionOutsideCategoryWhitelist",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadInsertsProcessingThenActivatesWhenMagicMatches",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadAcceptsValidJsonContent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "downloadHidesForeignAssetEvenWithPermissions",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadRejectsUnknownCategory",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "getRejectsExpiredAsset",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.FileServiceTests",
+    "name": "uploadQuarantinesWhenMagicDisagreesWithDeclaredType",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "extensionsAreLowercasedAndDefaultToEmpty",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "faceAndPortraitOnlyAcceptJpegAndPng",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "categoryParsingIsCaseInsensitiveAndRejectsUnknown",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "serverGeneratedCategoriesRejectUploadPolicyLookup",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "importCategoriesAcceptXlsxCsvJsonOnly",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "uploadableFlagMatchesContractEnum",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "imageAndImportLimitsAreIndependent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+    "name": "contentTypesAreNormalizedBeforeComparison",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessWithFailedMigration",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessWithMissingDeploymentConfig",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessWithEmptyMigrationHistory",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessDoesNotLeakDatabaseErrors",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "healthIsAlwaysUp",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessWhenEverythingIsHealthy",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.HealthServiceTests",
+    "name": "readinessWithoutDataSourceIsNotReady",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "failsWithSessionExpiredWhenAccountIsDeactivatedDuringTheWrite",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "rejectsNewPasswordEqualToCurrentOne",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "changesPasswordAndRotatesSessionAndCsrf",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "normalisesToNfcBeforeApplyingTheLengthRule",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "replayedKeyReturnsAcceptedWithoutSideEffects",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "missingIdempotencyKeyIsAValidationError",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "rejectsNewPasswordShorterThanFifteenCharacters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "sameKeyWithDifferentContentIsRejectedAsConflict",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "rejectsWeakPasswordThatContainsTheLoginName",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "rejectsWrongCurrentPasswordWith401NotValidationError",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.PasswordServiceTests",
+    "name": "rejectsNewPasswordLongerThan128Characters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "singleRoleProducesOneGrantPerType",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "siteKindsDoNotLeak",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "rolesDoNotCrossMultiply",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "accountScopeAllSites",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "roleWithoutDataTypesGrantsNothing",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "duplicateGrantsAreCollapsed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "accountScopeIsAdditive",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "dataTypesAreOrderedStably",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "ownOnlyStaysPerTuple",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "roleWithoutSitesGrantsNothing",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "accountSitesAreUnioned",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "roleAllSitesForcesEmptySiteList",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.ScopeCalculatorTests",
+    "name": "emptyUserScopeAddsNothing",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "staysAtTheAbsoluteDeadlineOnceReached",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "doesNotWriteWhenTheClockWentBackwards",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "rejectsNullArguments",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "renewsWhenTheNewValueIsLater",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "neverPushesPastTheAbsoluteDeadline",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionRenewalTests",
+    "name": "doesNotWriteWhenTheValueWouldNotMove",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "name": "beginUsesConfiguredTtls",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "name": "beginRejectsAccountDisabledAfterPasswordCheck",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "name": "beginRevokesPresentedSidEvenIfItBelongsToAnotherAccount",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "name": "beginRevokesAllSessionsEvenWithoutPresentedSid",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceBeginTests",
+    "name": "beginRejectsAccountDeletedAfterPasswordCheck",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceLogoutTests",
+    "name": "endReportsFalseWhenTheSessionWasAlreadyRevoked",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceLogoutTests",
+    "name": "realRepositoryRejectsNullSessionId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceLogoutTests",
+    "name": "endRevokesTheAuthenticatedSession",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceLogoutTests",
+    "name": "endIsIdempotentAcrossCalls",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "realRepositoryRejectsNullSessionId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewNeverPushesPastAbsolute",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewPropagatesStorageFailure",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewIsNoOpWhenAlreadyAtAbsolute",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewReturnsLaterIdleWhenConcurrentRenewWon",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewAdvancesIdleAndKeepsAbsolute",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.SessionServiceRenewTests",
+    "name": "renewRejectsSessionRevokedConcurrently",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "cancelAndRetryFollowTheContractSemantics",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "reaperReclaimsExpiredLeaseAndClosesTheAttempt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "duplicateIdempotencyKeyCreatesOneTaskAndDifferentPayloadConflicts",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "finishedTaskCannotBeClaimedAgain",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "reaperFailsTaskOnceAttemptsAreExhausted",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+    "name": "claimAndFinishDriveTheTriggerBackedStateMachine",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "hashAllowsNullParameterValues",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "transitionTableMatchesTheDatabaseTriggerForEveryPair",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "hashCoversSchemaVersionAndIsSixtyFourLowercaseHex",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "requireAcceptsLegalTransitionAndRejectsIllegalOne",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "heavyTaskTypesMatchTheSignedList",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "canonicalJsonSortsKeysSoInsertionOrderDoesNotMatter",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "leaseIsExpiredAtTheExactBoundary",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "perUserQuotaConstantsMatchTheSignedPolicy",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "commandValidatesIdentityAndPriority",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "deadlineIsNowPlusLease",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "sideEffectTaskTypesAreExactlyTheOnesThatCannotBeRetriedBlindly",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "terminalStatesAreTerminal",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "onlyRunningTasksWithExpiredLeasesNeedReaping",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskDomainTests",
+    "name": "stateMachineRejectsNull",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "retryWithSameKeyReplaysAndDoesNotRetryTwice",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "concurrentCreateWithSameKeyYieldsOneTaskForEveryCaller",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "idempotencyScopeIsActorAndOperation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "concurrentCreateWithDifferentPayloadsHasExactlyOneWinner",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "sameKeyDifferentTaskConflictsWith409",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "cancelWithSameKeyReplaysOriginalResponseWithoutSecondSideEffect",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+    "name": "unknownOutcomeCannotBeRetriedAndLeavesNoLedgerRow",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "dataScopeShrinkAfterClaimBlocksPublish",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "staleGenerationAfterReclaimCannotPublish",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "contextScopeNeverMultipliesTypesAndSitesAcrossRoles",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "concurrentCancelAndFinishNeverProduceTwoTerminalOutcomes",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "shrunkContextCannotBeUsedToSubmit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "expiredContextCannotBeUsedToSubmit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "exportResultMustBelongToCurrentOwner",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "rejectedPublishLeavesConsistentAttemptEventAndPointerState",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "cancelRequestIsNotACompletedCancellation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "exportedFileMustBeActiveAtPublishTime",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "taskTypeNarrowedByPermissionCannotBeSubmitted",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "permissionRevokedAfterClaimBlocksPublishAndFailsAttempt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "foreignContextIsHiddenBehind404",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "activeFileWithoutAnExpiryCannotBePublished",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "validLeaseAndScopePublishesSuccess",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "matchingVersionsDoNotOverrideTheCurrentTypedScope",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "leaseMustStillBeValidAtPublishAndHeartbeatExtendsIt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "exportsUseTheirOwnDomainPermissionRatherThanCapturePermissionForEveryExport",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "expiredLeaseCannotPublish",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+    "name": "wrongOwnerCannotPublishEvenWithRightGeneration",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "pendingTasksCountTowardTheFiveWaitingTaskLimit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "fullComputeBudgetDoesNotBlockAnAvailableNotificationSlot",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "queueDeadlineFailsTasksThatWaitedTooLong",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "queuedTasksPerOwnerAreCappedAtFive",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "claimOrderFollowsPriorityThenSubmittedAtThenId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "globalQueueCapIsEnforced",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "heartbeatExtendsLeaseByLeaseDuration",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "threeQueuedHeavyTasksStillAllowTheFirstTwoToBeClaimed",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "executionDeadlineRequestsCancellation",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "concurrentClaimsNeverHandOutTheSameTaskTwice",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+    "name": "workerOnlyClaimsSupportedTypesWithinLimit",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "attemptsReturnRowsInAttemptOrderWithNullableFinish",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listMapsFailedTaskToContractErrorCode",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listRequiresTaskReadPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listAddsResultReferenceWhenResultAssetExists",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listPassesFiltersAndPagingToRepository",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "attemptsForTaskWithoutAttemptsReturnEmptyList",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listHidesSensitiveParametersBehindSnapshotSummary",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "getUnknownTaskIsNotFound",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listDerivesExportResourceTypeWithoutResourceId",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listRejectsInvertedCreatedWindow",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "attemptsRequireTaskReadPermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listRejectsPageBelowOne",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listRejectsPageSizeAboveHundred",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "getRequiresPermissionBeforeTouchingRows",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "listReturnsContractPageShape",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "getHidesAnotherUsersTaskAsNotFound",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "attemptsHideAnotherUsersTaskAsNotFound",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskReadServiceTests",
+    "name": "getReturnsOwnTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskResultReferenceTests",
+    "name": "httpResponseExposesTheTypedReference",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskResultReferenceTests",
+    "name": "everyTaskTypePublishesTheContractShape",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskResultReferenceTests",
+    "name": "missingDomainRowBlocksPublish",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createFailsWithConflictWhenIgnoredInsertWinnerCannotBeRead",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "claimNextPromotesPendingTaskAndRecordsBothTransitions",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createTreatsIgnoredConflictAsIdempotentReplay",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "retryOnlyAcceptsFailedTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createReplaysExistingTaskWhenParametersMatch",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "renewReportsLeaseLoss",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "claimNextPassesWorkerCapabilitiesAndLimitToRepository",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "claimNextReturnsEmptyWhenQueueIsEmpty",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "finishRejectsWhenLeaseWasStolen",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "reapFailsTaskWhenAttemptsAreExhausted",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "cancelRunningTaskOnlyRecordsRequest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "cancelAlreadyCancelledTaskIsIdempotent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createRejectsConflictWhenStoredParametersDiffer",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "reapFailsSideEffectTaskWithUnknownOutcomeAndDoesNotRetry",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "reapCancelsTaskWhoseCancellationWasRequested",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "claimNextWritesAttemptAndRunningEvent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createPersistsPendingTaskAndCreationEvent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "cancelQueuedTaskIsImmediate",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "cancelTerminalTaskIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "createRejectsSameKeyWithDifferentParameters",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "finishRejectsNonTerminalOutcome",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "getHidesForeignTaskBehindNotFound",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskServiceTests",
+    "name": "reapRequeuesExpiredLeaseAndClosesAttempt",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskSideEffectOutcomeTests",
+    "name": "pureComputeIsRequeuedWhileSideEffectGoesUnknown",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskSideEffectOutcomeTests",
+    "name": "resetCommandThatLostItsLeaseEndsUnknownAndIsNeverRedispatched",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskSideEffectOutcomeTests",
+    "name": "deviceCommandTtlCapsLeaseAt120SecondsFromStart",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelOfRunningTaskOnlyRegistersRequest",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "retryRequiresTaskManagePermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelOfQueuedTaskBecomesCancelledImmediately",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "retryOfFailedTaskRequeuesSameTaskAndKeepsSnapshot",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelHidesAnotherUsersTask",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelOfRunningTaskWhoseStateChangedReportsConflict",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "retryOfNonFailedTaskIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelOfTerminalTaskIsRejected",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelRequiresTaskManagePermission",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  },
+  {
+    "suite": "com.xxplatform.api.service.task.TaskWriteServiceTests",
+    "name": "cancelOfCancelledTaskIsIdempotent",
+    "failed": false,
+    "error": false,
+    "skipped": false
+  }
+]

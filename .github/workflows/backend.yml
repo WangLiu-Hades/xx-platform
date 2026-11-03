@@ -1,0 +1,45 @@
+name: Backend contract build
+on:
+  pull_request:
+    paths: ['apps/api/**', 'contracts/api/**', '.github/workflows/backend.yml']
+  push:
+    paths: ['apps/api/**', 'contracts/api/**', '.github/workflows/backend.yml']
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: pr5_ci
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ci-only-test-db
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d pr5_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      # Disposable CI database only; production credentials are never used here.
+      XX_TASK_IT_DB_URL: jdbc:postgresql://127.0.0.1:5432/pr5_ci
+      XX_TASK_IT_DB_USER: postgres
+      XX_TASK_IT_DB_PASSWORD: ci-only-test-db
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+          cache-dependency-path: apps/api/pom.xml
+      - name: Generate, compile, test and package from clean sources
+        working-directory: apps/api
+        run: mvn -B -Pgenerate-api clean verify
+      - name: Retain actual backend test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: apps/api/target/surefire-reports/
+          if-no-files-found: error
