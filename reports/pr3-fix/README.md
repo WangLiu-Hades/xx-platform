@@ -4,6 +4,8 @@
 
 此前修复和验证记录见 [主分支规则修复与复核](final-main-rule-verification.md)，规则版本、逐项修复、测试证据及未接入能力均在其中列明；后续复审发现的问题按上述台账继续跟踪。
 
+2026-11-03 补记：PR #5（`d11265c`）的后端 CI 暴露任务配额测试遗留 RUNNING 任务、影响后续导出测试的隔离问题，已登记为 [BUG-007](known-bugs-2026-11-03.md#bug-007)，状态 OPEN。该条沿用本目录的现有台账；本次登记不修改先前6项问题的状态。
+
 - [主分支原件比对清单](main-rule-baseline.json)
 - [最终验证及受测文件摘要](final-verification.json)
 - [425项后端测试实际用例](test-cases-final.json)

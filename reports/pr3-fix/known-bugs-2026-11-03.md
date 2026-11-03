@@ -1,10 +1,12 @@
-# PR #3 已知 Bug 台账
+# 已知 Bug 台账（PR #3 / #5）
 
 发现日期：2026-11-03（Asia/Shanghai）。来源：[PR #3](https://github.com/WangLiu-Hades/xx-platform/pull/3) 合并前复审。
 
 受审查代码：`7e5f131704c784fc61657d8c2f5999bc83e44d44`。规则基线：`aca438ebfb218d40350b60ff933d2251bed50500`。PR #3 已按用户指示于 2026-11-03 16:34（Asia/Shanghai）合入 main，合并提交为 [`ea741a1`](https://github.com/WangLiu-Hades/xx-platform/commit/ea741a181fd7a481cb228cf843b09b1c0ac8e2b1)。本台账只登记问题，不修改业务实现；合并不代表以下问题已经修复。
 
-所有条目初始状态均为 **OPEN / 待修复**。修复后需登记修复提交、实际回归命令及结果，才能改为 CLOSED；历史修复报告和旧的通过数量不自动关闭本台账条目。后续编号从 BUG-007 递增，保留原编号和发现日期。
+所有条目初始状态均为 **OPEN / 待修复**。修复后需登记修复提交、实际回归命令及结果，才能改为 CLOSED；历史修复报告和旧的通过数量不自动关闭本台账条目。后续编号从 BUG-008 递增，保留原编号和发现日期。
+
+2026-11-03：根据用户提供的最新 PR #5（`d11265c17f728acc3a90aee79677c6d87a7030c9`）复审结果，补记 BUG-007。用户明确要求先登记该问题，再合并 #5；本次不修复业务或测试源码，不将合并视为 CI 通过或问题关闭。BUG-001 至 BUG-006 的既有状态保留。
 
 ## 问题索引
 
@@ -16,6 +18,7 @@
 | [BUG-004](#bug-004) | P2 | OPEN | 实际启动租约为两分钟，覆盖协议的 60 秒 | DEV-01 |
 | [BUG-005](#bug-005) | P2 | OPEN | 请求取消后，Worker 无法确认 CANCELLED | DEV-01，DEV-04 协作 |
 | [BUG-006](#bug-006) | P2 | OPEN | 任务取消、重试及拒绝路径缺少正式操作审计 | DEV-01 |
+| [BUG-007](#bug-007) | P1 | OPEN | 配额集成测试遗留 RUNNING 任务，污染后续导出权限测试并使完整后端 CI 失败 | DEV-01，DEV-05 协作 |
 
 建议主责依据现行开发分工，不表示已分配具体执行人；验证由 DEV-05 与修复角色协作。
 
@@ -115,7 +118,39 @@ API 进程仍活着但 Worker 卡住时，该定时器可持续给旧任务续�
 
 修复方向及回归要求：接入统一审计，验证成功与业务状态一致、拒绝/事务回滚后失败审计仍存在；幂等回放不重复产生业务成功事件，审计不得含敏感明文。
 
-## 发现时的验证范围
+<a id="bug-007"></a>
+## BUG-007
+
+**配额集成测试缺少完整收尾，遗留 RUNNING 任务占用全局 I/O 槽位；P1；OPEN。**
+
+登记日期：2026-11-03。暴露于 [PR #5](https://github.com/WangLiu-Hades/xx-platform/pull/5) 的 `d11265c17f728acc3a90aee79677c6d87a7030c9`；按用户提供的独立复审结论，这是 PR #3 遗留的测试隔离问题，由 #5 的后端 CI 暴露。
+
+### 现象与影响
+
+用户提供的审查结果：后端 CI 两次均为 **784 项通过、1 项报错**。`TaskQuotaIntegrationTests` 留下 RUNNING 任务占满 I/O 槽位，后续导出权限测试领取任务时得到空集合，随后按第 0 项取值触发越界异常。独立真库复现后，清理队列再运行同一测试可以通过。完整测试结果受前序用例状态和执行顺序影响，不能用单独运行该导出测试通过代替全量 CI 通过。
+
+本次已另行核对远程：下列两次后端检查均为 failure，对应前端检查为 success。上述通过数量和真库清理前后对照结论来自用户提供的报告，本次未重复执行真库复现。
+
+- [后端 CI：41602607380](https://github.com/WangLiu-Hades/xx-platform/actions/runs/41602607380/job/125804677113)
+- [后端 CI：41602600064](https://github.com/WangLiu-Hades/xx-platform/actions/runs/41602600064/job/125804653532)
+- [对应前端 CI：41602607397](https://github.com/WangLiu-Hades/xx-platform/actions/runs/41602607397)
+- [对应前端 CI：41602599965](https://github.com/WangLiu-Hades/xx-platform/actions/runs/41602599965)
+
+### 代码定位与复现步骤
+
+- [TaskQuotaIntegrationTests.java][pr5-quota]：`clearQueue` 是 BeforeEach 清理；`workerOnlyClaimsSupportedTypesWithinLimit` 等用例会实际领取任务，需要在用例或测试类退出时释放其遗留的非终态任务。类注释声明结束前收成终态，但类中没有 AfterEach/AfterAll 保证收尾。
+- [TaskIntegrationTestSupport.java][pr5-support]：共享真实数据库和全局任务队列，需统一保障测试清理；仅清理当前类下一条测试开始前的状态，不能保证跨类退出后无残留。
+- [ApprovalExportIntegrationTests.java:1010][pr5-export]：`publishedExportFileRequiresPermitAndCurrentSourcePermission` 调用 `claimNext(...EXPORT..., 1)`，紧接着使用 `claimed.get(0)`；槽位被占时领取为空并越界。该类自己的导出任务清理不能清除其他类遗留的配额任务。
+
+复现顺序：使用相同测试真库先执行任务配额用例并保留其 RUNNING 任务，再执行上述导出权限测试；检查全局非终态任务和 I/O 槽位占用。然后只清理测试所属队列和依赖，再运行同一导出测试，对照结果。完整命令和原始真库证据以用户提供的 `PR5合并复核报告.md` 为准；报告原位置是 `C:\Users\Administrator\Documents\pr5-merge-review-20261103\PR5合并复核报告.md`，本次运行主机无法读取该路径，未把它作为仓库有效附件或已独立读取的证据。
+
+### 修复与关闭要求
+
+建议由 DEV-01 修复共享测试底座和配额测试收尾，DEV-05 验证跨类顺序及 CI。可在可靠的 AfterEach/AfterAll/finally 中清理测试所属任务与依赖，或按测试类使用隔离数据库；失败退出也必须释放状态，清理范围只能覆盖测试环境。不得通过跳过用例、放宽生产配额、删除权限断言或强行访问空集合来声称修复。
+
+关闭前需记录修复提交，并完成以下实际验证：配额用例结束后无其所属 RUNNING/等待任务残留；原顺序和反向顺序均可运行；原失败导出测试通过；使用真实 PostgreSQL/PostGIS 跑完整后端 CI，失败和错误均为 0，未新增跳过。登记及合并本身不关闭本条目。
+
+## PR #3 发现时的验证范围
 
 2026-11-03 独立执行：前端 8 个测试文件、296 项通过；类型检查和生产构建通过；API 生成一致性检查通过（198 操作、623 Schema）；目录/链接/映射检查 14 项通过。Git 文本合并无冲突，核心规则和契约没有改写。
 
@@ -131,6 +166,7 @@ API 进程仍活着但 Worker 卡住时，该定时器可持续给旧任务续�
 | BUG-004 | 待修复 | 待验证 | — |
 | BUG-005 | 待修复 | 待验证 | — |
 | BUG-006 | 待修复 | 待验证 | — |
+| BUG-007 | 待修复 | 待完整真库 CI 验证 | 2026-11-03 |
 
 返回[本目录入口](README.md)或[报告入口](../README.md)。更早的主分支问题见[PR #1 审查报告](../pr1-integration/AUDIT.md)，其中 F08 后续已另行处理，状态应以相应后续证据为准。
 
@@ -151,3 +187,6 @@ API 进程仍活着但 Worker 卡住时，该定时器可持续给旧任务续�
 [finish-sql]: https://github.com/WangLiu-Hades/xx-platform/blob/7e5f131704c784fc61657d8c2f5999bc83e44d44/apps/api/src/main/java/com/xxplatform/api/infra/AsyncTaskRepository.java#L301
 [cancel-api]: https://github.com/WangLiu-Hades/xx-platform/blob/7e5f131704c784fc61657d8c2f5999bc83e44d44/apps/api/src/main/java/com/xxplatform/api/service/task/TaskWriteService.java#L85
 [cancel]: https://github.com/WangLiu-Hades/xx-platform/blob/7e5f131704c784fc61657d8c2f5999bc83e44d44/apps/api/src/main/java/com/xxplatform/api/service/task/TaskService.java#L296
+[pr5-quota]: https://github.com/WangLiu-Hades/xx-platform/blob/d11265c17f728acc3a90aee79677c6d87a7030c9/apps/api/src/test/java/com/xxplatform/api/service/task/TaskQuotaIntegrationTests.java#L79
+[pr5-support]: https://github.com/WangLiu-Hades/xx-platform/blob/d11265c17f728acc3a90aee79677c6d87a7030c9/apps/api/src/test/java/com/xxplatform/api/service/task/TaskIntegrationTestSupport.java#L93
+[pr5-export]: https://github.com/WangLiu-Hades/xx-platform/blob/d11265c17f728acc3a90aee79677c6d87a7030c9/apps/api/src/test/java/com/xxplatform/api/service/approval/ApprovalExportIntegrationTests.java#L1010
