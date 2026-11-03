@@ -1,0 +1,19 @@
+{
+  "exitCode": 0,
+  "testsPreviouslyVerified": {
+    "tests": 425,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": 42
+  },
+  "testsRepeated": false,
+  "reason": "Retry packaging only after successful full 425-test Surefire phase; allow retrieval of missing public Maven plugin dependencies",
+  "jar": {
+    "path": "C:\\Users\\Administrator\\Documents\\pr3-rule-fix-evidence-20261102\\maven-build-1793628898870288300\\xx-platform-api-0.1.0-SNAPSHOT.jar",
+    "sha256": "51ce0ee978800b1060cbc32450a4368456dc59412596244437396b07c882871d",
+    "bytes": 26195238
+  },
+  "packagedOriginalOpenApi": true,
+  "productionJarHasTestClasses": false
+}

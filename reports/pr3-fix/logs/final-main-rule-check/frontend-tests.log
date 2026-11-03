@@ -1,0 +1,16 @@
+
+> multidimensional-platform-prototype@2.0.0 test
+> vitest run --pool=threads --maxWorkers=1
+
+
+ RUN  v5.0.3 C:/Users/Administrator/Documents/pr3-rule-fix-20261102/apps/web
+
+
+ Test Files  8 passed (8)
+      Tests  296 passed (296)
+   Start at  21:45:16
+   Duration  8.38s (tests 44%, import 41%, transform 14%, worker 1%)
+
+     Import  30 modules were evaluated 58 times · 2.76s total, 41% of tracked time
+             ~1.33s faster with isolate: false — shared modules are evaluated once per worker instead of once per file
+             learn more: https://vitest.dev/guide/improving-performance#test-isolation

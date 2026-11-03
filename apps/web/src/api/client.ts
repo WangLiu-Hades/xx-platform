@@ -63,6 +63,8 @@ export async function request<I extends OperationId>(id:I,args:Request<I>={}):Pr
 export async function refreshCsrf(){const r=await request('getCsrfToken');setCsrfToken(r.data.token);}
 async function downloadBinary(id:'downloadReport'|'downloadFile',key:'reportId'|'fileAssetId',resourceId:string):Promise<Blob>{
  const epoch=identityEpoch;
+ if(id==='downloadFile')await request('getFileAsset',{path:{fileAssetId:resourceId}});
+ if(epoch!==identityEpoch)throw new axios.CanceledError('会话已改变，取消下载');
  const path={[key]:resourceId};const validator=await import('./validation');validator.validateRequest(id,path,undefined,undefined);
  const url=operationCatalog[id].path.replace('{'+key+'}',encodeURIComponent(resourceId));
  try{const result=await http.get<Blob>(url,{responseType:'blob',headers:{Accept:'application/octet-stream'}});

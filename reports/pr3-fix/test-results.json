@@ -1,0 +1,2783 @@
+{
+    "schemaVersion":  1,
+    "label":  "final-post-commit",
+    "startedAtUtc":  "2026-11-01T17:40:04Z",
+    "finishedAtUtc":  "2026-11-01T17:41:42Z",
+    "durationSeconds":  97.7,
+    "command":  "mvn -B clean test",
+    "workingDirectory":  "apps/api",
+    "exitCode":  0,
+    "logFile":  "reports/pr3-fix/logs/final-post-commit.log",
+    "database":  {
+                     "url":  "jdbc:postgresql://127.0.0.1:55433/xx_it_final5",
+                     "user":  "postgres",
+                     "password":  "（空；本地信任认证）",
+                     "realDbTestsRan":  true,
+                     "skippedDueToDb":  0
+                 },
+    "environment":  {
+                        "os":  "Microsoft Windows NT 10.0.26100.0",
+                        "java":  "java version \"17.0.12\" 2024-07-16 LTS\r",
+                        "maven":  "Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)\r",
+                        "node":  "v24.21.0",
+                        "psql":  "psql (PostgreSQL) 16.15",
+                        "gitHead":  "0b01354623c4fde983b876ea5ae5bc29888e5cb5",
+                        "gitBranch":  "codex/dev01-heyifan-api-skeleton"
+                    },
+    "totals":  {
+                   "tests":  391,
+                   "failures":  0,
+                   "errors":  0,
+                   "skipped":  0,
+                   "suites":  40
+               },
+    "workingTree":  "M reports/pr3-fix/collect-test-results.ps1\r\n M reports/pr3-fix/test-results.json",
+    "suites":  [
+                   {
+                       "className":  "com.xxplatform.api.api.CorsContractTests",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  9.791,
+                       "cases":  [
+                                     {
+                                         "name":  "sameOriginRequestWithoutOriginHeaderPasses",
+                                         "status":  "passed",
+                                         "duration":  0.303,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "preflightFromUntrustedOriginIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.037,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "actualRequestEchoesTrustedOriginWithoutWildcard",
+                                         "status":  "passed",
+                                         "duration":  0.016,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "preflightFromTrustedOriginAllowsContractHeaders",
+                                         "status":  "passed",
+                                         "duration":  0.007,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "actualRequestFromUntrustedOriginIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.api.FileControllerTests",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.006,
+                       "cases":  [
+                                     {
+                                         "name":  "attachmentHeaderFallsBackForMissingName",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "attachmentHeaderPercentEncodesChineseName",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "attachmentHeaderUsesRfc5987WithUtf8Name",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.api.FileHttpIntegrationTests",
+                       "tests":  11,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  2.985,
+                       "cases":  [
+                                     {
+                                         "name":  "csvQuotedNewlinesAreAcceptedAndColumnMismatchIsQuarantined",
+                                         "status":  "passed",
+                                         "duration":  0.833,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredFileCannotBeReadOrDownloaded",
+                                         "status":  "passed",
+                                         "duration":  0.165,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "validJsonBecomesActive",
+                                         "status":  "passed",
+                                         "duration":  0.039,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadPngIsActiveAndDetailAndDownloadWork",
+                                         "status":  "passed",
+                                         "duration":  0.112,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "xlsxIsParsedForRealAndTruncatedXlsxIsQuarantined",
+                                         "status":  "passed",
+                                         "duration":  0.105,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "processingAndForeignAssetsAreHidden",
+                                         "status":  "passed",
+                                         "duration":  0.041,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "oversizeAndUnsupportedTypeAreRejectedAndAudited",
+                                         "status":  "passed",
+                                         "duration":  0.123,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "disabledPolicyRejectsUploadAndIsAudited",
+                                         "status":  "passed",
+                                         "duration":  0.033,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadRequiresFileDownloadAndRevocationInvalidatesTheOldUrl",
+                                         "status":  "passed",
+                                         "duration":  0.048,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "idempotentReplayReturnsSameAssetAndDoesNotDuplicateRows",
+                                         "status":  "passed",
+                                         "duration":  0.076,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "invalidJsonIsQuarantinedAndCannotBeDownloaded",
+                                         "status":  "passed",
+                                         "duration":  0.046,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.ApiApplicationTests",
+                       "tests":  1,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.884,
+                       "cases":  [
+                                     {
+                                         "name":  "unknownRouteReturnsContractErrorEnvelope",
+                                         "status":  "passed",
+                                         "duration":  0.883,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.auth.AuthSessionIntegrationTests",
+                       "tests":  12,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  26.181,
+                       "cases":  [
+                                     {
+                                         "name":  "renewIsClampedToTheAbsoluteDeadlineAndKeepsSidAndCsrf",
+                                         "status":  "passed",
+                                         "duration":  1.81,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "originIsCheckedBothWaysOnReadAndWrite",
+                                         "status":  "passed",
+                                         "duration":  0.023,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "passwordChangeRotatesCredentialsAndEnforcesIdempotency",
+                                         "status":  "passed",
+                                         "duration":  2.754,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "initialPasswordUserIsGatedAndUnblockedByChangingPassword",
+                                         "status":  "passed",
+                                         "duration":  4.816,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredSessionCannotBeRevivedEvenWhenLastSeenIsFresh",
+                                         "status":  "passed",
+                                         "duration":  0.75,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "userAgentChangeRequiresReloginAndIsAudited",
+                                         "status":  "passed",
+                                         "duration":  0.731,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "idleSlidesOnActiveRequestsButNotOnPollingPathsOrBackgroundHeader",
+                                         "status":  "passed",
+                                         "duration":  6.782,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "loginOutsideConfiguredCidrIsRejectedAndAudited",
+                                         "status":  "passed",
+                                         "duration":  0.716,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "csrfIssuedBeforeLoginIsRevokedByLoginAndRotatedValueWorks",
+                                         "status":  "passed",
+                                         "duration":  0.679,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "loginLogoutAndPasswordChangeLeaveAuditEvents",
+                                         "status":  "passed",
+                                         "duration":  4.793,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "credentialResponsesAreNotCacheable",
+                                         "status":  "passed",
+                                         "duration":  0.71,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "clientIpChangeRequiresReloginAndIsAudited",
+                                         "status":  "passed",
+                                         "duration":  0.714,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.common.ClientNetworksTests",
+                       "tests":  6,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.015,
+                       "cases":  [
+                                     {
+                                         "name":  "malformedHopStopsResolution",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "trustedProxyResolvesRightmostUntrustedHop",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "forgedForwardedHeaderCannotBypassLoginCidr",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "allowedFollowsCidrAndDefaultsToDeny",
+                                         "status":  "passed",
+                                         "duration":  0.01,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "forwardedHeaderFromUntrustedPeerIsIgnored",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "sameAddressComparesBytes",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.common.CsrfFilterTests",
+                       "tests":  15,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.094,
+                       "cases":  [
+                                     {
+                                         "name":  "loginFromForeignOriginIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.007,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "nonBrowserStillNeedsToken",
+                                         "status":  "passed",
+                                         "duration":  0.005,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectionCarriesRequestTraceId",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "refererFallsBackWhenOriginIsAbsent",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyWriteMethodIsGated(String)[1]",
+                                         "status":  "passed",
+                                         "duration":  0.01,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyWriteMethodIsGated(String)[2]",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyWriteMethodIsGated(String)[3]",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "postWithoutTokenIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "foreignOriginIsRejectedEvenWithValidToken",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "loginIsTokenExempt",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "sameOriginPasses",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "storageFailureFailsClosed",
+                                         "status":  "passed",
+                                         "duration":  0.011,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "postWithWrongTokenIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "postWithValidTokenPairPasses",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readRequestsAreNotGated",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.common.IdempotencyKeyHeaderTests",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.007,
+                       "cases":  [
+                                     {
+                                         "name":  "rejectsBlankKey",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsKeyAboveMaximum",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsKeyBelowMinimum",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsMissingKey",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "acceptsBoundaryLengthsAndTrims",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.infra.LoginThrottleTests",
+                       "tests":  8,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.012,
+                       "cases":  [
+                                     {
+                                         "name":  "differentIpHasSeparateBucket",
+                                         "status":  "passed",
+                                         "duration":  0.005,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "recoversAfterLockout",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "clearResetsHistory",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "loginNameIsCaseSensitive",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "blocksAtThreshold",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "keyShape",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "failuresOutsideWindowArePruned",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "allowsBelowThreshold",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.infra.PasswordHasherTests",
+                       "tests":  6,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  10.833,
+                       "cases":  [
+                                     {
+                                         "name":  "malformedStoredValueIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "saltIsRandomPerHash",
+                                         "status":  "passed",
+                                         "duration":  2.842,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "hashThenVerify",
+                                         "status":  "passed",
+                                         "duration":  1.366,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "longPasswordNotTruncatedAt72Bytes",
+                                         "status":  "passed",
+                                         "duration":  2.024,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "wrongPasswordRejected",
+                                         "status":  "passed",
+                                         "duration":  2.61,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "nonAsciiPasswordRoundTrip",
+                                         "status":  "passed",
+                                         "duration":  1.987,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.migration.MigrationBaselineTests",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.262,
+                       "cases":  [
+                                     {
+                                         "name":  "baselineCoversAllSchemasAndGuards",
+                                         "status":  "passed",
+                                         "duration":  0.027,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "contractSchemaHashIsUnchanged",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "baselineStaysFrozen",
+                                         "status":  "passed",
+                                         "duration":  0.107,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "migrationsCoverContractStructure",
+                                         "status":  "passed",
+                                         "duration":  0.119,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "migrationDirectoryFollowsNamingConvention",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.approval.ApprovalCryptoConfigurationTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.022,
+                       "cases":  [
+                                     {
+                                         "name":  "truncatedCiphertextIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.005,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "repositoryConfigurationHasNoBuiltInApprovalKey",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "missingDeploymentKeyDisablesApprovalInsteadOfFallingBackToARepositoryValue",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "malformedKeyFailsFastAtStartup",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "tamperedCiphertextAndWrongKeyCannotDecrypt",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "keyIdIsPersistedWithTheCiphertextButTheKeyNeverIs",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everySealUsesAFreshNonceAndRoundTrips",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.approval.ApprovalExportIntegrationTests",
+                       "tests":  22,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  13.289,
+                       "cases":  [
+                                     {
+                                         "name":  "staleContextPermissionVersionIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.029,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "duplicateVoteBySameReviewerIsNotCountedTwice",
+                                         "status":  "passed",
+                                         "duration":  2.129,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "failedExportLeavesApprovalUnconsumed",
+                                         "status":  "passed",
+                                         "duration":  0.727,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "tamperedCiphertextAndWrongKeyFailClosed",
+                                         "status":  "passed",
+                                         "duration":  0.015,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredExecutionGrantIsGone",
+                                         "status":  "passed",
+                                         "duration":  0.693,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "approvalCreationIsIdempotentPerKeyAndRejectsDifferentContent",
+                                         "status":  "passed",
+                                         "duration":  0.026,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "insufficientEligibleApproversRejectsCreation",
+                                         "status":  "passed",
+                                         "duration":  0.011,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "executionIsRejectedAfterTargetVersionChanges",
+                                         "status":  "passed",
+                                         "duration":  0.703,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "requesterAndExecutorCannotApproveTheirOwnRequest",
+                                         "status":  "passed",
+                                         "duration":  0.015,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "deviceGroupIsResolvedServerSideAndDrivesTwoVoteRequirement",
+                                         "status":  "passed",
+                                         "duration":  0.013,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectionAuditSurvivesBusinessRollback",
+                                         "status":  "passed",
+                                         "duration":  0.03,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "approvalDecisionIsIdempotentPerKeyAndStillCountsOneVotePerApprover",
+                                         "status":  "passed",
+                                         "duration":  1.339,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rolledBackExportTransactionLeavesApprovalUnconsumedAndNoTask",
+                                         "status":  "passed",
+                                         "duration":  0.727,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "exportRequiresApprovalAndConsumesItExactlyOnce",
+                                         "status":  "passed",
+                                         "duration":  0.71,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "concurrentConsumptionAllowsExactlyOneSuccess",
+                                         "status":  "passed",
+                                         "duration":  0.755,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "approvalsAndExportRejectionsAreAudited",
+                                         "status":  "passed",
+                                         "duration":  1.396,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "contextDataTypeOutsideCurrentScopeIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.691,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "unknownTargetDeviceCannotBeFrozenIntoAnApproval",
+                                         "status":  "passed",
+                                         "duration":  0.01,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "idempotencyKeyIsScopedToActor",
+                                         "status":  "passed",
+                                         "duration":  0.691,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "actionPermissionAloneIsNotEnoughToVote",
+                                         "status":  "passed",
+                                         "duration":  0.683,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "ifMatchMustMatchTheFrozenDeviceVersion",
+                                         "status":  "passed",
+                                         "duration":  0.01,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reviewItemsMaskNestedSecretsAndCiphertextCarriesNoPlaintext",
+                                         "status":  "passed",
+                                         "duration":  0.013,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.approval.ApprovalOperationTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.004,
+                       "cases":  [
+                                     {
+                                         "name":  "exportOperationsAllRequireCaptureExport",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "deviceBatchesNeedTwoApprovalsOnlyAtTenDevices",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyOperationCarriesAPermission",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "parsesOnlyRegisteredOperationIds",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "nonDeviceOperationsStayAtOneApprovalEvenWithManyItems",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "catalogsEveryProposalInTheContract",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "decryptionAlwaysNeedsTwoApprovals",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.approval.ApprovalProposalsTests",
+                       "tests":  22,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.165,
+                       "cases":  [
+                                     {
+                                         "name":  "rejectsInvalidBusinessBodyEvenWhenKeysAreAllowed",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsPasswordsThatThePasswordPolicyWouldRejectAtExecutionTime",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "digestChangesWhenContentChanges",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsEmptyPayload",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "digestIsStableAcrossKeyOrder",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "deviceBatchAtThresholdNeedsTwoApprovals",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsPathParametersThatDoNotMatchThePathTemplate",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "pathParametersProposalWorksForDecryptionReview",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reviewItemsCanBeRebuiltFromCanonicalJson",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsUnknownKeys",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsRequestBodyKeysOutsideTheOperationSchema",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsProposalsWhoseReviewItemsExceedTheCap",
+                                         "status":  "passed",
+                                         "duration":  0.121,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyApprovalOperationHasAProposalSpec",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "masksSensitiveValuesNestedInSerializedJsonStrings",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "acceptsCreateExportProposalWithRequestBody",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "ifMatchIsBoundIntoTheDigest",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsDisplayValuesBeyondThePerItemBudget",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expandsDeviceIdsIntoOneReviewItemPerDevice",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsIfMatchOfWrongShape",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "masksSensitiveValuesInReviewItems",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsUnknownOperation",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "updateDeviceParametersRequiresIfMatch",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.approval.ApprovalServiceTests",
+                       "tests":  25,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  10.773,
+                       "cases":  [
+                                     {
+                                         "name":  "createFailsClosedWhenNoPayloadKeyIsConfigured",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeRejectsPendingApproval",
+                                         "status":  "passed",
+                                         "duration":  0.016,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "invalidCursorIsValidationError",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsShortReason",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsWhenTooFewEligibleApprovers",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createAllowsSingleApproverOperationWhenDeploymentHasOneApprover",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "pageSizeOutOfRangeIsValidationError",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "repeatingTheSameDecisionIsIdempotent",
+                                         "status":  "passed",
+                                         "duration":  1.298,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "wrongCurrentPasswordIsRejectedWithoutRecordingDecision",
+                                         "status":  "passed",
+                                         "duration":  0.642,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeRejectsExpiredExecutionGrant",
+                                         "status":  "passed",
+                                         "duration":  0.684,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "twoApprovalsAreCollectedThenGranted",
+                                         "status":  "passed",
+                                         "duration":  1.361,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "requesterCannotApproveOwnRequest",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeRejectsDigestMismatchAndKeepsGrantUsable",
+                                         "status":  "passed",
+                                         "duration":  0.655,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeRejectsOperationMismatch",
+                                         "status":  "passed",
+                                         "duration":  0.685,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRequiresTheOperationPermission",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredPendingApprovalIsMarkedAndRejected",
+                                         "status":  "passed",
+                                         "duration":  0.665,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeRejectsExecutorOtherThanTheDesignatedOne",
+                                         "status":  "passed",
+                                         "duration":  0.692,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listReturnsOwnApplicationAndReviewableItemsWithCursor",
+                                         "status":  "passed",
+                                         "duration":  0.007,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reviewerWithPermissionCanReadAndSeeReviewItems",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "approvingACompletedApprovalIsConflict",
+                                         "status":  "passed",
+                                         "duration":  1.302,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createFreezesProposalWithDigestAndPendingStatus",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "versionConflictOnConcurrentDecisionIsReported",
+                                         "status":  "passed",
+                                         "duration":  0.71,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "consumeMarksApprovalConsumedAndIsSingleUse",
+                                         "status":  "passed",
+                                         "duration":  0.704,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "strangerCannotReadApproval",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectionEndsTheApprovalImmediately",
+                                         "status":  "passed",
+                                         "duration":  0.673,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.AuditRollbackIntegrationTests",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.948,
+                       "cases":  [
+                                     {
+                                         "name":  "failureAuditSurvivesBusinessRollback",
+                                         "status":  "passed",
+                                         "duration":  0.023,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "successAuditIsWrittenOnceOnCommit",
+                                         "status":  "passed",
+                                         "duration":  0.005,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "auditWithoutOuterTransactionIsWritten",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "auditRowIsAppendOnly",
+                                         "status":  "passed",
+                                         "duration":  0.01,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.ClientConfigScalarsTests",
+                       "tests":  9,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.012,
+                       "cases":  [
+                                     {
+                                         "name":  "missingKeyNamesTheKey",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "oversizedUploadLimitIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "parsesValidObject",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "zeroIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "foreignTimeZoneIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "foreignCoordinateSystemIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "wrongTypeIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "nonObjectIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "unknownKeysAreTolerated",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.ExportServiceTests",
+                       "tests":  15,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.031,
+                       "cases":  [
+                                     {
+                                         "name":  "createRejectsEmptyColumnList",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createFreezesTaskAndExportJobForPlateExport",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createAcceptsBoundedGeneralRangeAcrossDataTypes",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsExpiredContext",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createStoresFrozenLimitsInTaskParameters",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsUnknownContext",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createKeepsRequestedColumnOrderAndDeduplicates",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsMissingPermission",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsSameKeyWithDifferentParameters",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsUnboundedGeneralRange",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsColumnFromAnotherDataType",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsUnsupportedContextType",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createReplaysSameKeyWithSameParameters",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsUnknownColumn",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createHidesContextOwnedBySomeoneElse",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.file.FilePolicyIntegrationTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  1.496,
+                       "cases":  [
+                                     {
+                                         "name":  "importRowLimitIsEnforced",
+                                         "status":  "passed",
+                                         "duration":  0.301,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "disabledPolicyRejectsUploadAndIsVisibleDownstream",
+                                         "status":  "passed",
+                                         "duration":  0.061,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "containerMultipartLimitsCoverTheBusinessLimit",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "effectiveLimitIsTheSmallerOfGlobalAndCategory",
+                                         "status":  "passed",
+                                         "duration":  0.015,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "elevenMiBImportIsAcceptedAndGetsTwelveMonthExpiry",
+                                         "status":  "passed",
+                                         "duration":  0.211,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "v5BackfillIsIdempotentAndUsesNaturalMonths",
+                                         "status":  "passed",
+                                         "duration":  0.014,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "seededPoliciesAreTheSameSourceForServerAndClientConfig",
+                                         "status":  "passed",
+                                         "duration":  0.019,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.file.FileRetentionTests",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.004,
+                       "cases":  [
+                                     {
+                                         "name":  "usesShanghaiCalendarEvenWhenUtcIsPreviousDay",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "addsTwelveCalendarMonths",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "clampsToLastDayOfMonthWhenDayDoesNotExist",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsNull",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.file.FileServiceTests",
+                       "tests":  23,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.191,
+                       "cases":  [
+                                     {
+                                         "name":  "downloadReturnsBytesForActiveOwnAsset",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadQuarantinesCsvThatContainsNulBytes",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsEmptyContent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadRequiresFileDownloadPermission",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadAcceptsCsvWhoseRowsMatchTheHeaderColumnCount",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadAllowsElevenMiBImportWhenImageLimitWouldRejectIt",
+                                         "status":  "passed",
+                                         "duration":  0.153,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsMediaOutsideCategoryWhitelist",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadQuarantinesCsvWithInconsistentColumnCount",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getHidesForeignAndUnknownAssets",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsServerGeneratedCategory",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadOfFaceAssetAlsoRequiresFacePermission",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsOversizedImage",
+                                         "status":  "passed",
+                                         "duration":  0.006,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadRejectsExpiredAsset",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadQuarantinesInvalidJsonContent",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadRejectsNonActiveAsset",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadQuarantinesUnknownXlsxThatIsNotAnOfficePackage",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsExtensionOutsideCategoryWhitelist",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadInsertsProcessingThenActivatesWhenMagicMatches",
+                                         "status":  "passed",
+                                         "duration":  0.004,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadAcceptsValidJsonContent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "downloadHidesForeignAssetEvenWithPermissions",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadRejectsUnknownCategory",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getRejectsExpiredAsset",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadQuarantinesWhenMagicDisagreesWithDeclaredType",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.file.UploadPolicyCatalogTests",
+                       "tests":  8,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.009,
+                       "cases":  [
+                                     {
+                                         "name":  "extensionsAreLowercasedAndDefaultToEmpty",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "faceAndPortraitOnlyAcceptJpegAndPng",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "categoryParsingIsCaseInsensitiveAndRejectsUnknown",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "serverGeneratedCategoriesRejectUploadPolicyLookup",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "importCategoriesAcceptXlsxCsvJsonOnly",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "uploadableFlagMatchesContractEnum",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "imageAndImportLimitsAreIndependent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "contentTypesAreNormalizedBeforeComparison",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.HealthServiceTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.018,
+                       "cases":  [
+                                     {
+                                         "name":  "readinessWithFailedMigration",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readinessWithMissingDeploymentConfig",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readinessWithEmptyMigrationHistory",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readinessDoesNotLeakDatabaseErrors",
+                                         "status":  "passed",
+                                         "duration":  0.007,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "healthIsAlwaysUp",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readinessWhenEverythingIsHealthy",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "readinessWithoutDataSourceIsNotReady",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.PasswordServiceTests",
+                       "tests":  11,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.019,
+                       "cases":  [
+                                     {
+                                         "name":  "failsWithSessionExpiredWhenAccountIsDeactivatedDuringTheWrite",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsNewPasswordEqualToCurrentOne",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "changesPasswordAndRotatesSessionAndCsrf",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "normalisesToNfcBeforeApplyingTheLengthRule",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "replayedKeyReturnsAcceptedWithoutSideEffects",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "missingIdempotencyKeyIsAValidationError",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsNewPasswordShorterThanFifteenCharacters",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "sameKeyWithDifferentContentIsRejectedAsConflict",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsWeakPasswordThatContainsTheLoginName",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsWrongCurrentPasswordWith401NotValidationError",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsNewPasswordLongerThan128Characters",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.ScopeCalculatorTests",
+                       "tests":  13,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.013,
+                       "cases":  [
+                                     {
+                                         "name":  "singleRoleProducesOneGrantPerType",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "siteKindsDoNotLeak",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rolesDoNotCrossMultiply",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "accountScopeAllSites",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "roleWithoutDataTypesGrantsNothing",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "duplicateGrantsAreCollapsed",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "accountScopeIsAdditive",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "dataTypesAreOrderedStably",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "ownOnlyStaysPerTuple",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "roleWithoutSitesGrantsNothing",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "accountSitesAreUnioned",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "roleAllSitesForcesEmptySiteList",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "emptyUserScopeAddsNothing",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.SessionRenewalTests",
+                       "tests":  6,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.006,
+                       "cases":  [
+                                     {
+                                         "name":  "staysAtTheAbsoluteDeadlineOnceReached",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "doesNotWriteWhenTheClockWentBackwards",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectsNullArguments",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewsWhenTheNewValueIsLater",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "neverPushesPastTheAbsoluteDeadline",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "doesNotWriteWhenTheValueWouldNotMove",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.SessionServiceBeginTests",
+                       "tests":  5,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.006,
+                       "cases":  [
+                                     {
+                                         "name":  "beginUsesConfiguredTtls",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "beginRejectsAccountDisabledAfterPasswordCheck",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "beginRevokesPresentedSidEvenIfItBelongsToAnotherAccount",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "beginRevokesAllSessionsEvenWithoutPresentedSid",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "beginRejectsAccountDeletedAfterPasswordCheck",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.SessionServiceLogoutTests",
+                       "tests":  4,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.003,
+                       "cases":  [
+                                     {
+                                         "name":  "endReportsFalseWhenTheSessionWasAlreadyRevoked",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "realRepositoryRejectsNullSessionId",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "endRevokesTheAuthenticatedSession",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "endIsIdempotentAcrossCalls",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.SessionServiceRenewTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.006,
+                       "cases":  [
+                                     {
+                                         "name":  "realRepositoryRejectsNullSessionId",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewNeverPushesPastAbsolute",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewPropagatesStorageFailure",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewIsNoOpWhenAlreadyAtAbsolute",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewReturnsLaterIdleWhenConcurrentRenewWon",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewAdvancesIdleAndKeepsAbsolute",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewRejectsSessionRevokedConcurrently",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskBaseIntegrationTests",
+                       "tests":  6,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  1.297,
+                       "cases":  [
+                                     {
+                                         "name":  "cancelAndRetryFollowTheContractSemantics",
+                                         "status":  "passed",
+                                         "duration":  0.119,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reaperReclaimsExpiredLeaseAndClosesTheAttempt",
+                                         "status":  "passed",
+                                         "duration":  0.078,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "duplicateIdempotencyKeyCreatesOneTaskAndDifferentPayloadConflicts",
+                                         "status":  "passed",
+                                         "duration":  0.019,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "finishedTaskCannotBeClaimedAgain",
+                                         "status":  "passed",
+                                         "duration":  0.025,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reaperFailsTaskOnceAttemptsAreExhausted",
+                                         "status":  "passed",
+                                         "duration":  0.033,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimAndFinishDriveTheTriggerBackedStateMachine",
+                                         "status":  "passed",
+                                         "duration":  0.038,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskDomainTests",
+                       "tests":  14,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.013,
+                       "cases":  [
+                                     {
+                                         "name":  "hashAllowsNullParameterValues",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "transitionTableMatchesTheDatabaseTriggerForEveryPair",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "hashCoversSchemaVersionAndIsSixtyFourLowercaseHex",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "requireAcceptsLegalTransitionAndRejectsIllegalOne",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "heavyTaskTypesMatchTheSignedList",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "canonicalJsonSortsKeysSoInsertionOrderDoesNotMatter",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "leaseIsExpiredAtTheExactBoundary",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "perUserQuotaConstantsMatchTheSignedPolicy",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "commandValidatesIdentityAndPriority",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "deadlineIsNowPlusLease",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "sideEffectTaskTypesAreExactlyTheOnesThatCannotBeRetriedBlindly",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "terminalStatesAreTerminal",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "onlyRunningTasksWithExpiredLeasesNeedReaping",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "stateMachineRejectsNull",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskIdempotencyIntegrationTests",
+                       "tests":  7,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  1.401,
+                       "cases":  [
+                                     {
+                                         "name":  "retryWithSameKeyReplaysAndDoesNotRetryTwice",
+                                         "status":  "passed",
+                                         "duration":  0.207,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "concurrentCreateWithSameKeyYieldsOneTaskForEveryCaller",
+                                         "status":  "passed",
+                                         "duration":  0.045,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "idempotencyScopeIsActorAndOperation",
+                                         "status":  "passed",
+                                         "duration":  0.073,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "concurrentCreateWithDifferentPayloadsHasExactlyOneWinner",
+                                         "status":  "passed",
+                                         "duration":  0.042,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "sameKeyDifferentTaskConflictsWith409",
+                                         "status":  "passed",
+                                         "duration":  0.059,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelWithSameKeyReplaysOriginalResponseWithoutSecondSideEffect",
+                                         "status":  "passed",
+                                         "duration":  0.05,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "unknownOutcomeCannotBeRetriedAndLeavesNoLedgerRow",
+                                         "status":  "passed",
+                                         "duration":  0.044,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskPublishGuardIntegrationTests",
+                       "tests":  16,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.499,
+                       "cases":  [
+                                     {
+                                         "name":  "dataScopeShrinkAfterClaimBlocksPublish",
+                                         "status":  "passed",
+                                         "duration":  0.049,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "staleGenerationAfterReclaimCannotPublish",
+                                         "status":  "passed",
+                                         "duration":  0.051,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "concurrentCancelAndFinishNeverProduceTwoTerminalOutcomes",
+                                         "status":  "passed",
+                                         "duration":  0.043,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "shrunkContextCannotBeUsedToSubmit",
+                                         "status":  "passed",
+                                         "duration":  0.021,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredContextCannotBeUsedToSubmit",
+                                         "status":  "passed",
+                                         "duration":  0.014,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "exportResultMustBelongToCurrentOwner",
+                                         "status":  "passed",
+                                         "duration":  0.033,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "rejectedPublishLeavesConsistentAttemptEventAndPointerState",
+                                         "status":  "passed",
+                                         "duration":  0.034,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelRequestIsNotACompletedCancellation",
+                                         "status":  "passed",
+                                         "duration":  0.043,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "exportedFileMustBeActiveAtPublishTime",
+                                         "status":  "passed",
+                                         "duration":  0.03,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "taskTypeNarrowedByPermissionCannotBeSubmitted",
+                                         "status":  "passed",
+                                         "duration":  0.015,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "permissionRevokedAfterClaimBlocksPublishAndFailsAttempt",
+                                         "status":  "passed",
+                                         "duration":  0.026,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "foreignContextIsHiddenBehind404",
+                                         "status":  "passed",
+                                         "duration":  0.023,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "validLeaseAndScopePublishesSuccess",
+                                         "status":  "passed",
+                                         "duration":  0.029,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "leaseMustStillBeValidAtPublishAndHeartbeatExtendsIt",
+                                         "status":  "passed",
+                                         "duration":  0.029,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "expiredLeaseCannotPublish",
+                                         "status":  "passed",
+                                         "duration":  0.024,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "wrongOwnerCannotPublishEvenWithRightGeneration",
+                                         "status":  "passed",
+                                         "duration":  0.025,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskQuotaIntegrationTests",
+                       "tests":  8,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.846,
+                       "cases":  [
+                                     {
+                                         "name":  "queueDeadlineFailsTasksThatWaitedTooLong",
+                                         "status":  "passed",
+                                         "duration":  0.027,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "queuedTasksPerOwnerAreCappedAtFive",
+                                         "status":  "passed",
+                                         "duration":  0.078,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimOrderFollowsPriorityThenSubmittedAtThenId",
+                                         "status":  "passed",
+                                         "duration":  0.075,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "globalQueueCapIsEnforced",
+                                         "status":  "passed",
+                                         "duration":  0.065,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "heartbeatExtendsLeaseByLeaseDuration",
+                                         "status":  "passed",
+                                         "duration":  0.298,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "executionDeadlineRequestsCancellation",
+                                         "status":  "passed",
+                                         "duration":  0.032,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "concurrentClaimsNeverHandOutTheSameTaskTwice",
+                                         "status":  "passed",
+                                         "duration":  0.227,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "workerOnlyClaimsSupportedTypesWithinLimit",
+                                         "status":  "passed",
+                                         "duration":  0.043,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskReadServiceTests",
+                       "tests":  18,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.02,
+                       "cases":  [
+                                     {
+                                         "name":  "attemptsReturnRowsInAttemptOrderWithNullableFinish",
+                                         "status":  "passed",
+                                         "duration":  0.003,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listMapsFailedTaskToContractErrorCode",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listRequiresTaskReadPermission",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listAddsResultReferenceWhenResultAssetExists",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listPassesFiltersAndPagingToRepository",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "attemptsForTaskWithoutAttemptsReturnEmptyList",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listHidesSensitiveParametersBehindSnapshotSummary",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getUnknownTaskIsNotFound",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listDerivesExportResourceTypeWithoutResourceId",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listRejectsInvertedCreatedWindow",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "attemptsRequireTaskReadPermission",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listRejectsPageBelowOne",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listRejectsPageSizeAboveHundred",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getRequiresPermissionBeforeTouchingRows",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "listReturnsContractPageShape",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getHidesAnotherUsersTaskAsNotFound",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "attemptsHideAnotherUsersTaskAsNotFound",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getReturnsOwnTask",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskResultReferenceTests",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.349,
+                       "cases":  [
+                                     {
+                                         "name":  "httpResponseExposesTheTypedReference",
+                                         "status":  "passed",
+                                         "duration":  0.067,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "everyTaskTypePublishesTheContractShape",
+                                         "status":  "passed",
+                                         "duration":  0.174,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "missingDomainRowBlocksPublish",
+                                         "status":  "passed",
+                                         "duration":  0.106,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskServiceTests",
+                       "tests":  23,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.021,
+                       "cases":  [
+                                     {
+                                         "name":  "createFailsWithConflictWhenIgnoredInsertWinnerCannotBeRead",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimNextPromotesPendingTaskAndRecordsBothTransitions",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createTreatsIgnoredConflictAsIdempotentReplay",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "retryOnlyAcceptsFailedTask",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createReplaysExistingTaskWhenParametersMatch",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "renewReportsLeaseLoss",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimNextPassesWorkerCapabilitiesAndLimitToRepository",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimNextReturnsEmptyWhenQueueIsEmpty",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "finishRejectsWhenLeaseWasStolen",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reapFailsTaskWhenAttemptsAreExhausted",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelRunningTaskOnlyRecordsRequest",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelAlreadyCancelledTaskIsIdempotent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsConflictWhenStoredParametersDiffer",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reapFailsSideEffectTaskWithUnknownOutcomeAndDoesNotRetry",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reapCancelsTaskWhoseCancellationWasRequested",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "claimNextWritesAttemptAndRunningEvent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createPersistsPendingTaskAndCreationEvent",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelQueuedTaskIsImmediate",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelTerminalTaskIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "createRejectsSameKeyWithDifferentParameters",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "finishRejectsNonTerminalOutcome",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "getHidesForeignTaskBehindNotFound",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "reapRequeuesExpiredLeaseAndClosesAttempt",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskSideEffectOutcomeTests",
+                       "tests":  3,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.097,
+                       "cases":  [
+                                     {
+                                         "name":  "pureComputeIsRequeuedWhileSideEffectGoesUnknown",
+                                         "status":  "passed",
+                                         "duration":  0.041,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "resetCommandThatLostItsLeaseEndsUnknownAndIsNeverRedispatched",
+                                         "status":  "passed",
+                                         "duration":  0.031,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "deviceCommandTtlCapsLeaseAt120SecondsFromStart",
+                                         "status":  "passed",
+                                         "duration":  0.024,
+                                         "message":  null
+                                     }
+                                 ]
+                   },
+                   {
+                       "className":  "com.xxplatform.api.service.task.TaskWriteServiceTests",
+                       "tests":  10,
+                       "failures":  0,
+                       "errors":  0,
+                       "skipped":  0,
+                       "time":  0.01,
+                       "cases":  [
+                                     {
+                                         "name":  "cancelOfRunningTaskOnlyRegistersRequest",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "retryRequiresTaskManagePermission",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelOfQueuedTaskBecomesCancelledImmediately",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "retryOfFailedTaskRequeuesSameTaskAndKeepsSnapshot",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelHidesAnotherUsersTask",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelOfRunningTaskWhoseStateChangedReportsConflict",
+                                         "status":  "passed",
+                                         "duration":  0.001,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "retryOfNonFailedTaskIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelOfTerminalTaskIsRejected",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelRequiresTaskManagePermission",
+                                         "status":  "passed",
+                                         "duration":  0,
+                                         "message":  null
+                                     },
+                                     {
+                                         "name":  "cancelOfCancelledTaskIsIdempotent",
+                                         "status":  "passed",
+                                         "duration":  0.002,
+                                         "message":  null
+                                     }
+                                 ]
+                   }
+               ]
+}

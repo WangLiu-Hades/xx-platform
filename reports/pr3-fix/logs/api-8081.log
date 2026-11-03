@@ -1,0 +1,77 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------< com.xxplatform:xx-platform-api >-------------------
+[INFO] Building xx-platform-api 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.16:run (default-cli) > test-compile @ xx-platform-api >>>
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ xx-platform-api ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 6 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ xx-platform-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ xx-platform-api ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ xx-platform-api ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.16:run (default-cli) < test-compile @ xx-platform-api <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.16:run (default-cli) @ xx-platform-api ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-02 01:34:32.038 INFO  [no-trace] com.xxplatform.api.ApiApplication - Starting ApiApplication using Java 17.0.12 with PID 23248 (C:\Users\dev02\workspace\xx-platform\apps\api\target\classes started by dev02 in C:\Users\dev02\workspace\xx-platform\apps\api)
+2026-11-02 01:34:32.040 DEBUG [no-trace] com.xxplatform.api.ApiApplication - Running with Spring Boot v3.5.16, Spring v6.2.19
+2026-11-02 01:34:32.042 INFO  [no-trace] com.xxplatform.api.ApiApplication - The following 1 profile is active: "db"
+2026-11-02 01:34:33.653 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8081 (http)
+2026-11-02 01:34:33.673 INFO  [no-trace] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-02 01:34:33.673 INFO  [no-trace] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-02 01:34:33.732 INFO  [no-trace] o.a.c.c.C.[.[localhost].[/api/v1] - Initializing Spring embedded WebApplicationContext
+2026-11-02 01:34:33.734 INFO  [no-trace] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1621 ms
+2026-11-02 01:34:34.020 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Starting...
+2026-11-02 01:34:34.181 INFO  [no-trace] com.zaxxer.hikari.pool.HikariPool - xxplatform-api - Added connection org.postgresql.jdbc.PgConnection@63a9c661
+2026-11-02 01:34:34.183 INFO  [no-trace] com.zaxxer.hikari.HikariDataSource - xxplatform-api - Start completed.
+2026-11-02 01:34:34.217 INFO  [no-trace] org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://127.0.0.1:55433/xx_it_browser (PostgreSQL 16.15)
+2026-11-02 01:34:34.311 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-11-02 01:34:34.315 INFO  [no-trace] o.f.core.internal.command.DbValidate - Successfully validated 6 migrations (execution time 00:00.068s)
+2026-11-02 01:34:34.340 INFO  [no-trace] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-11-02 01:34:34.409 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-11-02 01:34:34.626 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - baseline design 2"
+2026-11-02 01:34:34.632 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:34:34.634 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: extension "postgis" already exists, skipping (SQL State: 42710 - Error Code: 0)
+2026-11-02 01:34:37.474 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - seed deployment client config"
+2026-11-02 01:34:37.489 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "3 - approval aggregate and policy v1"
+2026-11-02 01:34:37.489 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:34:37.562 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "4 - policy parameters 20261019"
+2026-11-02 01:34:37.562 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:34:37.571 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "5 - backfill file asset retention"
+2026-11-02 01:34:37.581 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "6 - upload policy alignment"
+2026-11-02 01:34:37.582 WARN  [no-trace] o.f.c.i.s.DefaultSqlScriptExecutor - DB: there is already a transaction in progress (SQL State: 25001 - Error Code: 0)
+2026-11-02 01:34:37.593 INFO  [no-trace] o.f.core.internal.command.DbMigrate - Successfully applied 6 migrations to schema "public", now at version v6 (execution time 00:02.900s)
+2026-11-02 01:34:37.695 DEBUG [no-trace] c.x.api.common.RequestIdFilter - Filter 'requestIdFilter' configured for use
+2026-11-02 01:34:37.695 DEBUG [no-trace] c.xxplatform.api.common.CsrfFilter - Filter 'csrfFilter' configured for use
+2026-11-02 01:34:38.321 INFO  [no-trace] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8081 (http) with context path '/api/v1'
+2026-11-02 01:34:38.334 INFO  [no-trace] com.xxplatform.api.ApiApplication - Started ApiApplication in 6.951 seconds (process running for 7.38)
+2026-11-02 01:34:38.356 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ����������ӽ�ɫ roleCode=SUPER_ADMIN roleId=857208a9-dc53-4d3b-9823-cd49ca1e7732
+2026-11-02 01:34:38.358 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ����������ӽ�ɫ roleCode=OPERATOR roleId=3ec7df03-5441-4c12-a378-7d4eed2a4c2c
+2026-11-02 01:34:38.360 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ����������ӽ�ɫ roleCode=CLASSIFIED roleId=2451bc34-6875-4028-9485-260bfc057423
+2026-11-02 01:34:38.367 INFO  [no-trace] c.xxplatform.api.infra.DevUserSeeder - ��ɫ 857208a9-dc53-4d3b-9823-cd49ca1e7732 ���� 58 ��Ȩ���루ȫ��Ŀ¼��
+2026-11-02 01:34:40.645 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ������������˺� loginName=demo.admin userId=d590b321-6285-4cad-ad8e-c2c892b235d0����������/��������ֹ���������ñ����أ�
+2026-11-02 01:34:42.764 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ������������˺� loginName=demo.operator userId=9d73e728-ff1f-43db-bcd8-0e078e4758d7����������/��������ֹ���������ñ����أ�
+2026-11-02 01:34:44.840 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �Ѵ������������˺� loginName=demo.classified userId=40b74508-b5ce-4f23-ad6f-66a4ea4b6f1e����������/��������ֹ���������ñ����أ�
+2026-11-02 01:34:44.846 WARN  [no-trace] c.xxplatform.api.infra.DevUserSeeder - �����������ݾ������˺� demo.admin/demo.operator/demo.classified����ɫ SUPER_ADMIN/OPERATOR/CLASSIFIED����������/��������ֹ���������ñ����أ�

@@ -76,17 +76,19 @@ Show-Step 'Next steps'
 
 if ($ok) {
     Write-Host @'
-  1) Start with the self-check endpoint (the /smoke route exists only under the dev profile):
+  1) Start the service (the DB profile is required from task 4 on):
        cd apps/api
-       mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev"
+       mvn -o -B spring-boot:run "-Dspring-boot.run.profiles=dev,db"
 
   2) In another terminal, verify the contract envelope:
-       curl.exe http://127.0.0.1:8080/api/v1/smoke
+       curl.exe http://127.0.0.1:8080/api/v1/health
+       curl.exe http://127.0.0.1:8080/api/v1/ready
        curl.exe http://127.0.0.1:8080/api/v1/no-such-route
 
-     Expected: the first returns code="0" with checkedAt inside data; the second returns
-     404 with data=null and details=[]; for both, the X-Trace-Id response header equals
-     the traceId inside the body.
+     Expected: the first returns code="0" with status="UP" and an ISO-8601 checkedAt;
+     the second returns code="0" with status="READY" and three dependencies; the third
+     returns 404 with data=null and details=[]; for all three, the X-Trace-Id response
+     header equals the traceId inside the body.
 
   3) Generate contract Java interfaces/DTOs (first run needs network):
        mvn -Pgenerate-api generate-sources
