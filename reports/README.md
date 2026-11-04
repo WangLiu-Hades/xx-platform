@@ -7,3 +7,5 @@
 [保存期限一年](retention-20261019/README.md)记录F08的用户决定、配置/契约同步、验证及Java/PG环境失败的具体证据。
 
 [已知 Bug 台账（PR #3 / #5）](pr3-fix/known-bugs-2026-11-03.md)记录 PR #3 的6项待修问题，以及 PR #5 后端 CI 暴露的测试隔离问题 [BUG-007](pr3-fix/known-bugs-2026-11-03.md#bug-007)，包含优先级、触发条件、代码及规则依据、回归要求和修复登记。沿用现有 `reports/pr3-fix/` 目录，不另建重复问题目录。
+
+2026-11-04：#7 已合入 main，BUG-007 经正反顺序及完整真库回归验收后更新为 CLOSED；原6项问题仍为 OPEN。[本次验收证据](pr7-review/README.md)。

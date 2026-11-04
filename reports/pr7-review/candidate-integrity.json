@@ -1,0 +1,817 @@
+{
+  "checkedAt": "2026-11-04T05:51:36.742700+00:00",
+  "main": "aed331046f0f2fb221cc634eb594b15eb5a0cb62",
+  "head": "400b1b650d729d1976e4e8ac2a8d5eefb250a48a",
+  "candidateTree": "a6b6f6a26809041185582aba060f8fa66fa590f1",
+  "onlySourceChange": "apps/api/src/test/java/com/xxplatform/api/service/task/TaskQuotaIntegrationTests.java",
+  "mainRuleCount": 160,
+  "allMainRulesMatch": true,
+  "productionSourcesAndConfigurationEqualMain": true,
+  "candidateRuntimeAndTestsEqualPR7": true,
+  "coreRulesSource": "fixed origin/main Git blobs",
+  "mainBugLedgerPreserved": true,
+  "conflicts": false,
+  "whitespacePassed": true,
+  "rules": [
+    {
+      "path": ".gitattributes",
+      "mainBlob": "70752a0e628774151f400c3fc7bebc1b1385ca1a",
+      "candidateBlob": "70752a0e628774151f400c3fc7bebc1b1385ca1a"
+    },
+    {
+      "path": ".github/workflows/frontend.yml",
+      "mainBlob": "d75d81a2d413d94e74d7250e51fa609cd97a35d4",
+      "candidateBlob": "d75d81a2d413d94e74d7250e51fa609cd97a35d4"
+    },
+    {
+      "path": "README.md",
+      "mainBlob": "d2084bf339d123f1c6c0397b5845888cb97eb806",
+      "candidateBlob": "d2084bf339d123f1c6c0397b5845888cb97eb806"
+    },
+    {
+      "path": "contracts/README.md",
+      "mainBlob": "19ff14de1aecc9e461be30fc170f6ba8a058a95b",
+      "candidateBlob": "19ff14de1aecc9e461be30fc170f6ba8a058a95b"
+    },
+    {
+      "path": "contracts/api/FRONTEND_INTEGRATION.md",
+      "mainBlob": "95d7a585d1381c5e734e203245a66d9208fdbc38",
+      "candidateBlob": "95d7a585d1381c5e734e203245a66d9208fdbc38"
+    },
+    {
+      "path": "contracts/api/OPENAPI_CHANGELOG.md",
+      "mainBlob": "cb88cb3dda70d8edd106b49c8f1316fefea92cf8",
+      "candidateBlob": "cb88cb3dda70d8edd106b49c8f1316fefea92cf8"
+    },
+    {
+      "path": "contracts/api/OPENAPI_COVERAGE.md",
+      "mainBlob": "bf15721e2ed8ac6372ecf68777b7887f236360f3",
+      "candidateBlob": "bf15721e2ed8ac6372ecf68777b7887f236360f3"
+    },
+    {
+      "path": "contracts/api/OPENAPI_PENDING.md",
+      "mainBlob": "28d149377ad2e09e00a528a9d8626bda57b1f0c0",
+      "candidateBlob": "28d149377ad2e09e00a528a9d8626bda57b1f0c0"
+    },
+    {
+      "path": "contracts/api/README.md",
+      "mainBlob": "babb59e795fd5b5981b5f43fdf87e0c72ed13828",
+      "candidateBlob": "babb59e795fd5b5981b5f43fdf87e0c72ed13828"
+    },
+    {
+      "path": "contracts/api/api-conventions.md",
+      "mainBlob": "fa2981593c837c61119e8e86adcc74e6c23aa986",
+      "candidateBlob": "fa2981593c837c61119e8e86adcc74e6c23aa986"
+    },
+    {
+      "path": "contracts/api/api-coverage-matrix.md",
+      "mainBlob": "dc60349e1eb67d62f0adacc1178579db21959ba4",
+      "candidateBlob": "dc60349e1eb67d62f0adacc1178579db21959ba4"
+    },
+    {
+      "path": "contracts/api/error-codes.md",
+      "mainBlob": "2042822721610885503f57758eb171db7cfe14e9",
+      "candidateBlob": "2042822721610885503f57758eb171db7cfe14e9"
+    },
+    {
+      "path": "contracts/api/openapi-audit-report.md",
+      "mainBlob": "3c398c68d09943a541ac14b56955da3ba0bbb637",
+      "candidateBlob": "3c398c68d09943a541ac14b56955da3ba0bbb637"
+    },
+    {
+      "path": "contracts/api/openapi.yaml",
+      "mainBlob": "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd",
+      "candidateBlob": "a5e6d65b7cdfd11da5f0913cf501cad66ed4c3bd"
+    },
+    {
+      "path": "contracts/database/README.md",
+      "mainBlob": "0d106e789b40b9baba388fa4a26bf361d807877c",
+      "candidateBlob": "0d106e789b40b9baba388fa4a26bf361d807877c"
+    },
+    {
+      "path": "contracts/database/api-storage-map.md",
+      "mainBlob": "4d0f4dfa542d652cbde2799fe70c8f19e6e514a4",
+      "candidateBlob": "4d0f4dfa542d652cbde2799fe70c8f19e6e514a4"
+    },
+    {
+      "path": "contracts/database/data-dictionary.md",
+      "mainBlob": "a57135513b6fbf0fc7b2a120ee1fa3877019ce32",
+      "candidateBlob": "a57135513b6fbf0fc7b2a120ee1fa3877019ce32"
+    },
+    {
+      "path": "contracts/database/design-changelog.md",
+      "mainBlob": "734802e699e66f3c1f72a10b7fffbcdcc0ca5d8b",
+      "candidateBlob": "734802e699e66f3c1f72a10b7fffbcdcc0ca5d8b"
+    },
+    {
+      "path": "contracts/database/design-validation.md",
+      "mainBlob": "f91021734cc7157df01ba9805c68904ca6cf6e75",
+      "candidateBlob": "f91021734cc7157df01ba9805c68904ca6cf6e75"
+    },
+    {
+      "path": "contracts/database/index-design.md",
+      "mainBlob": "1b79a564153628820fd38767679633a945698d61",
+      "candidateBlob": "1b79a564153628820fd38767679633a945698d61"
+    },
+    {
+      "path": "contracts/database/migration-plan.md",
+      "mainBlob": "c602c550b5792753ee7b52adeb52268c996ee81b",
+      "candidateBlob": "c602c550b5792753ee7b52adeb52268c996ee81b"
+    },
+    {
+      "path": "contracts/database/migrations/PD_20261018_approval.sql",
+      "mainBlob": "7db6c2249fa62cf96e7fb5b33893bf8b0616df4c",
+      "candidateBlob": "7db6c2249fa62cf96e7fb5b33893bf8b0616df4c"
+    },
+    {
+      "path": "contracts/database/migrations/README.md",
+      "mainBlob": "bdc18b828994a016b95d9f6bb1a166f6c6408169",
+      "candidateBlob": "bdc18b828994a016b95d9f6bb1a166f6c6408169"
+    },
+    {
+      "path": "contracts/database/pending-design.md",
+      "mainBlob": "b59adb61a09997b50a54eacf56c1b806d75497d0",
+      "candidateBlob": "b59adb61a09997b50a54eacf56c1b806d75497d0"
+    },
+    {
+      "path": "contracts/database/query-examples.sql",
+      "mainBlob": "666b54bc7afeb0cdbd28914e2050280c55496c3b",
+      "candidateBlob": "666b54bc7afeb0cdbd28914e2050280c55496c3b"
+    },
+    {
+      "path": "contracts/database/schema.sql",
+      "mainBlob": "2e9835fbf3f8b70137bf0883c07331db3b205b55",
+      "candidateBlob": "2e9835fbf3f8b70137bf0883c07331db3b205b55"
+    },
+    {
+      "path": "docs/START_HERE.md",
+      "mainBlob": "f1776b1b28708ef6d911d1bd334829d6c8b66ea4",
+      "candidateBlob": "f1776b1b28708ef6d911d1bd334829d6c8b66ea4"
+    },
+    {
+      "path": "docs/project-governance/BACKEND_TWO_DEV_SPLIT.md",
+      "mainBlob": "94944a433f32bf78857b0764cfecf280b0fc7638",
+      "candidateBlob": "94944a433f32bf78857b0764cfecf280b0fc7638"
+    },
+    {
+      "path": "docs/project-governance/DEPENDENCY_AUDIT.md",
+      "mainBlob": "7e022a72258f297ff45116579f575e67046a9ed5",
+      "candidateBlob": "7e022a72258f297ff45116579f575e67046a9ed5"
+    },
+    {
+      "path": "docs/project-governance/DEVELOPMENT_PLAN.md",
+      "mainBlob": "a9c9f1d7da765cc0deea894ae62792279eeaed10",
+      "candidateBlob": "a9c9f1d7da765cc0deea894ae62792279eeaed10"
+    },
+    {
+      "path": "docs/project-governance/ENGINEERING_ASSIGNMENTS.md",
+      "mainBlob": "3690dabb273082dbfec7282844a07145ecaaf174",
+      "candidateBlob": "3690dabb273082dbfec7282844a07145ecaaf174"
+    },
+    {
+      "path": "docs/project-governance/FRONTEND_API_HANDOFF.md",
+      "mainBlob": "fdf31aabcf97fa402219b909cddd31dc4cd7200e",
+      "candidateBlob": "fdf31aabcf97fa402219b909cddd31dc4cd7200e"
+    },
+    {
+      "path": "docs/project-governance/INTERNAL_TASK_PROTOCOL.md",
+      "mainBlob": "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845",
+      "candidateBlob": "5e38c8726447e4a63bf9b06c0a3bd71d9ea88845"
+    },
+    {
+      "path": "docs/project-governance/METRIC_ALGORITHM_RULES.md",
+      "mainBlob": "61fa7fa65029fa5f2c8b1dfe19f37c7126fcc4bb",
+      "candidateBlob": "61fa7fa65029fa5f2c8b1dfe19f37c7126fcc4bb"
+    },
+    {
+      "path": "docs/project-governance/MODIFICATIONS.md",
+      "mainBlob": "b10a45cda80556d5c8492faa84225e03a62c2ab4",
+      "candidateBlob": "b10a45cda80556d5c8492faa84225e03a62c2ab4"
+    },
+    {
+      "path": "docs/project-governance/PENDING_REGISTER.md",
+      "mainBlob": "62ba7ebd902fc41ef0aabb225239485b7562f658",
+      "candidateBlob": "62ba7ebd902fc41ef0aabb225239485b7562f658"
+    },
+    {
+      "path": "docs/project-governance/PROJECT_AUDIT.md",
+      "mainBlob": "a171e39090fe390888be620d8c3f7c45e9ec6d9a",
+      "candidateBlob": "a171e39090fe390888be620d8c3f7c45e9ec6d9a"
+    },
+    {
+      "path": "docs/project-governance/README.md",
+      "mainBlob": "97d0828e4a7db6c313d288270ed903a46147c649",
+      "candidateBlob": "97d0828e4a7db6c313d288270ed903a46147c649"
+    },
+    {
+      "path": "docs/project-governance/README_REVIEW.md",
+      "mainBlob": "ad26a8a22743ac117078b8dc910ced19bc1c43ad",
+      "candidateBlob": "ad26a8a22743ac117078b8dc910ced19bc1c43ad"
+    },
+    {
+      "path": "docs/project-governance/RETENTION_POLICY.md",
+      "mainBlob": "112576e648d22f52e8097e6f6ed6d90c309cd5ce",
+      "candidateBlob": "112576e648d22f52e8097e6f6ed6d90c309cd5ce"
+    },
+    {
+      "path": "docs/project-governance/SENSITIVE_ACTION_PROTOCOL.md",
+      "mainBlob": "bab76551ef5cb7c8b4912ee3450c4aadae3da32e",
+      "candidateBlob": "bab76551ef5cb7c8b4912ee3450c4aadae3da32e"
+    },
+    {
+      "path": "docs/project-governance/audit/README.md",
+      "mainBlob": "cdd58ac81d620b2345a405e1d9b6a8e8113f7d0e",
+      "candidateBlob": "cdd58ac81d620b2345a405e1d9b6a8e8113f7d0e"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.csv",
+      "mainBlob": "5b8d6796754d62baf5c3a78c0c09d53133135897",
+      "candidateBlob": "5b8d6796754d62baf5c3a78c0c09d53133135897"
+    },
+    {
+      "path": "docs/project-governance/audit/api-inventory.json",
+      "mainBlob": "b8e700ab82bade42948f36907f2026b9ca7b64b5",
+      "candidateBlob": "b8e700ab82bade42948f36907f2026b9ca7b64b5"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-final.pdf",
+      "mainBlob": "483d8bda28fd951d44f8c31a33dc405fecafcf66",
+      "candidateBlob": "483d8bda28fd951d44f8c31a33dc405fecafcf66"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v2.pdf",
+      "mainBlob": "fd451dde95310f24f841ad37ee15b3e4c62efd9b",
+      "candidateBlob": "fd451dde95310f24f841ad37ee15b3e4c62efd9b"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v3.pdf",
+      "mainBlob": "4dee5034190372f278370300d4afee77e3d5183a",
+      "candidateBlob": "4dee5034190372f278370300d4afee77e3d5183a"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review-v4.pdf",
+      "mainBlob": "bc999db3908d4247cc4f81de80adda8199bf82b7",
+      "candidateBlob": "bc999db3908d4247cc4f81de80adda8199bf82b7"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-review.pdf",
+      "mainBlob": "eea24afbcabfb7e08fe3ce663b379a827738c2ba",
+      "candidateBlob": "eea24afbcabfb7e08fe3ce663b379a827738c2ba"
+    },
+    {
+      "path": "docs/project-governance/audit/assignment-reviewed.pdf",
+      "mainBlob": "d2f86083129dd3bc7382c346347599847accdd36",
+      "candidateBlob": "d2f86083129dd3bc7382c346347599847accdd36"
+    },
+    {
+      "path": "docs/project-governance/audit/checks.json",
+      "mainBlob": "b7a7b39440dcfa7992bf375d0a0fd2fbb64fd46e",
+      "candidateBlob": "b7a7b39440dcfa7992bf375d0a0fd2fbb64fd46e"
+    },
+    {
+      "path": "docs/project-governance/audit/contract-only-operations.md",
+      "mainBlob": "1cb4685e46bc38b074e34d0e036096450280a429",
+      "candidateBlob": "1cb4685e46bc38b074e34d0e036096450280a429"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current-run.json",
+      "mainBlob": "5b23376bd858308e6d0c870c2d0ea5f02c45d4eb",
+      "candidateBlob": "5b23376bd858308e6d0c870c2d0ea5f02c45d4eb"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.json",
+      "mainBlob": "ffb27c4dbb487a703ac9fdac3412017813128eeb",
+      "candidateBlob": "ffb27c4dbb487a703ac9fdac3412017813128eeb"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-current.stderr.txt",
+      "mainBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "candidateBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/project-governance/audit/dependency-pre-authorization.json",
+      "mainBlob": "a24ced9fb3e7f7dc46efefa01ccf860d5be7c05f",
+      "candidateBlob": "a24ced9fb3e7f7dc46efefa01ccf860d5be7c05f"
+    },
+    {
+      "path": "docs/project-governance/audit/output-manifest.json",
+      "mainBlob": "8fc3fd4a468d6e76f66cd88c75d2062c947d69ce",
+      "candidateBlob": "8fc3fd4a468d6e76f66cd88c75d2062c947d69ce"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-catalog.json",
+      "mainBlob": "63f587d0a2780c700f816e50bb1cdfef31fb0610",
+      "candidateBlob": "63f587d0a2780c700f816e50bb1cdfef31fb0610"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-checks.json",
+      "mainBlob": "443a0974c9d3b7887b23b31fba6bffcfb928d2bf",
+      "candidateBlob": "443a0974c9d3b7887b23b31fba6bffcfb928d2bf"
+    },
+    {
+      "path": "docs/project-governance/audit/readme-source-baseline.json",
+      "mainBlob": "b8460d23ad30dbb9662b756734573386c99076f3",
+      "candidateBlob": "b8460d23ad30dbb9662b756734573386c99076f3"
+    },
+    {
+      "path": "docs/project-governance/audit/unit-current.json",
+      "mainBlob": "0e47b647f4487cbc64f416462434e8ac522285a0",
+      "candidateBlob": "0e47b647f4487cbc64f416462434e8ac522285a0"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/README.md",
+      "mainBlob": "724fc03d5f118304b60c3b560b2ea96b9fd8c943",
+      "candidateBlob": "724fc03d5f118304b60c3b560b2ea96b9fd8c943"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-1.png",
+      "mainBlob": "59ef6394c020994f48cfcc1ee8f1604016c2511c",
+      "candidateBlob": "59ef6394c020994f48cfcc1ee8f1604016c2511c"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-10.png",
+      "mainBlob": "67755ddc71cf847d9646c4896eb238c13282680c",
+      "candidateBlob": "67755ddc71cf847d9646c4896eb238c13282680c"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-11.png",
+      "mainBlob": "8417017a0f197604ab09348546b05c8343f17b08",
+      "candidateBlob": "8417017a0f197604ab09348546b05c8343f17b08"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-12.png",
+      "mainBlob": "cb03811c84f036b86d2ebc551db2e9ba662340f8",
+      "candidateBlob": "cb03811c84f036b86d2ebc551db2e9ba662340f8"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-13.png",
+      "mainBlob": "d0badae7983844f6473773c4666bc487a2800ca9",
+      "candidateBlob": "d0badae7983844f6473773c4666bc487a2800ca9"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-14.png",
+      "mainBlob": "57e99d91a3e3bde2fe3404577942b76b7b730d18",
+      "candidateBlob": "57e99d91a3e3bde2fe3404577942b76b7b730d18"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-15.png",
+      "mainBlob": "204dc140814aaee1aedf337336a9a709d2586fbc",
+      "candidateBlob": "204dc140814aaee1aedf337336a9a709d2586fbc"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-16.png",
+      "mainBlob": "1fc197a0fbadd20f52684cba353e119b2aa8e191",
+      "candidateBlob": "1fc197a0fbadd20f52684cba353e119b2aa8e191"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-17.png",
+      "mainBlob": "574aaf2d5f330790918414f6e04c80bb61f69e87",
+      "candidateBlob": "574aaf2d5f330790918414f6e04c80bb61f69e87"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-18.png",
+      "mainBlob": "ff4eaaecd24211d6b84379b20beffca3174ad1fc",
+      "candidateBlob": "ff4eaaecd24211d6b84379b20beffca3174ad1fc"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-19.png",
+      "mainBlob": "6f784342271d0cde9b8bfc2870bd5fea51124e29",
+      "candidateBlob": "6f784342271d0cde9b8bfc2870bd5fea51124e29"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-2.png",
+      "mainBlob": "569bd5ea4ea2c2e27caddb28c029bbd665c6846e",
+      "candidateBlob": "569bd5ea4ea2c2e27caddb28c029bbd665c6846e"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-3.png",
+      "mainBlob": "4ba7c1f6eebd4a8d831645cad5b031e4a11d25d8",
+      "candidateBlob": "4ba7c1f6eebd4a8d831645cad5b031e4a11d25d8"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-4.png",
+      "mainBlob": "0718b39863f7982ade750b051c75af3eb043c341",
+      "candidateBlob": "0718b39863f7982ade750b051c75af3eb043c341"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-5.png",
+      "mainBlob": "10f4314b70e459fd35d13b670fb24aba3e0bb102",
+      "candidateBlob": "10f4314b70e459fd35d13b670fb24aba3e0bb102"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-6.png",
+      "mainBlob": "9e6a6e7b3ee8eab467916c3cbf66106f4884fa5a",
+      "candidateBlob": "9e6a6e7b3ee8eab467916c3cbf66106f4884fa5a"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-7.png",
+      "mainBlob": "102173cdc39cd9fcd9568d98cf7e7bc56c64b558",
+      "candidateBlob": "102173cdc39cd9fcd9568d98cf7e7bc56c64b558"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-8.png",
+      "mainBlob": "9ad6f7b8959b764a933f7d11c5b5adea92a18374",
+      "candidateBlob": "9ad6f7b8959b764a933f7d11c5b5adea92a18374"
+    },
+    {
+      "path": "docs/project-governance/audit/word-render/page-9.png",
+      "mainBlob": "4beabfdc16623481684ee2698022ddd152583a8b",
+      "candidateBlob": "4beabfdc16623481684ee2698022ddd152583a8b"
+    },
+    {
+      "path": "docs/project-governance/audit/word-visual-review.json",
+      "mainBlob": "bc19543b7561660671d96e3dbea4ae85768bb27b",
+      "candidateBlob": "bc19543b7561660671d96e3dbea4ae85768bb27b"
+    },
+    {
+      "path": "docs/project-governance/audit/work-packages.json",
+      "mainBlob": "c826bc357f05b51c3bfb9c4625d7bc30bac4758e",
+      "candidateBlob": "c826bc357f05b51c3bfb9c4625d7bc30bac4758e"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-files.jsonl",
+      "mainBlob": "03a653315fe988fbf82338b03d3aaf3152014501",
+      "candidateBlob": "03a653315fe988fbf82338b03d3aaf3152014501"
+    },
+    {
+      "path": "docs/project-governance/audit/workspace-inventory-summary.json",
+      "mainBlob": "a1d160fca0ed2fad565b9aae9c5ed7bbfdda59d3",
+      "candidateBlob": "a1d160fca0ed2fad565b9aae9c5ed7bbfdda59d3"
+    },
+    {
+      "path": "docs/project-governance/backend-operation-owners.csv",
+      "mainBlob": "ed961392f8e831bf08af6a5e612ea84b9f4ac57f",
+      "candidateBlob": "ed961392f8e831bf08af6a5e612ea84b9f4ac57f"
+    },
+    {
+      "path": "docs/project-governance/backend-operation-owners.json",
+      "mainBlob": "6f4bead5d9310c66811347c7b41e43847b04d46c",
+      "candidateBlob": "6f4bead5d9310c66811347c7b41e43847b04d46c"
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.csv",
+      "mainBlob": "7cfecf3cde3bf9df2a598cc5d4305af22d16cb6c",
+      "candidateBlob": "7cfecf3cde3bf9df2a598cc5d4305af22d16cb6c"
+    },
+    {
+      "path": "docs/project-governance/checks/api-inventory.json",
+      "mainBlob": "4f7ccf6f6f55732d2aaad1f28dcb3db7763da47e",
+      "candidateBlob": "4f7ccf6f6f55732d2aaad1f28dcb3db7763da47e"
+    },
+    {
+      "path": "docs/project-governance/checks/build.log",
+      "mainBlob": "16716fba294673afc111f8eab936a162e4d8a5bf",
+      "candidateBlob": "16716fba294673afc111f8eab936a162e4d8a5bf"
+    },
+    {
+      "path": "docs/project-governance/checks/contract-only-operations.md",
+      "mainBlob": "16543dd8c04b465f50e75694d57000f6e60e8115",
+      "candidateBlob": "16543dd8c04b465f50e75694d57000f6e60e8115"
+    },
+    {
+      "path": "docs/project-governance/checks/contract-policy-check.json",
+      "mainBlob": "085fd09cc03ea57f587ee3fa2be46a5127cd11c1",
+      "candidateBlob": "085fd09cc03ea57f587ee3fa2be46a5127cd11c1"
+    },
+    {
+      "path": "docs/project-governance/checks/delivery-manifest.json",
+      "mainBlob": "c74565ce1399e99b67cffbd7f1bf384620fc7e1a",
+      "candidateBlob": "c74565ce1399e99b67cffbd7f1bf384620fc7e1a"
+    },
+    {
+      "path": "docs/project-governance/checks/document-check.json",
+      "mainBlob": "a110ed7525624ef9367b0ec646a92caae1c2fbb1",
+      "candidateBlob": "a110ed7525624ef9367b0ec646a92caae1c2fbb1"
+    },
+    {
+      "path": "docs/project-governance/checks/generation.log",
+      "mainBlob": "20983de012e844b8aa6b45ba8be25c45139dbc19",
+      "candidateBlob": "20983de012e844b8aa6b45ba8be25c45139dbc19"
+    },
+    {
+      "path": "docs/project-governance/checks/sql-check.json",
+      "mainBlob": "c8037dca1cd5930d8245c3516853c17771f8af20",
+      "candidateBlob": "c8037dca1cd5930d8245c3516853c17771f8af20"
+    },
+    {
+      "path": "docs/project-governance/checks/tests.log",
+      "mainBlob": "656ddd041ce6f9601b00f282235c9bbf6583980d",
+      "candidateBlob": "656ddd041ce6f9601b00f282235c9bbf6583980d"
+    },
+    {
+      "path": "docs/project-governance/checks/typecheck.log",
+      "mainBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "candidateBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/project-governance/provisional-contract-changes.json",
+      "mainBlob": "ccbcc0361637f78cd845bc9e22bde524447dcccf",
+      "candidateBlob": "ccbcc0361637f78cd845bc9e22bde524447dcccf"
+    },
+    {
+      "path": "docs/project-governance/provisional-policy.json",
+      "mainBlob": "82f0d4c0e55f0aa25f4266298766e3623de7bc83",
+      "candidateBlob": "82f0d4c0e55f0aa25f4266298766e3623de7bc83"
+    },
+    {
+      "path": "docs/project-governance/scripts/README.md",
+      "mainBlob": "530c74dd49a6c2e2ed7fbaf2ae7858a448fc6008",
+      "candidateBlob": "530c74dd49a6c2e2ed7fbaf2ae7858a448fc6008"
+    },
+    {
+      "path": "docs/project-governance/scripts/audit_dependencies.cjs",
+      "mainBlob": "37149018ae17044ea63de8e49a588766d5fdc4dc",
+      "candidateBlob": "37149018ae17044ea63de8e49a588766d5fdc4dc"
+    },
+    {
+      "path": "docs/project-governance/scripts/build_governance.py",
+      "mainBlob": "11b1d3857b8f9343fd9ea0f9bdefecce449b7434",
+      "candidateBlob": "11b1d3857b8f9343fd9ea0f9bdefecce449b7434"
+    },
+    {
+      "path": "docs/project-governance/scripts/generate_backend_ownership.cjs",
+      "mainBlob": "2ddf8f22225c89e58e617ea529213327e0c619d4",
+      "candidateBlob": "2ddf8f22225c89e58e617ea529213327e0c619d4"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_api.cjs",
+      "mainBlob": "915b31ead54f521d3eecf24956e83b51cfbb8f3d",
+      "candidateBlob": "915b31ead54f521d3eecf24956e83b51cfbb8f3d"
+    },
+    {
+      "path": "docs/project-governance/scripts/inspect_workspace.py",
+      "mainBlob": "b32d0d593f3e5c41bc97832bf06d04ee82ff774f",
+      "candidateBlob": "b32d0d593f3e5c41bc97832bf06d04ee82ff774f"
+    },
+    {
+      "path": "docs/project-governance/scripts/render_word_review.py",
+      "mainBlob": "f19cf67306a9f9502b0b3678cd51938eea26c7d0",
+      "candidateBlob": "f19cf67306a9f9502b0b3678cd51938eea26c7d0"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_deliverables.py",
+      "mainBlob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "candidateBlob": "f412989129b27a157d676bebb15e4f0e50f9b909"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_provisional.cjs",
+      "mainBlob": "3ed21b5a89297f6b67b9317f9639d0c96d817ad9",
+      "candidateBlob": "3ed21b5a89297f6b67b9317f9639d0c96d817ad9"
+    },
+    {
+      "path": "docs/project-governance/scripts/verify_readmes.py",
+      "mainBlob": "f412989129b27a157d676bebb15e4f0e50f9b909",
+      "candidateBlob": "f412989129b27a157d676bebb15e4f0e50f9b909"
+    },
+    {
+      "path": "docs/project-governance/修改与检查记录.md",
+      "mainBlob": "9a6e6f90a5c7c241a55040e4076c4b86b97641ee",
+      "candidateBlob": "9a6e6f90a5c7c241a55040e4076c4b86b97641ee"
+    },
+    {
+      "path": "docs/project-governance/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "mainBlob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf",
+      "candidateBlob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf"
+    },
+    {
+      "path": "docs/project-governance/暂定方案与修改记录.md",
+      "mainBlob": "ef1fed4a2f25dfd81f2f5c28f8b8987f44cca41b",
+      "candidateBlob": "ef1fed4a2f25dfd81f2f5c28f8b8987f44cca41b"
+    },
+    {
+      "path": "docs/project-governance/暂定规则明细.md",
+      "mainBlob": "2f1274b191e206b11acd32242e2b5d424a0ea53d",
+      "candidateBlob": "2f1274b191e206b11acd32242e2b5d424a0ea53d"
+    },
+    {
+      "path": "docs/requirements/README.md",
+      "mainBlob": "049808176c0959856fef0581e20c1a4afe1ce6bb",
+      "candidateBlob": "049808176c0959856fef0581e20c1a4afe1ce6bb"
+    },
+    {
+      "path": "docs/requirements/source/README.md",
+      "mainBlob": "a86ee89f1ca90c53939c195b3c7e55e126375ecf",
+      "candidateBlob": "a86ee89f1ca90c53939c195b3c7e55e126375ecf"
+    },
+    {
+      "path": "docs/requirements/source/多维数据分析平台开发模块与人员分工（修订版）.docx",
+      "mainBlob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf",
+      "candidateBlob": "e09f94c11ca2cb029ff58aeb9da5a72d4639e4cf"
+    },
+    {
+      "path": "docs/requirements/source/平台功能设计（原始）.docx",
+      "mainBlob": "fb96500e6c2c31d872a7a88fb1272917db49b73a",
+      "candidateBlob": "fb96500e6c2c31d872a7a88fb1272917db49b73a"
+    },
+    {
+      "path": "docs/requirements/source/平台功能设计（原始）.pdf",
+      "mainBlob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31",
+      "candidateBlob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31"
+    },
+    {
+      "path": "docs/system-design/00_需求追踪与设计说明.md",
+      "mainBlob": "4a21a8c9c90cdc5a0094b1cb0cfb6818aa2e676c",
+      "candidateBlob": "4a21a8c9c90cdc5a0094b1cb0cfb6818aa2e676c"
+    },
+    {
+      "path": "docs/system-design/01_总体系统架构设计.md",
+      "mainBlob": "a8d7554c7bb245bdcd5733f4b2a9d953250ab5a5",
+      "candidateBlob": "a8d7554c7bb245bdcd5733f4b2a9d953250ab5a5"
+    },
+    {
+      "path": "docs/system-design/02_技术栈选型与ADR.md",
+      "mainBlob": "b869d1d2fd7c6f702d9173b97ec48864a1027519",
+      "candidateBlob": "b869d1d2fd7c6f702d9173b97ec48864a1027519"
+    },
+    {
+      "path": "docs/system-design/03_数据库与数据架构设计.md",
+      "mainBlob": "7c645a798a1a852ae4b85da368f056e82672f431",
+      "candidateBlob": "7c645a798a1a852ae4b85da368f056e82672f431"
+    },
+    {
+      "path": "docs/system-design/04_API与接口契约设计.md",
+      "mainBlob": "b98a0c2c0c87d6598e0bafa0dfdef29d3d2abc26",
+      "candidateBlob": "b98a0c2c0c87d6598e0bafa0dfdef29d3d2abc26"
+    },
+    {
+      "path": "docs/system-design/05_UIUX与交互设计.md",
+      "mainBlob": "b084c3ff1516c83b40c9e556004eab9c9f09fe3f",
+      "candidateBlob": "b084c3ff1516c83b40c9e556004eab9c9f09fe3f"
+    },
+    {
+      "path": "docs/system-design/06_安全架构设计.md",
+      "mainBlob": "b0361489be0cf6e18772c80a08f1284986727b90",
+      "candidateBlob": "b0361489be0cf6e18772c80a08f1284986727b90"
+    },
+    {
+      "path": "docs/system-design/07_性能与容量设计.md",
+      "mainBlob": "21b89ee88e2b6ac1bf600bb71fd9e446fb0d73d9",
+      "candidateBlob": "21b89ee88e2b6ac1bf600bb71fd9e446fb0d73d9"
+    },
+    {
+      "path": "docs/system-design/08_可靠性与可观测性设计.md",
+      "mainBlob": "a31be398163c10fa397b4167fdd74ef07f1b4c3e",
+      "candidateBlob": "a31be398163c10fa397b4167fdd74ef07f1b4c3e"
+    },
+    {
+      "path": "docs/system-design/09_部署架构设计.md",
+      "mainBlob": "b9ee22537ca5e97be586fdae9dab42cbfb41d896",
+      "candidateBlob": "b9ee22537ca5e97be586fdae9dab42cbfb41d896"
+    },
+    {
+      "path": "docs/system-design/10_开发联调与集成方案.md",
+      "mainBlob": "51cd0882c35691ee02d3daaa7053b3032918bfe5",
+      "candidateBlob": "51cd0882c35691ee02d3daaa7053b3032918bfe5"
+    },
+    {
+      "path": "docs/system-design/11_架构风险与待确认事项.md",
+      "mainBlob": "ca0751f34cf3e8819b3cbda8a9f839cbad9b6877",
+      "candidateBlob": "ca0751f34cf3e8819b3cbda8a9f839cbad9b6877"
+    },
+    {
+      "path": "docs/system-design/README.md",
+      "mainBlob": "bf9a4fc1a158a85abfb81cf7b068852fb4684a8f",
+      "candidateBlob": "bf9a4fc1a158a85abfb81cf7b068852fb4684a8f"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-001-architecture.md",
+      "mainBlob": "f57bf5d1110a2f7850eb2116d45f84e0ff3f5ace",
+      "candidateBlob": "f57bf5d1110a2f7850eb2116d45f84e0ff3f5ace"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-002-backend.md",
+      "mainBlob": "4320da82680ecbce2c2dbac5fceee4717cb0fdc7",
+      "candidateBlob": "4320da82680ecbce2c2dbac5fceee4717cb0fdc7"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-003-database.md",
+      "mainBlob": "c4c8a204c3848f80d0442db26c75097d9ee4870c",
+      "candidateBlob": "c4c8a204c3848f80d0442db26c75097d9ee4870c"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-004-gis.md",
+      "mainBlob": "57f12f0075c4346db117bedcf2d9ee9d7d7b0a52",
+      "candidateBlob": "57f12f0075c4346db117bedcf2d9ee9d7d7b0a52"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-005-async-task.md",
+      "mainBlob": "053c208644080eb8f2b2e339ec3de629b19a36e0",
+      "candidateBlob": "053c208644080eb8f2b2e339ec3de629b19a36e0"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-006-api.md",
+      "mainBlob": "7282971192f620979d8b82e637ae088ece4fe195",
+      "candidateBlob": "7282971192f620979d8b82e637ae088ece4fe195"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-007-authentication.md",
+      "mainBlob": "228531b6b2c3286f2bb3e9fd1bb50ad9236f6a88",
+      "candidateBlob": "228531b6b2c3286f2bb3e9fd1bb50ad9236f6a88"
+    },
+    {
+      "path": "docs/system-design/adr/ADR-008-deployment.md",
+      "mainBlob": "e2f7c010bae883f4a0d28a07514070f8779d9467",
+      "candidateBlob": "e2f7c010bae883f4a0d28a07514070f8779d9467"
+    },
+    {
+      "path": "docs/system-design/adr/README.md",
+      "mainBlob": "156bb20800d462822d3e2813a0a35c1cd3976a94",
+      "candidateBlob": "156bb20800d462822d3e2813a0a35c1cd3976a94"
+    },
+    {
+      "path": "docs/system-design/diagrams/README.md",
+      "mainBlob": "d4415d47473e217f52af621428be45c6b2b08e04",
+      "candidateBlob": "d4415d47473e217f52af621428be45c6b2b08e04"
+    },
+    {
+      "path": "docs/system-design/diagrams/analysis-task-sequence.mmd",
+      "mainBlob": "5481d6ece4f8296a077aecbc94d176a388ad6961",
+      "candidateBlob": "5481d6ece4f8296a077aecbc94d176a388ad6961"
+    },
+    {
+      "path": "docs/system-design/diagrams/auth-sequence.mmd",
+      "mainBlob": "be770a3d9349717c03e7cf1d8fd975a2cdf2cd31",
+      "candidateBlob": "be770a3d9349717c03e7cf1d8fd975a2cdf2cd31"
+    },
+    {
+      "path": "docs/system-design/diagrams/component-architecture.mmd",
+      "mainBlob": "73bbc3f36a29ed0c43e97a850816a4d458a5651b",
+      "candidateBlob": "73bbc3f36a29ed0c43e97a850816a4d458a5651b"
+    },
+    {
+      "path": "docs/system-design/diagrams/container-architecture.mmd",
+      "mainBlob": "9f4b2578202d605c14a5d150905665aaa2b5c03b",
+      "candidateBlob": "9f4b2578202d605c14a5d150905665aaa2b5c03b"
+    },
+    {
+      "path": "docs/system-design/diagrams/data-flow.mmd",
+      "mainBlob": "643374a0c88c162ea8020b4b5f7c14ce31b11f87",
+      "candidateBlob": "643374a0c88c162ea8020b4b5f7c14ce31b11f87"
+    },
+    {
+      "path": "docs/system-design/diagrams/deployment.mmd",
+      "mainBlob": "4d51e43fccd3c7a7a77df6758169fb875e09a2d3",
+      "candidateBlob": "4d51e43fccd3c7a7a77df6758169fb875e09a2d3"
+    },
+    {
+      "path": "docs/system-design/diagrams/er-diagram.mmd",
+      "mainBlob": "3cda07ce97212ef83c5e070b2005dae6d954258a",
+      "candidateBlob": "3cda07ce97212ef83c5e070b2005dae6d954258a"
+    },
+    {
+      "path": "docs/system-design/diagrams/module-dependency.mmd",
+      "mainBlob": "6f15fe5504213d88a756be0155e62242c3a9b2e1",
+      "candidateBlob": "6f15fe5504213d88a756be0155e62242c3a9b2e1"
+    },
+    {
+      "path": "docs/system-design/diagrams/search-sequence.mmd",
+      "mainBlob": "698fddf392a5c39c8900362a493592c53927fbfb",
+      "candidateBlob": "698fddf392a5c39c8900362a493592c53927fbfb"
+    },
+    {
+      "path": "docs/system-design/diagrams/system-context.mmd",
+      "mainBlob": "cde91c8ec872567891824b9e0ab828cf181ce055",
+      "candidateBlob": "cde91c8ec872567891824b9e0ab828cf181ce055"
+    },
+    {
+      "path": "docs/system-design/ui/README.md",
+      "mainBlob": "a38e70eadf38a7834d28e03b1363d403e675937f",
+      "candidateBlob": "a38e70eadf38a7834d28e03b1363d403e675937f"
+    },
+    {
+      "path": "docs/system-design/ui/design-system.md",
+      "mainBlob": "ad55ccd7d55b308ee4501bd8aa58a0407b3590fe",
+      "candidateBlob": "ad55ccd7d55b308ee4501bd8aa58a0407b3590fe"
+    },
+    {
+      "path": "docs/system-design/ui/information-architecture.md",
+      "mainBlob": "1470344e098a461f9ffb77c3eea0f2e288e90c65",
+      "candidateBlob": "1470344e098a461f9ffb77c3eea0f2e288e90c65"
+    },
+    {
+      "path": "docs/system-design/ui/wireframes/README.md",
+      "mainBlob": "11c2e8d35ad00ca4d5820ad24e749445a28f5df7",
+      "candidateBlob": "11c2e8d35ad00ca4d5820ad24e749445a28f5df7"
+    },
+    {
+      "path": "docs/system-design/ui/wireframes/核心页面线框.md",
+      "mainBlob": "f62b16a2110de3083b4bf45e65de4b1a6c82bafe",
+      "candidateBlob": "f62b16a2110de3083b4bf45e65de4b1a6c82bafe"
+    },
+    {
+      "path": "docs/system-design/系统设计说明书.md",
+      "mainBlob": "dda922ea0633a63ed5d581fb638d5383a8c87756",
+      "candidateBlob": "dda922ea0633a63ed5d581fb638d5383a8c87756"
+    },
+    {
+      "path": "多维数据分析平台开发模块与人员分工.docx",
+      "mainBlob": "971b0f6a0323a5d4eae8ce4922b9649fe6b8c851",
+      "candidateBlob": "971b0f6a0323a5d4eae8ce4922b9649fe6b8c851"
+    },
+    {
+      "path": "平台功能设计（原始）.pdf",
+      "mainBlob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31",
+      "candidateBlob": "e58fb3af6d89f25a46ae0ba89308ed53fe60ff31"
+    }
+  ]
+}
